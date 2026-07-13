@@ -1,0 +1,188 @@
+"use client";
+
+import React, { useState, useEffect, useCallback } from "react";
+import useSWR from "swr";
+import Link from "next/link";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+interface Banner {
+  _id: string;
+  imageUrl: string;
+  headline: string;
+  subtext?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  buttonTheme: "green" | "red";
+}
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function HeroSlider() {
+  const { data: banners = [], isLoading } = useSWR<Banner[]>("/api/banners", fetcher);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 5000, stopOnInteraction: false }),
+  ]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+
+  const onInit = useCallback((emblaApi: any) => {
+    setScrollSnaps(emblaApi.scrollSnapList());
+  }, []);
+
+  const onSelect = useCallback((emblaApi: any) => {
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, []);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onInit(emblaApi);
+    onSelect(emblaApi);
+    emblaApi.on("reInit", onInit);
+    emblaApi.on("select", onSelect);
+  }, [emblaApi, onInit, onSelect]);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
+  if (isLoading) {
+    return (
+      <div className="h-[60vh] md:h-[85vh] w-full bg-neutral-100 flex items-center justify-center animate-pulse">
+        <div className="h-8 w-8 rounded-full border-4 border-neutral-300 border-t-brand-black animate-spin"></div>
+      </div>
+    );
+  }
+
+  // Fallback defaults if no active banners seeded
+  const slides = banners.length > 0 ? banners : [
+    {
+      _id: "default-1",
+      imageUrl: "/placeholder-goat.jpg",
+      headline: "Premium Live Goats, Delivered Across Tamil Nadu",
+      subtext: "Choose from Boer, Tellicherry, and native breeds. Direct farm pricing.",
+      buttonText: "Explore Goats",
+      buttonLink: "/goats",
+      buttonTheme: "green" as const,
+    },
+    {
+      _id: "default-2",
+      imageUrl: "/placeholder-mutton.jpg",
+      headline: "Farm-Fresh Bulk Mutton, Booked in Minutes",
+      subtext: "Fresh quality cuts for families, events, and commercial orders.",
+      buttonText: "Explore Mutton",
+      buttonLink: "/mutton",
+      buttonTheme: "red" as const,
+    }
+  ];
+
+  return (
+    <section className="relative overflow-hidden group select-none">
+      {/* Viewport */}
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex">
+          {slides.map((slide) => (
+            <div
+              key={slide._id}
+              className="flex-[0_0_100%] min-w-0 h-[60vh] md:h-[88vh] relative bg-brand-black"
+            >
+              {/* Background Image */}
+              {slide.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={slide.imageUrl}
+                  alt={slide.headline}
+                  className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
+                  loading="eager"
+                />
+              )}
+              {/* Dark Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-brand-black/35 to-transparent"></div>
+
+              {/* Slide Content */}
+              <div className="absolute inset-0 flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-28">
+                <div className="max-w-3xl space-y-4 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
+                  {/* tag */}
+                  <span className="inline-block bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs font-semibold px-4 py-1">
+                    🌿 100% Farm Raised
+                  </span>
+                  
+                  {/* Title in display Anton font */}
+                  <h2 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
+                    {slide.headline}
+                  </h2>
+                  
+                  {/* Subtext */}
+                  {slide.subtext && (
+                    <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
+                      {slide.subtext}
+                    </p>
+                  )}
+                  
+                  {/* Call to action */}
+                  {slide.buttonText && (
+                    <div className="pt-2">
+                      <Link
+                        href={slide.buttonLink || "/"}
+                        className={`inline-flex items-center justify-center px-7 py-3 rounded-full text-sm font-semibold shadow-md transition-all duration-300 hover:scale-102 ${
+                          slide.buttonTheme === "red"
+                            ? "bg-mutton-primary text-white hover:bg-mutton-hover"
+                            : "bg-goat-primary text-white hover:bg-goat-hover"
+                        }`}
+                      >
+                        {slide.buttonText}
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={scrollPrev}
+        className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft size={24} strokeWidth={2} />
+      </button>
+
+      <button
+        onClick={scrollNext}
+        className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
+        aria-label="Next slide"
+      >
+        <ChevronRight size={24} strokeWidth={2} />
+      </button>
+
+      {/* Dots navigation */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2">
+        {scrollSnaps.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+              index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+    </section>
+  );
+}
