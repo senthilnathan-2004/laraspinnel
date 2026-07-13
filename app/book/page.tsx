@@ -559,7 +559,7 @@ function BookingForm() {
                           Preferred Delivery Date
                         </label>
                         <CustomDatePicker
-                          value={watch("preferredDate") || ""}
+                          value={(watch("preferredDate") as string) || ""}
                           onChange={(val) => {
                             setValue("preferredDate", val, { shouldValidate: true });
                           }}
