@@ -138,6 +138,7 @@ export default function MuttonListingPage() {
           breeds={[]}
           tags={tags}
           theme="mutton"
+          searchSuggestions={Array.from(new Set(packs.map(p => p.name)))}
         />
 
         {/* Catalog Grid */}

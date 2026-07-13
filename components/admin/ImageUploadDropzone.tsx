@@ -7,12 +7,14 @@ interface ImageUploadDropzoneProps {
   value: string[];
   onChange: (urls: string[]) => void;
   maxFiles?: number;
+  endpoint?: string;
 }
 
 export default function ImageUploadDropzone({
   value = [],
   onChange,
   maxFiles = 5,
+  endpoint = "/api/admin/upload",
 }: ImageUploadDropzoneProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState("");
@@ -38,7 +40,7 @@ export default function ImageUploadDropzone({
       formData.append("file", file);
 
       try {
-        const res = await fetch("/api/admin/upload", {
+        const res = await fetch(endpoint, {
           method: "POST",
           body: formData,
         });

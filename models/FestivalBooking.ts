@@ -16,6 +16,7 @@ export interface IFestivalBooking extends Document {
   address: string;
   
   notes?: string;
+  referenceImage?: string;
   status: "pending" | "confirmed" | "cancelled" | "completed";
   adminNotes?: string;
   createdAt: Date;
@@ -39,6 +40,7 @@ const FestivalBookingSchema = new Schema<IFestivalBooking>(
     address: { type: String, required: true },
     
     notes: { type: String },
+    referenceImage: { type: String },
     status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled", "completed"],

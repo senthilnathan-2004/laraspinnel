@@ -91,6 +91,7 @@ export const festivalBookingSchema = z.object({
   email: z.string().email("Invalid email address").optional().or(z.literal("")),
   address: z.string().min(10, "Complete address is required"),
   notes: z.string().optional().or(z.literal("")),
+  referenceImage: z.string().optional(),
 });
 
 export type FestivalBookingFormData = z.infer<typeof festivalBookingSchema>;

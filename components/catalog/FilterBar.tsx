@@ -16,6 +16,7 @@ interface FilterBarProps {
   breeds: string[];
   tags: string[];
   theme: "goat" | "mutton";
+  searchSuggestions?: string[];
 }
 
 export default function FilterBar({
@@ -30,9 +31,17 @@ export default function FilterBar({
   breeds = [],
   tags = [],
   theme,
+  searchSuggestions = [],
 }: FilterBarProps) {
   const isGoat = theme === "goat";
   const [isTagsExpanded, setIsTagsExpanded] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  // Filter suggestions based on current input
+  const filteredSuggestions = searchSuggestions.filter(
+    (s) => s.toLowerCase().includes(searchTerm.toLowerCase()) && s.toLowerCase() !== searchTerm.toLowerCase()
+  ).slice(0, 5); // Limit to 5 suggestions
+
 
   return (
     <div className="bg-white border border-brand-border rounded-2xl p-3 md:p-5 space-y-4 shadow-card">
@@ -46,11 +55,30 @@ export default function FilterBar({
             type="text"
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
             placeholder={isGoat ? "Search breed name..." : "Search packages..."}
             className={`w-full h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-xl text-sm text-brand-black outline-none focus:ring-2 transition-all ${
               isGoat ? "focus:ring-goat-primary" : "focus:ring-mutton-primary"
             }`}
           />
+          {/* Search Suggestions Dropdown */}
+          {showSuggestions && searchTerm.length > 0 && filteredSuggestions.length > 0 && (
+            <div className="absolute z-10 w-full mt-1 bg-white border border-brand-border rounded-xl shadow-lg max-h-60 overflow-auto">
+              {filteredSuggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  className="px-4 py-2 text-sm text-brand-black hover:bg-brand-light-gray cursor-pointer"
+                  onClick={() => {
+                    onSearchChange(suggestion);
+                    setShowSuggestions(false);
+                  }}
+                >
+                  {suggestion}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Dropdowns */}

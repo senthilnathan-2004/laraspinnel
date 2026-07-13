@@ -117,6 +117,7 @@ export default function GoatsListingPage() {
           breeds={breeds}
           tags={tags}
           theme="goat"
+          searchSuggestions={Array.from(new Set(goats.flatMap(g => [g.name, g.breed])))}
         />
 
         {/* Catalog Grid */}

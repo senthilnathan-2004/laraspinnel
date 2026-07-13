@@ -207,6 +207,23 @@ export default function AdminFestivalBookingDetailPage({
                 </div>
               </div>
             )}
+
+            {booking.referenceImage && (
+              <div className="bg-white rounded-2xl shadow-card border border-brand-border overflow-hidden">
+                <div className="p-5 border-b border-brand-border bg-brand-light-gray/30">
+                  <h3 className="font-bold text-brand-black">Reference Image</h3>
+                </div>
+                <div className="p-6">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={booking.referenceImage} alt="Reference" className="max-w-full h-auto rounded-xl border border-brand-border" />
+                  <div className="mt-4">
+                    <a href={booking.referenceImage} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-goat-primary hover:underline">
+                      View Original Size
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right Column: Customer & Actions */}

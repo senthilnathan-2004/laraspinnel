@@ -10,6 +10,7 @@ import CustomSelect from "@/components/shared/CustomSelect";
 import CustomDatePicker from "@/components/shared/CustomDatePicker";
 import { CalendarHeart, CheckCircle, AlertCircle, Sparkles, Send } from "lucide-react";
 import Link from "next/link";
+import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
 
 export default function FestivalBookingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,6 +39,7 @@ export default function FestivalBookingPage() {
       email: "",
       address: "",
       notes: "",
+      referenceImage: "",
     },
   });
 
@@ -298,6 +300,17 @@ export default function FestivalBookingPage() {
                         {...register("notes")}
                         className="w-full bg-brand-light-gray border border-brand-border rounded-xl p-4 text-sm focus:ring-2 focus:ring-goat-primary outline-none resize-none"
                       ></textarea>
+                    </div>
+
+                    <div className="space-y-1.5 md:col-span-2">
+                      <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Reference Image (Optional)</label>
+                      <p className="text-xs text-brand-gray mb-2">Upload a picture of the type of goat you are looking for.</p>
+                      <ImageUploadDropzone 
+                        value={watch("referenceImage") ? [watch("referenceImage")!] : []} 
+                        onChange={(urls) => setValue("referenceImage", urls[0] || "", { shouldValidate: true })} 
+                        maxFiles={1} 
+                        endpoint="/api/upload" 
+                      />
                     </div>
                   </div>
                 </div>
