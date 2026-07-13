@@ -26,11 +26,12 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function AdminFestivalBookingDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const unwrappedParams = React.use(params);
   const router = useRouter();
   const { data: booking, error, isLoading, mutate } = useSWR<IFestivalBooking>(
-    `/api/admin/festival-bookings/${params.id}`,
+    `/api/admin/festival-bookings/${unwrappedParams.id}`,
     fetcher
   );
 
@@ -53,7 +54,7 @@ export default function AdminFestivalBookingDetailPage({
     setUpdateSuccess(false);
     
     try {
-      const res = await fetch(`/api/admin/festival-bookings/${params.id}`, {
+      const res = await fetch(`/api/admin/festival-bookings/${unwrappedParams.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
