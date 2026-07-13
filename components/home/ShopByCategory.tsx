@@ -11,6 +11,17 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function ShopByCategory() {
   const { data: settings = {} } = useSWR("/api/settings", fetcher);
 
+  const displayDistricts = React.useMemo(() => {
+    if (!settings.mutton_districts) return "Coimbatore, Tiruppur, and Erode";
+    const districtsList = settings.mutton_districts.split(',').map((d: string) => d.trim()).filter(Boolean);
+    if (districtsList.length <= 3) {
+      if (districtsList.length === 1) return districtsList[0];
+      if (districtsList.length === 2) return `${districtsList[0]} and ${districtsList[1]}`;
+      return `${districtsList.slice(0, -1).join(', ')}, and ${districtsList[districtsList.length - 1]}`;
+    }
+    return `${districtsList.slice(0, 3).join(', ')}...`;
+  }, [settings.mutton_districts]);
+
   return (
     <section className="py-24 bg-brand-light-gray/20">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
@@ -108,7 +119,7 @@ export default function ShopByCategory() {
                   Bulk Mutton
                 </h3>
                 <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
-                  Fresh, quality, custom mutton cuts packed cleanly. Available for delivery within Coimbatore, Tiruppur, and Erode.
+                  Fresh, quality, custom mutton cuts packed cleanly. Available for delivery within {displayDistricts}.
                 </p>
               </div>
 
