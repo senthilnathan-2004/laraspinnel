@@ -75,16 +75,16 @@ export default function FestivalBookingPage() {
       <Navbar />
 
       <main className="flex-1 container mx-auto px-4 py-8 md:py-12 max-w-4xl">
-        <div className="text-center mb-8 md:mb-12">
+        <div className="mb-8 md:mb-12 border-b border-brand-border pb-6">
           <div className="inline-flex items-center gap-2 bg-goat-primary/10 text-goat-primary px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-goat-primary/20">
             <CalendarHeart size={14} />
             <span>Festival & Special Functions</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-brand-black mb-4">
-            Custom Festival Goat Order
+            Festival &amp; Bakrid Goat Booking Custom Order
           </h1>
-          <p className="text-brand-gray text-lg max-w-2xl mx-auto">
-            Tell us exactly what you need for your special occasion. We handpick the finest goats matching your specific color, weight, and age requirements.
+          <p className="text-brand-gray text-base font-medium">
+            Book custom live goats for Bakrid qurbani, temple festivals, wedding catering, and family functions. We select the best goats matching your weight, breed, color, and age requirements.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export default function FestivalBookingPage() {
         ) : (
           <div className="bg-white rounded-[2rem] shadow-card border border-brand-border overflow-hidden">
             <div className="p-4 md:p-10">
-              
+
               {serverError && (
                 <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-xl flex items-start gap-3 mb-8">
                   <AlertCircle size={20} className="text-red-600 mt-0.5 shrink-0" />
@@ -119,14 +119,14 @@ export default function FestivalBookingPage() {
               )}
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                
+
                 {/* 1. Occasion Details */}
                 <div className="space-y-5">
                   <div className="flex items-center gap-2 border-b border-brand-border pb-2 mb-4">
                     <Sparkles className="text-goat-primary" size={20} />
                     <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">1. Occasion Details</h3>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Function / Festival</label>
@@ -168,7 +168,7 @@ export default function FestivalBookingPage() {
                     <Sparkles className="text-goat-primary" size={20} />
                     <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">2. Specific Requirements</h3>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Preferred Color(s)</label>
@@ -211,7 +211,7 @@ export default function FestivalBookingPage() {
                     <Sparkles className="text-goat-primary" size={20} />
                     <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">3. Delivery Logistics</h3>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Delivery Date</label>
@@ -246,7 +246,7 @@ export default function FestivalBookingPage() {
                     <Sparkles className="text-goat-primary" size={20} />
                     <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">4. Contact Information</h3>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Full Name</label>
@@ -269,7 +269,7 @@ export default function FestivalBookingPage() {
                       />
                       {errors.phone && <p className="text-xs text-red-600 font-semibold">{errors.phone.message}</p>}
                     </div>
-                    
+
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Email Address (Optional)</label>
                       <input
@@ -305,11 +305,11 @@ export default function FestivalBookingPage() {
                     <div className="space-y-1.5 md:col-span-2">
                       <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">Reference Image (Optional)</label>
                       <p className="text-xs text-brand-gray mb-2">Upload a picture of the type of goat you are looking for.</p>
-                      <ImageUploadDropzone 
-                        value={watch("referenceImage") ? [watch("referenceImage")!] : []} 
-                        onChange={(urls) => setValue("referenceImage", urls[0] || "", { shouldValidate: true })} 
-                        maxFiles={1} 
-                        endpoint="/api/upload" 
+                      <ImageUploadDropzone
+                        value={watch("referenceImage") ? [watch("referenceImage")!] : []}
+                        onChange={(urls) => setValue("referenceImage", urls[0] || "", { shouldValidate: true })}
+                        maxFiles={1}
+                        endpoint="/api/upload"
                       />
                     </div>
                   </div>

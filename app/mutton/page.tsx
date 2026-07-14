@@ -38,7 +38,7 @@ export default function MuttonListingPage() {
   const [selectedTag, setSelectedTag] = useState("All");
 
   const districtsStr = settings.mutton_districts || "Coimbatore, Tiruppur, Erode, Villupuram";
-  
+
   // Collect unique tags/chips (e.g. from districts or packaging labels)
   const tags = Array.from(
     new Set(packs.flatMap((p) => p.districtsAvailable || []))
@@ -98,14 +98,25 @@ export default function MuttonListingPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10">
         {/* Page Header */}
-        <div className="space-y-2 border-b border-brand-border pb-6">
+        <div className="space-y-3 border-b border-brand-border pb-6">
           <span className="text-xs font-semibold text-mutton-text uppercase tracking-wider">🥩 Premium Mutton Catalog</span>
           <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
-            Fresh Mutton Packages
+            Fresh Mutton Packs — Farm to Home Delivery
           </h1>
-          <p className="text-sm font-medium text-brand-gray max-w-xl">
-            Order farm-fresh bulk mutton packages, prepared hygienically in customizable portions and delivered to your doorstep.
+          <h2 className="font-display text-lg text-mutton-text uppercase tracking-wide">
+            Bulk Naatu Aadu Mutton — 5kg, 10kg &amp; Custom Packs
+          </h2>
+          <p className="text-sm font-medium text-brand-gray hidden md:block">
+            Order farm fresh bulk mutton packages, freshly cut and hygienically packed, and delivered to your doorstep across Villupuram, Tindivanam, Vanur, and all Tamil Nadu districts. Perfect for weddings, functions, and regular orders.
           </p>
+          <details className="md:hidden text-xs text-brand-gray border border-brand-border rounded-xl p-3 mt-2 bg-brand-light-gray/30">
+            <summary className="font-semibold cursor-pointer outline-none select-none text-mutton-text uppercase tracking-wider">
+              Show Farm &amp; Delivery Details
+            </summary>
+            <p className="mt-2 leading-relaxed">
+              Order farm fresh bulk mutton packages, freshly cut and hygienically packed, and delivered to your doorstep across Villupuram, Tindivanam, Vanur, and all Tamil Nadu districts. Perfect for weddings, functions, and regular orders.
+            </p>
+          </details>
         </div>
 
         {/* District service banner */}
@@ -113,7 +124,7 @@ export default function MuttonListingPage() {
           <div className="flex gap-3 items-start">
             <MapPin size={22} className="text-mutton-primary shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-bold text-brand-black">Fresh Mutton Delivery Districts</p>
+              <h3 className="text-sm font-bold text-brand-black">Fresh Mutton Delivery Districts</h3>
               <p className="text-xs text-mutton-text mt-0.5 font-medium">
                 We deliver fresh bulk mutton to {districtsStr} districts.
               </p>
@@ -130,7 +141,7 @@ export default function MuttonListingPage() {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           selectedBreed=""
-          onBreedChange={() => {}}
+          onBreedChange={() => { }}
           sortBy={sortBy}
           onSortChange={setSortBy}
           selectedTag={selectedTag}

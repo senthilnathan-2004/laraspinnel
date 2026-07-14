@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { name, breed, description, weightRange, ageRange, priceEstimate, tags, images, isFeatured, isActive } = result.data;
+    const { name, breed, description, weightRange, ageRange, priceEstimate, tags, images, isFeatured, isActive } = result.data as any;
 
     // 3. Generate slug & check if exists
     let slug = slugify(name);

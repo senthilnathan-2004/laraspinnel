@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IBlogPost extends Document {
   title: string;
   slug: string;
-  content: string; // HTML output from RichText editor
+  content: string;
   excerpt: string;
   coverImage?: string;
   author: string;

@@ -219,13 +219,12 @@ function BookingForm() {
           ) : (
             /* Main Booking Form Block */
             <div className="space-y-6">
-              {/* Header */}
-              <div className="space-y-2 text-center">
+              <div className="space-y-3 border-b border-brand-border pb-6">
                 <h1 className="font-display text-4xl text-brand-black uppercase tracking-wide">
-                  Book Your Order
+                  Book Live Goat or Fresh Mutton Online
                 </h1>
-                <p className="text-sm text-brand-gray max-w-md mx-auto">
-                  Submit your reservation online. We Slaughter morning-fresh and ship specialized livestock transits.
+                <p className="text-sm font-medium text-brand-gray">
+                  Reserve Tellicherry, Boer, or naatu aadu live goats and custom mutton packs online. Safe livestock shipping and morning-fresh mutton delivery across Tamil Nadu.
                 </p>
               </div>
 
@@ -487,7 +486,7 @@ function BookingForm() {
                           <input
                             type="tel"
                             {...register("phone")}
-                            placeholder="9876543210"
+                            placeholder="9442379832"
                             className={`w-full h-11 bg-white border border-brand-border rounded-xl pl-10 pr-4 text-sm text-brand-black outline-none focus:ring-2 ${
                               isGoatTheme ? "focus:ring-goat-primary" : "focus:ring-mutton-primary"
                             }`}

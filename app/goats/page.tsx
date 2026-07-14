@@ -94,14 +94,25 @@ export default function GoatsListingPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10">
         {/* Page Header */}
-        <div className="space-y-2 border-b border-brand-border pb-6">
+        <div className="space-y-3 border-b border-brand-border pb-6">
           <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">🌿 Live Livestock Catalog</span>
           <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
-            Our Goat Varieties
+            Live Goat Varieties — Pasture Raised Breeds for Sale
           </h1>
-          <p className="text-sm font-medium text-brand-gray max-w-xl">
-            Browse our pasture-raised healthy breeds available for breeding, rearing, and festivals. Delivered safely across all districts in Tamil Nadu.
+          <h2 className="font-display text-lg text-goat-text uppercase tracking-wide">
+            Find Your Perfect Breed — Tellicherry, Boer, Kanni Aadu &amp; More
+          </h2>
+          <p className="text-sm font-medium text-brand-gray hidden md:block">
+            Browse our healthy naatu aadu and premium crossbreeds available for Bakrid sacrifice, rearing, and breeding. All goats are vaccinated and delivered safely across Villupuram, Tindivanam, and all Tamil Nadu districts.
           </p>
+          <details className="md:hidden text-xs text-brand-gray border border-brand-border rounded-xl p-3 mt-2 bg-brand-light-gray/30">
+            <summary className="font-semibold cursor-pointer outline-none select-none text-goat-text uppercase tracking-wider">
+              Show Farm &amp; Delivery Details
+            </summary>
+            <p className="mt-2 leading-relaxed">
+              Browse our healthy naatu aadu and premium crossbreeds available for Bakrid sacrifice, rearing, and breeding. All goats are vaccinated and delivered safely across Villupuram, Tindivanam, and all Tamil Nadu districts.
+            </p>
+          </details>
         </div>
 
         {/* Filter Bar */}

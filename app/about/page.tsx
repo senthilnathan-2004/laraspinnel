@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { CheckCircle2, Award, Shield, Compass } from "lucide-react";
 import Link from "next/link";
 import { useSettings } from "@/hooks/useSettings";
+import Image from "next/image";
 
 export default function AboutPage() {
   const { settings } = useSettings();
@@ -33,25 +34,30 @@ export default function AboutPage() {
 
       <main className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-12 w-full space-y-16 animate-in fade-in">
         {/* Page Header */}
-        <div className="space-y-2 border-b border-brand-border pb-6 text-center max-w-xl mx-auto">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">🌾 Our Story</span>
+        <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
+          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider block">🌾 Our Story</span>
           <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
             {settings.about_intro_title || "About Ragu Goat Farm"}
           </h1>
           <p className="text-sm font-medium text-brand-gray">
-            {settings.about_intro_subtitle || "Pioneering organic, pasture-raised livestock farming in Villupuram, Tamil Nadu since 2018."}
+            {settings.about_intro_subtitle || "Pioneering organic, pasture-raised livestock farming in Villupuram, Tamil Nadu."}
           </p>
         </div>
 
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-brand-light-gray border border-brand-border select-none shadow-sm">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={settings.about_intro_image || "/placeholder-goat.jpg"} alt="Ragu Farm Pastures" className="w-full h-full object-cover" />
+            <Image
+              src={settings.about_intro_image || "/placeholder-goat.jpg"}
+              alt="Ragu Farm Pastures"
+              fill
+              className="object-cover"
+              sizes="(max-w-768px) 100vw, 500px"
+            />
           </div>
           <div className="space-y-4">
             <h2 className="font-display text-2xl sm:text-3xl text-brand-black uppercase">
-              Our Farming Philosophy
+              Our Goat Farming Philosophy in Villupuram
             </h2>
             <p className="text-sm text-brand-gray leading-relaxed">
               {settings.about_intro_p1 || "At Ragu Goat Farm, we believe that premium quality begins with wholesome care. Located in the lush pastures of Villupuram, our farm spans acres of open grazing fields. Our animals are pasture-raised, allowing them natural forage access alongside nutrient-rich feed."}
@@ -66,7 +72,7 @@ export default function AboutPage() {
         <div className="space-y-8 bg-brand-light-gray/40 border border-brand-border rounded-3xl p-3 md:p-4 md:p-8">
           <div className="text-center space-y-2 max-w-md mx-auto">
             <h2 className="font-display text-2xl sm:text-3xl text-brand-black uppercase">
-              {settings.about_why_title || "Why Choose Ragu Farm?"}
+              {settings.about_why_title || "Why Choose Ragu Goat Farm?"}
             </h2>
             <p className="text-xs text-brand-gray font-medium">
               {settings.about_why_subtitle || "We stand by rigorous quality markers that differentiate our livestock and meat."}
@@ -109,7 +115,7 @@ export default function AboutPage() {
         {/* Closes CTA */}
         <div className="text-center space-y-4">
           <h3 className="font-display text-2xl text-brand-black uppercase">
-            Want to see our livestock in action?
+            Explore Our Live Goats &amp; Farm Gallery
           </h3>
           <div className="flex justify-center gap-4">
             <Link

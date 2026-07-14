@@ -247,7 +247,7 @@ export default function AdminSettingsPage() {
                         required
                         value={settings.contact_phone}
                         onChange={(e) => handleChange("contact_phone", e.target.value)}
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 9442379832"
                         className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                       />
                     </div>
@@ -261,7 +261,7 @@ export default function AdminSettingsPage() {
                         required
                         value={settings.contact_whatsapp}
                         onChange={(e) => handleChange("contact_whatsapp", e.target.value)}
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 9442379832"
                         className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                       />
                     </div>
@@ -275,7 +275,7 @@ export default function AdminSettingsPage() {
                         required
                         value={settings.contact_email}
                         onChange={(e) => handleChange("contact_email", e.target.value)}
-                        placeholder="info@ragugoatfarm.com"
+                        placeholder="senthilraguanthan2004@gmail.com"
                         className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                       />
                     </div>
@@ -303,7 +303,7 @@ export default function AdminSettingsPage() {
                         rows={3}
                         value={settings.contact_address}
                         onChange={(e) => handleChange("contact_address", e.target.value)}
-                        placeholder="123 Farm Road, Villupuram, Tamil Nadu"
+                        placeholder="2/90 MettuStreet, Therkunam, Villupuram"
                         className="w-full bg-white border border-brand-border rounded-xl p-3 md:p-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary resize-none"
                       ></textarea>
                     </div>

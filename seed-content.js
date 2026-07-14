@@ -21,7 +21,7 @@ const seedData = {
   home_stat_2: "Tamil Nadu Wide Goats",
   home_stat_3: "Fresh Quality Guaranteed",
   about_intro_title: "About Ragu Goat Farm",
-  about_intro_subtitle: "Pioneering organic, pasture-raised livestock farming in Villupuram, Tamil Nadu since 2018.",
+  about_intro_subtitle: "Pioneering organic, pasture-raised livestock farming in Villupuram, Tamil Nadu.",
   about_intro_p1: "At Ragu Goat Farm, we believe that premium quality begins with wholesome care. Located in the lush pastures of Villupuram, our farm spans acres of open grazing fields. Our animals are pasture-raised, allowing them natural forage access alongside nutrient-rich feed.",
   about_intro_p2: "We started with a vision to streamline livestock ordering in Tamil Nadu, eliminating middle-agency price hikes. By combining modern veterinary management with direct-to-customer deliveries, we ensure healthy animals reach your doorstep at transparent farm rates.",
   about_intro_image: "/placeholder-goat.jpg",

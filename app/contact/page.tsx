@@ -27,10 +27,10 @@ export default function ContactPage() {
   const [submitError, setSubmitError] = useState("");
 
   const farmName = settings.farm_name || "Ragu Goat Farm";
-  const phone = settings.contact_phone || "+91 98765 43210";
-  const whatsapp = settings.contact_whatsapp || "+91 98765 43210";
-  const email = settings.contact_email || "info@ragugoatfarm.com";
-  const address = settings.contact_address || "123 Farm Road, Villupuram, Tamil Nadu - 642001";
+  const phone = settings.contact_phone || "+91 9442379832";
+  const whatsapp = settings.contact_whatsapp || "+91 9442379832";
+  const email = settings.contact_email || "senthilraguanthan2004@gmail.com";
+  const address = settings.contact_address || "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
   const businessHours = settings.business_hours || "Monday - Sunday: 6:00 AM - 8:00 PM";
 
   const whatsappFormatted = whatsapp.replace(/[^\d+]/g, "");
@@ -82,13 +82,13 @@ export default function ContactPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-12">
         {/* Page Header */}
-        <div className="space-y-2 border-b border-brand-border pb-6 text-center max-w-xl mx-auto">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">📞 Get in touch</span>
+        <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
+          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider block">📞 Get in touch</span>
           <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
-            Contact Ragu Farm
+            Contact Ragu Goat Farm
           </h1>
           <p className="text-sm font-medium text-brand-gray">
-            Have questions about breed selections, shipping logistics, or weekly mutton options? Fill out the form or chat with us.
+            Have questions about goat breeds, Bakrid booking, mutton delivery, or wholesale pricing? Fill out the form or chat with us on WhatsApp.
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export default function ContactPage() {
           {/* Left Column: Form details */}
           <div className="flex flex-col h-full">
             <h2 className="font-display text-2xl text-brand-black uppercase tracking-wide mb-6">
-              Send us a Message
+              Send Your Booking or Delivery Enquiry
             </h2>
 
             {submitError && (
@@ -151,7 +151,7 @@ export default function ContactPage() {
                     <input
                       type="tel"
                       {...register("phone")}
-                      placeholder="9876543210"
+                      placeholder="9442379832"
                       className="w-full h-11 bg-brand-light-gray/40 border border-brand-border rounded-xl pl-10 pr-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                     />
                   </div>
@@ -255,7 +255,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-6 h-full justify-between">
             <div className="space-y-6">
               <h2 className="font-display text-2xl text-brand-black uppercase tracking-wide">
-                Direct Contact
+                Farm Contact Details
               </h2>
               <div className="bg-brand-light-gray border border-brand-border rounded-2xl p-3 md:p-6 space-y-5 text-sm select-none">
                 <div className="flex items-start gap-3">

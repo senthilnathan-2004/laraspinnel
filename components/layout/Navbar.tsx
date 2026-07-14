@@ -14,8 +14,8 @@ export default function Navbar() {
   const { settings } = useSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const phone = settings.contact_phone || "+91 98765 43210";
-  const whatsapp = settings.contact_whatsapp || "+91 98765 43210";
+  const phone = settings.contact_phone || "+91 9442379832";
+  const whatsapp = settings.contact_whatsapp || "+91 9442379832";
   // Format whatsapp link
   const whatsappFormatted = whatsapp.replace(/[^\d+]/g, "");
   const whatsappUrl = `https://wa.me/${whatsappFormatted}`;

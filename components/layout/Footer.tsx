@@ -11,10 +11,10 @@ export default function Footer() {
 
   const farmName = settings.farm_name || "Ragu Goat Farm";
   const tagline = settings.tagline || "Fresh, healthy, farm-raised live goats & bulk mutton";
-  const phone = settings.contact_phone || "+91 98765 43210";
-  const whatsapp = settings.contact_whatsapp || "+91 98765 43210";
-  const email = settings.contact_email || "info@ragugoatfarm.com";
-  const address = settings.contact_address || "123 Farm Road, Villupuram, Tamil Nadu - 642001";
+  const phone = settings.contact_phone || "+91 9442379832";
+  const whatsapp = settings.contact_whatsapp || "+91 9442379832";
+  const email = settings.contact_email || "senthilraguanthan2004@gmail.com";
+  const address = settings.contact_address || "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
   const businessHours = settings.business_hours || "Monday - Sunday: 6:00 AM - 8:00 PM";
   
   const districts = settings.mutton_districts 

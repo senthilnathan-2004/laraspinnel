@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronDown, CheckCircle, Phone, ShoppingBag, Loader2, Map
 import { Flame } from "@phosphor-icons/react";
 import useSWR from "swr";
 import Link from "next/link";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -93,6 +94,93 @@ export default function MuttonDetailsPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
+      {/* Dynamic JSON-LD structured schemas */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": pack.name,
+            "image": pack.images || [],
+            "description": pack.description,
+            "offers": {
+              "@type": "Offer",
+              "price": pack.price.replace(/[^\d.]/g, "") || "0",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock",
+              "url": typeof window !== "undefined" ? window.location.href : ""
+            },
+            "category": "Fresh Mutton Packs & Delivery",
+            "weight": pack.weightOptions || []
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://ragugoatfarm.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Fresh Mutton",
+                "item": "https://ragugoatfarm.com/mutton"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": pack.name,
+                "item": typeof window !== "undefined" ? window.location.href : ""
+              }
+            ]
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What are your slaughter and hygiene standards?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "All meat is freshly cut to order, slaughtered early morning in municipal-certified clean environments. We perform meticulous cleaning, portioning, and pack them instantly in vacuum-sealed food-grade packs with ice-chill packs."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is chilled transit delivery handled?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "We deliver mutton fresh and chilled using temperature-controlled insulated cold boxes. Slaughters happen at 4:30 AM, with delivery trucks leaving for Coimbatore, Tiruppur, and Erode by 6:00 AM. Doorstep arrival between 7:00 AM - 10:00 AM."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is the order processing and verification process?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Submit your booking reservation online with zero advanced charge. Our farm coordinator calls you to verify portion sizing, specialized cutting preference (chops, curry cut, fat selection), and confirm delivery slot. Payment on delivery."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-32 md:pb-16">
         {/* Back Link */}
         <Link
@@ -110,11 +198,13 @@ export default function MuttonDetailsPage() {
             {/* Primary Display */}
             <div className="relative aspect-square border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray">
               {activeImage && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={activeImage}
                   alt={pack.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-w-780px) 100vw, 50vw"
+                  priority
                 />
               )}
             </div>
@@ -131,8 +221,13 @@ export default function MuttonDetailsPage() {
                         : "border-brand-border hover:border-brand-gray"
                     }`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url} alt={`${pack.name} view ${idx + 1}`} className="w-full h-full object-cover" />
+                    <Image
+                      src={url}
+                      alt={`${pack.name} view ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
                   </div>
                 ))}
               </div>
@@ -146,7 +241,7 @@ export default function MuttonDetailsPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1 bg-mutton-tint text-mutton-text border border-mutton-primary/10 text-xs font-semibold px-3 py-1 rounded-lg">
                   <Flame size={12} weight="fill" className="text-mutton-primary" />
-                  <span>Fresh Halal Meat</span>
+                  <span>Fresh Quality Meat</span>
                 </span>
                 {pack.isFeatured && (
                   <span className="bg-brand-black text-white text-[10px] uppercase font-bold px-2 py-1 rounded">
@@ -182,7 +277,7 @@ export default function MuttonDetailsPage() {
                 <span>Book Mutton Pack</span>
               </Link>
               <a
-                href="tel:+919876543210"
+                href="tel:+919442379832"
                 className="flex-1 bg-brand-black hover:bg-neutral-800 text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
               >
                 <Phone size={18} />
@@ -264,7 +359,7 @@ export default function MuttonDetailsPage() {
                 </button>
                 {accordionOpen.hygiene && (
                   <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
-                    All meat is 100% Halal cut, slaughtered early morning in municipal-certified clean environments. We perform meticulous cleaning, portioning, and pack them instantly in vacuum-sealed food-grade packs with ice-chill packs.
+                    All meat is freshly cut to order, slaughtered early morning in municipal-certified clean environments. We perform meticulous cleaning, portioning, and pack them instantly in vacuum-sealed food-grade packs with ice-chill packs.
                   </div>
                 )}
               </div>
@@ -319,7 +414,7 @@ export default function MuttonDetailsPage() {
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-brand-border p-3 md:p-4 flex gap-4 md:hidden z-40 shadow-lg">
         {/* Call Now button */}
         <a
-          href="tel:+919876543210"
+          href="tel:+919442379832"
           className="flex-1 bg-brand-black hover:bg-neutral-800 text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
         >
           <Phone size={16} />

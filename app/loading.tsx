@@ -2,6 +2,7 @@
 
 import React from "react";
 import useSWR from "swr";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -23,10 +24,16 @@ export default function Loading() {
         
         {/* Logo Container */}
         <div className="relative z-10 w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.05)] overflow-hidden p-4">
-           {logoUrl ? (
-             // eslint-disable-next-line @next/next/no-img-element
-             <img src={logoUrl} alt={farmName} className="w-full h-full object-contain" />
-           ) : (
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={farmName}
+                fill
+                className="object-contain p-4"
+                sizes="112px"
+                priority
+              />
+            ) : (
              <span className="font-display text-2xl tracking-wider text-brand-black uppercase text-center leading-none">
                {farmName}
              </span>

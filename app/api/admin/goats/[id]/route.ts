@@ -27,7 +27,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       );
     }
 
-    const { name, breed, description, weightRange, ageRange, priceEstimate, tags, images, isFeatured, isActive } = result.data;
+    const { name, breed, description, weightRange, ageRange, priceEstimate, tags, images, isFeatured, isActive } = result.data as any;
 
     const existingGoat = await GoatVariety.findById(id);
     if (!existingGoat) {

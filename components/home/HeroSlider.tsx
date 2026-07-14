@@ -61,7 +61,7 @@ export default function HeroSlider() {
   if (isLoading) {
     return (
       <div className="h-[60vh] md:h-[85vh] w-full bg-neutral-100 flex items-center justify-center animate-pulse">
-        <div className="h-8 w-8 rounded-full border-4 border-neutral-300 border-t-brand-black animate-spin"></div>
+        {/* Placeholder background, no spinner to avoid double-loading effect */}
       </div>
     );
   }
@@ -93,7 +93,7 @@ export default function HeroSlider() {
       {/* Viewport */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             <div
               key={slide._id}
               className="flex-[0_0_100%] min-w-0 h-[60vh] md:h-[88vh] relative bg-brand-black"
@@ -106,6 +106,11 @@ export default function HeroSlider() {
                   alt={slide.headline}
                   className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
                   loading="eager"
+                  onLoad={() => {
+                    if (index === 0) {
+                      window.dispatchEvent(new Event("banner-loaded"));
+                    }
+                  }}
                 />
               )}
               {/* Dark Gradient Overlay */}
@@ -118,29 +123,28 @@ export default function HeroSlider() {
                   <span className="inline-block bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs font-semibold px-4 py-1">
                     🌿 100% Farm Raised
                   </span>
-                  
+
                   {/* Title in display Anton font */}
                   <h2 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
                     {slide.headline}
                   </h2>
-                  
+
                   {/* Subtext */}
                   {slide.subtext && (
                     <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
                       {slide.subtext}
                     </p>
                   )}
-                  
+
                   {/* Call to action */}
                   {slide.buttonText && (
                     <div className="pt-2">
                       <Link
                         href={slide.buttonLink || "/"}
-                        className={`inline-flex items-center justify-center px-7 py-3 rounded-full text-sm font-semibold shadow-md transition-all duration-300 hover:scale-102 ${
-                          slide.buttonTheme === "red"
+                        className={`inline-flex items-center justify-center px-7 py-3 rounded-full text-sm font-semibold shadow-md transition-all duration-300 hover:scale-102 ${slide.buttonTheme === "red"
                             ? "bg-mutton-primary text-white hover:bg-mutton-hover"
                             : "bg-goat-primary text-white hover:bg-goat-hover"
-                        }`}
+                          }`}
                       >
                         {slide.buttonText}
                       </Link>
@@ -176,9 +180,8 @@ export default function HeroSlider() {
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
-            }`}
+            className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           ></button>
         ))}

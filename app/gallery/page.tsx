@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { Search, ChevronLeft, ChevronRight, X, Image as ImageIcon, Loader2 } from "lucide-react";
 import { MagnifyingGlassPlus } from "@phosphor-icons/react";
 import useSWR from "swr";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -19,7 +20,7 @@ interface GalleryImage {
 
 export default function GalleryPage() {
   const { data: images = [], isLoading, error } = useSWR<GalleryImage[]>("/api/gallery", fetcher);
-  
+
   const [activeTab, setActiveTab] = useState("All");
   const [filteredImages, setFilteredImages] = useState<GalleryImage[]>([]);
 
@@ -56,14 +57,25 @@ export default function GalleryPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10 pb-20">
         {/* Page Header */}
-        <div className="space-y-2 border-b border-brand-border pb-6 text-center max-w-xl mx-auto">
+        <div className="space-y-3 border-b border-brand-border pb-6">
           <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">📸 Media Gallery</span>
           <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
-            A Look Inside Our Farm
+            Inside Ragu Goat Farm — Live Goats &amp; Fresh Mutton
           </h1>
-          <p className="text-sm font-medium text-brand-gray">
-            A visual documentation of our healthy livestock breeding pastures, slaughter sanitization levels, and delivery packaging systems.
+          <h2 className="font-display text-lg text-goat-text uppercase tracking-wide">
+            Farm Pastures, Healthy Livestock &amp; Packaging Gallery
+          </h2>
+          <p className="text-sm font-medium text-brand-gray hidden md:block">
+            A visual look inside our Villupuram farm healthy naatu aadu breeds, pasture grazing fields, hygienic mutton packaging, and event deliveries from Ragu Goat Farm, Tamil Nadu.
           </p>
+          <details className="md:hidden text-xs text-brand-gray border border-brand-border rounded-xl p-3 mt-2 bg-brand-light-gray/30">
+            <summary className="font-semibold cursor-pointer outline-none select-none text-goat-text uppercase tracking-wider">
+              Show Gallery Details &amp; Info
+            </summary>
+            <p className="mt-2 leading-relaxed">
+              A visual look inside our Villupuram farm healthy naatu aadu breeds, pasture grazing fields, hygienic mutton packaging, and event deliveries from Ragu Goat Farm, Tamil Nadu.
+            </p>
+          </details>
         </div>
 
         {/* Tab Selection Filter Row */}
@@ -72,11 +84,10 @@ export default function GalleryPage() {
             <button
               key={cat}
               onClick={() => setActiveTab(cat)}
-              className={`px-4 md:px-6 py-3 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors cursor-pointer ${
-                activeTab === cat
+              className={`px-4 md:px-6 py-3 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors cursor-pointer ${activeTab === cat
                   ? "border-goat-primary text-goat-primary"
                   : "border-transparent text-brand-gray hover:text-brand-black"
-              }`}
+                }`}
             >
               {cat === "Goat" ? "Live Goats" : cat === "Mutton" ? "Mutton Packs" : cat === "Farm" ? "Our Farm" : cat === "Event" ? "Events" : "All Photos"}
             </button>
@@ -111,11 +122,12 @@ export default function GalleryPage() {
               >
                 {/* Image */}
                 {img.imageUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={img.imageUrl}
                     alt={img.altText}
-                    className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 ease-out"
+                    fill
+                    className="object-cover group-hover:scale-103 transition-transform duration-500 ease-out"
+                    sizes="(max-w-768px) 100vw, 300px"
                   />
                 )}
                 {/* Category tag label */}
@@ -164,12 +176,13 @@ export default function GalleryPage() {
             </button>
 
             {/* Display Image */}
-            <div className="w-full h-[65vh] flex items-center justify-center p-3 md:p-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="w-full h-[65vh] flex items-center justify-center p-3 md:p-4 relative">
+              <Image
                 src={filteredImages[lightboxIndex].imageUrl}
                 alt={filteredImages[lightboxIndex].altText}
-                className="max-w-full max-h-full object-contain rounded-lg animate-in zoom-in-95 duration-200"
+                fill
+                className="object-contain rounded-lg animate-in zoom-in-95 duration-200"
+                sizes="(max-w-1024px) 100vw, 1024px"
               />
             </div>
 

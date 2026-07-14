@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       );
     }
 
-    const { name, description, price, weightOptions, districtsAvailable, images, isFeatured, isActive } = result.data;
+    const { name, description, price, weightOptions, districtsAvailable, images, isFeatured, isActive } = result.data as any;
 
     const existingPack = await MuttonPack.findById(id);
     if (!existingPack) {

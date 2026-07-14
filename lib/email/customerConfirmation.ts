@@ -95,7 +95,7 @@ export function getCustomerConfirmationEmailHtml(booking: any): string {
           </div>
 
           <p style="font-size: 12px; color: #6b7280; margin-top: 24px;">
-            If you need to make changes to your booking, please call or WhatsApp us at +91 98765 43210.
+            If you need to make changes to your booking, please call or WhatsApp us at +91 9442379832.
           </p>
         </div>
         <div class="footer">

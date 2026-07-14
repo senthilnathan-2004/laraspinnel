@@ -84,7 +84,7 @@ export function getCustomerStatusUpdateEmailHtml(booking: any): string {
           ` : ""}
 
           <p style="font-size: 12px; color: #6b7280; margin-top: 24px;">
-            If you have any questions, please call or WhatsApp us at +91 98765 43210.
+            If you have any questions, please call or WhatsApp us at +91 9442379832.
           </p>
         </div>
         <div class="footer">

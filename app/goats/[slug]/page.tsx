@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronDown, CheckCircle, Phone, ShoppingBag, Loader2, Arr
 import { Leaf } from "@phosphor-icons/react";
 import useSWR from "swr";
 import Link from "next/link";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -91,6 +92,105 @@ export default function GoatDetailsPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
+      {/* Dynamic JSON-LD structured schemas */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": goat.name,
+            "image": goat.images || [],
+            "description": goat.description,
+            "offers": {
+              "@type": "Offer",
+              "price": goat.priceEstimate.replace(/[^\d.]/g, "") || "0",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock",
+              "url": typeof window !== "undefined" ? window.location.href : ""
+            },
+            "category": "Live Goat Breeding & Livestock",
+            "weight": goat.weightRange,
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "name": "Breed",
+                "value": goat.breed
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "Age Class",
+                "value": goat.ageRange
+              }
+            ]
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://ragugoatfarm.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Live Goats",
+                "item": "https://ragugoatfarm.com/goats"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": goat.name,
+                "item": typeof window !== "undefined" ? window.location.href : ""
+              }
+            ]
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What are the breeding and care guidelines for this goat?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our goats are raised in optimal sanitary pasture conditions. They feed on natural green fodder, dry grass, and nutrient mixes. We recommend setting up clean, ventilated sheds and feeding regular vaccinations to prevent seasonal sickness."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is safe delivery of live goats arranged?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "We arrange specialized animal transport vehicles with regular stops to avoid stress during transit. Delivery coordinates across all 38 districts of Tamil Nadu. Transit charges apply based on distance from Villupuram farm center."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is the booking and payment process?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Book online with zero immediate payment. Our farm coordinator calls you to verify weights and delivery schedules. A partial advance payment is requested once shipping dates are verified, with balance on delivery."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-32 md:pb-16">
         {/* Back Link */}
         <Link
@@ -108,11 +208,13 @@ export default function GoatDetailsPage() {
             {/* Primary Display */}
             <div className="relative aspect-square border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray">
               {activeImage && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={activeImage}
                   alt={goat.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-w-780px) 100vw, 50vw"
+                  priority
                 />
               )}
             </div>
@@ -129,8 +231,13 @@ export default function GoatDetailsPage() {
                         : "border-brand-border hover:border-brand-gray"
                     }`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url} alt={`${goat.name} view ${idx + 1}`} className="w-full h-full object-cover" />
+                    <Image
+                      src={url}
+                      alt={`${goat.name} view ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
                   </div>
                 ))}
               </div>
@@ -180,7 +287,7 @@ export default function GoatDetailsPage() {
                 <span>Book This Goat</span>
               </Link>
               <a
-                href="tel:+919876543210"
+                href="tel:+919442379832"
                 className="flex-1 bg-brand-black hover:bg-neutral-800 text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
               >
                 <Phone size={18} />
@@ -292,7 +399,7 @@ export default function GoatDetailsPage() {
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-brand-border p-3 md:p-4 flex gap-4 md:hidden z-40 shadow-lg">
         {/* Call Now button */}
         <a
-          href="tel:+919876543210"
+          href="tel:+919442379832"
           className="flex-1 bg-brand-black hover:bg-neutral-800 text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
         >
           <Phone size={16} />

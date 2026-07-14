@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { name, description, price, weightOptions, districtsAvailable, images, isFeatured, isActive } = result.data;
+    const { name, description, price, weightOptions, districtsAvailable, images, isFeatured, isActive } = result.data as any;
 
     let slug = slugify(name);
     const existing = await MuttonPack.findOne({ slug });
