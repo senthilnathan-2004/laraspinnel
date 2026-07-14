@@ -93,40 +93,7 @@ export default function GoatDetailsPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      {/* Dynamic JSON-LD structured schemas */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            "name": goat.name,
-            "image": goat.images || [],
-            "description": goat.description,
-            "offers": {
-              "@type": "Offer",
-              "price": goat.priceEstimate.replace(/[^\d.]/g, "") || "0",
-              "priceCurrency": "INR",
-              "availability": "https://schema.org/InStock",
-              "url": typeof window !== "undefined" ? window.location.href : ""
-            },
-            "category": "Live Goat Breeding & Livestock",
-            "weight": goat.weightRange,
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "name": "Breed",
-                "value": goat.breed
-              },
-              {
-                "@type": "PropertyValue",
-                "name": "Age Class",
-                "value": goat.ageRange
-              }
-            ]
-          })
-        }}
-      />
+      {/* Product schema is emitted server-side in layout.tsx (crawler-visible). */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
