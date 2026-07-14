@@ -26,7 +26,7 @@ export default async function FestivalGoatCTA() {
 
   return (
     <section className="py-12 md:py-16 bg-white relative overflow-hidden border-t border-brand-border">
-      <div className="container mx-auto px-4 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         
         {/* Header Section */}
         <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-10">
