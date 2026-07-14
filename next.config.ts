@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
         hostname: "ik.imagekit.io",
       }
     ],
+    formats: ['image/avif', 'image/webp'],
   },
   compress: true, // Explicitly enable compression (Gzip/Brotli)
   async headers() {

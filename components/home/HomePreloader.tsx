@@ -71,7 +71,7 @@ export default function HomePreloader({ children }: { children: React.ReactNode 
             </div>
           </div>
         </div>
-      <div className={`transition-opacity duration-700 ${loading ? "opacity-0 h-screen overflow-hidden" : "opacity-100 h-auto"}`}>
+      <div className={`transition-opacity duration-700 ${loading ? "h-screen overflow-hidden pointer-events-none" : "opacity-100 h-auto"}`}>
         {children}
       </div>
     </>

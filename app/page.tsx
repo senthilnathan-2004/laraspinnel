@@ -138,11 +138,11 @@ export default async function HomePage() {
 
           {/* Desktop-only Marquee 1 */}
           <div className="hidden lg:block">
-            <TextMarquee 
-              items={["Wholesale Available", "Farm Direct Pricing", "Cash On Delivery", "Custom Cuts", "Lowest Price Guaranteed"]} 
-              bgColor="bg-brand-light-gray" 
-              textColor="text-brand-black" 
-              dividerColor="text-brand-black/20" 
+            <TextMarquee
+              items={["Wholesale Available", "Farm Direct Pricing", "Cash On Delivery", "Custom Cuts", "Lowest Price Guaranteed"]}
+              bgColor="bg-brand-light-gray"
+              textColor="text-brand-black"
+              dividerColor="text-brand-black/20"
             />
           </div>
 
@@ -156,7 +156,7 @@ export default async function HomePage() {
 
           {/* Featured Live Goats Variety cards */}
           <FeaturedVarieties />
-          
+
           {/* Variety Image Marquee */}
           <ImageMarquee />
 
@@ -197,7 +197,7 @@ export default async function HomePage() {
                   Your Trusted Source for Premium Livestock and Fresh Meat in Tamil Nadu
                 </h2>
               </div>
-              
+
               {/* Bottom Row: Expanded Content */}
               <PhilosophyContent content={philosophyContent} />
             </section>
