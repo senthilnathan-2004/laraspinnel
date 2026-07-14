@@ -1,8 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import useSWR from "swr";
+import Image from "next/image";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function HomePreloader({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
+  const { data: settings = {} } = useSWR("/api/settings", fetcher);
 
   useEffect(() => {
     const handleLoad = () => setLoading(false);
@@ -10,7 +15,7 @@ export default function HomePreloader({ children }: { children: React.ReactNode 
     window.addEventListener("banner-loaded", handleLoad);
 
     // Fallback just in case some resources hang
-    const timeout = setTimeout(() => setLoading(false), 3000);
+    const timeout = setTimeout(() => setLoading(false), 4000);
 
     return () => {
       window.removeEventListener("banner-loaded", handleLoad);
@@ -18,7 +23,8 @@ export default function HomePreloader({ children }: { children: React.ReactNode 
     };
   }, []);
 
-  const farmName = "RAGU FARM";
+  const logoUrl = settings.logo_url;
+  const farmName = settings.farm_name || "RAGU FARM";
 
   return (
     <>
@@ -37,9 +43,20 @@ export default function HomePreloader({ children }: { children: React.ReactNode 
             
             {/* Logo Container */}
             <div className="relative z-10 w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.05)] overflow-hidden p-4">
+                {logoUrl ? (
+                  <Image
+                    src={logoUrl}
+                    alt={farmName}
+                    fill
+                    className="object-contain p-4"
+                    sizes="112px"
+                    priority
+                  />
+                ) : (
                  <span className="font-display text-2xl tracking-wider text-brand-black uppercase text-center leading-none">
                    {farmName}
                  </span>
+               )}
             </div>
           </div>
           
