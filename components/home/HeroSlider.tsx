@@ -107,6 +107,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                   fill
                   className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
                   priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   sizes="100vw"
                   onLoad={() => {
                     if (index === 0) {
