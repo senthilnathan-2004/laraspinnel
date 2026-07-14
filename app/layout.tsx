@@ -265,12 +265,13 @@ export default async function RootLayout({
     <html
       lang="en-IN"
       className={`${anton.variable} ${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="alternate" type="text/plain" href="/llms.txt" />
       </head>
-      <body className="min-h-full flex flex-col font-body bg-white text-brand-black">
+      <body className="min-h-full flex flex-col font-body bg-white text-brand-black" suppressHydrationWarning>
         <a 
           href="#main-content" 
           className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-brand-black focus:text-white"

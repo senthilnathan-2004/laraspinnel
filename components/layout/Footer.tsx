@@ -233,7 +233,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
         <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-          <p className="text-neutral-600">
+          <p className="text-neutral-600" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved.
           </p>
           <div className="flex items-center gap-3 text-neutral-600">
