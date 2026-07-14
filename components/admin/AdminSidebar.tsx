@@ -22,6 +22,7 @@ import {
   Quote,
   Sparkles,
   PenTool,
+  HelpCircle,
 } from "lucide-react";
 import { Horse } from "@phosphor-icons/react";
 import useSWR from "swr";
@@ -130,6 +131,11 @@ export default function AdminSidebar() {
       name: "Testimonials",
       href: "/admin/testimonials",
       icon: <Quote size={18} />,
+    },
+    {
+      name: "FAQs",
+      href: "/admin/faq",
+      icon: <HelpCircle size={18} />,
     },
     {
       name: "Settings",
