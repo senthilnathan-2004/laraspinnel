@@ -160,6 +160,16 @@ export default function GoatsListingPage() {
             ))}
           </div>
         )}
+
+        {/* SEO Content Block */}
+        <section className="bg-brand-light-gray/20 rounded-2xl p-4 md:p-6 border border-brand-border mt-12 text-left w-full mx-auto space-y-4">
+          <h3 className="font-display text-2xl text-brand-black uppercase tracking-wide">
+            Buy Live Goats Online in Tamil Nadu
+          </h3>
+          <p className="text-brand-gray text-sm leading-relaxed">
+            Discover a wide selection of pasture-raised, healthy live goats at Ragu Goat Farm. We specialize in premium breeds such as Boer, Tellicherry, Kanni Aadu, and local Naatu Aadu. Whether you need livestock for breeding, farming, or festive occasions like Bakrid, our goats are reared in open pastures with natural feed and regular veterinary care to ensure superior health and growth. We offer transparent pricing and reliable transport services across Villupuram, Tindivanam, Chennai, and other major districts in Tamil Nadu.
+          </p>
+        </section>
       </main>
 
       <Footer />

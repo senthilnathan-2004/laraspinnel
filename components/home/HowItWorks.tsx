@@ -83,7 +83,7 @@ export default function HowItWorks() {
         </div>
 
         {/* Mobile View - Marquee */}
-        <div className="flex md:hidden overflow-hidden -mx-4 px-4 pt-2" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+        <div className="flex md:hidden overflow-hidden -mx-4 px-4 pt-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <div className="flex animate-marquee-steps gap-12 w-max">
             {[1, 2].map((setIndex) => (
               <React.Fragment key={setIndex}>

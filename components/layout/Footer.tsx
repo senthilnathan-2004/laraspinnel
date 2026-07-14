@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
 import { Phone, Mail, MapPin, Clock, Lock } from "lucide-react";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa6";
@@ -16,9 +17,9 @@ export default function Footer() {
   const email = settings.contact_email || "senthilraguanthan2004@gmail.com";
   const address = settings.contact_address || "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
   const businessHours = settings.business_hours || "Monday - Sunday: 6:00 AM - 8:00 PM";
-  
-  const districts = settings.mutton_districts 
-    ? settings.mutton_districts.split(",") 
+
+  const districts = settings.mutton_districts
+    ? settings.mutton_districts.split(",")
     : ["Coimbatore", "Tiruppur", "Erode", "Villupuram"];
 
   const whatsappFormatted = whatsapp.replace(/[^\d+]/g, "");
@@ -31,10 +32,11 @@ export default function Footer() {
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-2">
             {settings.logo_url && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={settings.logo_url}
                 alt={farmName}
+                width={200}
+                height={40}
                 className="h-10 w-auto object-contain"
               />
             )}
@@ -181,7 +183,7 @@ export default function Footer() {
             <li className="flex items-start gap-2.5">
               <Mail size={15} className="shrink-0 mt-0.5 text-neutral-500" />
               <a href={`mailto:${email}`} className="hover:text-white transition-colors">
-                {email}
+                Email Us
               </a>
             </li>
             <li className="flex items-start gap-2.5">

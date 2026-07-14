@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Tag } from "@phosphor-icons/react";
 import useSWR from "swr";
@@ -44,11 +45,12 @@ export default function ShopByCategory() {
           >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full bg-brand-black">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={settings.home_shop_image_1 || "/placeholder-goat.jpg"}
                 alt="Live Goats"
-                className="w-full h-full object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
               />
             </div>
             
@@ -93,11 +95,12 @@ export default function ShopByCategory() {
           >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full bg-brand-black">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={settings.home_shop_image_2 || "/placeholder-mutton.jpg"}
                 alt="Bulk Mutton"
-                className="w-full h-full object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
               />
             </div>
             

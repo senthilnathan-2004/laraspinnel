@@ -85,8 +85,8 @@ export default function GalleryPage() {
               key={cat}
               onClick={() => setActiveTab(cat)}
               className={`px-4 md:px-6 py-3 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors cursor-pointer ${activeTab === cat
-                  ? "border-goat-primary text-goat-primary"
-                  : "border-transparent text-brand-gray hover:text-brand-black"
+                ? "border-goat-primary text-goat-primary"
+                : "border-transparent text-brand-gray hover:text-brand-black"
                 }`}
             >
               {cat === "Goat" ? "Live Goats" : cat === "Mutton" ? "Mutton Packs" : cat === "Farm" ? "Our Farm" : cat === "Event" ? "Events" : "All Photos"}

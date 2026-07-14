@@ -281,7 +281,7 @@ export default function ContactPage() {
                   <div>
                     <span className="text-[10px] text-brand-gray font-bold uppercase tracking-wider block">Email Inbox</span>
                     <a href={`mailto:${email}`} className="font-semibold text-brand-black hover:text-goat-primary transition-colors block mt-0.5">
-                      {email}
+                      Email Us
                     </a>
                   </div>
                 </div>

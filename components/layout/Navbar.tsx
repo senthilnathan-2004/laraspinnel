@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useScrollNavbar } from "@/hooks/useScrollNavbar";
 import { useSettings } from "@/hooks/useSettings";
@@ -43,10 +44,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             {settings.logo_url && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={settings.logo_url}
                 alt={settings.farm_name || "Ragu Goat Farm"}
+                width={200}
+                height={40}
                 className="h-10 w-auto object-contain"
               />
             )}

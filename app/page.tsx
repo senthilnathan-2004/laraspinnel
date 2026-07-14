@@ -17,9 +17,9 @@ import ImageMarquee from "@/components/home/ImageMarquee";
 import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
 import HomePreloader from "@/components/home/HomePreloader";
 export const metadata: Metadata = {
-  title: "Ragu Goat Farm | Live Goats & Mutton Villupuram",
+  title: "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu",
   description:
-    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh breeds with delivery across Tamil Nadu. Book now!",
+    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Boer breeds with delivery across Tamil Nadu. Book now!",
   keywords: [
     "live goat for sale Tamil Nadu",
     "goat farm Villupuram",
@@ -81,6 +81,9 @@ export default function HomePage() {
         <Navbar />
 
         <main className="flex-1">
+          {/* Visually hidden H1 for SEO since HeroSlider fetches client-side */}
+          <h1 className="sr-only">Ragu Goat Farm - Live Goats & Fresh Mutton in Villupuram</h1>
+
           {/* Hero Banner Slider */}
           <HeroSlider />
 
@@ -129,6 +132,34 @@ export default function HomePage() {
 
           {/* Customer Testimonials and Trust Badges */}
           <Testimonials />
+
+          {/* SEO Content Block (Card Style) */}
+          <div className="max-w-7xl mx-auto px-4 md:px-6 my-16">
+            <section className="bg-brand-light-gray/20 rounded-2xl p-4 sm:p-6 lg:p-12 border border-brand-border text-left flex flex-col lg:flex-row gap-6 lg:gap-16 items-start lg:items-center relative overflow-hidden group hover:border-goat-primary/30 transition-colors">
+              {/* Decorative subtle background accent for desktop */}
+              <div className="hidden lg:block absolute -top-24 -right-24 w-64 h-64 bg-goat-primary/5 rounded-full blur-3xl pointer-events-none group-hover:bg-goat-primary/10 transition-colors" />
+
+              {/* Left Column: Heading */}
+              <div className="lg:w-5/12 space-y-4 relative z-10">
+                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-goat-primary/10 border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-widest">
+                  Farm to Table Quality
+                </div>
+                <h2 className="font-display text-2xl md:text-4xl lg:text-5xl text-brand-black uppercase tracking-wide leading-tight lg:text-justify">
+                  Your Trusted Source for Premium Live Goats and Fresh Mutton in Tamil Nadu
+                </h2>
+              </div>
+              
+              {/* Right Column: Content */}
+              <div className="lg:w-7/12 space-y-4 lg:space-y-6 relative z-10 lg:border-l lg:border-brand-border/60 lg:pl-16">
+                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
+                  At Ragu Goat Farm, we take pride in raising healthy, pasture-fed goats across Villupuram and surrounding districts. Whether you are looking for premium Boer, Tellicherry, or native Naatu Aadu breeds for farming or festivals like Bakrid, we guarantee the highest quality livestock. Our bulk mutton delivery service ensures that you receive hygienic, farm-fresh cuts tailored for your special events and commercial needs, delivered promptly to your location.
+                </p>
+                <p className="text-brand-gray leading-relaxed text-sm md:text-base hidden sm:block">
+                  With years of expertise in goat farming, we prioritize animal welfare, organic feeding practices, and regular veterinary checkups. Buy directly from our farm to enjoy unmatched quality, transparent pricing, and reliable delivery across Tamil Nadu. Experience the difference of true farm-to-table quality today.
+                </p>
+              </div>
+            </section>
+          </div>
 
           {/* Blog post previews */}
           <BlogPreview />

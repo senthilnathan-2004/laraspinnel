@@ -3,6 +3,7 @@
 import React from "react";
 import useSWR from "swr";
 import Link from "next/link";
+import Image from "next/image";
 import { MagnifyingGlassPlus } from "@phosphor-icons/react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -63,11 +64,12 @@ export default function GalleryPreview() {
               >
                 {/* Image */}
                 {img.imageUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={img.imageUrl}
                     alt={img.altText}
-                    className={`w-full h-full object-cover ${i === 0 ? "object-bottom md:object-[center_20%]" : "object-[center_20%]"} group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className={`object-cover ${i === 0 ? "object-bottom md:object-[center_20%]" : "object-[center_20%]"} group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]`}
                   />
                 )}
 

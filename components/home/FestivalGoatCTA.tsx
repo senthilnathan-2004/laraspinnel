@@ -42,7 +42,7 @@ export default async function FestivalGoatCTA() {
         </div>
 
         {/* Two Column Layout for Details & Booking */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 max-w-6xl mx-auto items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 w-full mx-auto items-stretch">
           
           {/* Left Side: Functions We Supply */}
           <div className="lg:col-span-7 flex flex-col h-full">

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Leaf, Flame } from "@phosphor-icons/react";
 
@@ -33,11 +34,12 @@ export default function PremiumCard({
       {/* Background Image with Zoom */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-900">
         {image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={image}
             alt={name}
-            className="w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 opacity-90 group-hover:opacity-100"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 opacity-90 group-hover:opacity-100"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center opacity-10">

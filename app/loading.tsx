@@ -46,9 +46,9 @@ export default function Loading() {
           Loading
         </p>
         <div className="flex gap-1">
-          <div className="w-1.5 h-1.5 rounded-full bg-goat-primary animate-bounce" style={{ animationDelay: "0ms" }} />
-          <div className="w-1.5 h-1.5 rounded-full bg-goat-primary animate-bounce" style={{ animationDelay: "150ms" }} />
-          <div className="w-1.5 h-1.5 rounded-full bg-goat-primary animate-bounce" style={{ animationDelay: "300ms" }} />
+          <div className="w-1.5 h-1.5 rounded-full bg-goat-primary animate-bounce [animation-delay:0ms]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-goat-primary animate-bounce [animation-delay:150ms]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-goat-primary animate-bounce [animation-delay:300ms]" />
         </div>
       </div>
     </div>

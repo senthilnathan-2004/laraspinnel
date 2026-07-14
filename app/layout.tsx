@@ -19,9 +19,9 @@ import SiteSettings from "@/models/SiteSettings";
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://ragugoatfarm.com";
 
 export async function generateMetadata(): Promise<Metadata> {
-  let title = "Ragu Goat Farm | Live Goats & Mutton Villupuram";
+  let title = "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu";
   let description =
-    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh breeds with delivery across Tamil Nadu. Book now!";
+    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Boer breeds with delivery across Tamil Nadu. Book now!";
   let favicon = "/favicon.ico";
 
   try {
@@ -106,6 +106,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { Providers } from "@/components/Providers";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default async function RootLayout({
   children,
@@ -148,7 +149,7 @@ export default async function RootLayout({
           "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
           "addressLocality": "Villupuram",
           "addressRegion": "Tamil Nadu",
-          "postalCode": "642001",
+          "postalCode": "604102",
           "addressCountry": "IN"
         },
         "geo": {
@@ -230,6 +231,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <GoogleAnalytics gaId="G-PLACEHOLDER" />
       </body>
     </html>
   );

@@ -181,6 +181,16 @@ export default function MuttonListingPage() {
             ))}
           </div>
         )}
+
+        {/* SEO Content Block */}
+        <section className="bg-brand-light-gray/20 rounded-2xl p-4 md:p-6 border border-brand-border mt-12 text-left w-full mx-auto space-y-4">
+          <h3 className="font-display text-2xl text-brand-black uppercase tracking-wide">
+            Bulk Farm-Fresh Mutton Delivery
+          </h3>
+          <p className="text-brand-gray text-sm leading-relaxed">
+            Elevate your culinary experience with premium, farm-fresh mutton from Ragu Goat Farm. We supply hygienic, bulk mutton packs ideal for weddings, restaurants, family gatherings, and commercial orders. Sourced exclusively from healthy, young country goats (Naatu Aadu) raised on our farm, our meat guarantees tenderness and rich traditional flavor. Enjoy seamless booking and prompt cold-chain delivery directly to your doorstep in Villupuram, Coimbatore, Tiruppur, Erode, and surrounding areas.
+          </p>
+        </section>
       </main>
 
       <Footer />

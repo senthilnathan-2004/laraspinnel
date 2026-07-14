@@ -3,6 +3,7 @@
 import React from "react";
 import useSWR from "swr";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Calendar, User } from "lucide-react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -83,11 +84,12 @@ export default function BlogPreview() {
                 {/* Cover Image */}
               <div className="relative aspect-[16/10] overflow-hidden bg-brand-light-gray">
                 {post.coverImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={post.coverImage}
                     alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 ease-out"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-103 transition-transform duration-500 ease-out"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-neutral-400">

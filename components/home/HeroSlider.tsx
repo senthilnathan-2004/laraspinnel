@@ -6,6 +6,7 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 interface Banner {
   _id: string;
@@ -100,12 +101,13 @@ export default function HeroSlider() {
             >
               {/* Background Image */}
               {slide.imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={slide.imageUrl}
                   alt={slide.headline}
+                  fill
                   className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
-                  loading="eager"
+                  priority={index === 0}
+                  sizes="100vw"
                   onLoad={() => {
                     if (index === 0) {
                       window.dispatchEvent(new Event("banner-loaded"));
