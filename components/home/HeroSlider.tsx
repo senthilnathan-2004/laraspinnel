@@ -20,8 +20,8 @@ interface Banner {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function HeroSlider() {
-  const { data: banners = [], isLoading } = useSWR<Banner[]>("/api/banners", fetcher);
+export default function HeroSlider({ initialBanners = [] }: { initialBanners?: Banner[] }) {
+  const { data: banners = initialBanners, isLoading } = useSWR<Banner[]>("/api/banners", fetcher, { fallbackData: initialBanners });
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
@@ -59,7 +59,7 @@ export default function HeroSlider() {
     [emblaApi]
   );
 
-  if (isLoading) {
+  if (isLoading && banners.length === 0) {
     return (
       <div className="h-[60vh] md:h-[85vh] w-full bg-neutral-100 flex items-center justify-center animate-pulse">
         {/* Placeholder background, no spinner to avoid double-loading effect */}

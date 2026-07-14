@@ -162,39 +162,41 @@ export default function Footer() {
           <h4 className="text-white font-semibold text-sm uppercase tracking-wider">
             Contact Us
           </h4>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-2.5">
-              <Phone size={15} className="shrink-0 mt-0.5 text-neutral-500" />
-              <a href={`tel:${phone}`} className="hover:text-white transition-colors">
-                {phone}
-              </a>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <FaWhatsapp size={15} className="shrink-0 mt-0.5 text-[#25D366]" />
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#25D366] transition-colors"
-              >
-                WhatsApp Chat
-              </a>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <Mail size={15} className="shrink-0 mt-0.5 text-neutral-500" />
-              <a href={`mailto:${email}`} className="hover:text-white transition-colors">
-                Email Us
-              </a>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <MapPin size={15} className="shrink-0 mt-1 text-neutral-500" />
-              <span className="text-xs leading-relaxed">{address}</span>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <Clock size={15} className="shrink-0 mt-0.5 text-neutral-500" />
-              <span className="text-xs">{businessHours}</span>
-            </li>
-          </ul>
+          <address className="not-italic">
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start gap-2.5">
+                <Phone size={15} className="shrink-0 mt-0.5 text-neutral-500" />
+                <a href={`tel:${phone}`} itemProp="telephone" className="hover:text-white transition-colors">
+                  {phone}
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <FaWhatsapp size={15} className="shrink-0 mt-0.5 text-[#25D366]" />
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#25D366] transition-colors"
+                >
+                  WhatsApp Chat
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail size={15} className="shrink-0 mt-0.5 text-neutral-500" />
+                <a href={`mailto:${email}`} itemProp="email" className="hover:text-white transition-colors">
+                  Email Us
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin size={15} className="shrink-0 mt-1 text-neutral-500" />
+                <span itemProp="address" className="text-xs leading-relaxed">{address}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Clock size={15} className="shrink-0 mt-0.5 text-neutral-500" />
+                <span className="text-xs">{businessHours}</span>
+              </li>
+            </ul>
+          </address>
         </div>
       </div>
 

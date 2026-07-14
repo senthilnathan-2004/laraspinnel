@@ -16,6 +16,9 @@ import TextMarquee from "@/components/home/TextMarquee";
 import ImageMarquee from "@/components/home/ImageMarquee";
 import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
 import HomePreloader from "@/components/home/HomePreloader";
+import { connectToDatabase } from "@/lib/db";
+import Banner from "@/models/Banner";
+
 export const metadata: Metadata = {
   title: "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu",
   description:
@@ -64,7 +67,7 @@ export const metadata: Metadata = {
 
 
 
-export default function HomePage() {
+export default async function HomePage() {
   const qualityItems = [
     "Premium Quality",
     "Farm Fresh",
@@ -73,6 +76,23 @@ export default function HomePage() {
     "Traceable Lineage",
     "Hygienic Packaging"
   ];
+
+  let initialBanners: any[] = [];
+  try {
+    await connectToDatabase();
+    const dbBanners = await Banner.find({ isActive: true }).sort({ order: 1, createdAt: -1 }).lean();
+    initialBanners = dbBanners.map((b: any) => ({
+      _id: b._id.toString(),
+      imageUrl: b.imageUrl,
+      headline: b.headline,
+      subtext: b.subtext || "",
+      buttonText: b.buttonText || "",
+      buttonLink: b.buttonLink || "",
+      buttonTheme: b.buttonTheme || "green",
+    }));
+  } catch (err) {
+    console.error("Failed to load initial banners", err);
+  }
 
   return (
     <HomePreloader>
@@ -85,7 +105,7 @@ export default function HomePage() {
           <h1 className="sr-only">Ragu Goat Farm - Live Goats & Fresh Mutton in Villupuram</h1>
 
           {/* Hero Banner Slider */}
-          <HeroSlider />
+          <HeroSlider initialBanners={initialBanners} />
 
           {/* Desktop-only Marquee 1 */}
           <div className="hidden lg:block">

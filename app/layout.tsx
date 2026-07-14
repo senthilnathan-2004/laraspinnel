@@ -60,6 +60,9 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(BASE_URL),
     alternates: {
       canonical: "/",
+      languages: {
+        "en-IN": "/",
+      },
     },
     robots: {
       index: true,
@@ -107,6 +110,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 import { Providers } from "@/components/Providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 
 export default async function RootLayout({
   children,
@@ -144,6 +148,11 @@ export default async function RootLayout({
         "telephone": phone,
         "email": email,
         "priceRange": "$$",
+        "sameAs": [
+          "https://facebook.com",
+          "https://instagram.com",
+          "https://youtube.com"
+        ],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
@@ -177,7 +186,12 @@ export default async function RootLayout({
           "contactType": "customer service",
           "areaServed": "IN",
           "availableLanguage": ["English", "Tamil"]
-        }
+        },
+        "sameAs": [
+          "https://facebook.com",
+          "https://instagram.com",
+          "https://youtube.com"
+        ]
       },
       {
         "@type": "WebSite",
@@ -217,6 +231,9 @@ export default async function RootLayout({
       lang="en"
       className={`${anton.variable} ${inter.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+      </head>
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black">
         <a 
           href="#main-content" 
@@ -231,6 +248,34 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Facebook Pixel Code */}
+        <Script
+          id="fb-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', 'FACEBOOK_PIXEL_ID');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"
+            alt="Facebook Pixel"
+          />
+        </noscript>
         <GoogleAnalytics gaId="G-PLACEHOLDER" />
       </body>
     </html>
