@@ -3,10 +3,56 @@
 import React, { useState, useEffect } from "react";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
+import TiptapEditor from "@/components/admin/TiptapEditor";
 import { Save, Loader2, AlertCircle, CheckCircle, Info, Landmark, Briefcase, Map, Globe, Image as ImageIcon } from "lucide-react";
 
+const DEFAULT_PRIVACY = `
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3">1. Information We Collect</h2>
+  <p>We collect information you provide directly to us when you make a booking, subscribe to our newsletter, or contact us for support. This may include your name, email address, phone number, delivery address, and payment information.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. How We Use Your Information</h2>
+  <p>We use the information we collect to fulfill your orders, provide customer service, improve our website, and send you important updates regarding your purchases or our farming practices.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Information Sharing</h2>
+  <p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties except trusted third parties who assist us in operating our website, conducting our business, or servicing you, so long as those parties agree to keep this information confidential.</p>
+</section>
+`;
+
+const DEFAULT_TERMS = `
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3">1. Acceptance of Terms</h2>
+  <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. Products and Orders</h2>
+  <p>All livestock and meat orders are subject to availability. We reserve the right to refuse service, cancel orders, or limit quantities at our discretion. Prices are subject to change without notice.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Delivery and Refunds</h2>
+  <p>Delivery times are estimates and may vary. Due to the perishable nature of our products (meat) and the complexities of livestock transport, refund and return policies are handled on a case-by-case basis. Please contact customer service for any issues with your delivery.</p>
+</section>
+`;
+
+const DEFAULT_EDITORIAL = `
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3">1. Author Expertise & Integrity</h2>
+  <p>All content published on the Ragu Goat Farm website, including blog articles, livestock care guides, and nutritional information, is written, reviewed, and approved by our internal team of experienced agricultural specialists, farmers, and veterinary consultants. We are committed to sharing accurate, safe, and reliable farming practices.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. Content Review Process</h2>
+  <p>Our content undergoes a strict review process to ensure that all animal husbandry advice aligns with modern veterinary science and sustainable agricultural practices before it is published.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Corrections and Updates</h2>
+  <p>We frequently review older content to ensure it remains accurate and up-to-date. If errors are discovered, we will promptly correct the content and note the date of modification.</p>
+</section>
+`;
+
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<"branding" | "business" | "districts" | "seo" | "animations">("branding");
+  const [activeTab, setActiveTab] = useState<"branding" | "business" | "districts" | "seo" | "animations" | "policies">("branding");
   const [settings, setSettings] = useState<any>({
     farm_name: "",
     tagline: "",
@@ -21,6 +67,9 @@ export default function AdminSettingsPage() {
     seo_title: "",
     seo_description: "",
     variety_marquee_images: "[]",
+    privacy_policy_content: "",
+    terms_of_service_content: "",
+    editorial_policy_content: "",
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +84,13 @@ export default function AdminSettingsPage() {
         if (res.ok) {
           const data = await res.json();
           // Merge fetched settings with default placeholders
-          setSettings((prev: any) => ({ ...prev, ...data }));
+          setSettings((prev: any) => ({ 
+            ...prev, 
+            ...data,
+            privacy_policy_content: data.privacy_policy_content?.trim() ? data.privacy_policy_content : DEFAULT_PRIVACY,
+            terms_of_service_content: data.terms_of_service_content?.trim() ? data.terms_of_service_content : DEFAULT_TERMS,
+            editorial_policy_content: data.editorial_policy_content?.trim() ? data.editorial_policy_content : DEFAULT_EDITORIAL,
+          }));
         } else {
           setError("Failed to load site settings.");
         }
@@ -171,6 +226,18 @@ export default function AdminSettingsPage() {
               >
                 <ImageIcon size={16} />
                 <span>Animations</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab("policies")}
+                className={`flex items-center gap-2 px-4 md:px-6 py-4 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors ${
+                  activeTab === "policies"
+                    ? "border-goat-primary text-goat-primary"
+                    : "border-transparent text-brand-gray hover:text-brand-black"
+                }`}
+              >
+                <Briefcase size={16} />
+                <span>Policies</span>
               </button>
             </div>
 
@@ -407,6 +474,51 @@ export default function AdminSettingsPage() {
                       }
                       onChange={(urls) => handleChange("variety_marquee_images", JSON.stringify(urls))}
                       maxFiles={10}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* POLICIES TAB */}
+              {activeTab === "policies" && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="bg-brand-light-gray p-3 md:p-4 rounded-xl border border-brand-border text-brand-black text-sm flex gap-3 items-start">
+                    <Info size={18} className="shrink-0 text-goat-primary mt-0.5" />
+                    <div>
+                      <p className="font-semibold">Legal & Policy Pages</p>
+                      <p className="text-xs text-brand-gray mt-0.5">
+                        Edit the content for your site's policy pages. You can use basic HTML tags (like &lt;p&gt;, &lt;strong&gt;, &lt;h2&gt;) for formatting. If left blank, the site will show the default placeholder policies.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
+                      Privacy Policy Content
+                    </label>
+                    <TiptapEditor 
+                      value={settings.privacy_policy_content} 
+                      onChange={(val) => handleChange("privacy_policy_content", val)} 
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
+                      Terms of Service Content
+                    </label>
+                    <TiptapEditor 
+                      value={settings.terms_of_service_content} 
+                      onChange={(val) => handleChange("terms_of_service_content", val)} 
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
+                      Editorial Policy Content
+                    </label>
+                    <TiptapEditor 
+                      value={settings.editorial_policy_content} 
+                      onChange={(val) => handleChange("editorial_policy_content", val)} 
                     />
                   </div>
                 </div>

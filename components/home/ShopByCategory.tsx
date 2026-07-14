@@ -32,7 +32,7 @@ export default function ShopByCategory() {
             {settings.home_shop_title || "What Are You Looking For?"}
           </h2>
           <p className="text-base font-medium text-brand-gray/80">
-            {settings.home_shop_subtitle || "Choose your category to browse live farm goats or clean bulk mutton cuts."}
+            {settings.home_shop_subtitle || "Choose your category to browse healthy pasture livestock or fresh wholesale protein."}
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function ShopByCategory() {
                   Live Goats
                 </h3>
                 <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
-                  Explore a wide breed variety, including Boer, Tellicherry, and native breeds. We deliver right to your location.
+                  Explore a wide breed variety, including Boer, Tellicherry, and native stock. We deliver right to your location.
                 </p>
               </div>
 
@@ -122,7 +122,7 @@ export default function ShopByCategory() {
                   Bulk Mutton
                 </h3>
                 <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
-                  Fresh, quality, custom mutton cuts packed cleanly. Available for delivery within {displayDistricts}.
+                  Fresh, prime, custom meat cuts packed cleanly. Available for delivery within {displayDistricts}.
                 </p>
               </div>
 

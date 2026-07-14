@@ -1,0 +1,55 @@
+import React from "react";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { connectToDatabase } from "@/lib/db";
+import SiteSettings from "@/models/SiteSettings";
+
+export const metadata = {
+  title: "Terms of Service | Ragu Goat Farm",
+  description: "Terms of Service for Ragu Goat Farm.",
+};
+
+const DEFAULT_CONTENT = `
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3">1. Acceptance of Terms</h2>
+  <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. Products and Orders</h2>
+  <p>All livestock and meat orders are subject to availability. We reserve the right to refuse service, cancel orders, or limit quantities at our discretion. Prices are subject to change without notice.</p>
+</section>
+<section>
+  <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Delivery and Refunds</h2>
+  <p>Delivery times are estimates and may vary. Due to the perishable nature of our products (meat) and the complexities of livestock transport, refund and return policies are handled on a case-by-case basis. Please contact customer service for any issues with your delivery.</p>
+</section>
+`;
+
+export default async function TermsOfServicePage() {
+  let content = DEFAULT_CONTENT;
+
+  try {
+    await connectToDatabase();
+    const settings = await SiteSettings.findOne({ key: "terms_of_service_content" }).lean();
+    if (settings && settings.value && settings.value.trim() !== "") {
+      content = settings.value;
+    }
+  } catch (error) {
+    console.error("Error loading terms of service:", error);
+  }
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col font-body">
+      <Navbar />
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 pt-8 md:pt-12 pb-24 w-full">
+        <h1 className="font-display text-4xl md:text-5xl text-brand-black mb-4 uppercase tracking-wide border-b border-neutral-200 pb-6">Terms of Service</h1>
+        <p className="text-sm text-brand-gray mb-10 italic">Last Updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+
+        <div 
+          className="space-y-6 text-brand-gray leading-relaxed text-sm md:text-base prose prose-sm max-w-none prose-headings:font-bold prose-headings:text-brand-black prose-a:text-goat-primary"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      </main>
+      <Footer />
+    </div>
+  );
+}

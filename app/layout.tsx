@@ -136,95 +136,96 @@ export default async function RootLayout({
     console.error("Error loading settings for RootLayout schema:", error);
   }
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "@id": `${BASE_URL}/#localbusiness`,
-        "name": farmName,
-        "image": `${BASE_URL}/placeholder-goat.jpg`,
-        "url": BASE_URL,
-        "telephone": phone,
-        "email": email,
-        "priceRange": "$$",
-        "sameAs": [
-          "https://facebook.com",
-          "https://instagram.com",
-          "https://youtube.com"
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
-          "addressLocality": "Villupuram",
-          "addressRegion": "Tamil Nadu",
-          "postalCode": "604102",
-          "addressCountry": "IN"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 11.9401,
-          "longitude": 79.4861
-        },
-        "areaServed": ["Villupuram", "Chennai", "Pondicherry", "Tamil Nadu"],
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "06:00",
-          "closes": "20:00"
-        }
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": `${BASE_URL}/#localbusiness`,
+      "name": farmName,
+      "image": `${BASE_URL}/placeholder-goat.jpg`,
+      "url": BASE_URL,
+      "telephone": phone,
+      "email": email,
+      "priceRange": "$$",
+      "sameAs": [
+        "https://facebook.com",
+        "https://instagram.com",
+        "https://youtube.com"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
+        "addressLocality": "Villupuram",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "604102",
+        "addressCountry": "IN"
       },
-      {
-        "@type": "Organization",
-        "@id": `${BASE_URL}/#organization`,
-        "name": farmName,
-        "url": BASE_URL,
-        "logo": `${BASE_URL}/placeholder-goat.jpg`,
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": phone,
-          "contactType": "customer service",
-          "areaServed": "IN",
-          "availableLanguage": ["English", "Tamil"]
-        },
-        "sameAs": [
-          "https://facebook.com",
-          "https://instagram.com",
-          "https://youtube.com"
-        ]
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 11.9401,
+        "longitude": 79.4861
       },
-      {
-        "@type": "WebSite",
-        "@id": `${BASE_URL}/#website`,
-        "url": BASE_URL,
-        "name": farmName,
-        "publisher": {
-          "@id": `${BASE_URL}/#organization`
-        }
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Do you deliver mutton to Chennai from Villupuram?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we provide bulk fresh mutton delivery to Chennai, Villupuram, and surrounding areas in Tamil Nadu."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What breeds of live goats do you sell?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "We specialize in healthy Tellicherry, Boer, and local Naatu Aadu goat breeds."
-            }
-          }
-        ]
+      "areaServed": ["Villupuram", "Chennai", "Pondicherry", "Tamil Nadu"],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "06:00",
+        "closes": "20:00"
       }
-    ]
-  };
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      "name": farmName,
+      "url": BASE_URL,
+      "logo": `${BASE_URL}/placeholder-goat.jpg`,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": phone,
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Tamil"]
+      },
+      "sameAs": [
+        "https://facebook.com",
+        "https://instagram.com",
+        "https://youtube.com"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      "url": BASE_URL,
+      "name": farmName,
+      "publisher": {
+        "@id": `${BASE_URL}/#organization`
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do you deliver mutton to Chennai from Villupuram?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we provide bulk fresh mutton delivery to Chennai, Villupuram, and surrounding areas in Tamil Nadu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What breeds of live goats do you sell?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We specialize in healthy Tellicherry, Boer, and local Naatu Aadu goat breeds."
+          }
+        }
+      ]
+    }
+  ];
 
   return (
     <html
@@ -233,6 +234,7 @@ export default async function RootLayout({
     >
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="llms-txt" href="/llms.txt" />
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black">
         <a 

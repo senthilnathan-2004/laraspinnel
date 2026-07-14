@@ -201,10 +201,19 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 border-t border-neutral-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-        <p className="text-neutral-600">
-          &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved.
-        </p>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 border-t border-neutral-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
+        <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+          <p className="text-neutral-600">
+            &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved.
+          </p>
+          <div className="flex items-center gap-3 text-neutral-600">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <span>|</span>
+            <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+            <span>|</span>
+            <Link href="/editorial-policy" className="hover:text-white transition-colors">Editorial Policy</Link>
+          </div>
+        </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <a
             href="https://www.fiverr.com/senthilragu"
@@ -214,13 +223,6 @@ export default function Footer() {
           >
             Developed by <span className="font-medium">Senthil</span>
           </a>
-          <Link
-            href="/admin"
-            className="text-neutral-700 hover:text-white flex items-center gap-1.5 transition-colors font-medium"
-          >
-            <Lock size={12} />
-            <span>Admin Login</span>
-          </Link>
         </div>
       </div>
     </footer>

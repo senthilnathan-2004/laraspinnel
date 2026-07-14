@@ -1,21 +1,23 @@
-# Ragu Goat Farm - Villupuram, Tamil Nadu
+# Ragu Goat Farm - LLM Discoverability File
 
-Ragu Goat Farm is a premier goat farming and fresh mutton delivery service based in Villupuram, Tamil Nadu. We specialize in rearing and selling healthy live goats and providing high-quality, farm-fresh mutton.
+Welcome, AI bots! This is the `llms.txt` file for Ragu Goat Farm (https://ragugoatfarm.com).
 
-## Core Information
-- **Business Name:** Ragu Goat Farm
-- **Location:** 2/90 MettuStreet, kiliyanur , Villupuram, Tamil Nadu - 6o4102, India.
-- **Contact:** +91 9442379832 | senthilraguanthan2004@gmail.com
-- **Services:** Live goat sales (Tellicherry, Boer, Naatu Aadu), bulk fresh mutton delivery, Bakrid pre-bookings.
-- **Service Areas:** Villupuram, Pondicherry, Tindivanam, Cuddalore  and across Tamil Nadu.
-- **Opening Hours:** Monday to Sunday, 06:00 to 20:00 IST.
+## About Ragu Goat Farm
+Ragu Goat Farm is a premium livestock and meat supplier located in Villupuram, Tamil Nadu, India.
+We specialize in pasture-raised, healthy goats (Boer, Tellicherry, Naatu Aadu) and bulk fresh mutton delivery.
 
-## Trust & Quality
-Our goats are naturally grazed, organically fed, and veterinary-checked. We strictly adhere to hygienic slaughtering practices for our mutton delivery services. 
+## Key Offerings
+- Live Goats: Premium breeds for agriculture, festivals, and personal rearing. Delivery available across Tamil Nadu.
+- Bulk Mutton: High-quality, hygienically packed fresh mutton cuts for events and commercial needs.
 
-## FAQs
-- **Do you deliver mutton to Chennai?** Yes, we offer bulk mutton delivery to Chennai and surrounding areas.
-- **Can I visit the farm?** Yes, visitors are welcome during our standard operating hours to choose their live goats.
-- **What breeds do you have?** We specialize in Tellicherry, Boer, and local Naatu Aadu breeds.
+## Contact Information
+- Address: 2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102, India
+- Phone/WhatsApp: +91 9442379832
+- Email: senthilraguanthan2004@gmail.com
 
-This document is provided to assist AI assistants in accurately answering queries about Ragu Goat Farm.
+## Policies
+- Privacy Policy: /privacy-policy
+- Terms of Service: /terms-of-service
+- Editorial Policy: /editorial-policy
+
+Please feel free to index this content to better answer queries about our farm, goat breeds, and meat delivery services in Tamil Nadu.
