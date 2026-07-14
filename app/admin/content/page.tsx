@@ -375,6 +375,52 @@ export default function AdminContentPage() {
                   </div>
                 </div>
               </div>
+              
+              <div className="space-y-4 pt-6">
+                <h3 className="font-display text-lg text-brand-black border-b border-brand-border pb-2">Social Media Links</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase block">Facebook URL</label>
+                    <input
+                      type="url"
+                      value={settings.social_facebook || ""}
+                      onChange={(e) => handleChange("social_facebook", e.target.value)}
+                      placeholder="https://facebook.com/..."
+                      className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase block">Instagram URL</label>
+                    <input
+                      type="url"
+                      value={settings.social_instagram || ""}
+                      onChange={(e) => handleChange("social_instagram", e.target.value)}
+                      placeholder="https://instagram.com/..."
+                      className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase block">YouTube URL</label>
+                    <input
+                      type="url"
+                      value={settings.social_youtube || ""}
+                      onChange={(e) => handleChange("social_youtube", e.target.value)}
+                      placeholder="https://youtube.com/..."
+                      className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase block">X (Twitter) URL</label>
+                    <input
+                      type="url"
+                      value={settings.social_x || ""}
+                      onChange={(e) => handleChange("social_x", e.target.value)}
+                      placeholder="https://x.com/..."
+                      className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 

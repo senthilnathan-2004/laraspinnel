@@ -8,23 +8,26 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/"],
+        disallow: ["/admin/", "/dashboard/", "/api/private/", "/login/", "/auth/"],
       },
-      {
-        userAgent: [
-          "GPTBot",
-          "ChatGPT-User",
-          "ClaudeBot",
-          "Claude-Web",
-          "Google-Extended",
-          "Applebot-Extended",
-          "PerplexityBot",
-          "cohere-ai",
-          "facebookexternalhit",
-        ],
+      // Ensure AI Crawlers have explicit, individual rules for strict parsers
+      ...[
+        "GPTBot",
+        "ChatGPT-User",
+        "ClaudeBot",
+        "Claude-Web",
+        "Google-Extended",
+        "Applebot-Extended",
+        "PerplexityBot",
+        "cohere-ai",
+        "facebookexternalhit",
+        "Bingbot",
+        "Googlebot",
+      ].map((bot) => ({
+        userAgent: bot,
         allow: "/",
-        disallow: ["/admin/", "/api/"],
-      },
+        disallow: ["/admin/", "/dashboard/", "/api/private/", "/login/", "/auth/"],
+      })),
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
   };

@@ -201,7 +201,39 @@ export default async function RootLayout({
       "name": farmName,
       "publisher": {
         "@id": `${BASE_URL}/#organization`
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${BASE_URL}/search?q={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
       }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": BASE_URL
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Goats",
+          "item": `${BASE_URL}/goats`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mutton",
+          "item": `${BASE_URL}/mutton`
+        }
+      ]
     },
     {
       "@context": "https://schema.org",
@@ -234,7 +266,7 @@ export default async function RootLayout({
     >
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="llms-txt" href="/llms.txt" />
+        <link rel="alternate" type="text/plain" href="/llms.txt" />
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black">
         <a 

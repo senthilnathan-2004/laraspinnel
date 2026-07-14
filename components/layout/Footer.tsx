@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
 import { Phone, Mail, MapPin, Clock, Lock } from "lucide-react";
-import { FaWhatsapp, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa6";
+import { FaWhatsapp, FaFacebook, FaInstagram, FaYoutube, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   const { settings } = useSettings();
@@ -49,42 +49,61 @@ export default function Footer() {
           </p>
           {/* Social icons */}
           <div className="flex items-center gap-4 pt-2">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-white transition-colors"
-              aria-label="Facebook"
-            >
-              <FaFacebook size={20} />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-white transition-colors"
-              aria-label="Instagram"
-            >
-              <FaInstagram size={20} />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-white transition-colors"
-              aria-label="YouTube"
-            >
-              <FaYoutube size={20} />
-            </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-[#25D366] transition-colors"
-              aria-label="WhatsApp"
-            >
-              <FaWhatsapp size={20} />
-            </a>
+            {settings.social_facebook && (
+              <a
+                href={settings.social_facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-500 hover:text-white transition-colors"
+                aria-label="Facebook"
+              >
+                <FaFacebook size={20} />
+              </a>
+            )}
+            {settings.social_instagram && (
+              <a
+                href={settings.social_instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-500 hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={20} />
+              </a>
+            )}
+            {settings.social_youtube && (
+              <a
+                href={settings.social_youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-500 hover:text-white transition-colors"
+                aria-label="YouTube"
+              >
+                <FaYoutube size={20} />
+              </a>
+            )}
+            {settings.social_x && (
+              <a
+                href={settings.social_x}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-500 hover:text-white transition-colors"
+                aria-label="X (Twitter)"
+              >
+                <FaXTwitter size={20} />
+              </a>
+            )}
+            {whatsapp && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-500 hover:text-[#25D366] transition-colors"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp size={20} />
+              </a>
+            )}
           </div>
         </div>
 
