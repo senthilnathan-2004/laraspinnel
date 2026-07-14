@@ -106,131 +106,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { Providers } from "@/components/Providers";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
-export default async function RootLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let farmName = "Ragu Goat Farm";
-  let phone = "+91 9442379832";
-  let email = "senthilraguanthan2004@gmail.com";
-  let address = "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
-
-  try {
-    await connectToDatabase();
-    const settings = await SiteSettings.find({
-      key: { $in: ["farm_name", "contact_phone", "contact_email", "contact_address"] }
-    });
-    const getSetting = (k: string) => settings.find(s => s.key === k)?.value;
-    farmName = getSetting("farm_name") || farmName;
-    phone = getSetting("contact_phone") || phone;
-    email = getSetting("contact_email") || email;
-    address = getSetting("contact_address") || address;
-  } catch (error) {
-    console.error("Error loading settings for RootLayout schema:", error);
-  }
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "@id": `${BASE_URL}/#localbusiness`,
-        "name": farmName,
-        "image": `${BASE_URL}/placeholder-goat.jpg`,
-        "url": BASE_URL,
-        "telephone": phone,
-        "email": email,
-        "priceRange": "$$",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
-          "addressLocality": "Villupuram",
-          "addressRegion": "Tamil Nadu",
-          "postalCode": "642001",
-          "addressCountry": "IN"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 11.9401,
-          "longitude": 79.4861
-        },
-        "areaServed": ["Villupuram", "Chennai", "Pondicherry", "Tamil Nadu"],
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "06:00",
-          "closes": "20:00"
-        }
-      },
-      {
-        "@type": "Organization",
-        "@id": `${BASE_URL}/#organization`,
-        "name": farmName,
-        "url": BASE_URL,
-        "logo": `${BASE_URL}/placeholder-goat.jpg`,
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": phone,
-          "contactType": "customer service",
-          "areaServed": "IN",
-          "availableLanguage": ["English", "Tamil"]
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${BASE_URL}/#website`,
-        "url": BASE_URL,
-        "name": farmName,
-        "publisher": {
-          "@id": `${BASE_URL}/#organization`
-        }
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Do you deliver mutton to Chennai from Villupuram?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we provide bulk fresh mutton delivery to Chennai, Villupuram, and surrounding areas in Tamil Nadu."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What breeds of live goats do you sell?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "We specialize in healthy Tellicherry, Boer, and local Naatu Aadu goat breeds."
-            }
-          }
-        ]
-      }
-    ]
-  };
-
   return (
-    <html
-      lang="en"
-      className={`${anton.variable} ${inter.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-body bg-white text-brand-black">
-        <a 
-          href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:p-4 focus:bg-brand-black focus:text-white"
-        >
-          Skip to main content
-        </a>
-        <div className="flex flex-col min-h-screen overflow-x-hidden w-full relative" id="main-content">
-          <Providers>{children}</Providers>
-        </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </body>
-    </html>
+    <div className="flex h-screen overflow-hidden bg-brand-light-gray/20 w-full relative">
+      <AdminSidebar />
+      <div className="flex-1 overflow-y-auto w-full relative flex flex-col">
+        <Providers>{children}</Providers>
+      </div>
+    </div>
   );
 }
