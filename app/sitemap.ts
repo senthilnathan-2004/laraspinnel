@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/contact",
     "/book",
     "/festival-booking",
+    "/faq",
     "/locations/villupuram",
     "/privacy-policy",
     "/terms-of-service",
