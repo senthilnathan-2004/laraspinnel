@@ -16,8 +16,10 @@ import TextMarquee from "@/components/home/TextMarquee";
 import ImageMarquee from "@/components/home/ImageMarquee";
 import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
 import HomePreloader from "@/components/home/HomePreloader";
+import PhilosophyContent from "@/components/home/PhilosophyContent";
 import { connectToDatabase } from "@/lib/db";
 import Banner from "@/models/Banner";
+import SiteSettings from "@/models/SiteSettings";
 
 export const metadata: Metadata = {
   title: "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu",
@@ -67,6 +69,22 @@ export const metadata: Metadata = {
 
 
 
+const DEFAULT_PHILOSOPHY = `
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">At Ragu Estate, we take immense pride in raising healthy, pasture-fed animals across Villupuram and surrounding districts. Whether you are looking for premium Boer, Tellicherry, or native Naatu breeds for agriculture or festivals like Bakrid, we guarantee the highest standard of livestock. Our bulk delivery service ensures that you receive hygienic, freshly prepared cuts tailored for your special events and commercial needs, delivered promptly to your location.</p>
+<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Sustainable Agriculture & Rearing</h3>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">With years of expertise in animal husbandry, we prioritize animal welfare, organic feeding practices, and regular veterinary checkups. Buy directly from our pastures to enjoy unmatched excellence, transparent pricing, and reliable delivery across Tamil Nadu. Experience the difference of true source-to-table superiority today. Our flocks are allowed to roam freely on extensive green lands, consuming a natural diet that significantly enhances their health and vitality.</p>
+<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Hygienic Processing & Superior Standard</h3>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">When it comes to our premium protein offerings, hygiene is our utmost priority. Our processing facilities adhere strictly to modern cleanliness protocols, ensuring every batch of meat is safely handled, carefully inspected, and cleanly packaged. We avoid any artificial preservatives or hormones. This rigorous dedication guarantees that our clients always receive the freshest, most tender cuts available on the market, perfect for home cooking, large family gatherings, or catering services.</p>
+<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Committed to Community & Tradition</h3>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">We believe in upholding the agricultural traditions of Tamil Nadu while employing modern techniques to improve yield and animal health. Our estate works closely with local communities, providing employment and supporting sustainable local ecosystems. Every purchase directly supports these rural economies and helps preserve traditional rearing methods that have been passed down for generations.</p>
+<h4 class="text-lg font-bold text-brand-black pt-4 mb-2">Sustainable Future</h4>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">Our vision is to continue expanding our green pastures while reducing our carbon hoofprint.</p>
+<h5 class="text-base font-bold text-brand-black pt-2 mb-2">Local Partnerships</h5>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">We partner with local farmers to share our veterinary insights.</p>
+<h6 class="text-sm font-bold text-brand-black pt-2 mb-2">Join Us</h6>
+<p class="text-brand-gray leading-relaxed text-sm mb-6">Support sustainable farming by choosing Ragu Goat Farm for your next purchase.</p>
+`;
+
 export default async function HomePage() {
   const qualityItems = [
     "Premium Standards",
@@ -77,9 +95,10 @@ export default async function HomePage() {
     "Hygienic Packaging"
   ];
 
+  await connectToDatabase();
+
   let initialBanners: any[] = [];
   try {
-    await connectToDatabase();
     const dbBanners = await Banner.find({ isActive: true }).sort({ order: 1, createdAt: -1 }).lean();
     initialBanners = dbBanners.map((b: any) => ({
       _id: b._id.toString(),
@@ -92,6 +111,16 @@ export default async function HomePage() {
     }));
   } catch (err) {
     console.error("Failed to load initial banners", err);
+  }
+
+  let philosophyContent = DEFAULT_PHILOSOPHY;
+  try {
+    const philosophySetting = await SiteSettings.findOne({ key: "philosophy_content" }).lean();
+    if (philosophySetting && philosophySetting.value && philosophySetting.value.trim() !== "") {
+      philosophyContent = philosophySetting.value;
+    }
+  } catch (err) {
+    console.error("Failed to load philosophy content", err);
   }
 
   return (
@@ -155,12 +184,12 @@ export default async function HomePage() {
 
           {/* Comprehensive SEO & Philosophy Text Block (Boosts Text-to-HTML ratio) */}
           <div className="max-w-7xl mx-auto px-4 md:px-6 my-16">
-            <section className="bg-brand-light-gray/20 rounded-2xl p-4 sm:p-6 lg:p-12 border border-brand-border text-left flex flex-col lg:flex-row gap-6 lg:gap-16 items-start relative overflow-hidden group hover:border-goat-primary/30 transition-colors">
+            <section className="bg-brand-light-gray/20 rounded-2xl p-4 sm:p-6 lg:p-8 border border-brand-border text-left relative overflow-hidden group hover:border-goat-primary/30 transition-colors">
               {/* Decorative subtle background accent for desktop */}
               <div className="hidden lg:block absolute -top-24 -right-24 w-64 h-64 bg-goat-primary/5 rounded-full blur-3xl pointer-events-none group-hover:bg-goat-primary/10 transition-colors" />
 
-              {/* Left Column: Heading */}
-              <div className="lg:w-1/3 space-y-4 relative z-10 sticky top-24">
+              {/* Top Row: Heading */}
+              <div className="space-y-4 relative z-10 mb-8 lg:mb-12">
                 <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-goat-primary/10 border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-widest">
                   Our Philosophy
                 </div>
@@ -169,42 +198,8 @@ export default async function HomePage() {
                 </h2>
               </div>
               
-              {/* Right Column: Expanded Content */}
-              <div className="lg:w-2/3 space-y-6 relative z-10 lg:border-l lg:border-brand-border/60 lg:pl-16">
-                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
-                  At Ragu Estate, we take immense pride in raising healthy, pasture-fed animals across Villupuram and surrounding districts. Whether you are looking for premium Boer, Tellicherry, or native Naatu breeds for agriculture or festivals like Bakrid, we guarantee the highest standard of livestock. Our bulk delivery service ensures that you receive hygienic, freshly prepared cuts tailored for your special events and commercial needs, delivered promptly to your location.
-                </p>
-                
-                <h3 className="text-xl font-bold text-brand-black pt-4">Sustainable Agriculture & Rearing</h3>
-                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
-                  With years of expertise in animal husbandry, we prioritize animal welfare, organic feeding practices, and regular veterinary checkups. Buy directly from our pastures to enjoy unmatched excellence, transparent pricing, and reliable delivery across Tamil Nadu. Experience the difference of true source-to-table superiority today. Our flocks are allowed to roam freely on extensive green lands, consuming a natural diet that significantly enhances their health and vitality.
-                </p>
-
-                <h3 className="text-xl font-bold text-brand-black pt-4">Hygienic Processing & Superior Standard</h3>
-                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
-                  When it comes to our premium protein offerings, hygiene is our utmost priority. Our processing facilities adhere strictly to modern cleanliness protocols, ensuring every batch of meat is safely handled, carefully inspected, and cleanly packaged. We avoid any artificial preservatives or hormones. This rigorous dedication guarantees that our clients always receive the freshest, most tender cuts available on the market, perfect for home cooking, large family gatherings, or catering services.
-                </p>
-
-                <h3 className="text-xl font-bold text-brand-black pt-4">Committed to Community & Tradition</h3>
-                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
-                  We believe in upholding the agricultural traditions of Tamil Nadu while employing modern techniques to improve yield and animal health. Our estate works closely with local communities, providing employment and supporting sustainable local ecosystems. Every purchase directly supports these rural economies and helps preserve traditional rearing methods that have been passed down for generations.
-                </p>
-
-                <h4 className="text-lg font-bold text-brand-black pt-4">Sustainable Future</h4>
-                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
-                  Our vision is to continue expanding our green pastures while reducing our carbon hoofprint.
-                </p>
-
-                <h5 className="text-base font-bold text-brand-black pt-2">Local Partnerships</h5>
-                <p className="text-brand-gray leading-relaxed text-sm md:text-base">
-                  We partner with local farmers to share our veterinary insights.
-                </p>
-
-                <h6 className="text-sm font-bold text-brand-black pt-2">Join Us</h6>
-                <p className="text-brand-gray leading-relaxed text-sm">
-                  Support sustainable farming by choosing Ragu Goat Farm for your next purchase.
-                </p>
-              </div>
+              {/* Bottom Row: Expanded Content */}
+              <PhilosophyContent content={philosophyContent} />
             </section>
           </div>
 

@@ -51,8 +51,24 @@ const DEFAULT_EDITORIAL = `
 </section>
 `;
 
+const DEFAULT_PHILOSOPHY = `
+<p>At Ragu Estate, we take immense pride in raising healthy, pasture-fed animals across Villupuram and surrounding districts. Whether you are looking for premium Boer, Tellicherry, or native Naatu breeds for agriculture or festivals like Bakrid, we guarantee the highest standard of livestock. Our bulk delivery service ensures that you receive hygienic, freshly prepared cuts tailored for your special events and commercial needs, delivered promptly to your location.</p>
+<h3>Sustainable Agriculture & Rearing</h3>
+<p>With years of expertise in animal husbandry, we prioritize animal welfare, organic feeding practices, and regular veterinary checkups. Buy directly from our pastures to enjoy unmatched excellence, transparent pricing, and reliable delivery across Tamil Nadu. Experience the difference of true source-to-table superiority today. Our flocks are allowed to roam freely on extensive green lands, consuming a natural diet that significantly enhances their health and vitality.</p>
+<h3>Hygienic Processing & Superior Standard</h3>
+<p>When it comes to our premium protein offerings, hygiene is our utmost priority. Our processing facilities adhere strictly to modern cleanliness protocols, ensuring every batch of meat is safely handled, carefully inspected, and cleanly packaged. We avoid any artificial preservatives or hormones. This rigorous dedication guarantees that our clients always receive the freshest, most tender cuts available on the market, perfect for home cooking, large family gatherings, or catering services.</p>
+<h3>Committed to Community & Tradition</h3>
+<p>We believe in upholding the agricultural traditions of Tamil Nadu while employing modern techniques to improve yield and animal health. Our estate works closely with local communities, providing employment and supporting sustainable local ecosystems. Every purchase directly supports these rural economies and helps preserve traditional rearing methods that have been passed down for generations.</p>
+<h4>Sustainable Future</h4>
+<p>Our vision is to continue expanding our green pastures while reducing our carbon hoofprint.</p>
+<h5>Local Partnerships</h5>
+<p>We partner with local farmers to share our veterinary insights.</p>
+<h6>Join Us</h6>
+<p>Support sustainable farming by choosing Ragu Goat Farm for your next purchase.</p>
+`;
+
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<"branding" | "business" | "districts" | "seo" | "animations" | "policies">("branding");
+  const [activeTab, setActiveTab] = useState<"branding" | "business" | "districts" | "seo" | "animations" | "policies" | "homepage">("branding");
   const [settings, setSettings] = useState<any>({
     farm_name: "",
     tagline: "",
@@ -70,6 +86,7 @@ export default function AdminSettingsPage() {
     privacy_policy_content: "",
     terms_of_service_content: "",
     editorial_policy_content: "",
+    philosophy_content: "",
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -90,6 +107,7 @@ export default function AdminSettingsPage() {
             privacy_policy_content: data.privacy_policy_content?.trim() ? data.privacy_policy_content : DEFAULT_PRIVACY,
             terms_of_service_content: data.terms_of_service_content?.trim() ? data.terms_of_service_content : DEFAULT_TERMS,
             editorial_policy_content: data.editorial_policy_content?.trim() ? data.editorial_policy_content : DEFAULT_EDITORIAL,
+            philosophy_content: data.philosophy_content?.trim() ? data.philosophy_content : DEFAULT_PHILOSOPHY,
           }));
         } else {
           setError("Failed to load site settings.");
@@ -226,6 +244,18 @@ export default function AdminSettingsPage() {
               >
                 <ImageIcon size={16} />
                 <span>Animations</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab("homepage")}
+                className={`flex items-center gap-2 px-4 md:px-6 py-4 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors ${
+                  activeTab === "homepage"
+                    ? "border-goat-primary text-goat-primary"
+                    : "border-transparent text-brand-gray hover:text-brand-black"
+                }`}
+              >
+                <Landmark size={16} />
+                <span>Homepage</span>
               </button>
 
               <button
@@ -519,6 +549,31 @@ export default function AdminSettingsPage() {
                     <TiptapEditor 
                       value={settings.editorial_policy_content} 
                       onChange={(val) => handleChange("editorial_policy_content", val)} 
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* HOMEPAGE TAB */}
+              {activeTab === "homepage" && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="bg-brand-light-gray p-3 md:p-4 rounded-xl border border-brand-border text-brand-black text-sm flex gap-3 items-start">
+                    <Info size={18} className="shrink-0 text-goat-primary mt-0.5" />
+                    <div>
+                      <p className="font-semibold">Homepage Content</p>
+                      <p className="text-xs text-brand-gray mt-0.5">
+                        Edit the content displayed on your homepage. The "Our Philosophy" section supports rich text formatting.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
+                      Our Philosophy Content
+                    </label>
+                    <TiptapEditor 
+                      value={settings.philosophy_content} 
+                      onChange={(val) => handleChange("philosophy_content", val)} 
                     />
                   </div>
                 </div>
