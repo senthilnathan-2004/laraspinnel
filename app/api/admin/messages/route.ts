@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     }
 
     await connectToDatabase();
-    const messages = await ContactMessage.find().sort({ createdAt: -1 });
+    const messages = await ContactMessage.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json(messages);
   } catch (error: any) {
     console.error("Admin Messages GET error:", error);

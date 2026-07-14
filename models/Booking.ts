@@ -49,6 +49,11 @@ const BookingSchema = new Schema<IBooking>(
   { timestamps: true }
 );
 
+// Indexes for admin list sort, status filters, and schedule/pending counts
+BookingSchema.index({ status: 1, createdAt: -1 });
+BookingSchema.index({ createdAt: -1 });
+BookingSchema.index({ preferredDate: 1, status: 1 });
+
 const Booking: Model<IBooking> =
   mongoose.models.Booking || mongoose.model<IBooking>("Booking", BookingSchema);
 

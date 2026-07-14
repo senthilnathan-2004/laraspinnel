@@ -1,7 +1,7 @@
 export function getAdminNewBookingEmailHtml(booking: any): string {
   const isGoat = booking.productType === "goat";
   const themeColor = isGoat ? "#1E8A4C" : "#C0392B";
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatfarm.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
   
 
   return `

@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     // 2. Dispatch Emails
     // Retrieve admin email from settings
     const adminEmailSetting = await SiteSettings.findOne({ key: "contact_email" });
-    const adminEmail = adminEmailSetting?.value || "admin@ragugoatfarm.com";
+    const adminEmail = adminEmailSetting?.value || "admin@ragugoatform.com";
 
     // Send Alert to Admin
     sendEmail({

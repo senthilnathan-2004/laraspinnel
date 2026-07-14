@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
       ];
     }
 
-    const bookings = await Booking.find(query).sort({ createdAt: -1 });
+    const bookings = await Booking.find(query).sort({ createdAt: -1 }).lean();
 
     return NextResponse.json(bookings);
   } catch (error: any) {

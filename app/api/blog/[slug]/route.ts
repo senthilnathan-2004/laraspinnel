@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
     await connectToDatabase();
     const { slug } = await params;
 
-    const post = await BlogPost.findOne({ slug, isPublished: true });
+    const post = await BlogPost.findOne({ slug, isPublished: true }).lean();
 
     if (!post) {
       return NextResponse.json({ error: "Article not found" }, { status: 444 });

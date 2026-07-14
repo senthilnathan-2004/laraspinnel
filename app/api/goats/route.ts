@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
       query.isFeatured = true;
     }
 
-    const goats = await GoatVariety.find(query).sort({ isFeatured: -1, name: 1 });
+    const goats = await GoatVariety.find(query).sort({ isFeatured: -1, name: 1 }).lean();
     return NextResponse.json(goats);
   } catch (error: any) {
     console.error("Public Goats API error:", error);

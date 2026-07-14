@@ -7,6 +7,7 @@ import BlogPost from "@/models/BlogPost";
 import Link from "next/link";
 import BlogShareSidebar from "@/components/blog/BlogShareSidebar";
 import Image from "next/image";
+import { SITE_URL } from "@/lib/siteUrl";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -72,7 +73,7 @@ export default async function BlogDetailsPage({ params }: Props) {
               "name": "Ragu Goat Farm",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://ragugoatfarm.com/placeholder-logo.jpg"
+                "url": `${SITE_URL}/icon.svg`
               }
             }
           })
@@ -89,19 +90,19 @@ export default async function BlogDetailsPage({ params }: Props) {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://ragugoatfarm.com/"
+                "item": `${SITE_URL}/`
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Blog",
-                "item": "https://ragugoatfarm.com/blog"
+                "item": `${SITE_URL}/blog`
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": p.title,
-                "item": `https://ragugoatfarm.com/blog/${p.slug}`
+                "item": `${SITE_URL}/blog/${p.slug}`
               }
             ]
           })
@@ -109,6 +110,17 @@ export default async function BlogDetailsPage({ params }: Props) {
       />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-20">
+        {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
+        <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
+          <ol className="flex flex-wrap items-center gap-1.5">
+            <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/blog" className="hover:text-brand-black transition-colors">Blog</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{p.title}</li>
+          </ol>
+        </nav>
+
         {/* Back Link */}
         <Link
           href="/blog"
@@ -156,7 +168,7 @@ export default async function BlogDetailsPage({ params }: Props) {
 
         {/* Cover image */}
         {p.coverImage && (
-          <div className="relative aspect-[16/9] border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray select-none shadow-sm">
+          <div className="relative aspect-video border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray select-none shadow-sm">
             <Image
               src={p.coverImage}
               alt={p.title}

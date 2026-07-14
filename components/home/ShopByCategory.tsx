@@ -41,7 +41,7 @@ export default function ShopByCategory() {
           {/* Card 1: Live Goats */}
           <Link
             href="/goats"
-            className="group relative flex flex-col w-full min-h-[350px] md:min-h-[400px] rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
+            className="group relative flex flex-col w-full min-h-87.5 md:min-h-100 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
           >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full bg-brand-black">
@@ -55,7 +55,7 @@ export default function ShopByCategory() {
             </div>
             
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
             {/* Top Tag */}
             <div className="absolute top-6 left-6 md:top-8 md:left-8 z-10">
@@ -91,7 +91,7 @@ export default function ShopByCategory() {
           {/* Card 2: Bulk Mutton */}
           <Link
             href="/mutton"
-            className="group relative flex flex-col w-full min-h-[350px] md:min-h-[400px] rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
+            className="group relative flex flex-col w-full min-h-87.5 md:min-h-100 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
           >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full bg-brand-black">
@@ -105,7 +105,7 @@ export default function ShopByCategory() {
             </div>
             
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
             {/* Top Tag */}
             <div className="absolute top-6 left-6 md:top-8 md:left-8 z-10">

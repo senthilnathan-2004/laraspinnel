@@ -33,6 +33,10 @@ const GoatVarietySchema = new Schema<IGoatVariety>(
   { timestamps: true }
 );
 
+// Indexes for public catalog (active + featured) and admin sort
+GoatVarietySchema.index({ isActive: 1, isFeatured: -1, name: 1 });
+GoatVarietySchema.index({ createdAt: -1 });
+
 const GoatVariety: Model<IGoatVariety> =
   mongoose.models.GoatVariety || mongoose.model<IGoatVariety>("GoatVariety", GoatVarietySchema);
 

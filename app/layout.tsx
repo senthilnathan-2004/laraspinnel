@@ -1,6 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#1a1a1a",
+  width: "device-width",
+  initialScale: 1,
+};
 
 const anton = Anton({
   weight: "400",
@@ -16,13 +22,14 @@ const inter = Inter({
 import { connectToDatabase } from "@/lib/db";
 import SiteSettings from "@/models/SiteSettings";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://ragugoatfarm.com";
+import { SITE_URL } from "@/lib/siteUrl";
+const BASE_URL = SITE_URL;
 
 export async function generateMetadata(): Promise<Metadata> {
   let title = "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu";
   let description =
     "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Boer breeds with delivery across Tamil Nadu. Book now!";
-  let favicon = "/favicon.ico";
+  let favicon = "/icon.svg";
 
   try {
     await connectToDatabase();
@@ -98,6 +105,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     icons: {
       icon: favicon,
+      apple: favicon,
+      shortcut: favicon,
     },
     other: {
       "geo.region": "IN-TN",
@@ -121,17 +130,26 @@ export default async function RootLayout({
   let phone = "+91 9442379832";
   let email = "senthilraguanthan2004@gmail.com";
   let address = "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
+  let socialLinks: string[] = [];
+
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+  const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 
   try {
     await connectToDatabase();
     const settings = await SiteSettings.find({
-      key: { $in: ["farm_name", "contact_phone", "contact_email", "contact_address"] }
+      key: { $in: ["farm_name", "contact_phone", "contact_email", "contact_address", "social_facebook", "social_instagram", "social_youtube"] }
     });
     const getSetting = (k: string) => settings.find(s => s.key === k)?.value;
     farmName = getSetting("farm_name") || farmName;
     phone = getSetting("contact_phone") || phone;
     email = getSetting("contact_email") || email;
     address = getSetting("contact_address") || address;
+    socialLinks = [
+      getSetting("social_facebook"),
+      getSetting("social_instagram"),
+      getSetting("social_youtube"),
+    ].filter((v): v is string => Boolean(v));
   } catch (error) {
     console.error("Error loading settings for RootLayout schema:", error);
   }
@@ -147,11 +165,7 @@ export default async function RootLayout({
       "telephone": phone,
       "email": email,
       "priceRange": "$$",
-      "sameAs": [
-        "https://facebook.com",
-        "https://instagram.com",
-        "https://youtube.com"
-      ],
+      "sameAs": socialLinks,
       "address": {
         "@type": "PostalAddress",
         "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
@@ -187,11 +201,7 @@ export default async function RootLayout({
         "areaServed": "IN",
         "availableLanguage": ["English", "Tamil"]
       },
-      "sameAs": [
-        "https://facebook.com",
-        "https://instagram.com",
-        "https://youtube.com"
-      ]
+      "sameAs": socialLinks
     },
     {
       "@context": "https://schema.org",
@@ -201,14 +211,6 @@ export default async function RootLayout({
       "name": farmName,
       "publisher": {
         "@id": `${BASE_URL}/#organization`
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": `${BASE_URL}/search?q={search_term_string}`
-        },
-        "query-input": "required name=search_term_string"
       }
     },
     {
@@ -261,7 +263,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`${anton.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
@@ -271,7 +273,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black">
         <a 
           href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:p-4 focus:bg-brand-black focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-brand-black focus:text-white"
         >
           Skip to main content
         </a>
@@ -282,35 +284,40 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Facebook Pixel Code */}
-        <Script
-          id="fb-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', 'FACEBOOK_PIXEL_ID');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"
-            alt="Facebook Pixel"
-          />
-        </noscript>
-        <GoogleAnalytics gaId="G-PLACEHOLDER" />
+        {/* Facebook Pixel — only rendered when NEXT_PUBLIC_FB_PIXEL_ID is set */}
+        {FB_PIXEL_ID && (
+          <>
+            <Script
+              id="fb-pixel"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  !function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '${FB_PIXEL_ID}');
+                  fbq('track', 'PageView');
+                `,
+              }}
+            />
+            <noscript>
+              <img
+                height="1"
+                width="1"
+                style={{ display: "none" }}
+                src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
+                alt="Facebook Pixel"
+              />
+            </noscript>
+          </>
+        )}
+        {/* Google Analytics — only rendered when NEXT_PUBLIC_GA_ID is set */}
+        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
       </body>
     </html>
   );

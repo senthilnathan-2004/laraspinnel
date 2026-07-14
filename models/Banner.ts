@@ -26,6 +26,10 @@ const BannerSchema = new Schema<IBanner>(
   { timestamps: true }
 );
 
+// Indexes for public active banners and ordered display
+BannerSchema.index({ isActive: 1, order: 1 });
+BannerSchema.index({ order: 1, createdAt: -1 });
+
 const Banner: Model<IBanner> =
   mongoose.models.Banner || mongoose.model<IBanner>("Banner", BannerSchema);
 

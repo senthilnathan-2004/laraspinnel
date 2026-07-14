@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     
     const query = activeOnly ? { isActive: true } : {};
 
-    const testimonials = await Testimonial.find(query).sort({ createdAt: -1 });
+    const testimonials = await Testimonial.find(query).sort({ createdAt: -1 }).lean();
 
     return NextResponse.json(testimonials);
   } catch (error: any) {

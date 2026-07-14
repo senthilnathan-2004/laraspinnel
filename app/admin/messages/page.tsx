@@ -194,16 +194,16 @@ export default function AdminMessagesPage() {
 
           <div className="flex-1 overflow-y-auto divide-y divide-brand-border">
             {isLoading ? (
-              <div className="p-3 md:p-4 md:p-8 text-center text-brand-gray flex flex-col items-center gap-3">
+              <div className="p-3 md:p-8 text-center text-brand-gray flex flex-col items-center gap-3">
                 <Loader2 className="animate-spin text-goat-primary" size={24} />
                 <p className="text-xs">Loading messages...</p>
               </div>
             ) : error ? (
-              <div className="p-3 md:p-4 md:p-8 text-center text-red-600 text-xs font-semibold">
+              <div className="p-3 md:p-8 text-center text-red-600 text-xs font-semibold">
                 {error}
               </div>
             ) : messages.length === 0 ? (
-              <div className="p-3 md:p-4 md:p-8 text-center text-brand-gray flex flex-col items-center gap-2">
+              <div className="p-3 md:p-8 text-center text-brand-gray flex flex-col items-center gap-2">
                 <Mail size={32} className="text-neutral-300" />
                 <p className="text-xs font-medium">Inbox is empty</p>
               </div>
@@ -394,7 +394,7 @@ export default function AdminMessagesPage() {
               )}
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center text-brand-gray p-3 md:p-4 md:p-8">
+            <div className="flex-1 flex flex-col items-center justify-center text-center text-brand-gray p-3 md:p-8">
               <Mail size={48} className="text-neutral-200 mb-3" />
               <h4 className="font-semibold text-brand-black">No message selected</h4>
               <p className="text-xs mt-1">Select a contact message from the list to view its contents.</p>

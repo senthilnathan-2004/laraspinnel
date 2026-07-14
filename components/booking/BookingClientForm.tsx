@@ -170,7 +170,7 @@ function BookingForm() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white border border-brand-border rounded-2xl p-3 md:p-4 md:p-8 shadow-hover text-center space-y-6 max-w-lg mx-auto py-16 animate-in duration-300"
+              className="bg-white border border-brand-border rounded-2xl p-3 md:p-8 shadow-hover text-center space-y-6 max-w-lg mx-auto py-16 animate-in duration-300"
             >
               {/* Animated checkmark circle */}
               <div className="flex items-center justify-center">

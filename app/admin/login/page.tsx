@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-brand-light-gray flex flex-col items-center justify-center p-3 md:p-6">
       {/* Login Container */}
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-hover border border-brand-border p-3 md:p-4 md:p-8 space-y-6">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-hover border border-brand-border p-3 md:p-8 space-y-6">
         {/* Brand Header */}
         <div className="flex flex-col items-center text-center space-y-3">
           <div className="w-16 h-16 rounded-full bg-goat-tint text-goat-text flex items-center justify-center border border-goat-primary/10">
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full h-12 bg-white border border-brand-border rounded-xl pl-11 pr-4 text-sm text-brand-black placeholder-brand-gray focus:ring-2 focus:ring-goat-primary focus:border-transparent outline-none transition-all"
-                placeholder="admin@ragugoatfarm.com"
+                placeholder="admin@ragugoatform.com"
               />
             </div>
           </div>

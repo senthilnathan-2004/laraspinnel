@@ -29,7 +29,7 @@ export default function VarietyCard({
   return (
     <Link
       href={url}
-      className="group relative flex flex-col w-full overflow-hidden rounded-[2rem] bg-brand-black shadow-lg hover:shadow-2xl transition-all duration-700 aspect-square"
+      className="group relative flex flex-col w-full overflow-hidden rounded-4xl bg-brand-black shadow-lg hover:shadow-2xl transition-all duration-700 aspect-square"
     >
       {/* Background Image with Zoom */}
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-900">
@@ -49,7 +49,7 @@ export default function VarietyCard({
       </div>
 
       {/* Dark Gradient Overlay for Text Readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
       {/* Top Tag */}
       {tag && (

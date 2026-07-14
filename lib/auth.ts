@@ -1,7 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import mongoose from "mongoose";
 import { connectToDatabase } from "./db";
 import AdminUser from "../models/AdminUser";
 
@@ -10,7 +9,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Admin Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "admin@ragugoatfarm.com" },
+        email: { label: "Email", type: "email", placeholder: "admin@ragugoatform.com" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -19,25 +18,19 @@ export const authOptions: NextAuthOptions = {
         }
 
         await connectToDatabase();
-        // mongoose is already imported at the top of the file
-        console.log("LOGIN ATTEMPT - DB URI:", process.env.MONGODB_URI);
-        console.log("LOGIN ATTEMPT - DB Name:", mongoose.connection.name);
-        
-        console.log("LOGIN ATTEMPT - Raw Email:", credentials.email);
+
         const email = credentials.email.trim().toLowerCase();
-        console.log("LOGIN ATTEMPT - Trimmed Email:", email);
-
         const user = await AdminUser.findOne({ email });
-        console.log("LOGIN ATTEMPT - Found User:", user ? user.email : "null");
 
+        // Generic message for both cases to prevent user enumeration.
         if (!user) {
-          throw new Error("No admin found with this email");
+          throw new Error("Invalid email or password");
         }
 
         const isPasswordValid = await bcrypt.compare(credentials.password, user.passwordHash);
 
         if (!isPasswordValid) {
-          throw new Error("Incorrect password");
+          throw new Error("Invalid email or password");
         }
 
         return {

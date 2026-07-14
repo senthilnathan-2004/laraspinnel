@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     }
 
     await connectToDatabase();
-    const posts = await BlogPost.find().sort({ createdAt: -1 });
+    const posts = await BlogPost.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json(posts);
   } catch (error: any) {
     console.error("Admin Blog GET error:", error);

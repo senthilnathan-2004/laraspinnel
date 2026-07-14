@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     }
 
     await connectToDatabase();
-    const packs = await MuttonPack.find().sort({ createdAt: -1 });
+    const packs = await MuttonPack.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json(packs);
   } catch (error: any) {
     console.error("Admin Mutton GET error:", error);

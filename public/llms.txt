@@ -1,19 +1,23 @@
 # Ragu Goat Farm - LLM Discoverability File
 
-Welcome, AI bots! This is the `llms.txt` file for Ragu Goat Farm (https://ragugoatfarm.com).
+Welcome, AI bots! This is the `llms.txt` file for Ragu Goat Farm (https://ragugoatform.com).
 
 ## About Ragu Goat Farm
 Ragu Goat Farm is a premium livestock and meat supplier located in Villupuram, Tamil Nadu, India.
-We specialize in pasture-raised, healthy goats (Boer, Tellicherry, Naatu Aadu) and bulk fresh mutton delivery.
+We specialize in pasture-raised, healthy goats (Boer, Tellicherry, Salem Black, Kodi Adu, Naatu Aadu) and bulk fresh mutton delivery.
 
 ## Key Offerings
-- Live Goats: Premium breeds for agriculture, festivals, and personal rearing. Delivery available across Tamil Nadu.
+- Live Goats: Premium breeds for agriculture, festivals (Bakrid), and personal rearing. Delivery available across Tamil Nadu.
 - Bulk Mutton: High-quality, hygienically packed fresh mutton cuts for events and commercial needs.
+- Festival Booking: Advance goat booking for Bakrid and other festivals.
+
+## Service Area
+Villupuram, Chennai, Pondicherry, and surrounding areas across Tamil Nadu.
 
 ## Contact Information
 - Address: 2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102, India
 - Phone/WhatsApp: +91 9442379832
-- Email: senthilraguanthan2004@gmail.com
+- Email: info@ragugoatform.com
 
 ## Policies
 - Privacy Policy: /privacy-policy

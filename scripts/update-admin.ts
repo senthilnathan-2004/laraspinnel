@@ -8,7 +8,7 @@ async function updateAdmin() {
   const passwordHash = await bcrypt.hash("Senthil@123", 10);
   
   // Make sure the default admin has this password too
-  const defaultAdmin = await AdminUser.findOne({ email: "admin@ragugoatfarm.com" });
+  const defaultAdmin = await AdminUser.findOne({ email: "admin@ragugoatform.com" });
   if (defaultAdmin) {
     defaultAdmin.passwordHash = passwordHash;
     await defaultAdmin.save();

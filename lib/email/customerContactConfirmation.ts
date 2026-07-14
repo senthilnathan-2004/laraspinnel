@@ -1,5 +1,5 @@
 export function getCustomerContactConfirmationEmailHtml(message: any): string {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatfarm.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
   
 
   return `

@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       query.category = category.toLowerCase();
     }
 
-    const images = await GalleryImage.find(query).sort({ order: 1, createdAt: -1 });
+    const images = await GalleryImage.find(query).sort({ order: 1, createdAt: -1 }).lean();
     return NextResponse.json(images);
   } catch (error: any) {
     console.error("Public Gallery API error:", error);

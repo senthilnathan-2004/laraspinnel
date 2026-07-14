@@ -21,6 +21,10 @@ const TestimonialSchema = new Schema<ITestimonial>(
   { timestamps: true }
 );
 
+// Indexes for active testimonials and admin sort
+TestimonialSchema.index({ isActive: 1, createdAt: -1 });
+TestimonialSchema.index({ createdAt: -1 });
+
 const Testimonial: Model<ITestimonial> =
   mongoose.models.Testimonial || mongoose.model<ITestimonial>("Testimonial", TestimonialSchema);
 

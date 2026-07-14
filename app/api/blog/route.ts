@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       query.tags = { $in: [tag] };
     }
 
-    let dbQuery = BlogPost.find(query).sort({ publishedAt: -1, createdAt: -1 });
+    let dbQuery = BlogPost.find(query).sort({ publishedAt: -1, createdAt: -1 }).lean();
 
     if (limitStr) {
       const limit = parseInt(limitStr);

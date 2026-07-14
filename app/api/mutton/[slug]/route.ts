@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
     await connectToDatabase();
     const { slug } = await params;
 
-    const pack = await MuttonPack.findOne({ slug, isActive: true });
+    const pack = await MuttonPack.findOne({ slug, isActive: true }).lean();
 
     if (!pack) {
       return NextResponse.json({ error: "Mutton pack not found" }, { status: 444 });

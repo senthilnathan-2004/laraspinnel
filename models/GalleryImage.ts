@@ -24,6 +24,9 @@ const GalleryImageSchema = new Schema<IGalleryImage>(
   { timestamps: true }
 );
 
+// Index for ordered gallery display
+GalleryImageSchema.index({ order: 1, createdAt: -1 });
+
 const GalleryImage: Model<IGalleryImage> =
   mongoose.models.GalleryImage ||
   mongoose.model<IGalleryImage>("GalleryImage", GalleryImageSchema);

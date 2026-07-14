@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 
     await connectToDatabase();
 
-    const settingsList = await SiteSettings.find({});
+    const settingsList = await SiteSettings.find({}).lean();
     
     // Map list [ { key: 'farm_name', value: '...' } ] to single object { farm_name: '...' }
     const settingsObject = settingsList.reduce((acc: any, curr) => {

@@ -51,6 +51,10 @@ const FestivalBookingSchema = new Schema<IFestivalBooking>(
   { timestamps: true }
 );
 
+// Indexes for pending-count and admin list sort
+FestivalBookingSchema.index({ status: 1, createdAt: -1 });
+FestivalBookingSchema.index({ createdAt: -1 });
+
 const FestivalBooking: Model<IFestivalBooking> =
   mongoose.models.FestivalBooking ||
   mongoose.model<IFestivalBooking>("FestivalBooking", FestivalBookingSchema);

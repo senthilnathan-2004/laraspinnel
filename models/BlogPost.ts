@@ -33,6 +33,10 @@ const BlogPostSchema = new Schema<IBlogPost>(
   { timestamps: true }
 );
 
+// Indexes for public published listing and admin list sort
+BlogPostSchema.index({ isPublished: 1, publishedAt: -1 });
+BlogPostSchema.index({ createdAt: -1 });
+
 const BlogPost: Model<IBlogPost> =
   mongoose.models.BlogPost || mongoose.model<IBlogPost>("BlogPost", BlogPostSchema);
 

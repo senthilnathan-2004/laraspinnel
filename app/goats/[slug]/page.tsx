@@ -9,6 +9,7 @@ import { Leaf } from "@phosphor-icons/react";
 import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
+import { SITE_URL } from "@/lib/siteUrl";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -137,13 +138,13 @@ export default function GoatDetailsPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://ragugoatfarm.com/"
+                "item": `${SITE_URL}/`
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Live Goats",
-                "item": "https://ragugoatfarm.com/goats"
+                "item": `${SITE_URL}/goats`
               },
               {
                 "@type": "ListItem",
@@ -192,6 +193,17 @@ export default function GoatDetailsPage() {
       />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-32 md:pb-16">
+        {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
+        <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
+          <ol className="flex flex-wrap items-center gap-1.5">
+            <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/goats" className="hover:text-brand-black transition-colors">Goats</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{goat.name}</li>
+          </ol>
+        </nav>
+
         {/* Back Link */}
         <Link
           href="/goats"
@@ -281,7 +293,7 @@ export default function GoatDetailsPage() {
             <div className="hidden md:flex items-center gap-4 pt-2">
               <Link
                 href={`/book?type=goat&id=${goat._id}`}
-                className="flex-[2] bg-goat-primary hover:bg-goat-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all shadow-sm shadow-goat-primary/20"
+                className="flex-2 bg-goat-primary hover:bg-goat-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all shadow-sm shadow-goat-primary/20"
               >
                 <ShoppingBag size={18} />
                 <span>Book This Goat</span>
@@ -409,7 +421,7 @@ export default function GoatDetailsPage() {
         {/* Book Now button */}
         <Link
           href={`/book?type=goat&id=${goat._id}`}
-          className="flex-[2] bg-goat-primary hover:bg-goat-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
+          className="flex-2 bg-goat-primary hover:bg-goat-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
         >
           <ShoppingBag size={16} />
           <span>Book This Goat</span>

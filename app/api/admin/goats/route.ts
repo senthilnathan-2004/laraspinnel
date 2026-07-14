@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     }
 
     await connectToDatabase();
-    const goats = await GoatVariety.find().sort({ createdAt: -1 });
+    const goats = await GoatVariety.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json(goats);
   } catch (error: any) {
     console.error("Admin Goats GET error:", error);

@@ -51,25 +51,15 @@ export default function AdminSidebar() {
     setIsMobileOpen(false);
   }, [pathname]);
 
-  const { data: messagesData } = useSWR("/api/admin/messages/unread-count", fetcher, { 
-    refreshInterval: 60000 
+  // One request for all badge counts, refreshed every 60s and deduped by SWR.
+  const { data: counts } = useSWR("/api/admin/counts", fetcher, {
+    refreshInterval: 60000,
+    dedupingInterval: 30000,
   });
-  const unreadCount = messagesData?.count || 0;
-
-  const { data: bookingsData } = useSWR("/api/admin/bookings/pending-count", fetcher, { 
-    refreshInterval: 60000 
-  });
-  const pendingBookingsCount = bookingsData?.count || 0;
-
-  const { data: scheduleData } = useSWR("/api/admin/schedule/count", fetcher, { 
-    refreshInterval: 60000 
-  });
-  const scheduleCount = scheduleData?.count || 0;
-
-  const { data: festivalBookingsData } = useSWR("/api/admin/festival-bookings/pending-count", fetcher, { 
-    refreshInterval: 60000 
-  });
-  const pendingFestivalCount = festivalBookingsData?.count || 0;
+  const unreadCount = counts?.messages || 0;
+  const pendingBookingsCount = counts?.bookings || 0;
+  const scheduleCount = counts?.schedule || 0;
+  const pendingFestivalCount = counts?.festival || 0;
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -211,7 +201,7 @@ export default function AdminSidebar() {
                 
                 {/* Badge */}
                 {item.badge !== undefined && item.badge > 0 && !isCollapsed && (
-                  <span className="bg-mutton-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                  <span className="bg-mutton-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-5 text-center">
                     {item.badge}
                   </span>
                 )}

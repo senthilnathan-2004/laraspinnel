@@ -94,7 +94,11 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
       {/* Viewport */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {slides.map((slide, index) => (
+          {slides.map((slide, index) => {
+            // The page's single <h1> is the sr-only heading in app/page.tsx.
+            // Carousel slide headlines are <h2> so there is exactly one H1.
+            const Heading = "h2";
+            return (
             <div
               key={slide._id}
               className="flex-[0_0_100%] min-w-0 h-[60vh] md:h-[88vh] relative bg-brand-black"
@@ -117,7 +121,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                 />
               )}
               {/* Dark Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-brand-black/35 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-brand-black/80 via-brand-black/35 to-transparent"></div>
 
               {/* Slide Content */}
               <div className="absolute inset-0 flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-28">
@@ -128,9 +132,9 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                   </span>
 
                   {/* Title in display Anton font */}
-                  <h1 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
+                  <Heading className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
                     {slide.headline}
-                  </h1>
+                  </Heading>
 
                   {/* Subtext */}
                   {slide.subtext && (
@@ -156,7 +160,8 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

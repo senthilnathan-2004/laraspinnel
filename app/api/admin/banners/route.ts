@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     }
 
     await connectToDatabase();
-    const banners = await Banner.find().sort({ order: 1, createdAt: -1 });
+    const banners = await Banner.find().sort({ order: 1, createdAt: -1 }).lean();
     return NextResponse.json(banners);
   } catch (error: any) {
     console.error("Admin Banners GET error:", error);

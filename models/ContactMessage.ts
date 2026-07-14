@@ -33,6 +33,10 @@ const ContactMessageSchema = new Schema<IContactMessage>(
   { timestamps: true }
 );
 
+// Indexes for unread-count and admin message list sort
+ContactMessageSchema.index({ status: 1, createdAt: -1 });
+ContactMessageSchema.index({ createdAt: -1 });
+
 const ContactMessage: Model<IContactMessage> =
   mongoose.models.ContactMessage ||
   mongoose.model<IContactMessage>("ContactMessage", ContactMessageSchema);

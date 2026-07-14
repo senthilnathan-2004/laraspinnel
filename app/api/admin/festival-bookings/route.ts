@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       query.status = status;
     }
 
-    const bookings = await FestivalBooking.find(query).sort({ createdAt: -1 });
+    const bookings = await FestivalBooking.find(query).sort({ createdAt: -1 }).lean();
 
     return NextResponse.json(bookings);
   } catch (error: any) {

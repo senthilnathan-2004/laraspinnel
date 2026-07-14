@@ -7,7 +7,7 @@ interface SendEmailParams {
 }
 
 export async function sendEmail({ to, subject, html }: SendEmailParams) {
-  const fromEmail = process.env.EMAIL_FROM || "Ragu Goat Farm <no-reply@ragugoatfarm.com>";
+  const fromEmail = process.env.EMAIL_FROM || "Ragu Goat Farm <no-reply@ragugoatform.com>";
 
   if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
     console.log("-----------------------------------------");

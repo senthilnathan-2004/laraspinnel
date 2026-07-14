@@ -19,7 +19,7 @@ export function getCustomerStatusUpdateEmailHtml(booking: any): string {
   const currentStatusColor = statusColors[booking.status as keyof typeof statusColors] || themeColor;
   const currentStatusLabel = statusLabels[booking.status as keyof typeof statusLabels] || booking.status;
   
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatfarm.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
   
 
   return `

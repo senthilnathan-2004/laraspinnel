@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
     await connectToDatabase();
     const { slug } = await params;
 
-    const goat = await GoatVariety.findOne({ slug, isActive: true });
+    const goat = await GoatVariety.findOne({ slug, isActive: true }).lean();
 
     if (!goat) {
       return NextResponse.json({ error: "Goat variety not found" }, { status: 444 });

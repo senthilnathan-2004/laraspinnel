@@ -46,7 +46,7 @@ export default function AboutPage() {
 
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-brand-light-gray border border-brand-border select-none shadow-sm">
+          <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-brand-light-gray border border-brand-border select-none shadow-sm">
             <Image
               src={settings.about_intro_image || "/placeholder-goat.jpg"}
               alt="Ragu Farm Pastures"
@@ -69,7 +69,7 @@ export default function AboutPage() {
         </div>
 
         {/* Core Values */}
-        <div className="space-y-8 bg-brand-light-gray/40 border border-brand-border rounded-3xl p-3 md:p-4 md:p-8">
+        <div className="space-y-8 bg-brand-light-gray/40 border border-brand-border rounded-3xl p-3 md:p-8">
           <div className="text-center space-y-2 max-w-md mx-auto">
             <h2 className="font-display text-2xl sm:text-3xl text-brand-black uppercase">
               {settings.about_why_title || "Why Choose Ragu Goat Farm?"}

@@ -29,6 +29,10 @@ const MuttonPackSchema = new Schema<IMuttonPack>(
   { timestamps: true }
 );
 
+// Indexes for public catalog (active + featured) and admin sort
+MuttonPackSchema.index({ isActive: 1, isFeatured: -1, name: 1 });
+MuttonPackSchema.index({ createdAt: -1 });
+
 const MuttonPack: Model<IMuttonPack> =
   mongoose.models.MuttonPack || mongoose.model<IMuttonPack>("MuttonPack", MuttonPackSchema);
 

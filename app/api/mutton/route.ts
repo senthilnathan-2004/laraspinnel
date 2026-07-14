@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
       query.isFeatured = true;
     }
 
-    const packs = await MuttonPack.find(query).sort({ isFeatured: -1, name: 1 });
+    const packs = await MuttonPack.find(query).sort({ isFeatured: -1, name: 1 }).lean();
     return NextResponse.json(packs);
   } catch (error: any) {
     console.error("Public Mutton API error:", error);

@@ -3,9 +3,10 @@ import { connectToDatabase } from "@/lib/db";
 import GoatVariety from "@/models/GoatVariety";
 import MuttonPack from "@/models/MuttonPack";
 import BlogPost from "@/models/BlogPost";
+import { SITE_URL } from "@/lib/siteUrl";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ragugoatfarm.com";
+  const baseUrl = SITE_URL;
 
   // Static routes
   const staticRoutes = [

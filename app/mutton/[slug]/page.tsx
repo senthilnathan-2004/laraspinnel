@@ -9,6 +9,7 @@ import { Flame } from "@phosphor-icons/react";
 import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
+import { SITE_URL } from "@/lib/siteUrl";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -127,13 +128,13 @@ export default function MuttonDetailsPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://ragugoatfarm.com/"
+                "item": `${SITE_URL}/`
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Fresh Mutton",
-                "item": "https://ragugoatfarm.com/mutton"
+                "item": `${SITE_URL}/mutton`
               },
               {
                 "@type": "ListItem",
@@ -182,6 +183,17 @@ export default function MuttonDetailsPage() {
       />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-32 md:pb-16">
+        {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
+        <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
+          <ol className="flex flex-wrap items-center gap-1.5">
+            <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/mutton" className="hover:text-brand-black transition-colors">Mutton</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{pack.name}</li>
+          </ol>
+        </nav>
+
         {/* Back Link */}
         <Link
           href="/mutton"
@@ -271,7 +283,7 @@ export default function MuttonDetailsPage() {
             <div className="hidden md:flex items-center gap-4 pt-2">
               <Link
                 href={`/book?type=mutton&id=${pack._id}&weight=${selectedWeight}`}
-                className="flex-[2] bg-mutton-primary hover:bg-mutton-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all shadow-sm shadow-mutton-primary/20"
+                className="flex-2 bg-mutton-primary hover:bg-mutton-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all shadow-sm shadow-mutton-primary/20"
               >
                 <ShoppingBag size={18} />
                 <span>Book Mutton Pack</span>
@@ -424,7 +436,7 @@ export default function MuttonDetailsPage() {
         {/* Book Now button */}
         <Link
           href={`/book?type=mutton&id=${pack._id}&weight=${selectedWeight}`}
-          className="flex-[2] bg-mutton-primary hover:bg-mutton-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
+          className="flex-2 bg-mutton-primary hover:bg-mutton-hover text-white font-semibold text-sm h-12 rounded-xl flex items-center justify-center gap-2 active:scale-98 transition-all"
         >
           <ShoppingBag size={16} />
           <span>Book Mutton Pack</span>
