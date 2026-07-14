@@ -17,9 +17,9 @@ import ImageMarquee from "@/components/home/ImageMarquee";
 import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
 import HomePreloader from "@/components/home/HomePreloader";
 export const metadata: Metadata = {
-  title: "Ragu Goat Farm | Live Goat & Fresh Mutton Delivery — Villupuram, Tamil Nadu",
+  title: "Ragu Goat Farm | Live Goats & Mutton Villupuram",
   description:
-    "Buy healthy live goats online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Tellicherry & Boer breeds. Bulk mutton home delivery across Tamil Nadu. Bakrid bookings open.",
+    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh breeds with delivery across Tamil Nadu. Book now!",
   keywords: [
     "live goat for sale Tamil Nadu",
     "goat farm Villupuram",
@@ -44,6 +44,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     siteName: "Ragu Goat Farm",
+    url: "/",
+    images: [
+      {
+        url: "/placeholder-goat.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ragu Goat Farm Boer Goat",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

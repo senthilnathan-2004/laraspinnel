@@ -19,9 +19,9 @@ import SiteSettings from "@/models/SiteSettings";
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://ragugoatfarm.com";
 
 export async function generateMetadata(): Promise<Metadata> {
-  let title = "Ragu Goat Farm | Live Goat & Fresh Mutton Delivery — Villupuram, Tamil Nadu";
+  let title = "Ragu Goat Farm | Live Goats & Mutton Villupuram";
   let description =
-    "Buy healthy live goats online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Tellicherry & Boer breeds. Bulk mutton home delivery across Tamil Nadu. Bakrid bookings open.";
+    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh breeds with delivery across Tamil Nadu. Book now!";
   let favicon = "/favicon.ico";
 
   try {
@@ -72,14 +72,22 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    openGraph: {
-      type: "website",
-      locale: "en_IN",
-      url: BASE_URL,
-      siteName: "Ragu Goat Farm",
-      title,
-      description,
-    },
+      openGraph: {
+        type: "website",
+        locale: "en_IN",
+        url: BASE_URL,
+        siteName: "Ragu Goat Farm",
+        title,
+        description,
+        images: [
+          {
+            url: "/placeholder-goat.jpg",
+            width: 1200,
+            height: 630,
+            alt: "Ragu Goat Farm Boer Goat",
+          },
+        ],
+      },
     twitter: {
       card: "summary_large_image",
       title,

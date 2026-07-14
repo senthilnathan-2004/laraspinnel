@@ -43,6 +43,12 @@ export default function HeroSlider() {
     emblaApi.on("select", onSelect);
   }, [emblaApi, onInit, onSelect]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      window.dispatchEvent(new Event("banner-loaded"));
+    }
+  }, [isLoading]);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -106,11 +112,6 @@ export default function HeroSlider() {
                   alt={slide.headline}
                   className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
                   loading="eager"
-                  onLoad={() => {
-                    if (index === 0) {
-                      window.dispatchEvent(new Event("banner-loaded"));
-                    }
-                  }}
                 />
               )}
               {/* Dark Gradient Overlay */}
@@ -125,9 +126,9 @@ export default function HeroSlider() {
                   </span>
 
                   {/* Title in display Anton font */}
-                  <h2 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
+                  <h1 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
                     {slide.headline}
-                  </h2>
+                  </h1>
 
                   {/* Subtext */}
                   {slide.subtext && (
