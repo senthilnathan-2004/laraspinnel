@@ -28,7 +28,7 @@ const BASE_URL = SITE_URL;
 export async function generateMetadata(): Promise<Metadata> {
   let title = "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu";
   let description =
-    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Boer breeds with delivery across Tamil Nadu. Book now!";
+    "Buy healthy live goats & fresh mutton from Ragu Goat Farm, Villupuram. Naatu aadu, Boer & Tellicherry breeds delivered across Tamil Nadu.";
   let favicon = "/icon.svg";
 
   try {

@@ -77,7 +77,7 @@ export default function Testimonials() {
                   {rev.initial}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-brand-black text-sm">{rev.name}</h4>
+                  <h3 className="font-semibold text-brand-black text-sm">{rev.name}</h3>
                   <p className="text-[10px] text-brand-gray mt-0.5 font-medium">{rev.location}</p>
                 </div>
               </div>

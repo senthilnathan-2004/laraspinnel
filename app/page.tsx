@@ -24,7 +24,7 @@ import SiteSettings from "@/models/SiteSettings";
 export const metadata: Metadata = {
   title: "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu",
   description:
-    "Buy healthy live goats & fresh mutton online from Ragu Goat Farm, Villupuram. Farm-fresh naatu aadu, Boer breeds with delivery across Tamil Nadu. Book now!",
+    "Buy healthy live goats & fresh mutton from Ragu Goat Farm, Villupuram. Naatu aadu, Boer & Tellicherry breeds delivered across Tamil Nadu.",
   keywords: [
     "live goat for sale Tamil Nadu",
     "goat farm Villupuram",

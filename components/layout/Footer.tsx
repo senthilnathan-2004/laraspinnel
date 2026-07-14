@@ -109,9 +109,9 @@ export default function Footer() {
 
         {/* Column 2: Quick Links */}
         <div className="space-y-4">
-          <h4 className="text-white font-semibold text-sm uppercase tracking-wider">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
             Quick Links
-          </h4>
+          </h3>
           <ul className="space-y-2 text-sm">
             <li>
               <Link href="/" className="hover:text-white transition-colors">
@@ -153,12 +153,12 @@ export default function Footer() {
 
         {/* Column 3: Service Areas */}
         <div className="space-y-4">
-          <h4 className="text-white font-semibold text-sm uppercase tracking-wider">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
             Service Areas
-          </h4>
+          </h3>
           <div className="space-y-3 text-sm">
             <div>
-              <span className="text-white font-semibold block text-xs uppercase tracking-wider text-goat-primary">
+              <span className="font-semibold block text-xs uppercase tracking-wider text-goat-primary">
                 Live Goats
               </span>
               <span className="text-xs text-neutral-500 mt-0.5 block">
@@ -166,7 +166,7 @@ export default function Footer() {
               </span>
             </div>
             <div>
-              <span className="text-white font-semibold block text-xs uppercase tracking-wider text-mutton-primary">
+              <span className="font-semibold block text-xs uppercase tracking-wider text-mutton-primary">
                 Bulk Mutton
               </span>
               <span className="text-xs text-neutral-500 mt-0.5 block">
@@ -178,9 +178,9 @@ export default function Footer() {
 
         {/* Column 4: Contact Info */}
         <div className="space-y-4">
-          <h4 className="text-white font-semibold text-sm uppercase tracking-wider">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
             Contact Us
-          </h4>
+          </h3>
           <address className="not-italic">
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2.5">
@@ -219,8 +219,19 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Disclaimer (YMYL — livestock / food quality) */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-neutral-800">
+        <p className="text-[11px] leading-relaxed text-neutral-600">
+          <strong className="text-neutral-500">Disclaimer:</strong> All livestock and mutton are sold subject to
+          availability and on-site inspection. Prices, weights, and delivery timelines are indicative and confirmed
+          at the time of booking. {farmName} follows local animal-welfare and food-hygiene practices; customers are
+          advised to verify product suitability for their specific dietary, religious, or agricultural needs before
+          purchase. Images are representative and actual animals or cuts may vary.
+        </p>
+      </div>
+
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 border-t border-neutral-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
         <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
           <p className="text-neutral-600">
             &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved.
