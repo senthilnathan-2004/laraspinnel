@@ -65,34 +65,63 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
           />
         </div>
 
-        {tags.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 border-t border-brand-border pt-4 text-xs font-semibold select-none">
-            <span className="text-brand-gray uppercase tracking-wider font-bold mr-1">Categories:</span>
-            <button
-              onClick={() => setSelectedTag("All")}
-              className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                selectedTag === "All"
-                  ? "bg-goat-tint text-goat-text border-goat-primary/20"
-                  : "bg-white text-brand-black border-brand-border hover:bg-brand-light-gray"
-              }`}
-            >
-              All
-            </button>
-            {tags.map((tag) => (
+        {tags.length > 0 && (() => {
+          const TagButtons = () => (
+            <>
               <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
+                onClick={() => setSelectedTag("All")}
                 className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  selectedTag === tag
+                  selectedTag === "All"
                     ? "bg-goat-tint text-goat-text border-goat-primary/20"
                     : "bg-white text-brand-black border-brand-border hover:bg-brand-light-gray"
                 }`}
               >
-                {tag}
+                All
               </button>
-            ))}
-          </div>
-        )}
+              {tags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                    selectedTag === tag
+                      ? "bg-goat-tint text-goat-text border-goat-primary/20"
+                      : "bg-white text-brand-black border-brand-border hover:bg-brand-light-gray"
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </>
+          );
+
+          return (
+            <div className="border-t border-brand-border pt-4 text-xs font-semibold select-none">
+              {/* Desktop View */}
+              <div className="hidden md:flex flex-wrap items-center gap-2">
+                <span className="text-brand-gray uppercase tracking-wider font-bold mr-1">Categories:</span>
+                <TagButtons />
+              </div>
+
+              {/* Mobile View */}
+              <details className="md:hidden group">
+                <summary className="cursor-pointer text-brand-gray uppercase tracking-wider font-bold flex items-center justify-between outline-none">
+                  <span>Categories</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-normal bg-brand-light-gray text-brand-black px-2 py-0.5 rounded-full group-open:hidden max-w-[150px] truncate">
+                      {selectedTag !== "All" ? selectedTag : `${tags.length} Topics`}
+                    </span>
+                    <span className="text-[10px] font-normal bg-brand-light-gray text-brand-black px-2 py-0.5 rounded-full hidden group-open:inline-block">
+                      Close
+                    </span>
+                  </div>
+                </summary>
+                <div className="flex flex-wrap items-center gap-2 pt-3">
+                  <TagButtons />
+                </div>
+              </details>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Listing Grid */}
