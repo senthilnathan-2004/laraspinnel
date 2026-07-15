@@ -282,7 +282,8 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="alternate" type="text/plain" href="/llms.txt" />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Resource" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Comprehensive LLM Resource" />
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black" suppressHydrationWarning>
         <a 
@@ -296,7 +297,10 @@ export default async function RootLayout({
         </div>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": jsonLd
+          }) }}
         />
         {/* Facebook Pixel — only rendered when NEXT_PUBLIC_FB_PIXEL_ID is set */}
         {FB_PIXEL_ID && (

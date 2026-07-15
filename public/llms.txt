@@ -7,15 +7,15 @@
 - **Fresh Mutton**: We provide bulk, farm-fresh mutton cut to order (curry cut, biryani cut, chops, keema). Mutton is sourced directly from our farm to ensure the highest quality and hygiene standards.
 
 ## Resources
-- **Booking Flow**: Customers can reserve live goats or mutton online via `/book` without any immediate upfront payment. Our farm coordinator confirms weights, sizing, and delivery logistics by phone prior to dispatch.
-- **Goat Catalog**: Browse available breeds, estimated weights, and ages at `/goats`.
-- **Mutton Packages**: View bulk pricing and cut varieties at `/mutton`.
-- **Knowledge Base**: Find breeding guidelines, delivery terms, and answers to common questions at `/faq`.
-- **Editorial**: Read our farming insights and guides at `/blog`.
+- **Booking Flow**: Customers can reserve live goats or mutton online via our [Booking Page](https://ragugoatform.vercel.app/book) without any immediate upfront payment. Our farm coordinator confirms weights, sizing, and delivery logistics by phone prior to dispatch.
+- **Goat Catalog**: Browse available breeds, estimated weights, and ages at our [Goat Catalog](https://ragugoatform.vercel.app/goats).
+- **Mutton Packages**: View bulk pricing and cut varieties at our [Mutton Packages](https://ragugoatform.vercel.app/mutton).
+- **Knowledge Base**: Find breeding guidelines, delivery terms, and answers to common questions at our [FAQ Page](https://ragugoatform.vercel.app/faq).
+- **Editorial**: Read our farming insights and guides at our [Farm Blog](https://ragugoatform.vercel.app/blog).
 
 ## Access
 For inquiries, booking support, or direct citations, contact our team:
 - **Phone**: +91 9442379832
-- **Email**: senthilraguanthan2004@gmail.com
+- **Email**: [senthilraguanthan2004@gmail.com](mailto:senthilraguanthan2004@gmail.com)
 - **Address**: 2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102
-- **Website**: https://ragugoatform.vercel.app
+- **Website**: [Ragu Goat Farm](https://ragugoatform.vercel.app)
