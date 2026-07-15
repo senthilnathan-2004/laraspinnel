@@ -24,11 +24,32 @@ export const authOptions: NextAuthOptions = {
         const envAdminPassword = process.env.SEED_ADMIN_PASSWORD;
 
         if (envAdminEmail && envAdminPassword && email === envAdminEmail && credentials.password === envAdminPassword) {
+          await connectToDatabase();
+          let user = await AdminUser.findOne({ email: envAdminEmail });
+          
+          if (!user) {
+            // Auto-seed the database if this admin doesn't exist yet
+            const passwordHash = await bcrypt.hash(envAdminPassword, 10);
+            user = await AdminUser.create({
+              name: "System Admin",
+              email: envAdminEmail,
+              passwordHash,
+              role: "superadmin",
+            });
+          } else {
+            // Ensure the password matches the ENV password to keep them synced
+            const isValid = await bcrypt.compare(envAdminPassword, user.passwordHash);
+            if (!isValid) {
+              user.passwordHash = await bcrypt.hash(envAdminPassword, 10);
+              await user.save();
+            }
+          }
+
           return {
-            id: "env-superadmin",
-            email: envAdminEmail,
-            name: "System Admin",
-            role: "superadmin",
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
           };
         }
 

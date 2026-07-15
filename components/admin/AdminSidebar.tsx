@@ -144,6 +144,10 @@ export default function AdminSidebar() {
     },
   ];
 
+  if (pathname === "/admin/login") {
+    return null;
+  }
+
   return (
     <>
       {/* Mobile Overlay */}
