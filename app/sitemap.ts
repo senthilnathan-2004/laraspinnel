@@ -70,4 +70,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [...staticRoutes, ...dynamicRoutes];
 }
-export const revalidate = 3600; // Revalidate sitemap every hour
+export const revalidate = 0; // Always generate sitemap dynamically to include latest content
