@@ -5,6 +5,8 @@ import { connectToDatabase } from "@/lib/db";
 import BlogPost from "@/models/BlogPost";
 import BlogListContainer from "@/components/blog/BlogListContainer";
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export default async function BlogListingPage() {
   let posts: any[] = [];
   try {

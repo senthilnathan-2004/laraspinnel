@@ -13,6 +13,8 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export default async function BlogDetailsPage({ params }: Props) {
   const { slug } = await params;
   
