@@ -53,21 +53,17 @@ export default function Testimonials() {
               key={idx}
               className={`bg-white p-3 md:p-6 rounded-2xl border border-brand-border shadow-card flex-col justify-between relative group hover:-translate-y-0.5 transition-transform duration-200 ${idx >= 2 ? "hidden md:flex" : "flex"}`}
             >
-              {/* Quote Icon Background Indicator */}
-              <div className="text-goat-primary/10 absolute top-5 right-5 group-hover:scale-105 transition-transform">
-                <Quote size={36} />
-              </div>
+              <Quote className="text-goat-primary/10 absolute top-5 right-5 group-hover:scale-105 transition-transform" size={36} />
 
               {/* Review Text */}
               <div className="space-y-4">
-                {/* 5 Stars */}
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} weight="fill" size={16} className="text-[#F59E0B]" />
                   ))}
                 </div>
                 <div 
-                  className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-2 text-justify"
+                  className="text-xs text-brand-gray leading-relaxed relative z-10 text-justify"
                   dangerouslySetInnerHTML={{ __html: rev.review }}
                 />
               </div>

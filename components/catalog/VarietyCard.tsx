@@ -53,15 +53,13 @@ export default function VarietyCard({
 
       {/* Top Tag */}
       {tag && (
-        <div className="absolute top-5 left-5 z-10">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-medium tracking-wide shadow-sm">
-            {isGoat ? (
-              <Leaf size={12} weight="fill" className="text-green-300" />
-            ) : (
-              <Flame size={12} weight="fill" className="text-red-300" />
-            )}
-            <span>{tag}</span>
-          </div>
+        <div className="absolute top-5 left-5 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-medium tracking-wide shadow-sm">
+          {isGoat ? (
+            <Leaf size={12} weight="fill" className="text-green-300" />
+          ) : (
+            <Flame size={12} weight="fill" className="text-red-300" />
+          )}
+          <span>{tag}</span>
         </div>
       )}
 
@@ -81,16 +79,14 @@ export default function VarietyCard({
         </div>
 
         {/* Action Button */}
-        <div className="flex items-center gap-3 mt-1 overflow-hidden">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
-            <span>View Details</span>
-            <div
-              className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-500 transform md:-translate-x-4 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
-                isGoat ? "bg-goat-primary" : "bg-mutton-primary"
-              }`}
-            >
-              <ArrowRight size={14} className="text-white" />
-            </div>
+        <div className="flex items-center gap-2 mt-1 overflow-hidden text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
+          <span>View Details</span>
+          <div
+            className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-500 transform md:-translate-x-4 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
+              isGoat ? "bg-goat-primary" : "bg-mutton-primary"
+            }`}
+          >
+            <ArrowRight size={14} className="text-white" />
           </div>
         </div>
       </div>

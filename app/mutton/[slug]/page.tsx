@@ -7,6 +7,8 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+export const revalidate = 60; // Cache for 60 seconds
+
 export default async function MuttonDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   

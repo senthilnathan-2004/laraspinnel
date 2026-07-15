@@ -5,16 +5,19 @@ import HeroSlider from "@/components/home/HeroSlider";
 import ShopByCategory from "@/components/home/ShopByCategory";
 import FeaturedVarieties from "@/components/home/FeaturedVarieties";
 import FeaturedMutton from "@/components/home/FeaturedMutton";
-import HowItWorks from "@/components/home/HowItWorks";
-import GalleryPreview from "@/components/home/GalleryPreview";
-import BlogPreview from "@/components/home/BlogPreview";
-import Testimonials from "@/components/home/Testimonials";
+import dynamic from "next/dynamic";
+
+const Testimonials = dynamic(() => import("@/components/home/Testimonials"), { ssr: true });
+const FestivalGoatCTA = dynamic(() => import("@/components/home/FestivalGoatCTA"), { ssr: true });
+const HowItWorks = dynamic(() => import("@/components/home/HowItWorks"), { ssr: true });
+const GalleryPreview = dynamic(() => import("@/components/home/GalleryPreview"), { ssr: true });
+const BlogPreview = dynamic(() => import("@/components/home/BlogPreview"), { ssr: true });
+
 import ServiceAreaBanner from "@/components/home/ServiceAreaBanner";
 import FinalCTA from "@/components/home/FinalCTA";
 import Footer from "@/components/layout/Footer";
 import TextMarquee from "@/components/home/TextMarquee";
 import ImageMarquee from "@/components/home/ImageMarquee";
-import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
 import HomePreloader from "@/components/home/HomePreloader";
 import PhilosophyContent from "@/components/home/PhilosophyContent";
 import { connectToDatabase } from "@/lib/db";
