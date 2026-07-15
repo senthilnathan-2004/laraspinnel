@@ -21,6 +21,8 @@ import { connectToDatabase } from "@/lib/db";
 import Banner from "@/models/Banner";
 import SiteSettings from "@/models/SiteSettings";
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export const metadata: Metadata = {
   title: "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu",
   description:

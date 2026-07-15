@@ -51,6 +51,10 @@ export async function PUT(req: NextRequest) {
     });
 
     await Promise.all(updatePromises);
+    
+    // Purge the homepage cache so changes show immediately
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/");
 
     return NextResponse.json({ message: "Settings updated successfully" });
   } catch (error: any) {
