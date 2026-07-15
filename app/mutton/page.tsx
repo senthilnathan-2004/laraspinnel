@@ -108,14 +108,14 @@ export default function MuttonListingPage() {
             Bulk Naatu Aadu Mutton — 5kg, 10kg &amp; Custom Packs
           </h2>
           <p className="text-sm font-medium text-brand-gray hidden md:block">
-            Order farm fresh bulk mutton packages, freshly cut and hygienically packed, and delivered to your doorstep across Villupuram, Tindivanam, Vanur, and all Tamil Nadu districts. Perfect for weddings, functions, and regular orders.
+            Order farm fresh bulk mutton packages, freshly cut and hygienically packed, and delivered to your doorstep across Villupuram, Tindivanam, and other major districts in Tamil Nadu. Perfect for weddings, functions, and regular orders.
           </p>
           <details className="md:hidden text-xs text-brand-gray border border-brand-border rounded-xl p-3 mt-2 bg-brand-light-gray/30">
             <summary className="font-semibold cursor-pointer outline-none select-none text-mutton-text uppercase tracking-wider">
               Show Farm &amp; Delivery Details
             </summary>
             <p className="mt-2 leading-relaxed">
-              Order farm fresh bulk mutton packages, freshly cut and hygienically packed, and delivered to your doorstep across Villupuram, Tindivanam, Vanur, and all Tamil Nadu districts. Perfect for weddings, functions, and regular orders.
+              Order farm fresh bulk mutton packages, freshly cut and hygienically packed, and delivered to your doorstep across Villupuram, Tindivanam, and other major districts in Tamil Nadu. Perfect for weddings, functions, and regular orders.
             </p>
           </details>
         </div>
@@ -186,10 +186,10 @@ export default function MuttonListingPage() {
         {/* SEO Content Block */}
         <section className="bg-brand-light-gray/20 rounded-2xl p-4 md:p-6 border border-brand-border mt-12 text-left w-full mx-auto space-y-4">
           <h3 className="font-display text-2xl text-brand-black uppercase tracking-wide">
-            Bulk Farm-Fresh Mutton Delivery
+            Bulk Farm Fresh Mutton Delivery
           </h3>
           <p className="text-brand-gray text-sm leading-relaxed">
-            Elevate your culinary experience with premium, farm-fresh mutton from Ragu Goat Farm. We supply hygienic, bulk mutton packs ideal for weddings, restaurants, family gatherings, and commercial orders. Sourced exclusively from healthy, young country goats (Naatu Aadu) raised on our farm, our meat guarantees tenderness and rich traditional flavor. Enjoy seamless booking and prompt cold-chain delivery directly to your doorstep in Villupuram, Coimbatore, Tiruppur, Erode, and surrounding areas.
+            Elevate your culinary experience with premium, farm fresh mutton from Ragu Goat Farm. We supply hygienic, bulk mutton packs ideal for weddings, restaurants, family gatherings, and commercial orders. Sourced exclusively from healthy, young country goats (Naatu Aadu) raised on our farm, our meat guarantees tenderness and rich traditional flavor. Enjoy seamless booking and prompt cold chain delivery directly to your doorstep in Villupuram, Pondicherry, Tindivanam, Vanur and surrounding districts in Tamil Nadu.
           </p>
         </section>
       </main>
