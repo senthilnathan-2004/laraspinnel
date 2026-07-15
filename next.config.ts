@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   compress: true, // Explicitly enable compression (Gzip/Brotli)
+  experimental: {
+    optimizeCss: true, // Inlines critical CSS to prevent render blocking
+  },
+  turbopack: {},
   async headers() {
     return [
       {

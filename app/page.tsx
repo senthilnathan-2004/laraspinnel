@@ -86,36 +86,6 @@ const DEFAULT_PHILOSOPHY = `
 <h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Committed to Community & Tradition</h3>
 <p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">We believe in upholding the agricultural traditions of Tamil Nadu while employing modern techniques to improve yield and animal health. Our estate works closely with local communities, providing employment and supporting sustainable local ecosystems. Every purchase directly supports these rural economies and helps preserve traditional rearing methods that have been passed down for generations. By choosing our services, you are investing in a system that values human connection, respects the environment, and honors the timeless practices of ethical animal stewardship.</p>
 
-<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">At a Glance: Our Offerings</h3>
-<div class="overflow-x-auto mb-6 border border-brand-border rounded-xl">
-  <table class="w-full text-left text-sm text-brand-gray border-collapse">
-    <thead class="bg-brand-light-gray text-brand-black font-semibold text-xs uppercase tracking-wider">
-      <tr>
-        <th class="px-4 py-3 border-b border-brand-border">Service / Product</th>
-        <th class="px-4 py-3 border-b border-brand-border">Key Highlights</th>
-        <th class="px-4 py-3 border-b border-brand-border">Primary Availability</th>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-brand-border">
-      <tr class="hover:bg-brand-light-gray/50 transition-colors">
-        <td class="px-4 py-3 font-semibold text-brand-black">Live Goats (Boer, Tellicherry, Naatu)</td>
-        <td class="px-4 py-3">Pasture-raised, vet-inspected, traceable lineage</td>
-        <td class="px-4 py-3">All 38 Districts in Tamil Nadu</td>
-      </tr>
-      <tr class="hover:bg-brand-light-gray/50 transition-colors">
-        <td class="px-4 py-3 font-semibold text-brand-black">Bulk Fresh Mutton</td>
-        <td class="px-4 py-3">Custom cuts, hygienic packaging, 100% organic</td>
-        <td class="px-4 py-3">Villupuram & Surrounding Areas</td>
-      </tr>
-      <tr class="hover:bg-brand-light-gray/50 transition-colors">
-        <td class="px-4 py-3 font-semibold text-brand-black">Festival Bookings (Bakrid)</td>
-        <td class="px-4 py-3">Advance booking, no immediate upfront payment</td>
-        <td class="px-4 py-3">Statewide Delivery</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
 <h4 class="text-lg font-bold text-brand-black pt-4 mb-2">A Sustainable Future for All</h4>
 <p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">Our vision is to continue expanding our green pastures while reducing our carbon footprint. We are constantly researching innovative methods to integrate renewable energy into our daily operations, minimizing waste, and maximizing resource efficiency. Our dedication to a greener tomorrow ensures that our agricultural practices remain viable and beneficial for decades to come.</p>
 
@@ -173,6 +143,35 @@ export default async function HomePage() {
         <main className="flex-1">
           {/* Visually hidden H1 for SEO since HeroSlider fetches client-side */}
           <h1 className="sr-only">Ragu Goat Farm - Live Goats & Fresh Mutton in Villupuram</h1>
+          
+          {/* Visually hidden data table for AI Citability & SEO structured extraction */}
+          <table className="sr-only">
+            <caption>Ragu Goat Farm Services & Offerings</caption>
+            <thead>
+              <tr>
+                <th scope="col">Product / Service</th>
+                <th scope="col">Key Highlights</th>
+                <th scope="col">Availability</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Live Goats (Boer, Tellicherry, Naatu)</td>
+                <td>Pasture-raised, vet-inspected, traceable lineage</td>
+                <td>All 38 Districts in Tamil Nadu</td>
+              </tr>
+              <tr>
+                <td>Bulk Fresh Mutton</td>
+                <td>Custom cuts, hygienic packaging, 100% organic</td>
+                <td>Villupuram & Surrounding Areas</td>
+              </tr>
+              <tr>
+                <td>Festival Bookings (Bakrid)</td>
+                <td>Advance booking, no immediate upfront payment</td>
+                <td>Statewide Delivery</td>
+              </tr>
+            </tbody>
+          </table>
 
           {/* Hero Banner Slider */}
           <HeroSlider initialBanners={initialBanners} />
