@@ -17,9 +17,23 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Please enter email and password");
         }
 
-        await connectToDatabase();
-
         const email = credentials.email.trim().toLowerCase();
+
+        // 1. Check against Environment Variables first (great for fresh Vercel deployments)
+        const envAdminEmail = process.env.SEED_ADMIN_EMAIL?.trim().toLowerCase();
+        const envAdminPassword = process.env.SEED_ADMIN_PASSWORD;
+
+        if (envAdminEmail && envAdminPassword && email === envAdminEmail && credentials.password === envAdminPassword) {
+          return {
+            id: "env-superadmin",
+            email: envAdminEmail,
+            name: "System Admin",
+            role: "superadmin",
+          };
+        }
+
+        // 2. Fallback to Database Check
+        await connectToDatabase();
         const user = await AdminUser.findOne({ email });
 
         // Generic message for both cases to prevent user enumeration.
