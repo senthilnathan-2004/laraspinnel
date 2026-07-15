@@ -43,10 +43,11 @@ export default function FeaturedVarieties() {
 
         {/* List Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
             <div className="block"><SkeletonCard /></div>
             <div className="block"><SkeletonCard /></div>
-            <div className="hidden sm:block"><SkeletonCard /></div>
+            <div className="block"><SkeletonCard /></div>
+            <div className="block md:hidden"><SkeletonCard /></div>
           </div>
         ) : error ? (
           <p className="text-center text-red-600 text-sm font-semibold py-8">
@@ -57,9 +58,9 @@ export default function FeaturedVarieties() {
             <p className="text-sm font-semibold">No featured varieties set up.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {goats.slice(0, 3).map((goat, i) => (
-              <div key={goat._id} className={i >= 2 ? "hidden sm:block" : ""}>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
+            {goats.slice(0, 4).map((goat, i) => (
+              <div key={goat._id} className={i === 3 ? "md:hidden" : ""}>
                 <PremiumCard
                   name={goat.name}
                   price={goat.priceEstimate}

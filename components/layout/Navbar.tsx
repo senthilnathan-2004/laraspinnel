@@ -54,7 +54,7 @@ export default function Navbar() {
                 className="h-10 w-auto object-contain"
               />
             )}
-            <span className="font-display text-2xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase">
+            <span className="font-display text-2xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase truncate max-w-[130px] min-[375px]:max-w-[180px] sm:max-w-none">
               {settings.farm_name || "RAGU FARM"}
             </span>
           </Link>

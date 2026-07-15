@@ -29,6 +29,7 @@ export default function PremiumCard({
   return (
     <Link
       href={url}
+      prefetch={true}
       className="group relative flex flex-col w-full overflow-hidden rounded-4xl bg-brand-black shadow-lg hover:shadow-2xl transition-all duration-700 aspect-square"
     >
       {/* Background Image with Zoom */}
@@ -53,26 +54,26 @@ export default function PremiumCard({
 
       {/* Top Tag */}
       {tag && (
-        <div className="absolute top-5 left-5 z-10">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-medium tracking-wide shadow-sm">
+        <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-10">
+          <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 max-[355px]:px-1.5 max-[355px]:py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] max-[355px]:text-[8px] sm:text-xs font-medium tracking-wide shadow-sm">
             {isGoat ? (
-              <Leaf size={12} weight="fill" className="text-green-300" />
+              <Leaf weight="fill" className="text-green-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
             ) : (
-              <Flame size={12} weight="fill" className="text-red-300" />
+              <Flame weight="fill" className="text-red-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
             )}
-            <span>{tag}</span>
+            <span className="max-[355px]:max-w-[50px] max-[355px]:truncate">{tag}</span>
           </div>
         </div>
       )}
 
       {/* Content at Bottom */}
-      <div className="relative z-10 mt-auto p-6 flex flex-col gap-4 transform md:translate-y-2 translate-y-0 group-hover:translate-y-0 transition-transform duration-500">
-        <div className="space-y-1">
-          <h3 className="text-2xl font-display text-white tracking-wide leading-tight group-hover:text-white/90">
+      <div className="relative z-10 mt-auto p-4 sm:p-6 max-[355px]:p-2.5 flex flex-col gap-2 max-[355px]:gap-1 sm:gap-4 transform md:translate-y-2 translate-y-0 group-hover:translate-y-0 transition-transform duration-500">
+        <div className="space-y-0.5 sm:space-y-1 max-[355px]:space-y-0">
+          <h3 className="text-lg sm:text-2xl max-[355px]:text-[14px] font-display text-white tracking-wide leading-tight group-hover:text-white/90">
             {name}
           </h3>
           <p
-            className={`text-lg font-semibold tracking-tight ${
+            className={`text-sm sm:text-lg max-[355px]:text-[11px] font-semibold tracking-tight ${
               isGoat ? "text-green-400" : "text-red-400"
             }`}
           >
@@ -81,15 +82,15 @@ export default function PremiumCard({
         </div>
 
         {/* Action Button */}
-        <div className="flex items-center gap-3 mt-1 overflow-hidden">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
+        <div className="flex items-center gap-3 mt-0 sm:mt-1 max-[355px]:mt-0 overflow-hidden">
+          <div className="flex items-center gap-1 sm:gap-2 text-[10px] max-[355px]:text-[8.5px] sm:text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
             <span>View Details</span>
             <div
-              className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-500 transform md:-translate-x-4 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
+              className={`flex items-center justify-center w-5 h-5 max-[355px]:w-4 max-[355px]:h-4 sm:w-8 sm:h-8 rounded-full transition-all duration-500 transform md:-translate-x-4 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
                 isGoat ? "bg-goat-primary" : "bg-mutton-primary"
               }`}
             >
-              <ArrowRight size={14} className="text-white" />
+              <ArrowRight className="text-white w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3.5 sm:h-3.5" />
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ export default function GalleryPreview() {
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[280px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6 auto-rows-[160px] sm:auto-rows-[220px] md:auto-rows-[280px]">
           {items.map((img, i) => {
             let bentoClasses = "col-span-1 row-span-1"; // Normal for mobile
             let displayClass = ""; // Show by default
@@ -49,11 +49,9 @@ export default function GalleryPreview() {
             } else if (i === 1) {
               bentoClasses = "col-span-1 row-span-1 md:col-span-2 md:row-span-1"; // Wide block on desktop, normal square on mobile
             } else if (i === 2) {
-              bentoClasses = "md:col-span-1 md:row-span-1"; 
-              displayClass = "hidden md:block"; // Hide on mobile, show on desktop
+              bentoClasses = "col-span-1 row-span-1 md:col-span-1 md:row-span-1"; 
             } else if (i === 3) {
-              bentoClasses = "md:col-span-1 md:row-span-1"; 
-              displayClass = "hidden md:block"; // Hide on mobile, show on desktop
+              bentoClasses = "col-span-1 row-span-1 md:col-span-1 md:row-span-1"; 
             }
 
             return (

@@ -37,11 +37,11 @@ export default function ShopByCategory() {
         </div>
 
         {/* Two cards container */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 gap-3 md:gap-8 lg:gap-12">
           {/* Card 1: Live Goats */}
           <Link
             href="/goats"
-            className="group relative flex flex-col w-full min-h-87.5 md:min-h-100 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
+            className="group relative flex flex-col w-full min-h-[220px] md:min-h-[400px] rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
           >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full bg-brand-black">
@@ -49,7 +49,7 @@ export default function ShopByCategory() {
                 src={settings.home_shop_image_1 || "/placeholder-goat.jpg"}
                 alt="Live Goats"
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 50vw, 50vw"
                 className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
               />
             </div>
@@ -58,30 +58,30 @@ export default function ShopByCategory() {
             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
             {/* Top Tag */}
-            <div className="absolute top-6 left-6 md:top-8 md:left-8 z-10">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wide shadow-sm">
-                <Tag size={14} weight="fill" className="text-green-300" />
-                <span>Tamil Nadu Delivery</span>
+            <div className="absolute top-3 left-3 md:top-8 md:left-8 z-10">
+              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm">
+                <Tag weight="fill" className="text-green-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5" />
+                <span className="truncate max-w-[80px] md:max-w-none">Tamil Nadu Delivery</span>
               </div>
             </div>
 
             {/* Content Bottom */}
-            <div className="relative z-10 mt-auto p-8 md:p-10 flex flex-col gap-4 transform md:translate-y-4 translate-y-0 group-hover:translate-y-0 transition-transform duration-700">
-              <div className="space-y-3">
-                <h3 className="font-display text-white text-4xl md:text-5xl leading-tight group-hover:text-white/90">
+            <div className="relative z-10 mt-auto p-4 md:p-10 flex flex-col gap-2 md:gap-4 transform md:translate-y-4 translate-y-0 group-hover:translate-y-0 transition-transform duration-700">
+              <div className="space-y-1 md:space-y-3">
+                <h3 className="font-display text-white text-xl md:text-4xl lg:text-5xl leading-tight group-hover:text-white/90">
                   Live Goats
                 </h3>
-                <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
+                <p className="text-white/80 text-[10px] md:text-base leading-tight md:leading-relaxed max-w-sm line-clamp-2 md:line-clamp-none">
                   Explore a wide breed variety, including Boer, Tellicherry, and native stock. We deliver right to your location.
                 </p>
               </div>
 
               {/* Action Button */}
-              <div className="flex items-center gap-3 mt-4 overflow-hidden">
-                <div className="flex items-center gap-3 text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
-                  <span className="text-base">Browse Goats</span>
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-goat-primary transition-all duration-500 transform md:-translate-x-6 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
-                    <ArrowRight size={18} className="text-white" />
+              <div className="flex items-center gap-1.5 md:gap-3 mt-1 md:mt-4 overflow-hidden">
+                <div className="flex items-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
+                  <span className="text-xs md:text-base">Browse</span>
+                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-goat-primary transition-all duration-500 transform md:-translate-x-6 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
+                    <ArrowRight className="text-white w-3 h-3 md:w-4.5 md:h-4.5" />
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default function ShopByCategory() {
           {/* Card 2: Bulk Mutton */}
           <Link
             href="/mutton"
-            className="group relative flex flex-col w-full min-h-87.5 md:min-h-100 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
+            className="group relative flex flex-col w-full min-h-[220px] md:min-h-[400px] rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
           >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full bg-brand-black">
@@ -99,7 +99,7 @@ export default function ShopByCategory() {
                 src={settings.home_shop_image_2 || "/placeholder-mutton.jpg"}
                 alt="Bulk Mutton"
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 50vw, 50vw"
                 className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
               />
             </div>
@@ -108,30 +108,30 @@ export default function ShopByCategory() {
             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
             {/* Top Tag */}
-            <div className="absolute top-6 left-6 md:top-8 md:left-8 z-10">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wide shadow-sm">
-                <Tag size={14} weight="fill" className="text-red-300" />
-                <span>Select Districts Only</span>
+            <div className="absolute top-3 left-3 md:top-8 md:left-8 z-10">
+              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm">
+                <Tag weight="fill" className="text-red-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5" />
+                <span className="truncate max-w-[80px] md:max-w-none">Select Districts</span>
               </div>
             </div>
 
             {/* Content Bottom */}
-            <div className="relative z-10 mt-auto p-8 md:p-10 flex flex-col gap-4 transform md:translate-y-4 translate-y-0 group-hover:translate-y-0 transition-transform duration-700">
-              <div className="space-y-3">
-                <h3 className="font-display text-white text-4xl md:text-5xl leading-tight group-hover:text-white/90">
+            <div className="relative z-10 mt-auto p-4 md:p-10 flex flex-col gap-2 md:gap-4 transform md:translate-y-4 translate-y-0 group-hover:translate-y-0 transition-transform duration-700">
+              <div className="space-y-1 md:space-y-3">
+                <h3 className="font-display text-white text-xl md:text-4xl lg:text-5xl leading-tight group-hover:text-white/90">
                   Bulk Mutton
                 </h3>
-                <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
+                <p className="text-white/80 text-[10px] md:text-base leading-tight md:leading-relaxed max-w-sm line-clamp-2 md:line-clamp-none">
                   Fresh, prime, custom meat cuts packed cleanly. Available for delivery within {displayDistricts}.
                 </p>
               </div>
 
               {/* Action Button */}
-              <div className="flex items-center gap-3 mt-4 overflow-hidden">
-                <div className="flex items-center gap-3 text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
-                  <span className="text-base">Browse Mutton</span>
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-mutton-primary transition-all duration-500 transform md:-translate-x-6 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
-                    <ArrowRight size={18} className="text-white" />
+              <div className="flex items-center gap-1.5 md:gap-3 mt-1 md:mt-4 overflow-hidden">
+                <div className="flex items-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
+                  <span className="text-xs md:text-base">Browse</span>
+                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-mutton-primary transition-all duration-500 transform md:-translate-x-6 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
+                    <ArrowRight className="text-white w-3 h-3 md:w-4.5 md:h-4.5" />
                   </div>
                 </div>
               </div>
