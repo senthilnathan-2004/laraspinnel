@@ -121,7 +121,7 @@ export default async function BlogDetailsPage({ params }: Props) {
             <li aria-hidden="true">/</li>
             <li><Link href="/blog" className="hover:text-brand-black transition-colors">Blog</Link></li>
             <li aria-hidden="true">/</li>
-            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{p.title}</li>
+            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem] lg:max-w-none">{p.title}</li>
           </ol>
         </nav>
 
