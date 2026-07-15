@@ -125,13 +125,18 @@ export default async function HomePage() {
   }
 
   let philosophyContent = DEFAULT_PHILOSOPHY;
+  let allSettings: Record<string, string> = {};
   try {
-    const philosophySetting = await SiteSettings.findOne({ key: "philosophy_content" }).lean();
-    if (philosophySetting && philosophySetting.value && philosophySetting.value.trim() !== "") {
-      philosophyContent = philosophySetting.value;
+    const settingsList = await SiteSettings.find({}).lean();
+    settingsList.forEach((s: any) => {
+      allSettings[s.key] = s.value;
+    });
+    
+    if (allSettings["philosophy_content"] && allSettings["philosophy_content"].trim() !== "") {
+      philosophyContent = allSettings["philosophy_content"];
     }
   } catch (err) {
-    console.error("Failed to load philosophy content", err);
+    console.error("Failed to load settings", err);
   }
 
   return (
@@ -187,7 +192,7 @@ export default async function HomePage() {
           </div>
 
           {/* Shop by Category cards */}
-          <ShopByCategory />
+          <ShopByCategory settings={allSettings} />
 
           {/* Festival Goat CTA Block */}
           <FestivalGoatCTA />

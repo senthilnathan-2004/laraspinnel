@@ -1,27 +1,21 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { Tag } from "@phosphor-icons/react";
-import useSWR from "swr";
+import { Tag } from "@phosphor-icons/react/dist/ssr";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export default function ShopByCategory() {
-  const { data: settings = {} } = useSWR("/api/settings", fetcher);
-
-  const displayDistricts = React.useMemo(() => {
-    if (!settings.mutton_districts) return "Coimbatore, Tiruppur, and Erode";
+export default function ShopByCategory({ settings }: { settings: any }) {
+  let displayDistricts = "Coimbatore, Tiruppur, and Erode";
+  if (settings?.mutton_districts) {
     const districtsList = settings.mutton_districts.split(',').map((d: string) => d.trim()).filter(Boolean);
     if (districtsList.length <= 3) {
-      if (districtsList.length === 1) return districtsList[0];
-      if (districtsList.length === 2) return `${districtsList[0]} and ${districtsList[1]}`;
-      return `${districtsList.slice(0, -1).join(', ')}, and ${districtsList[districtsList.length - 1]}`;
+      if (districtsList.length === 1) displayDistricts = districtsList[0];
+      else if (districtsList.length === 2) displayDistricts = `${districtsList[0]} and ${districtsList[1]}`;
+      else displayDistricts = `${districtsList.slice(0, -1).join(', ')}, and ${districtsList[districtsList.length - 1]}`;
+    } else {
+      displayDistricts = `${districtsList.slice(0, 3).join(', ')}...`;
     }
-    return `${districtsList.slice(0, 3).join(', ')}...`;
-  }, [settings.mutton_districts]);
+  }
 
   return (
     <section className="py-24 bg-brand-light-gray/20">
