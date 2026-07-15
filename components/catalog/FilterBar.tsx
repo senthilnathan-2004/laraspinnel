@@ -85,7 +85,7 @@ export default function FilterBar({
         <div className="flex w-full lg:w-auto items-center gap-3">
           {/* Breed/Filter Dropdown */}
           {isGoat && (
-            <div className="flex-1 lg:flex-none lg:w-44">
+            <div className="flex-1 min-w-0 lg:flex-none lg:w-44">
               <CustomSelect
                 options={[
                   { label: "All Breeds", value: "all" },
@@ -99,7 +99,7 @@ export default function FilterBar({
           )}
 
           {/* Sort Selector */}
-          <div className="flex-1 lg:flex-none lg:w-44">
+          <div className="flex-1 min-w-0 lg:flex-none lg:w-44">
             <CustomSelect
               options={[
                 { label: "Name (A-Z)", value: "name-asc" },
@@ -122,8 +122,8 @@ export default function FilterBar({
       {/* Quick Tag Chips Row */}
       {tags.length > 0 && (
         <div className="border-t border-brand-border pt-4 mt-2">
-          {/* Mobile/Tablet Toggle Button */}
-          <div className="lg:hidden flex mb-2">
+          {/* Toggle Button */}
+          <div className="flex mb-2">
             <button
               onClick={() => setIsTagsExpanded(!isTagsExpanded)}
               className="flex items-center gap-1.5 text-xs font-bold text-brand-black uppercase tracking-wider"
@@ -134,7 +134,7 @@ export default function FilterBar({
           </div>
 
           {/* Tags List */}
-          <div className={`${isTagsExpanded ? 'flex' : 'hidden'} lg:flex flex-wrap items-center gap-2 text-xs font-semibold select-none transition-all`}>
+          <div className={`${isTagsExpanded ? 'flex' : 'hidden'} flex-wrap items-center gap-2 text-xs font-semibold select-none transition-all`}>
             <span className="hidden lg:flex text-brand-gray uppercase tracking-wider font-bold mr-1 items-center gap-1">
               <SlidersHorizontal size={12} />
               <span>Tags:</span>

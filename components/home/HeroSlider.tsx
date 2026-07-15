@@ -61,7 +61,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
 
   if (isLoading && banners.length === 0) {
     return (
-      <div className="h-[60vh] md:h-[85vh] w-full bg-neutral-100 flex items-center justify-center animate-pulse">
+      <div className="h-[60vh] xl:h-[88vh] w-full bg-neutral-100 flex items-center justify-center animate-pulse">
         {/* Placeholder background, no spinner to avoid double-loading effect */}
       </div>
     );
@@ -99,67 +99,68 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
             // Carousel slide headlines are <h2> so there is exactly one H1.
             const Heading = "h2";
             return (
-            <div
-              key={slide._id}
-              className="flex-[0_0_100%] min-w-0 h-[60vh] md:h-[88vh] relative bg-brand-black"
-            >
-              {/* Background Image */}
-              {slide.imageUrl && (
-                <Image
-                  src={slide.imageUrl}
-                  alt={slide.headline}
-                  fill
-                  className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
-                  priority={index === 0}
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  sizes="100vw"
-                  onLoad={() => {
-                    if (index === 0) {
-                      window.dispatchEvent(new Event("banner-loaded"));
-                    }
-                  }}
-                />
-              )}
-              {/* Dark Gradient Overlay */}
-              <div className="absolute inset-0 bg-linear-to-t from-brand-black/80 via-brand-black/35 to-transparent"></div>
+              <div
+                key={slide._id}
+                className="flex-[0_0_100%] min-w-full w-full h-[60vh] xl:h-[88vh] relative bg-brand-black"
+              >
+                {/* Background Image */}
+                {slide.imageUrl && (
+                  <Image
+                    src={slide.imageUrl}
+                    alt={slide.headline}
+                    fill
+                    className="absolute inset-0 w-full h-full object-cover object-right md:object-center opacity-80"
+                    priority={index === 0}
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    sizes="100vw"
+                    quality={75}
+                    onLoad={() => {
+                      if (index === 0) {
+                        window.dispatchEvent(new Event("banner-loaded"));
+                      }
+                    }}
+                  />
+                )}
+                {/* Dark Gradient Overlay */}
+                <div className="absolute inset-0 bg-linear-to-t from-brand-black/80 via-brand-black/35 to-transparent"></div>
 
-              {/* Slide Content */}
-              <div className="absolute inset-0 flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-28">
-                <div className="max-w-3xl space-y-4 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
-                  {/* tag */}
-                  <span className="inline-block bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs font-semibold px-4 py-1">
-                    🌿 100% Farm Raised
-                  </span>
+                {/* Slide Content */}
+                <div className="absolute inset-0 flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-28">
+                  <div className="max-w-3xl space-y-4 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
+                    {/* tag */}
+                    <span className="inline-block bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs font-semibold px-4 py-1">
+                      🌿 100% Farm Raised
+                    </span>
 
-                  {/* Title in display Anton font */}
-                  <Heading className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
-                    {slide.headline}
-                  </Heading>
+                    {/* Title in display Anton font */}
+                    <Heading className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide">
+                      {slide.headline}
+                    </Heading>
 
-                  {/* Subtext */}
-                  {slide.subtext && (
-                    <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
-                      {slide.subtext}
-                    </p>
-                  )}
+                    {/* Subtext */}
+                    {slide.subtext && (
+                      <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
+                        {slide.subtext}
+                      </p>
+                    )}
 
-                  {/* Call to action */}
-                  {slide.buttonText && (
-                    <div className="pt-2">
-                      <Link
-                        href={slide.buttonLink || "/"}
-                        className={`inline-flex items-center justify-center px-7 py-3 rounded-full text-sm font-semibold shadow-md transition-all duration-300 hover:scale-102 ${slide.buttonTheme === "red"
+                    {/* Call to action */}
+                    {slide.buttonText && (
+                      <div className="pt-2">
+                        <Link
+                          href={slide.buttonLink || "/"}
+                          className={`inline-flex items-center justify-center px-7 py-3 rounded-full text-sm font-semibold shadow-md transition-all duration-300 hover:scale-102 ${slide.buttonTheme === "red"
                             ? "bg-mutton-primary text-white hover:bg-mutton-hover"
                             : "bg-goat-primary text-white hover:bg-goat-hover"
-                          }`}
-                      >
-                        {slide.buttonText}
-                      </Link>
-                    </div>
-                  )}
+                            }`}
+                        >
+                          {slide.buttonText}
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
             );
           })}
         </div>

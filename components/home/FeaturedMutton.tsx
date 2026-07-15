@@ -43,11 +43,11 @@ export default function FeaturedMutton() {
 
         {/* List Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <div className="block"><SkeletonCard /></div>
             <div className="block"><SkeletonCard /></div>
             <div className="block"><SkeletonCard /></div>
-            <div className="block md:hidden"><SkeletonCard /></div>
+            <div className="block"><SkeletonCard /></div>
           </div>
         ) : error ? (
           <p className="text-center text-red-600 text-sm font-semibold py-8">
@@ -58,9 +58,9 @@ export default function FeaturedMutton() {
             <p className="text-sm font-semibold">No featured mutton packs set up.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-            {packs.slice(0, 4).map((pack, i) => (
-              <div key={pack._id} className={i === 3 ? "md:hidden" : ""}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+            {packs.slice(0, 4).map((pack) => (
+              <div key={pack._id}>
                 <PremiumCard
                   name={pack.name}
                   price={pack.price}

@@ -5,7 +5,7 @@ import MuttonClientList from "./MuttonClientList";
 import { connectToDatabase } from "@/lib/db";
 import MuttonPack from "@/models/MuttonPack";
 import SiteSettings from "@/models/SiteSettings";
-import { MapPin, Info } from "lucide-react";
+import { MapPin, Info, ChevronDown } from "lucide-react";
 
 export const revalidate = 60; // Cache for 60 seconds
 
@@ -13,7 +13,7 @@ export default async function MuttonListingPage() {
   await connectToDatabase();
   const dbPacks = await MuttonPack.find({ isActive: true }).sort({ isFeatured: -1, name: 1 }).lean();
   const settingsSetting = await SiteSettings.findOne({ key: "mutton_districts" }).lean();
-  
+
   const districtsStr = settingsSetting?.value || "Coimbatore, Tiruppur, Erode, Villupuram";
 
   // Serialize for client component
@@ -67,14 +67,28 @@ export default async function MuttonListingPage() {
         <MuttonClientList initialPacks={initialPacks} />
 
         {/* SEO Content Block */}
-        <section className="bg-brand-light-gray/20 rounded-2xl p-4 md:p-6 border border-brand-border mt-12 text-left w-full mx-auto space-y-4">
-          <h3 className="font-display text-2xl text-brand-black uppercase tracking-wide">
-            Bulk Farm Fresh Mutton Delivery
-          </h3>
-          <p className="text-brand-gray text-sm leading-relaxed text-justify">
-            Elevate your culinary experience with premium, farm fresh mutton from Ragu Goat Farm. We supply hygienic, bulk mutton packs ideal for weddings, restaurants, family gatherings, and commercial orders. Sourced exclusively from healthy, young country goats (Naatu Aadu) raised on our farm, our meat guarantees tenderness and rich traditional flavor. Enjoy seamless booking and prompt cold chain delivery directly to your doorstep in Villupuram, Pondicherry, Tindivanam, Vanur and surrounding districts in Tamil Nadu.
-          </p>
-        </section>
+        <div className="bg-brand-light-gray/20 rounded-2xl p-3 lg:p-6 border border-brand-border mt-12 text-left w-full mx-auto">
+          {/* Desktop View */}
+          <section className="hidden lg:block space-y-4">
+            <h3 className="font-display text-2xl text-brand-black uppercase tracking-wide">
+              Bulk Farm Fresh Mutton Delivery
+            </h3>
+            <p className="text-brand-gray text-sm leading-relaxed text-justify">
+              Elevate your culinary experience with premium, farm fresh mutton from Ragu Goat Farm. We supply hygienic, bulk mutton packs ideal for weddings, restaurants, family gatherings, and commercial orders. Sourced exclusively from healthy, young country goats (Naatu Aadu) raised on our farm, our meat guarantees tenderness and rich traditional flavor. Enjoy seamless booking and prompt cold chain delivery directly to your doorstep in Villupuram, Pondicherry, Tindivanam, Vanur and surrounding districts in Tamil Nadu.
+            </p>
+          </section>
+
+          {/* Mobile & Tablet View */}
+          <details className="lg:hidden group">
+            <summary className="font-display text-lg sm:text-xl text-brand-black uppercase tracking-wide cursor-pointer flex justify-between items-center outline-none list-none [&::-webkit-details-marker]:hidden">
+              <span className="pr-2 leading-tight">Bulk Farm Fresh Mutton Delivery</span>
+              <ChevronDown className="w-5 h-5 text-brand-gray transition-transform duration-300 group-open:rotate-180 shrink-0" />
+            </summary>
+            <p className="text-brand-gray text-sm leading-relaxed text-justify mt-3 border-t border-brand-border pt-3">
+              Elevate your culinary experience with premium, farm fresh mutton from Ragu Goat Farm. We supply hygienic, bulk mutton packs ideal for weddings, restaurants, family gatherings, and commercial orders. Sourced exclusively from healthy, young country goats (Naatu Aadu) raised on our farm, our meat guarantees tenderness and rich traditional flavor. Enjoy seamless booking and prompt cold chain delivery directly to your doorstep in Villupuram, Pondicherry, Tindivanam, Vanur and surrounding districts in Tamil Nadu.
+            </p>
+          </details>
+        </div>
       </main>
 
       <Footer />

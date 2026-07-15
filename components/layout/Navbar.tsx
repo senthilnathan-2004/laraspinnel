@@ -50,6 +50,8 @@ export default function Navbar() {
                 alt={settings.farm_name || "Ragu Goat Farm"}
                 width={200}
                 height={40}
+                sizes="200px"
+                quality={75}
                 priority
                 className="h-10 w-auto object-contain"
               />
@@ -60,7 +62,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden xl:flex items-center gap-6">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -83,7 +85,7 @@ export default function Navbar() {
           </nav>
 
           {/* Right Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             {/* Phone */}
             <a
               href={`tel:${phone}`}
@@ -116,7 +118,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile controls */}
-          <div className="flex lg:hidden items-center gap-3">
+          <div className="flex xl:hidden items-center gap-3">
             <a
               href={`tel:${phone}`}
               className="p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
@@ -142,14 +144,14 @@ export default function Navbar() {
       {/* Backdrop */}
       <div
         onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 top-16 bg-brand-black/60 z-30 backdrop-blur-sm lg:hidden transition-all duration-300 ${
+        className={`fixed inset-0 top-16 bg-brand-black/60 z-30 backdrop-blur-sm xl:hidden transition-all duration-300 ${
           mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
       ></div>
 
       {/* Drawer starts below the main header */}
       <div 
-        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm bg-white/95 backdrop-blur-xl z-40 shadow-2xl flex flex-col justify-between p-3 md:p-6 lg:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${
+        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm bg-white/95 backdrop-blur-xl z-40 shadow-2xl flex flex-col justify-between p-3 md:p-6 xl:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

@@ -152,7 +152,7 @@ export default async function BlogDetailsPage({ params }: Props) {
               <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-black uppercase leading-tight tracking-wide">
                 {p.title}
               </h1>
-              <p className="text-sm md:text-base font-medium text-brand-gray leading-relaxed text-justify">{p.excerpt}</p>
+              <p className="text-sm md:text-base font-medium text-brand-gray leading-normal text-justify">{p.excerpt}</p>
 
               <div className="flex items-center gap-6 text-xs text-brand-gray border-y border-brand-border py-3 select-none">
                 <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export default async function BlogDetailsPage({ params }: Props) {
         {/* Main rich text content */}
         <div className="w-full">
           <div
-            className="prose max-w-none w-full text-brand-black text-sm md:text-base leading-relaxed text-justify"
+            className="prose max-w-none w-full text-brand-black text-sm md:text-base leading-normal prose-p:leading-normal prose-li:leading-normal prose-li:my-1 prose-ul:my-4 prose-ol:my-4 prose-p:my-3 text-justify"
             dangerouslySetInnerHTML={{ __html: p.content }}
           ></div>
         </div>

@@ -70,11 +70,10 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
             <>
               <button
                 onClick={() => setSelectedTag("All")}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  selectedTag === "All"
+                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${selectedTag === "All"
                     ? "bg-goat-tint text-goat-text border-goat-primary/20"
                     : "bg-white text-brand-black border-brand-border hover:bg-brand-light-gray"
-                }`}
+                  }`}
               >
                 All
               </button>
@@ -82,11 +81,10 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag)}
-                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                    selectedTag === tag
+                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${selectedTag === tag
                       ? "bg-goat-tint text-goat-text border-goat-primary/20"
                       : "bg-white text-brand-black border-brand-border hover:bg-brand-light-gray"
-                  }`}
+                    }`}
                 >
                   {tag}
                 </button>
@@ -176,10 +174,10 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
                     <span>
                       {post.publishedAt
                         ? new Date(post.publishedAt).toLocaleDateString("en-IN", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })
                         : ""}
                     </span>
                   </div>

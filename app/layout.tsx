@@ -12,11 +12,17 @@ const anton = Anton({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 import { connectToDatabase } from "@/lib/db";
@@ -276,7 +282,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="alternate" type="text/plain" href="/llms.txt" />
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black" suppressHydrationWarning>

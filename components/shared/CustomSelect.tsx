@@ -61,7 +61,7 @@ export default function CustomSelect({
             {icon}
           </div>
         )}
-        <span className={`block truncate ${selectedOption ? "text-brand-black font-medium" : "text-brand-gray"}`}>
+        <span className={`block truncate flex-1 min-w-0 ${selectedOption ? "text-brand-black font-medium" : "text-brand-gray"}`}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-brand-gray">

@@ -39,7 +39,7 @@ export default function GalleryPreview() {
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6 auto-rows-[160px] sm:auto-rows-[220px] md:auto-rows-[280px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6 auto-rows-[160px] sm:auto-rows-[220px] lg:auto-rows-[200px]">
           {items.map((img, i) => {
             let bentoClasses = "col-span-1 row-span-1"; // Normal for mobile
             let displayClass = ""; // Show by default
@@ -67,6 +67,7 @@ export default function GalleryPreview() {
                     alt={img.altText}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={75}
                     className={`object-cover ${i === 0 ? "object-bottom md:object-[center_20%]" : "object-[center_20%]"} group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]`}
                   />
                 )}
