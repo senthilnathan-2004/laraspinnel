@@ -88,22 +88,22 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-      openGraph: {
-        type: "website",
-        locale: "en_IN",
-        url: BASE_URL,
-        siteName: "Ragu Goat Farm",
-        title,
-        description,
-        images: [
-          {
-            url: "/placeholder-goat.jpg",
-            width: 1200,
-            height: 630,
-            alt: "Ragu Goat Farm Boer Goat",
-          },
-        ],
-      },
+    openGraph: {
+      type: "website",
+      locale: "en_IN",
+      url: BASE_URL,
+      siteName: "Ragu Goat Farm",
+      title,
+      description,
+      images: [
+        {
+          url: "/placeholder-goat.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Ragu Goat Farm Boer Goat",
+        },
+      ],
+    },
     twitter: {
       card: "summary_large_image",
       title,
@@ -135,7 +135,7 @@ export default async function RootLayout({
   let farmName = "Ragu Goat Farm";
   let phone = "+91 9442379832";
   let email = "senthilraguanthan2004@gmail.com";
-  let address = "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
+  let address = " MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
   let socialLinks: string[] = [];
 
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -174,7 +174,7 @@ export default async function RootLayout({
       "sameAs": socialLinks,
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": address.split(",")[0]?.trim() || "2/90 MettuStreet",
+        "streetAddress": address.split(",")[0]?.trim() || " MettuStreet",
         "addressLocality": "Villupuram",
         "addressRegion": "Tamil Nadu",
         "postalCode": "604102",
@@ -182,16 +182,18 @@ export default async function RootLayout({
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 11.9401,
-        "longitude": 79.4861
+        "latitude": "11.9401",
+        "longitude": "79.4861"
       },
       "areaServed": ["Villupuram", "Chennai", "Pondicherry", "Tamil Nadu"],
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "06:00",
-        "closes": "20:00"
-      }
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "06:00",
+          "closes": "20:00"
+        }
+      ]
     },
     {
       "@context": "https://schema.org",
@@ -286,8 +288,8 @@ export default async function RootLayout({
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Comprehensive LLM Resource" />
       </head>
       <body className="min-h-full flex flex-col font-body bg-white text-brand-black" suppressHydrationWarning>
-        <a 
-          href="#main-content" 
+        <a
+          href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-9999 focus:p-4 focus:bg-brand-black focus:text-white"
         >
           Skip to main content
@@ -295,13 +297,13 @@ export default async function RootLayout({
         <div className="flex flex-col min-h-screen overflow-x-hidden w-full relative" id="main-content">
           <Providers>{children}</Providers>
         </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": jsonLd
-          }) }}
-        />
+        {jsonLd.map((schema, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
         {/* Facebook Pixel — only rendered when NEXT_PUBLIC_FB_PIXEL_ID is set */}
         {FB_PIXEL_ID && (
           <>
