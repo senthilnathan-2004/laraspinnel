@@ -96,14 +96,7 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
 
           return (
             <div className="border-t border-brand-border pt-4 text-xs font-semibold select-none">
-              {/* Desktop View */}
-              <div className="hidden md:flex flex-wrap items-center gap-2">
-                <span className="text-brand-gray uppercase tracking-wider font-bold mr-1">Categories:</span>
-                <TagButtons />
-              </div>
-
-              {/* Mobile View */}
-              <details className="md:hidden group">
+              <details className="group">
                 <summary className="cursor-pointer text-brand-gray uppercase tracking-wider font-bold flex items-center justify-between outline-none">
                   <span>Categories</span>
                   <div className="flex items-center gap-2">

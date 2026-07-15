@@ -31,22 +31,22 @@ export default function BlogShareSidebar({ title, slug }: BlogShareSidebarProps)
   const shareUrl = encodeURIComponent(currentUrl);
 
   return (
-    <div className="md:col-span-1 border-t md:border-t-0 md:border-l border-brand-border pt-6 md:pt-0 md:pl-6 h-fit space-y-4 md:sticky md:top-24 select-none">
+    <div className="pt-8 mt-10 border-t border-brand-border space-y-4 select-none">
       <h4 className="text-xs font-bold text-brand-black uppercase tracking-wider">Share Article</h4>
-      <div className="flex md:flex-col gap-2.5">
+      <div className="flex flex-wrap gap-4">
         {/* Copy Link */}
         <button
           onClick={handleCopyLink}
-          className="flex items-center gap-2 px-3 py-2 border border-brand-border hover:bg-brand-light-gray rounded-xl text-xs font-semibold text-brand-black transition-colors flex-1 md:flex-none cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 border border-brand-border hover:bg-brand-light-gray rounded-xl text-sm font-semibold text-brand-black transition-colors cursor-pointer"
         >
           {copied ? (
             <>
-              <CheckCircle2 size={14} className="text-green-600" />
+              <CheckCircle2 size={16} className="text-green-600" />
               <span>Copied!</span>
             </>
           ) : (
             <>
-              <Link2 size={14} />
+              <Link2 size={16} />
               <span>Copy Link</span>
             </>
           )}
@@ -57,9 +57,9 @@ export default function BlogShareSidebar({ title, slug }: BlogShareSidebarProps)
           href={`https://wa.me/?text=${shareText}%20${shareUrl}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-3 py-2 border border-[#25D366]/20 bg-[#25D366]/5 hover:bg-[#25D366]/10 rounded-xl text-xs font-semibold text-[#25D366] transition-colors flex-1 md:flex-none"
+          className="flex items-center gap-2 px-4 py-2 border border-[#25D366]/20 bg-[#25D366]/5 hover:bg-[#25D366]/10 rounded-xl text-sm font-semibold text-[#25D366] transition-colors"
         >
-          <FaWhatsapp size={15} />
+          <FaWhatsapp size={16} />
           <span>WhatsApp</span>
         </a>
 
@@ -68,9 +68,9 @@ export default function BlogShareSidebar({ title, slug }: BlogShareSidebarProps)
           href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-3 py-2 border border-[#3b5998]/20 bg-[#3b5998]/5 hover:bg-[#3b5998]/10 rounded-xl text-xs font-semibold text-[#3b5998] transition-colors flex-1 md:flex-none"
+          className="flex items-center gap-2 px-4 py-2 border border-[#3b5998]/20 bg-[#3b5998]/5 hover:bg-[#3b5998]/10 rounded-xl text-sm font-semibold text-[#3b5998] transition-colors"
         >
-          <FaFacebook size={15} />
+          <FaFacebook size={16} />
           <span>Facebook</span>
         </a>
       </div>

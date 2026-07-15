@@ -115,10 +115,10 @@ export default async function BlogDetailsPage({ params }: Props) {
 
       <main className="flex-1 max-w-6xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 lg:space-y-12 pb-20">
         
-        {/* Top Section: Header & Image */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-center">
+        {/* Top Section: Header & Image (Full Width) */}
+        <div className="space-y-8 lg:space-y-10">
           
-          {/* Left Side: Meta & Headers */}
+          {/* Meta & Headers */}
           <div className="space-y-6 lg:space-y-8">
             <div className="space-y-4">
               {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
@@ -152,7 +152,7 @@ export default async function BlogDetailsPage({ params }: Props) {
               <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-black uppercase leading-tight tracking-wide">
                 {p.title}
               </h1>
-              <p className="text-sm font-medium text-brand-gray leading-relaxed">{p.excerpt}</p>
+              <p className="text-sm md:text-base font-medium text-brand-gray leading-relaxed text-justify">{p.excerpt}</p>
 
               <div className="flex items-center gap-6 text-xs text-brand-gray border-y border-brand-border py-3 select-none">
                 <div className="flex items-center gap-2">
@@ -190,34 +190,31 @@ export default async function BlogDetailsPage({ params }: Props) {
             </div>
           </div>
 
-          {/* Right Side: Cover image */}
+          {/* Cover image (Full Width) */}
           {p.coverImage && (
-            <div className="relative aspect-video lg:aspect-[4/3] border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray select-none shadow-sm">
+            <div className="relative w-full aspect-video border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray select-none shadow-sm">
               <Image
                 src={p.coverImage}
                 alt={p.title}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="100vw"
                 priority
               />
             </div>
           )}
         </div>
 
-        {/* Content & Social share wrapper */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* Main rich text content */}
-          <div className="md:col-span-3 space-y-6">
-            <div
-              className="prose max-w-none text-brand-black text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: p.content }}
-            ></div>
-          </div>
-
-          {/* Share Sidebar (Client Component) */}
-          <BlogShareSidebar title={p.title} slug={p.slug} />
+        {/* Main rich text content */}
+        <div className="w-full">
+          <div
+            className="prose max-w-none w-full text-brand-black text-sm md:text-base leading-relaxed text-justify"
+            dangerouslySetInnerHTML={{ __html: p.content }}
+          ></div>
         </div>
+
+        {/* Share Sidebar (Client Component) */}
+        <BlogShareSidebar title={p.title} slug={p.slug} />
       </main>
 
       <Footer />
