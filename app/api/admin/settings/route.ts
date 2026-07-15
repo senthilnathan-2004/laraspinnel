@@ -52,9 +52,9 @@ export async function PUT(req: NextRequest) {
 
     await Promise.all(updatePromises);
     
-    // Purge the homepage cache so changes show immediately
+    // Purge the entire site cache so changes (including policy pages and layout) show immediately
     const { revalidatePath } = require("next/cache");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
 
     return NextResponse.json({ message: "Settings updated successfully" });
   } catch (error: any) {
