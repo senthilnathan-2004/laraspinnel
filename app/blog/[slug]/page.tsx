@@ -113,87 +113,97 @@ export default async function BlogDetailsPage({ params }: Props) {
         }}
       />
 
-      <main className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-20">
-        {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
-        <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
-          <ol className="flex flex-wrap items-center gap-1.5">
-            <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
-            <li aria-hidden="true">/</li>
-            <li><Link href="/blog" className="hover:text-brand-black transition-colors">Blog</Link></li>
-            <li aria-hidden="true">/</li>
-            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem] lg:max-w-none">{p.title}</li>
-          </ol>
-        </nav>
+      <main className="flex-1 max-w-6xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 lg:space-y-12 pb-20">
+        
+        {/* Top Section: Header & Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 lg:items-center">
+          
+          {/* Left Side: Meta & Headers */}
+          <div className="space-y-6 lg:space-y-8">
+            <div className="space-y-4">
+              {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
+              <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
+                <ol className="flex flex-wrap items-center gap-1.5">
+                  <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
+                  <li aria-hidden="true">/</li>
+                  <li><Link href="/blog" className="hover:text-brand-black transition-colors">Blog</Link></li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{p.title}</li>
+                </ol>
+              </nav>
 
-        {/* Back Link */}
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-brand-gray hover:text-brand-black transition-colors"
-        >
-          <ChevronLeft size={16} />
-          <span>Back to Blog Articles</span>
-        </Link>
+              {/* Back Link */}
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-brand-gray hover:text-brand-black transition-colors"
+              >
+                <ChevronLeft size={16} />
+                <span>Back to Blog Articles</span>
+              </Link>
+            </div>
 
-        {/* Article Header block */}
-        <div className="space-y-4">
-          {p.tags?.[0] && (
-            <span className="bg-goat-tint text-goat-text text-xs uppercase font-bold px-3 py-1 rounded-lg border border-goat-primary/10">
-              {p.tags[0]}
-            </span>
+            {/* Article Header block */}
+            <div className="space-y-4">
+              {p.tags?.[0] && (
+                <span className="bg-goat-tint text-goat-text text-xs uppercase font-bold px-3 py-1 rounded-lg border border-goat-primary/10">
+                  {p.tags[0]}
+                </span>
+              )}
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-black uppercase leading-tight tracking-wide">
+                {p.title}
+              </h1>
+              <p className="text-sm font-medium text-brand-gray leading-relaxed">{p.excerpt}</p>
+
+              <div className="flex items-center gap-6 text-xs text-brand-gray border-y border-brand-border py-3 select-none">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-goat-tint text-goat-primary flex items-center justify-center font-bold">
+                    {p.author ? p.author.charAt(0) : "R"}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-brand-black text-sm">{p.author || "Ragu Farm Team"}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-goat-text font-semibold">Farming Expert</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 font-mono">
+                  <Calendar size={14} className="text-neutral-400" />
+                  <span>
+                    {p.updatedAt
+                      ? new Date(p.updatedAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : p.publishedAt
+                      ? new Date(p.publishedAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : new Date(p.createdAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Cover image */}
+          {p.coverImage && (
+            <div className="relative aspect-video lg:aspect-[4/3] border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray select-none shadow-sm">
+              <Image
+                src={p.coverImage}
+                alt={p.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
+            </div>
           )}
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-black uppercase leading-tight tracking-wide">
-            {p.title}
-          </h1>
-          <p className="text-sm font-medium text-brand-gray leading-relaxed">{p.excerpt}</p>
-
-          <div className="flex items-center gap-6 text-xs text-brand-gray border-y border-brand-border py-3 select-none">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-goat-tint text-goat-primary flex items-center justify-center font-bold">
-                {p.author ? p.author.charAt(0) : "R"}
-              </div>
-              <div className="flex flex-col">
-                <span className="font-semibold text-brand-black text-sm">{p.author || "Ragu Farm Team"}</span>
-                <span className="text-[10px] uppercase tracking-wider text-goat-text font-semibold">Farming Expert</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono">
-              <Calendar size={14} className="text-neutral-400" />
-              <span>
-                {p.updatedAt
-                  ? new Date(p.updatedAt).toLocaleDateString("en-IN", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : p.publishedAt
-                  ? new Date(p.publishedAt).toLocaleDateString("en-IN", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : new Date(p.createdAt).toLocaleDateString("en-IN", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })}
-              </span>
-            </div>
-          </div>
         </div>
-
-        {/* Cover image */}
-        {p.coverImage && (
-          <div className="relative aspect-video border border-brand-border rounded-2xl overflow-hidden bg-brand-light-gray select-none shadow-sm">
-            <Image
-              src={p.coverImage}
-              alt={p.title}
-              fill
-              className="object-cover"
-              sizes="(max-w-768px) 100vw, 768px"
-              priority
-            />
-          </div>
-        )}
 
         {/* Content & Social share wrapper */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
