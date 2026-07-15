@@ -28,19 +28,19 @@ export default function FAQClient({ faqs }: FAQClientProps) {
             className="bg-white rounded-2xl shadow-sm border border-brand-border hover:shadow-md transition-all duration-300 overflow-hidden h-full"
           >
             {/* --- Desktop View: Always Open, No Interactivity --- */}
-            <div className="hidden lg:flex p-8 items-start gap-4">
-              <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-goat-tint text-goat-primary font-bold text-sm">
-                Q
-              </span>
-              <div>
-                <h2 className="text-xl font-bold text-brand-black mb-3 leading-snug">
+            <div className="hidden lg:flex flex-col p-8">
+              <div className="flex items-start gap-4">
+                <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-goat-tint text-goat-primary font-bold text-sm mt-0.5">
+                  Q
+                </span>
+                <h2 className="text-xl font-bold text-brand-black leading-snug">
                   {faq.question}
                 </h2>
-                <div 
-                  className="text-brand-gray leading-relaxed space-y-3 text-justify [&_p]:text-justify!"
-                  dangerouslySetInnerHTML={{ __html: faq.answer }}
-                />
               </div>
+              <div 
+                className="mt-4 text-brand-gray leading-relaxed space-y-3 text-justify [&_p]:text-justify!"
+                dangerouslySetInnerHTML={{ __html: faq.answer }}
+              />
             </div>
 
             {/* --- Mobile & Tablet View: Apple-style Accordion --- */}
@@ -75,7 +75,7 @@ export default function FAQClient({ faqs }: FAQClientProps) {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="px-3 md:px-6 pb-3 md:pb-6 ml-11">
+                  <div className="px-3 md:px-6 pb-3 md:pb-6">
                     <div 
                       className="text-brand-gray leading-relaxed space-y-3 text-justify [&_p]:text-justify!"
                       dangerouslySetInnerHTML={{ __html: faq.answer }}

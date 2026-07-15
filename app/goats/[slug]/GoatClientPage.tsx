@@ -220,7 +220,7 @@ export default function GoatClientPage({ initialGoat }: GoatClientPageProps) {
             </div>
 
             {/* Description */}
-            <p className="text-sm text-brand-gray leading-relaxed">{goat.description}</p>
+            <p className="text-sm text-brand-gray leading-relaxed text-justify">{goat.description}</p>
 
             {/* Desktop CTAs (Hidden on mobile where sticky bar shows) */}
             <div className="hidden md:flex items-center gap-4 pt-2">
@@ -288,7 +288,7 @@ export default function GoatClientPage({ initialGoat }: GoatClientPageProps) {
                   />
                 </button>
                 {accordionOpen.breeding && (
-                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
+                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20 text-justify">
                     Our goats are raised in optimal sanitary pasture conditions. They feed on natural green fodder, dry grass, and nutrient mixes. We recommend setting up clean, ventilated sheds and feeding regular vaccinations to prevent seasonal sickness.
                   </div>
                 )}
@@ -309,7 +309,7 @@ export default function GoatClientPage({ initialGoat }: GoatClientPageProps) {
                   />
                 </button>
                 {accordionOpen.delivery && (
-                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
+                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20 text-justify">
                     We arrange specialized animal transport vehicles with regular stops to avoid stress during transit. Delivery coordinates across all 38 districts of Tamil Nadu. Transit charges apply based on distance from Villupuram farm center.
                   </div>
                 )}
@@ -330,7 +330,7 @@ export default function GoatClientPage({ initialGoat }: GoatClientPageProps) {
                   />
                 </button>
                 {accordionOpen.payment && (
-                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
+                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20 text-justify">
                     Book online with zero immediate payment. Our farm coordinator calls you to verify weights and delivery schedules. A partial advance payment is requested once shipping dates are verified, with balance on delivery.
                   </div>
                 )}

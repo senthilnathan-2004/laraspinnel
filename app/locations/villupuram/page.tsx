@@ -13,7 +13,7 @@ export default function VillupuramLocationPage() {
         <h1 className="text-4xl font-display uppercase text-brand-black tracking-tight sm:text-5xl">
           Villupuram's Trusted Goat Farm & Mutton Delivery
         </h1>
-        <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto text-justify">
           Proudly serving Villupuram and surrounding districts with the healthiest live goats and farm-fresh mutton.
         </p>
       </div>
@@ -24,21 +24,21 @@ export default function VillupuramLocationPage() {
           <ul className="space-y-4 text-lg text-gray-700">
             <li className="flex items-start">
               <span className="text-green-600 mr-2">✓</span>
-              <span><strong>Local & Fresh:</strong> Located right here in Villupuram (604102), ensuring minimal transit stress for livestock and maximum freshness for mutton.</span>
+              <span className="text-justify"><strong>Local & Fresh:</strong> Located right here in Villupuram (604102), ensuring minimal transit stress for livestock and maximum freshness for mutton.</span>
             </li>
             <li className="flex items-start">
               <span className="text-green-600 mr-2">✓</span>
-              <span><strong>Variety of Breeds:</strong> We raise Tellicherry, Boer, and native Naatu Aadu perfectly acclimated to the Tamil Nadu climate.</span>
+              <span className="text-justify"><strong>Variety of Breeds:</strong> We raise Tellicherry, Boer, and native Naatu Aadu perfectly acclimated to the Tamil Nadu climate.</span>
             </li>
             <li className="flex items-start">
               <span className="text-green-600 mr-2">✓</span>
-              <span><strong>Bulk Delivery:</strong> We handle bulk orders for weddings, festivals (Bakrid), and local restaurants across the Villupuram district.</span>
+              <span className="text-justify"><strong>Bulk Delivery:</strong> We handle bulk orders for weddings, festivals (Bakrid), and local restaurants across the Villupuram district.</span>
             </li>
           </ul>
         </div>
-        <div className="bg-gray-50 p-8 rounded-2xl shadow-sm border border-gray-100">
+        <div className="bg-gray-50 p-5 md:p-8 rounded-2xl shadow-sm border border-gray-100">
           <h3 className="text-2xl font-bold mb-4">Visit Our Farm</h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 text-justify">
             We encourage local buyers to visit us in person. Choose your goat directly from our herds.
           </p>
           <div className="space-y-3 text-gray-800">

@@ -226,7 +226,7 @@ export default function Footer() {
 
       {/* Disclaimer (YMYL — livestock / food quality) */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-neutral-800">
-        <p className="text-[11px] leading-relaxed text-neutral-600">
+        <p className="text-[11px] leading-relaxed text-neutral-600 text-justify">
           <strong className="text-neutral-500">Disclaimer:</strong> All livestock and mutton are sold subject to
           availability and on-site inspection. Prices, weights, and delivery timelines are indicative and confirmed
           at the time of booking. {farmName} follows local animal-welfare and food-hygiene practices; customers are

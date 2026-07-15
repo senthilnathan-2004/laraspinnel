@@ -221,7 +221,7 @@ export default function MuttonClientPage({ initialPack }: MuttonClientPageProps)
             </div>
 
             {/* Description */}
-            <p className="text-sm text-brand-gray leading-relaxed">{pack.description}</p>
+            <p className="text-sm text-brand-gray leading-relaxed text-justify">{pack.description}</p>
 
             {/* Desktop CTAs (Hidden on mobile where sticky bar shows) */}
             <div className="hidden md:flex items-center gap-4 pt-2">
@@ -314,7 +314,7 @@ export default function MuttonClientPage({ initialPack }: MuttonClientPageProps)
                   />
                 </button>
                 {accordionOpen.hygiene && (
-                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
+                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20 text-justify">
                     All meat is freshly cut to order, slaughtered early morning in municipal-certified clean environments. We perform meticulous cleaning, portioning, and pack them instantly in vacuum-sealed food-grade packs with ice-chill packs.
                   </div>
                 )}
@@ -335,7 +335,7 @@ export default function MuttonClientPage({ initialPack }: MuttonClientPageProps)
                   />
                 </button>
                 {accordionOpen.delivery && (
-                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
+                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20 text-justify">
                     We deliver mutton fresh and chilled using temperature-controlled insulated cold boxes. Slaughters happen at 4:30 AM, with delivery trucks leaving for Coimbatore, Tiruppur, and Erode by 6:00 AM. Doorstep arrival between 7:00 AM - 10:00 AM.
                   </div>
                 )}
@@ -356,7 +356,7 @@ export default function MuttonClientPage({ initialPack }: MuttonClientPageProps)
                   />
                 </button>
                 {accordionOpen.payment && (
-                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20">
+                  <div className="p-3 md:p-4 border-t border-brand-border text-xs text-brand-gray leading-relaxed bg-brand-light-gray/20 text-justify">
                     Submit your booking reservation online with zero advanced charge. Our farm coordinator calls you to verify portion sizing, specialized cutting preference (chops, curry cut, fat selection), and confirm delivery slot. Payment on delivery.
                   </div>
                 )}
