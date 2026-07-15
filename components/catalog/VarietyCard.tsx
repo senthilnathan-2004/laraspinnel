@@ -29,6 +29,7 @@ export default function VarietyCard({
   return (
     <Link
       href={url}
+      prefetch={true}
       className="group relative flex flex-col w-full overflow-hidden rounded-4xl bg-brand-black shadow-lg hover:shadow-2xl transition-all duration-700 aspect-square"
     >
       {/* Background Image with Zoom */}

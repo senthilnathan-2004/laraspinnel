@@ -9,6 +9,14 @@ import { ArrowLeft } from "lucide-react";
 
 export const revalidate = 60; // Cache for 60 seconds
 
+export async function generateStaticParams() {
+  await connectToDatabase();
+  const goats = await GoatVariety.find({ isActive: true }).select('slug').lean();
+  return goats.map((goat) => ({
+    slug: goat.slug,
+  }));
+}
+
 export default async function GoatDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   

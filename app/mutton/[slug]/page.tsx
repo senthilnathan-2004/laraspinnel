@@ -9,6 +9,14 @@ import { ArrowLeft } from "lucide-react";
 
 export const revalidate = 60; // Cache for 60 seconds
 
+export async function generateStaticParams() {
+  await connectToDatabase();
+  const packs = await MuttonPack.find({ isActive: true }).select('slug').lean();
+  return packs.map((pack) => ({
+    slug: pack.slug,
+  }));
+}
+
 export default async function MuttonDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   
