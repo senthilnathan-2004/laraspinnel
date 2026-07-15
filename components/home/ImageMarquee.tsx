@@ -62,7 +62,7 @@ export default function ImageMarquee({
         }
       `}</style>
       <div className={`flex ${direction === "right" ? "animate-marquee-image-reverse" : "animate-marquee-image"} whitespace-nowrap w-max items-center`}>
-        {[1, 2, 3, 4].map((setIndex) => (
+        {[1, 2].map((setIndex) => (
           <div key={setIndex} className="flex items-center">
             {images.map((imgSrc, idx) => (
               <div 

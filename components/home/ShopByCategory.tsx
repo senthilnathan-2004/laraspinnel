@@ -49,7 +49,6 @@ export default function ShopByCategory() {
                 src={settings.home_shop_image_1 || "/placeholder-goat.jpg"}
                 alt="Live Goats"
                 fill
-                priority
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
               />
@@ -100,7 +99,6 @@ export default function ShopByCategory() {
                 src={settings.home_shop_image_2 || "/placeholder-mutton.jpg"}
                 alt="Bulk Mutton"
                 fill
-                priority
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
               />
