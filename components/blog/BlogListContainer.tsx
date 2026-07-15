@@ -130,6 +130,7 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
             <Link
               key={post._id}
               href={`/blog/${post.slug}`}
+              prefetch={true}
               className="group bg-white border border-brand-border rounded-2xl overflow-hidden shadow-card hover:shadow-hover transition-all duration-300 hover:-translate-y-1 flex flex-col"
             >
               {/* Cover Image */}
