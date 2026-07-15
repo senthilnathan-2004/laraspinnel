@@ -42,6 +42,9 @@ export async function PUT(
       );
     }
 
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/");
+
     return NextResponse.json(updatedTestimonial);
   } catch (error: any) {
     console.error("Testimonial PUT error:", error);
@@ -73,6 +76,9 @@ export async function DELETE(
         { status: 404 }
       );
     }
+
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/");
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

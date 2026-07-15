@@ -44,6 +44,9 @@ export async function POST(req: NextRequest) {
       isActive: isActive !== undefined ? isActive : true,
     });
 
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/faq");
+
     return NextResponse.json(newFaq, { status: 201 });
   } catch (error) {
     console.error("POST /api/admin/faq error:", error);

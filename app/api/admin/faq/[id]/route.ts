@@ -28,6 +28,9 @@ export async function PUT(
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
     }
 
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/faq");
+
     return NextResponse.json(updated);
   } catch (error) {
     console.error("PUT /api/admin/faq/[id] error:", error);
@@ -53,6 +56,9 @@ export async function DELETE(
     if (!deleted) {
       return NextResponse.json({ error: "FAQ not found" }, { status: 404 });
     }
+
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/faq");
 
     return NextResponse.json({ success: true });
   } catch (error) {

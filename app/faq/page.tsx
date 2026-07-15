@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     "Find answers to common questions about booking live goats, mutton delivery, pricing, and our farming practices at Ragu Goat Farm.",
 };
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export default async function FAQPage() {
   await connectToDatabase();
 

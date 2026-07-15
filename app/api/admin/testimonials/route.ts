@@ -59,6 +59,9 @@ export async function POST(req: NextRequest) {
       isActive: isActive !== undefined ? isActive : true,
     });
 
+    const { revalidatePath } = require("next/cache");
+    revalidatePath("/");
+
     return NextResponse.json(newTestimonial, { status: 201 });
   } catch (error: any) {
     console.error("Testimonial POST error:", error);
