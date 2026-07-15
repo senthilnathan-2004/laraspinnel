@@ -19,13 +19,13 @@ export default function FAQClient({ faqs }: FAQClientProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-stretch">
       {faqs.map((faq, index) => {
         const isOpen = openIndex === index;
         return (
           <div
             key={faq._id}
-            className="bg-white rounded-2xl shadow-sm border border-brand-border hover:shadow-md transition-all duration-300 overflow-hidden"
+            className="bg-white rounded-2xl shadow-sm border border-brand-border hover:shadow-md transition-all duration-300 overflow-hidden h-full"
           >
             {/* --- Desktop View: Always Open, No Interactivity --- */}
             <div className="hidden lg:flex p-8 items-start gap-4">

@@ -45,7 +45,7 @@ export default async function FAQPage() {
     <div className="min-h-screen bg-brand-light-gray flex flex-col font-body text-brand-black">
       <Navbar />
 
-      <main className="flex-1 pt-16 md:pt-32 pb-16 px-4 md:px-6">
+      <main className="flex-1 pt-12 md:pt-16 pb-16 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brand-black uppercase tracking-wide mb-6">
