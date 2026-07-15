@@ -3,6 +3,8 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface ISiteSettings extends Document {
   key: string;
   value: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const SiteSettingsSchema = new Schema<ISiteSettings>(

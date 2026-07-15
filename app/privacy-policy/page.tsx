@@ -27,11 +27,18 @@ const DEFAULT_CONTENT = `
 export default async function PrivacyPolicyPage() {
   let content = DEFAULT_CONTENT;
 
+  let updatedAt = new Date("2024-07-01"); // fallback
+
   try {
     await connectToDatabase();
     const settings = await SiteSettings.findOne({ key: "privacy_policy_content" }).lean();
-    if (settings && settings.value && settings.value.trim() !== "") {
-      content = settings.value;
+    if (settings) {
+      if (settings.value && settings.value.trim() !== "") {
+        content = settings.value;
+      }
+      if (settings.updatedAt) {
+        updatedAt = new Date(settings.updatedAt);
+      }
     }
   } catch (error) {
     console.error("Error loading privacy policy:", error);
@@ -42,7 +49,7 @@ export default async function PrivacyPolicyPage() {
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 pt-8 md:pt-12 pb-24 w-full">
         <h1 className="font-display text-4xl md:text-5xl text-brand-black mb-4 uppercase tracking-wide border-b border-neutral-200 pb-6">Privacy Policy</h1>
-        <p className="text-sm text-brand-gray mb-10 italic">Last Updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+        <p className="text-sm text-brand-gray mb-10 italic">Last Updated: {updatedAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
 
         <div 
           className="space-y-6 text-brand-gray leading-relaxed text-sm md:text-base prose prose-sm max-w-none prose-p:text-brand-gray prose-a:text-goat-primary [&_:is(h1,h2,h3,h4,h5,h6)]:!text-xl md:[&_:is(h1,h2,h3,h4,h5,h6)]:!text-2xl [&_:is(h1,h2,h3,h4,h5,h6)]:!font-bold [&_:is(h1,h2,h3,h4,h5,h6)]:!text-brand-black [&_:is(h1,h2,h3,h4,h5,h6)]:!mt-8 [&_:is(h1,h2,h3,h4,h5,h6)]:!mb-4"

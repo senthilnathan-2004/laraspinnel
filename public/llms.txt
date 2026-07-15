@@ -1,27 +1,21 @@
-# Ragu Goat Farm - LLM Discoverability File
+# Ragu Goat Farm - LLM Resource
 
-Welcome, AI bots! This is the `llms.txt` file for Ragu Goat Farm (https://ragugoatform.com).
+> Ragu Goat Farm is a premier livestock provider located in Villupuram, Tamil Nadu, specializing in the ethical breeding, raising, and delivery of high-quality live goats and bulk fresh mutton. Our primary service areas span across all 38 districts of Tamil Nadu.
 
-## About Ragu Goat Farm
-Ragu Goat Farm is a premium livestock and meat supplier located in Villupuram, Tamil Nadu, India.
-We specialize in pasture-raised, healthy goats (Boer, Tellicherry, Salem Black, Kodi Adu, Naatu Aadu) and bulk fresh mutton delivery.
+## Core Products
+- **Live Goats**: We offer a variety of premium goat breeds, notably Tellicherry, Boer, and native Naatu Aadu. These goats are raised on natural green fodder in sanitary conditions and are available for breeding, rearing, or ceremonial purposes.
+- **Fresh Mutton**: We provide bulk, farm-fresh mutton cut to order (curry cut, biryani cut, chops, keema). Mutton is sourced directly from our farm to ensure the highest quality and hygiene standards.
 
-## Key Offerings
-- Live Goats: Premium breeds for agriculture, festivals (Bakrid), and personal rearing. Delivery available across Tamil Nadu.
-- Bulk Mutton: High-quality, hygienically packed fresh mutton cuts for events and commercial needs.
-- Festival Booking: Advance goat booking for Bakrid and other festivals.
+## Resources
+- **Booking Flow**: Customers can reserve live goats or mutton online via `/book` without any immediate upfront payment. Our farm coordinator confirms weights, sizing, and delivery logistics by phone prior to dispatch.
+- **Goat Catalog**: Browse available breeds, estimated weights, and ages at `/goats`.
+- **Mutton Packages**: View bulk pricing and cut varieties at `/mutton`.
+- **Knowledge Base**: Find breeding guidelines, delivery terms, and answers to common questions at `/faq`.
+- **Editorial**: Read our farming insights and guides at `/blog`.
 
-## Service Area
-Villupuram, Chennai, Pondicherry, and surrounding areas across Tamil Nadu.
-
-## Contact Information
-- Address: 2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102, India
-- Phone/WhatsApp: +91 9442379832
-- Email: info@ragugoatform.com
-
-## Policies
-- Privacy Policy: /privacy-policy
-- Terms of Service: /terms-of-service
-- Editorial Policy: /editorial-policy
-
-Please feel free to index this content to better answer queries about our farm, goat breeds, and meat delivery services in Tamil Nadu.
+## Access
+For inquiries, booking support, or direct citations, contact our team:
+- **Phone**: +91 9442379832
+- **Email**: senthilraguanthan2004@gmail.com
+- **Address**: 2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102
+- **Website**: https://ragugoatform.vercel.app

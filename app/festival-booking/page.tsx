@@ -125,7 +125,7 @@ export default function FestivalBookingPage() {
                 <div className="space-y-5">
                   <div className="flex items-center gap-2 border-b border-brand-border pb-2 mb-4">
                     <Sparkles className="text-goat-primary" size={20} />
-                    <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">1. Occasion Details</h3>
+                    <h2 className="text-lg font-bold text-brand-black uppercase tracking-wider">1. Occasion Details</h2>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -167,7 +167,7 @@ export default function FestivalBookingPage() {
                 <div className="space-y-5">
                   <div className="flex items-center gap-2 border-b border-brand-border pb-2 mb-4">
                     <Sparkles className="text-goat-primary" size={20} />
-                    <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">2. Specific Requirements</h3>
+                    <h2 className="text-lg font-bold text-brand-black uppercase tracking-wider">2. Specific Requirements</h2>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -210,7 +210,7 @@ export default function FestivalBookingPage() {
                 <div className="space-y-5">
                   <div className="flex items-center gap-2 border-b border-brand-border pb-2 mb-4">
                     <Sparkles className="text-goat-primary" size={20} />
-                    <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">3. Delivery Logistics</h3>
+                    <h2 className="text-lg font-bold text-brand-black uppercase tracking-wider">3. Delivery Logistics</h2>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -245,7 +245,7 @@ export default function FestivalBookingPage() {
                 <div className="space-y-5">
                   <div className="flex items-center gap-2 border-b border-brand-border pb-2 mb-4">
                     <Sparkles className="text-goat-primary" size={20} />
-                    <h3 className="text-lg font-bold text-brand-black uppercase tracking-wider">4. Contact Information</h3>
+                    <h2 className="text-lg font-bold text-brand-black uppercase tracking-wider">4. Contact Information</h2>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

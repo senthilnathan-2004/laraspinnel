@@ -33,12 +33,13 @@ export default function FAQClient({ faqs }: FAQClientProps) {
                 Q
               </span>
               <div>
-                <h3 className="text-xl font-bold text-brand-black mb-3 leading-snug">
+                <h2 className="text-xl font-bold text-brand-black mb-3 leading-snug">
                   {faq.question}
-                </h3>
-                <p className="text-brand-gray leading-relaxed">
-                  {faq.answer}
-                </p>
+                </h2>
+                <div 
+                  className="text-brand-gray leading-relaxed space-y-3"
+                  dangerouslySetInnerHTML={{ __html: faq.answer }}
+                />
               </div>
             </div>
 
@@ -53,9 +54,9 @@ export default function FAQClient({ faqs }: FAQClientProps) {
                   <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-goat-tint text-goat-primary font-bold text-sm mt-0.5">
                     Q
                   </span>
-                  <h3 className="text-lg md:text-xl font-bold text-brand-black leading-snug">
+                  <h2 className="text-lg md:text-xl font-bold text-brand-black leading-snug">
                     {faq.question}
-                  </h3>
+                  </h2>
                 </div>
                 <div className="flex-shrink-0 ml-4 mt-1">
                   <ChevronDown
@@ -75,9 +76,10 @@ export default function FAQClient({ faqs }: FAQClientProps) {
               >
                 <div className="overflow-hidden">
                   <div className="px-3 md:px-6 pb-3 md:pb-6 ml-11">
-                    <p className="text-brand-gray leading-relaxed">
-                      {faq.answer}
-                    </p>
+                    <div 
+                      className="text-brand-gray leading-relaxed space-y-3"
+                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                    />
                   </div>
                 </div>
               </div>

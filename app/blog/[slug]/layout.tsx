@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return {
         title: displayTitle,
         description: displayDesc,
+        authors: [{ name: post.author || "Ragu Farm Team" }],
         keywords: [
           ...(post.tags || []),
           "goat farming tips",

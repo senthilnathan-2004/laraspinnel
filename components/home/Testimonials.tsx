@@ -16,19 +16,19 @@ export default function Testimonials() {
     {
       name: "Ramesh Kumar",
       location: "Coimbatore, TN",
-      review: "Ordered 15 live goats for a family celebration. The breed quality was exceptional, and they arrived right on time in excellent health. Best farm service in Tamil Nadu!",
+      review: "<strong>Goal:</strong> Sourcing 15 healthy live goats for a large family celebration.<br/><br/><strong>Outcome:</strong> Exceptional breed quality delivered right on time in excellent health. Ragu Goat Farm provided the most reliable farm-to-door service we've experienced in Tamil Nadu.",
       initial: "R",
     },
     {
       name: "Revathi S.",
       location: "Villupuram, TN",
-      review: "Ragu Goat Farm is our default source for bulk mutton. The cuts are fresh, clean, and delivered in hygienic food-grade packages. Highly recommend their weekly family packs.",
+      review: "<strong>Goal:</strong> Finding a consistent, hygienic source for weekly bulk mutton family packs.<br/><br/><strong>Outcome:</strong> Fresh, clean cuts delivered regularly in hygienic food-grade packaging. Ragu Goat Farm is now our default source for all mutton needs.",
       initial: "R",
     },
     {
       name: "Mohamed Asif",
       location: "Tiruppur, TN",
-      review: "Purchased Boer goats for festival breeding. The farm team helped us select the right weight classes and guided us on care. Very professional, honest farm pricing.",
+      review: "<strong>Goal:</strong> Purchasing premium Boer goats for festival breeding and rearing.<br/><br/><strong>Outcome:</strong> The farm team helped select the optimal weight classes and provided expert care guidance. Very professional service with honest, transparent farm pricing.",
       initial: "M",
     },
   ];
@@ -66,9 +66,10 @@ export default function Testimonials() {
                     <Star key={i} weight="fill" size={16} className="text-[#F59E0B]" />
                   ))}
                 </div>
-                <p className="text-xs text-brand-gray leading-relaxed italic relative z-10">
-                  &ldquo;{rev.review}&rdquo;
-                </p>
+                <div 
+                  className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-2"
+                  dangerouslySetInnerHTML={{ __html: rev.review }}
+                />
               </div>
 
               {/* Customer Info */}

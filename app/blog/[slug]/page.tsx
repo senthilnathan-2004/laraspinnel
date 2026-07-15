@@ -66,7 +66,9 @@ export default async function BlogDetailsPage({ params }: Props) {
             "datePublished": p.publishedAt || p.createdAt,
             "author": {
               "@type": "Person",
-              "name": p.author || "Ragu Farm Team"
+              "name": p.author || "Ragu Farm Team",
+              "jobTitle": "Livestock & Farming Expert",
+              "url": `${SITE_URL}/about`
             },
             "publisher": {
               "@type": "Organization",
@@ -143,14 +145,25 @@ export default async function BlogDetailsPage({ params }: Props) {
           <p className="text-sm font-medium text-brand-gray leading-relaxed">{p.excerpt}</p>
 
           <div className="flex items-center gap-6 text-xs text-brand-gray border-y border-brand-border py-3 select-none">
-            <div className="flex items-center gap-1.5">
-              <User size={14} className="text-neutral-400" />
-              <span className="font-semibold text-brand-black">{p.author}</span>
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-goat-tint text-goat-primary flex items-center justify-center font-bold">
+                {p.author ? p.author.charAt(0) : "R"}
+              </div>
+              <div className="flex flex-col">
+                <span className="font-semibold text-brand-black text-sm">{p.author || "Ragu Farm Team"}</span>
+                <span className="text-[10px] uppercase tracking-wider text-goat-text font-semibold">Farming Expert</span>
+              </div>
             </div>
             <div className="flex items-center gap-1.5 font-mono">
               <Calendar size={14} className="text-neutral-400" />
               <span>
-                {p.publishedAt
+                {p.updatedAt
+                  ? new Date(p.updatedAt).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : p.publishedAt
                   ? new Date(p.publishedAt).toLocaleDateString("en-IN", {
                       day: "2-digit",
                       month: "long",

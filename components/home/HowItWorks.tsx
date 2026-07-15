@@ -7,25 +7,25 @@ export default function HowItWorks() {
   const steps = [
     {
       number: "1",
-      title: "Browse Varieties",
+      title: "Step 1: Browse Varieties",
       description: "Explore premium goats or custom bulk mutton packs.",
       icon: <MagnifyingGlass size={30} weight="duotone" className="text-goat-primary" />,
     },
     {
       number: "2",
-      title: "Select & Book",
+      title: "Step 2: Select & Book",
       description: "Fill a quick, easy booking form in minutes.",
       icon: <ClipboardText size={30} weight="duotone" className="text-goat-primary" />,
     },
     {
       number: "3",
-      title: "We Call to Confirm",
+      title: "Step 3: We Call to Confirm",
       description: "Our farm team calls you to verify your order.",
       icon: <Phone size={30} weight="duotone" className="text-goat-primary" />,
     },
     {
       number: "4",
-      title: "Delivered Fresh",
+      title: "Step 4: Delivered Fresh",
       description: "Receive your order fresh, right on schedule.",
       icon: <Truck size={30} weight="duotone" className="text-goat-primary" />,
     },

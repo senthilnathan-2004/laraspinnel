@@ -159,9 +159,10 @@ export default function AdminTestimonialsPage() {
                 
                 <div className="flex-1 space-y-4">
                   <Quote size={24} className="text-goat-primary/20" />
-                  <p className="text-sm text-brand-gray leading-relaxed italic line-clamp-4">
-                    "{t.review}"
-                  </p>
+                  <div 
+                    className="text-sm text-brand-gray leading-relaxed italic line-clamp-4 space-y-1"
+                    dangerouslySetInnerHTML={{ __html: `"${t.review}"` }}
+                  />
                 </div>
                 
                 <div className="mt-6 pt-4 border-t border-brand-border flex items-center justify-between">
@@ -259,6 +260,7 @@ export default function AdminTestimonialsPage() {
                   className="w-full border border-brand-border rounded-xl p-3 md:p-4 text-sm resize-none"
                   placeholder="What did they say about the farm?"
                 />
+                <span className="text-xs text-brand-gray mt-1 block">Supports HTML tags like &lt;strong&gt; and &lt;br/&gt;</span>
               </div>
 
               <label className="flex items-center gap-3 cursor-pointer p-3 md:p-4 border border-brand-border rounded-xl bg-brand-light-gray/30 hover:bg-brand-light-gray transition-colors">

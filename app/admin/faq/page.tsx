@@ -186,9 +186,10 @@ export default function AdminFAQPage() {
                   <h3 className="font-bold text-gray-900 mb-1 line-clamp-2">
                     {faq.question}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-3">
-                    {faq.answer}
-                  </p>
+                  <div 
+                    className="text-sm text-gray-600 line-clamp-3"
+                    dangerouslySetInnerHTML={{ __html: faq.answer }}
+                  />
                 </div>
               </div>
             ))}
@@ -252,6 +253,7 @@ export default function AdminFAQPage() {
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all resize-none"
                   placeholder="e.g. Yes, we deliver fresh mutton and live goats to Chennai..."
                 />
+                <span className="text-xs text-gray-500 mt-1 block">Supports HTML tags like &lt;strong&gt; and &lt;br/&gt;</span>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

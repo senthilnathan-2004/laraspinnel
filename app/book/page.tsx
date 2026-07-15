@@ -159,73 +159,62 @@ function BookingForm() {
   const isGoatTheme = productType === "goat";
 
   return (
-    <div className="min-h-screen bg-white flex flex-col justify-between">
-      <Navbar />
+    <div className="space-y-8">
+      {/* Success Overlay Panel */}
+      <AnimatePresence>
+        {isSuccess ? (
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="bg-white border border-brand-border rounded-2xl p-3 md:p-8 shadow-hover text-center space-y-6 max-w-lg mx-auto py-16 animate-in duration-300"
+          >
+            {/* Animated checkmark circle */}
+            <div className="flex items-center justify-center">
+              <CheckCircle
+                weight="fill"
+                size={72}
+                className={isGoatTheme ? "text-goat-primary" : "text-mutton-primary"}
+              />
+            </div>
 
-      <main className="flex-1 max-w-3xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 select-none">
-        {/* Success Overlay Panel */}
-        <AnimatePresence>
-          {isSuccess ? (
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white border border-brand-border rounded-2xl p-3 md:p-8 shadow-hover text-center space-y-6 max-w-lg mx-auto py-16 animate-in duration-300"
-            >
-              {/* Animated checkmark circle */}
-              <div className="flex items-center justify-center">
-                <CheckCircle
-                  weight="fill"
-                  size={72}
-                  className={isGoatTheme ? "text-goat-primary" : "text-mutton-primary"}
-                />
-              </div>
-
-              {/* Text */}
-              <div className="space-y-2">
-                <h2 className="font-display text-3xl text-brand-black uppercase">
-                  Booking Received!
-                </h2>
-                <p className="text-sm font-medium text-brand-gray">
-                  Thank you for choosing Ragu Goat Farm. We have received your reservation.
-                </p>
-              </div>
-
-              {/* Reference ID card */}
-              <div className="bg-brand-light-gray p-3 md:p-4 rounded-xl border border-brand-border inline-block">
-                <span className="text-[10px] text-brand-gray uppercase font-bold block">
-                  Your Reference ID
-                </span>
-                <span className="font-mono text-lg font-bold text-brand-black tracking-wider block mt-1">
-                  {refId}
-                </span>
-              </div>
-
-              <p className="text-xs text-brand-gray max-w-xs mx-auto leading-relaxed">
-                Our farm coordinator will call you shortly on your provided phone number to confirm portion sizing, weights, and arrange delivery.
+            {/* Text */}
+            <div className="space-y-2">
+              <h2 className="font-display text-3xl text-brand-black uppercase">
+                Booking Received!
+              </h2>
+              <p className="text-sm font-medium text-brand-gray">
+                Thank you for choosing Ragu Goat Farm. We have received your reservation.
               </p>
+            </div>
 
-              <div className="pt-2">
-                <button
-                  onClick={() => router.push("/")}
-                  className={`px-4 md:px-6 py-2.5 rounded-full text-white font-semibold text-sm transition-all cursor-pointer ${isGoatTheme ? "bg-goat-primary hover:bg-goat-hover" : "bg-mutton-primary hover:bg-mutton-hover"
-                    }`}
-                >
-                  Return to Home
-                </button>
-              </div>
-            </motion.div>
-          ) : (
-            /* Main Booking Form Block */
-            <div className="space-y-6">
-              <div className="space-y-3 border-b border-brand-border pb-6">
-                <h1 className="font-display text-4xl text-brand-black uppercase tracking-wide">
-                  Book Live Goat or Fresh Mutton Online
-                </h1>
-                <p className="text-sm font-medium text-brand-gray">
-                  Reserve Tellicherry, Boer, or naatu aadu live goats and custom mutton packs online. Safe livestock shipping and morning-fresh mutton delivery across Tamil Nadu.
-                </p>
-              </div>
+            {/* Reference ID card */}
+            <div className="bg-brand-light-gray p-3 md:p-4 rounded-xl border border-brand-border inline-block">
+              <span className="text-[10px] text-brand-gray uppercase font-bold block">
+                Your Reference ID
+              </span>
+              <span className="font-mono text-lg font-bold text-brand-black tracking-wider block mt-1">
+                {refId}
+              </span>
+            </div>
+
+            <p className="text-xs text-brand-gray max-w-xs mx-auto leading-relaxed">
+              Our farm coordinator will call you shortly on your provided phone number to confirm portion sizing, weights, and arrange delivery.
+            </p>
+
+            <div className="pt-2">
+              <button
+                onClick={() => router.push("/")}
+                className={`px-4 md:px-6 py-2.5 rounded-full text-white font-semibold text-sm transition-all cursor-pointer ${isGoatTheme ? "bg-goat-primary hover:bg-goat-hover" : "bg-mutton-primary hover:bg-mutton-hover"
+                  }`}
+              >
+                Return to Home
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          /* Main Booking Form Block */
+          <div className="space-y-6">
 
               {/* Step indicator progress bar */}
               <div className="flex items-center justify-center gap-4 text-xs font-semibold select-none">
@@ -710,24 +699,38 @@ function BookingForm() {
             </div>
           )}
         </AnimatePresence>
-      </main>
-
-      <Footer />
     </div>
   );
 }
 
 export default function BookingFormPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-white flex items-center justify-center">
-          <div className="h-8 w-8 rounded-full border-4 border-neutral-200 border-t-goat-primary animate-spin"></div>
+    <div className="min-h-screen bg-white flex flex-col justify-between">
+      <Navbar />
+
+      <main className="flex-1 max-w-3xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 select-none">
+        <div className="space-y-3 border-b border-brand-border pb-6">
+          <h1 className="font-display text-4xl text-brand-black uppercase tracking-wide">
+            Book Live Goat or Fresh Mutton Online
+          </h1>
+          <p className="text-sm font-medium text-brand-gray">
+            Reserve Tellicherry, Boer, or naatu aadu live goats and custom mutton packs online. Safe livestock shipping and morning-fresh mutton delivery across Tamil Nadu.
+          </p>
         </div>
-      }
-    >
-      <BookingForm />
-    </Suspense>
+
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center py-20">
+              <div className="h-8 w-8 rounded-full border-4 border-neutral-200 border-t-goat-primary animate-spin"></div>
+            </div>
+          }
+        >
+          <BookingForm />
+        </Suspense>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 
