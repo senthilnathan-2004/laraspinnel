@@ -6,8 +6,7 @@ import "../globals.css";
 export const metadata: Metadata = {
   title: "Admin | Ragu Goat Farm",
   description: "Ragu Goat Farm admin dashboard.",
-  robots: { index: true, follow: true },
-  icons: { icon: "/icon.svg" },
+  robots: { index: false, follow: false },
 };
 
 import { Providers } from "@/components/Providers";
