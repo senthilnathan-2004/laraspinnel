@@ -22,7 +22,7 @@ export default function PhilosophyContent({ content }: { content: string }) {
       <div className="relative">
         <div 
           ref={contentRef}
-          className={`space-y-6 relative z-10 max-w-none prose prose-sm md:prose-base prose-p:text-brand-gray prose-a:text-goat-primary [&_:is(h1,h2,h3,h4,h5,h6)]:text-xl! md:[&_:is(h1,h2,h3,h4,h5,h6)]:text-2xl! [&_:is(h1,h2,h3,h4,h5,h6)]:font-bold! [&_:is(h1,h2,h3,h4,h5,h6)]:text-brand-black! [&_:is(h1,h2,h3,h4,h5,h6)]:mt-8! [&_:is(h1,h2,h3,h4,h5,h6)]:mb-4! transition-all duration-500 overflow-hidden ${
+          className={`space-y-6 relative z-10 max-w-none prose prose-sm md:prose-base [&_p]:text-justify! prose-p:text-brand-gray prose-a:text-goat-primary [&_:is(h1,h2,h3,h4,h5,h6)]:text-xl! md:[&_:is(h1,h2,h3,h4,h5,h6)]:text-2xl! [&_:is(h1,h2,h3,h4,h5,h6)]:font-bold! [&_:is(h1,h2,h3,h4,h5,h6)]:text-brand-black! [&_:is(h1,h2,h3,h4,h5,h6)]:mt-8! [&_:is(h1,h2,h3,h4,h5,h6)]:mb-4! transition-all duration-500 overflow-hidden ${
             !isExpanded ? "max-h-75 lg:max-h-100" : "max-h-[5000px]"
           }`}
           dangerouslySetInnerHTML={{ __html: content }}

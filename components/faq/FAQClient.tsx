@@ -37,7 +37,7 @@ export default function FAQClient({ faqs }: FAQClientProps) {
                   {faq.question}
                 </h2>
                 <div 
-                  className="text-brand-gray leading-relaxed space-y-3"
+                  className="text-brand-gray leading-relaxed space-y-3 text-justify [&_p]:text-justify!"
                   dangerouslySetInnerHTML={{ __html: faq.answer }}
                 />
               </div>
@@ -77,7 +77,7 @@ export default function FAQClient({ faqs }: FAQClientProps) {
                 <div className="overflow-hidden">
                   <div className="px-3 md:px-6 pb-3 md:pb-6 ml-11">
                     <div 
-                      className="text-brand-gray leading-relaxed space-y-3"
+                      className="text-brand-gray leading-relaxed space-y-3 text-justify [&_p]:text-justify!"
                       dangerouslySetInnerHTML={{ __html: faq.answer }}
                     />
                   </div>

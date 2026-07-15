@@ -59,10 +59,10 @@ export default function AboutPage() {
             <h2 className="font-display text-2xl sm:text-3xl text-brand-black uppercase">
               Our Goat Farming Philosophy in Villupuram
             </h2>
-            <p className="text-sm text-brand-gray leading-relaxed">
+            <p className="text-sm text-brand-gray leading-relaxed text-justify">
               {settings.about_intro_p1 || "At Ragu Goat Farm, we believe that premium quality begins with wholesome care. Located in the lush pastures of Villupuram, our farm spans acres of open grazing fields. Our animals are pasture-raised, allowing them natural forage access alongside nutrient-rich feed."}
             </p>
-            <p className="text-sm text-brand-gray leading-relaxed">
+            <p className="text-sm text-brand-gray leading-relaxed text-justify">
               {settings.about_intro_p2 || "We started with a vision to streamline livestock ordering in Tamil Nadu, eliminating middle-agency price hikes. By combining modern veterinary management with direct-to-customer deliveries, we ensure healthy animals reach your doorstep at transparent farm rates."}
             </p>
           </div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
                   {v.icon}
                 </div>
                 <h4 className="font-semibold text-brand-black text-sm">{v.title}</h4>
-                <p className="text-xs text-brand-gray leading-relaxed">{v.description}</p>
+                <p className="text-xs text-brand-gray leading-relaxed text-justify">{v.description}</p>
               </div>
             ))}
           </div>

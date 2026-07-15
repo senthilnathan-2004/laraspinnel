@@ -48,44 +48,47 @@ export default async function FestivalGoatCTA() {
           <div className="lg:col-span-7 flex flex-col h-full">
             <div className="mb-4">
               <h3 className="text-xl font-bold text-brand-black mb-1">Special Function Goats</h3>
-              <p className="text-brand-gray text-sm">We handpick and reserve the finest livestock specifically meeting the traditional requirements of your festivals and religious functions.</p>
+              <p className="text-brand-gray text-sm text-justify">We handpick and reserve the finest livestock specifically meeting the traditional requirements of your festivals and religious functions.</p>
             </div>
 
             <div className="flex flex-col gap-4 flex-1">
               {/* Hindu Function */}
-              <div className="flex gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
+              <div className="grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
                 <div className="w-10 h-10 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black shrink-0">
                   <MdOutlineTempleHindu size={22} />
                 </div>
-                <div>
-                  <h4 className="text-base font-bold text-brand-black mb-1">Hindu Temple Functions</h4>
-                  <p className="text-brand-gray text-sm leading-relaxed">
+                <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Hindu Temple Functions</h4>
+                <div className="col-span-2 lg:col-span-1 lg:flex-1">
+                  <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Hindu Temple Functions</h4>
+                  <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
                     {hinduDesc}
                   </p>
                 </div>
               </div>
 
               {/* Muslim Function */}
-              <div className="flex gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
+              <div className="grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
                 <div className="w-10 h-10 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black shrink-0">
                   <MdOutlineMosque size={22} />
                 </div>
-                <div>
-                  <h4 className="text-base font-bold text-brand-black mb-1">Muslim Festivals (Qurbani / Aqeeqah)</h4>
-                  <p className="text-brand-gray text-sm leading-relaxed">
+                <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Muslim Festivals (Qurbani / Aqeeqah)</h4>
+                <div className="col-span-2 lg:col-span-1 lg:flex-1">
+                  <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Muslim Festivals (Qurbani / Aqeeqah)</h4>
+                  <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
                     {muslimDesc}
                   </p>
                 </div>
               </div>
 
               {/* Christian Function */}
-              <div className="flex gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
+              <div className="grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
                 <div className="w-10 h-10 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black shrink-0">
                   <MdOutlineChurch size={22} />
                 </div>
-                <div>
-                  <h4 className="text-base font-bold text-brand-black mb-1">Christian Feast Days</h4>
-                  <p className="text-brand-gray text-sm leading-relaxed">
+                <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Christian Feast Days</h4>
+                <div className="col-span-2 lg:col-span-1 lg:flex-1">
+                  <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Christian Feast Days</h4>
+                  <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
                     {christianDesc}
                   </p>
                 </div>
@@ -101,19 +104,19 @@ export default async function FestivalGoatCTA() {
               <ul className="space-y-3 mb-8 flex-1">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-brand-black shrink-0 mt-0.5" />
-                  <span className="text-brand-black font-medium text-sm">Choose exactly what you need (Weight, Color, Age/Teeth).</span>
+                  <span className="text-brand-black font-medium text-sm text-justify">Choose exactly what you need (Weight, Color, Age/Teeth).</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-brand-black shrink-0 mt-0.5" />
-                  <span className="text-brand-black font-medium text-sm">Schedule precise delivery date and timing.</span>
+                  <span className="text-brand-black font-medium text-sm text-justify">Schedule precise delivery date and timing.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 size={18} className="text-brand-black shrink-0 mt-0.5" />
-                  <span className="text-brand-black font-medium text-sm">Our team will verify your exact requirements before confirming.</span>
+                  <span className="text-brand-black font-medium text-sm text-justify">Our team will verify your exact requirements before confirming.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Info size={18} className="text-brand-gray shrink-0 mt-0.5" />
-                  <span className="text-brand-gray text-sm">No payment required upfront. We will contact you with pricing after reviewing your request.</span>
+                  <span className="text-brand-gray text-sm text-justify">No payment required upfront. We will contact you with pricing after reviewing your request.</span>
                 </li>
               </ul>
 

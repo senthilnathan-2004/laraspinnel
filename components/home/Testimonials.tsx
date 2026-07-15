@@ -67,7 +67,7 @@ export default function Testimonials() {
                   ))}
                 </div>
                 <div 
-                  className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-2"
+                  className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: rev.review }}
                 />
               </div>
