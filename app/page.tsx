@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import HeroSlider from "@/components/home/HeroSlider";
 import ShopByCategory from "@/components/home/ShopByCategory";
-import FeaturedVarieties from "@/components/home/FeaturedVarieties";
-import FeaturedMutton from "@/components/home/FeaturedMutton";
 import dynamic from "next/dynamic";
 
 const Testimonials = dynamic(() => import("@/components/home/Testimonials"), { ssr: true });
@@ -12,14 +10,16 @@ const FestivalGoatCTA = dynamic(() => import("@/components/home/FestivalGoatCTA"
 const HowItWorks = dynamic(() => import("@/components/home/HowItWorks"), { ssr: true });
 const GalleryPreview = dynamic(() => import("@/components/home/GalleryPreview"), { ssr: true });
 const BlogPreview = dynamic(() => import("@/components/home/BlogPreview"), { ssr: true });
+const FeaturedVarieties = dynamic(() => import("@/components/home/FeaturedVarieties"), { ssr: true });
+const FeaturedMutton = dynamic(() => import("@/components/home/FeaturedMutton"), { ssr: true });
+const ServiceAreaBanner = dynamic(() => import("@/components/home/ServiceAreaBanner"), { ssr: true });
+const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"), { ssr: true });
+const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), { ssr: true });
+const ImageMarquee = dynamic(() => import("@/components/home/ImageMarquee"), { ssr: true });
+const PhilosophyContent = dynamic(() => import("@/components/home/PhilosophyContent"), { ssr: true });
 
-import ServiceAreaBanner from "@/components/home/ServiceAreaBanner";
-import FinalCTA from "@/components/home/FinalCTA";
 import Footer from "@/components/layout/Footer";
-import TextMarquee from "@/components/home/TextMarquee";
-import ImageMarquee from "@/components/home/ImageMarquee";
 import HomePreloader from "@/components/home/HomePreloader";
-import PhilosophyContent from "@/components/home/PhilosophyContent";
 import { connectToDatabase } from "@/lib/db";
 import Banner from "@/models/Banner";
 import SiteSettings from "@/models/SiteSettings";
