@@ -261,7 +261,7 @@ export default function Footer() {
           <p className="text-neutral-600" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved. <br className="sm:hidden" />
             <span className="hidden sm:inline"> | </span> 
-            Content Last Updated: <time dateTime={new Date().toISOString().split('T')[0]} className="font-medium text-neutral-500">{new Date().toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</time>
+            Content Last Updated: <time dateTime="2026-07-16" className="font-medium text-neutral-500">Jul 2026</time>
           </p>
           <div className="flex items-center gap-3 text-neutral-600">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>

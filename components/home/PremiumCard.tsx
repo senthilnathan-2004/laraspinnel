@@ -39,7 +39,7 @@ export default function PremiumCard({
             src={image}
             alt={name}
             fill
-            sizes="(max-width: 768px) 100vw, 400px"
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             quality={75}
             className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 opacity-90 group-hover:opacity-100"
           />

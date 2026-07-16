@@ -297,6 +297,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Resource" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Comprehensive LLM Resource" />
       </head>
