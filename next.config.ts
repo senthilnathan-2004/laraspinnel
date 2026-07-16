@@ -16,9 +16,9 @@ const nextConfig: NextConfig = {
   },
   compress: true, // Explicitly enable compression (Gzip/Brotli)
   experimental: {
-    optimizeCss: true, // Inlines critical CSS to prevent render blocking
+    optimizeCss: true, // Inlines critical CSS to prevent render blocking (requires webpack, not turbopack)
   },
-  turbopack: {},
+
   async headers() {
     return [
       {
