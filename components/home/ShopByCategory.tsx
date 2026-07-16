@@ -53,10 +53,10 @@ export default function ShopByCategory({ settings }: { settings: any }) {
             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
             {/* Top Tag */}
-            <div className="absolute top-3 left-3 md:top-8 md:left-8 z-10">
-              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm">
-                <Tag weight="fill" className="text-green-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5" />
-                <span className="truncate max-w-[80px] md:max-w-none">Tamil Nadu Delivery</span>
+            <div className="absolute top-3 left-3 right-3 md:top-8 md:left-8 md:right-auto z-10 flex">
+              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm max-w-full">
+                <Tag weight="fill" className="text-green-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5 shrink-0" />
+                <span className="truncate">Tamil Nadu Delivery</span>
               </div>
             </div>
 
@@ -104,10 +104,10 @@ export default function ShopByCategory({ settings }: { settings: any }) {
             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
             {/* Top Tag */}
-            <div className="absolute top-3 left-3 md:top-8 md:left-8 z-10">
-              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm">
-                <Tag weight="fill" className="text-red-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5" />
-                <span className="truncate max-w-[80px] md:max-w-none">Select Districts</span>
+            <div className="absolute top-3 left-3 right-3 md:top-8 md:left-8 md:right-auto z-10 flex">
+              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm max-w-full">
+                <Tag weight="fill" className="text-red-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5 shrink-0" />
+                <span className="truncate">Select Districts</span>
               </div>
             </div>
 
