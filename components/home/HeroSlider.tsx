@@ -21,7 +21,14 @@ interface Banner {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function HeroSlider({ initialBanners = [] }: { initialBanners?: Banner[] }) {
-  const { data: banners = initialBanners, isLoading } = useSWR<Banner[]>("/api/banners", fetcher, { fallbackData: initialBanners });
+  const { data: banners = initialBanners } = useSWR<Banner[]>("/api/banners", fetcher, {
+    fallbackData: initialBanners,
+    // Don't re-fetch on first mount — server already passed initialBanners.
+    // This prevents a duplicate network request on the critical path and
+    // eliminates the loading flash that was delaying LCP.
+    revalidateOnMount: false,
+    revalidateOnFocus: false,
+  });
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
@@ -59,13 +66,6 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
     [emblaApi]
   );
 
-  if (isLoading && banners.length === 0) {
-    return (
-      <div className="h-[60vh] xl:h-[88vh] w-full bg-neutral-100 flex items-center justify-center animate-pulse">
-        {/* Placeholder background, no spinner to avoid double-loading effect */}
-      </div>
-    );
-  }
 
   // Fallback defaults if no active banners seeded
   const slides = banners.length > 0 ? banners : [

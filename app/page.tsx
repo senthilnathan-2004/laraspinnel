@@ -1,25 +1,20 @@
 import React from "react";
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
+// Above-fold: static imports — rendered immediately, no deferred bundle
 import HeroSlider from "@/components/home/HeroSlider";
 import ShopByCategory from "@/components/home/ShopByCategory";
+import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
+
+// Near-fold text marquee with SSR for no layout shift
 import dynamic from "next/dynamic";
-
-const Testimonials = dynamic(() => import("@/components/home/Testimonials"), { ssr: true });
-const FestivalGoatCTA = dynamic(() => import("@/components/home/FestivalGoatCTA"), { ssr: true });
-const HowItWorks = dynamic(() => import("@/components/home/HowItWorks"), { ssr: true });
-const GalleryPreview = dynamic(() => import("@/components/home/GalleryPreview"), { ssr: true });
-const BlogPreview = dynamic(() => import("@/components/home/BlogPreview"), { ssr: true });
-const FeaturedVarieties = dynamic(() => import("@/components/home/FeaturedVarieties"), { ssr: true });
-const FeaturedMutton = dynamic(() => import("@/components/home/FeaturedMutton"), { ssr: true });
-const ServiceAreaBanner = dynamic(() => import("@/components/home/ServiceAreaBanner"), { ssr: true });
-const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"), { ssr: true });
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), { ssr: true });
-const ImageMarquee = dynamic(() => import("@/components/home/ImageMarquee"), { ssr: true });
-const PhilosophyContent = dynamic(() => import("@/components/home/PhilosophyContent"), { ssr: true });
 
-import Footer from "@/components/layout/Footer";
-import HomePreloader from "@/components/home/HomePreloader";
+// Below-fold sections — Client Component that defers JS bundles via ssr:false
+import BelowFoldSections from "@/components/home/BelowFoldSections";
+
 import { connectToDatabase } from "@/lib/db";
 import Banner from "@/models/Banner";
 import SiteSettings from "@/models/SiteSettings";
@@ -140,10 +135,9 @@ export default async function HomePage() {
   }
 
   return (
-    <HomePreloader>
-      <div className="min-h-screen bg-white flex flex-col justify-between">
-        {/* Scroll-aware sticky Navbar */}
-        <Navbar />
+    <div className="min-h-screen bg-white flex flex-col justify-between">
+      {/* Scroll-aware sticky Navbar */}
+      <Navbar />
 
         <main className="flex-1">
           {/* Visually hidden H1 for SEO since HeroSlider fetches client-side */}
@@ -197,70 +191,13 @@ export default async function HomePage() {
           {/* Festival Goat CTA Block */}
           <FestivalGoatCTA />
 
-
-
-          {/* Featured Live Goats Variety cards */}
-          <FeaturedVarieties />
-
-          {/* Variety Image Marquee */}
-          <ImageMarquee />
-
-          {/* Service areas banner */}
-          <ServiceAreaBanner />
-
-
-
-          {/* Featured Mutton Packs cards */}
-          <FeaturedMutton />
-
-          {/* How Booking Works flow strip */}
-          <HowItWorks />
-
-          {/* Farm Gallery previews */}
-          <GalleryPreview />
-
-          {/* Desktop-only Marquee 2 */}
-          <div className="hidden lg:block">
-            <ImageMarquee direction="right" bgColor="bg-transparent border-none" />
-          </div>
-
-          {/* Customer Testimonials and Trust Badges */}
-          <Testimonials />
-
-          {/* Comprehensive SEO & Philosophy Text Block (Boosts Text-to-HTML ratio) */}
-          <div className="max-w-7xl mx-auto px-4 md:px-6 my-16">
-            <section className="bg-brand-light-gray/20 rounded-2xl p-4 sm:p-6 lg:p-8 border border-brand-border text-left relative overflow-hidden group hover:border-goat-primary/30 transition-colors">
-              {/* Decorative subtle background accent for desktop */}
-              <div className="hidden lg:block absolute -top-24 -right-24 w-64 h-64 bg-goat-primary/5 rounded-full blur-3xl pointer-events-none group-hover:bg-goat-primary/10 transition-colors" />
-
-              {/* Top Row: Heading */}
-              <div className="space-y-4 relative z-10 mb-8 lg:mb-12">
-                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-goat-primary/10 border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-widest">
-                  Our Philosophy
-                </div>
-                <h2 className="font-display text-2xl md:text-4xl lg:text-5xl text-brand-black uppercase tracking-wide leading-tight">
-                  Your Trusted Source for Premium Livestock and Fresh Meat in Tamil Nadu
-                </h2>
-              </div>
-
-              {/* Bottom Row: Expanded Content */}
-              <PhilosophyContent content={philosophyContent} />
-            </section>
-          </div>
-
-          {/* Blog post previews */}
-          <BlogPreview />
-
-          {/* Goat Varieties / Marketing Marquee */}
-          <TextMarquee items={["Boer Goat", "Tellicherry", "Kanni Aadu", "Sirohi", "Native Breed", "Dorper"]} bgColor="bg-brand-black" textColor="text-white" dividerColor="text-white/20" />
-
-          {/* Centered final Booking CTA */}
-          <FinalCTA />
+          {/* Below-fold sections: JS bundles are deferred via ssr:false
+              inside the BelowFoldSections Client Component wrapper */}
+          <BelowFoldSections philosophyContent={philosophyContent} />
         </main>
 
-        {/* Footer block */}
-        <Footer />
-      </div>
-    </HomePreloader>
+      {/* Footer block */}
+      <Footer />
+    </div>
   );
 }

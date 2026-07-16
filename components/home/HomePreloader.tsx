@@ -1,3 +1,14 @@
+/**
+ * HomePreloader — DEPRECATED from homepage use.
+ *
+ * This component was removed from app/page.tsx because it wrapped the entire
+ * page in a full-screen z-[9999] white overlay while waiting for the hero banner
+ * image to load. This completely hid all LCP-measurable content until the
+ * "banner-loaded" event fired (or the 4-second timeout), causing LCP ~3s+.
+ *
+ * It is kept here in case it is needed elsewhere, but should NOT be used on any
+ * page where LCP matters.
+ */
 "use client";
 import React, { useState, useEffect } from "react";
 import useSWR from "swr";
@@ -23,8 +34,8 @@ export default function HomePreloader({ children }: { children: React.ReactNode 
     };
   }, []);
 
-  const logoUrl = settings.logo_url;
-  const farmName = settings.farm_name || "RAGU FARM";
+  const logoUrl = (settings as any).logo_url;
+  const farmName = (settings as any).farm_name || "RAGU FARM";
 
   return (
     <>

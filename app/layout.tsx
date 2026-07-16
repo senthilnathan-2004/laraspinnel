@@ -284,16 +284,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Preload the Inter (body) font to break the CSS→font dependency chain.
-            This tells the browser to fetch the woff2 before it discovers it via CSS,
-            reducing the critical path latency (~2,500ms → ~600ms). */}
-        <link
-          rel="preload"
-          as="font"
-          type="font/woff2"
-          href="/_next/static/media/a34f9d1faa5f3315-s.p.woff2"
-          crossOrigin="anonymous"
-        />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Resource" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Comprehensive LLM Resource" />
       </head>
