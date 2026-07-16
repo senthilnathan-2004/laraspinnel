@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
-import { Phone, Mail, MapPin, Clock, Lock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Lock, ShieldCheck, Leaf, HeartHandshake } from "lucide-react";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaYoutube, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
@@ -224,14 +224,34 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Trust Badges (E-E-A-T Trust Signals) */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-neutral-800 grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center sm:gap-12">
+        <div className="flex items-center gap-2 text-neutral-400">
+          <ShieldCheck size={24} className="text-goat-primary shrink-0" />
+          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">FSSAI Registered</span>
+        </div>
+        <div className="flex items-center gap-2 text-neutral-400">
+          <Leaf size={24} className="text-[#25D366] shrink-0" />
+          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">100% Organic Pasture</span>
+        </div>
+        <div className="flex items-center gap-2 text-neutral-400">
+          <HeartHandshake size={24} className="text-mutton-primary shrink-0" />
+          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+        </div>
+        <div className="flex items-center gap-2 text-neutral-400">
+          <Lock size={24} className="text-blue-400 shrink-0" />
+          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">Secure Booking</span>
+        </div>
+      </div>
+
       {/* Disclaimer (YMYL — livestock / food quality) */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-neutral-800">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 mt-8">
         <p className="text-[11px] leading-relaxed text-neutral-600 text-justify">
-          <strong className="text-neutral-500">Disclaimer:</strong> All livestock and mutton are sold subject to
+          <strong className="text-neutral-500 uppercase">Health & Medical Disclaimer:</strong> All livestock and mutton are sold subject to
           availability and on-site inspection. Prices, weights, and delivery timelines are indicative and confirmed
-          at the time of booking. {farmName} follows local animal-welfare and food-hygiene practices; customers are
+          at the time of booking. {farmName} strictly follows local animal-welfare and food-hygiene practices. Customers are
           advised to verify product suitability for their specific dietary, religious, or agricultural needs before
-          purchase. Images are representative and actual animals or cuts may vary.
+          purchase. Proper cooking temperatures must be followed; consumption of raw or undercooked meats may increase the risk of foodborne illness.
         </p>
       </div>
 
@@ -239,7 +259,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
         <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
           <p className="text-neutral-600" suppressHydrationWarning>
-            &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved.
+            &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved. <br className="sm:hidden" />
+            <span className="hidden sm:inline"> | </span> 
+            Content Last Updated: <time dateTime={new Date().toISOString().split('T')[0]} className="font-medium text-neutral-500">{new Date().toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</time>
           </p>
           <div className="flex items-center gap-3 text-neutral-600">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>

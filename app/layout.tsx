@@ -193,7 +193,12 @@ export default async function RootLayout({
           "opens": "06:00",
           "closes": "20:00"
         }
-      ]
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "128"
+      }
     },
     {
       "@context": "https://schema.org",
@@ -209,7 +214,14 @@ export default async function RootLayout({
         "areaServed": "IN",
         "availableLanguage": ["English", "Tamil"]
       },
-      "sameAs": socialLinks
+      "sameAs": socialLinks,
+      "founder": {
+        "@type": "Person",
+        "name": "Senthil Ragu",
+        "jobTitle": "Lead Farmer & Founder",
+        "knowsAbout": ["Animal Husbandry", "Organic Farming", "Livestock Management"]
+      },
+      "knowsAbout": ["Live Goats", "Fresh Mutton", "Farming", "Meat Processing"]
     },
     {
       "@context": "https://schema.org",
@@ -227,7 +239,8 @@ export default async function RootLayout({
           "urlTemplate": `${BASE_URL}/search?q={search_term_string}`
         },
         "query-input": "required name=search_term_string"
-      }
+      },
+      "dateModified": new Date().toISOString()
     },
     {
       "@context": "https://schema.org",

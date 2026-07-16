@@ -124,8 +124,8 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                 <div className="absolute inset-0 bg-linear-to-t from-brand-black/80 via-brand-black/35 to-transparent"></div>
 
                 {/* Slide Content */}
-                <div className="absolute inset-0 flex flex-col pt-24 pb-20 md:pb-28 max-[300px]:pb-8 max-w-7xl mx-auto px-4 md:px-6 overflow-y-auto overflow-x-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                  <div className="mt-auto max-w-3xl space-y-4 max-[300px]:space-y-2 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
+                <div className="absolute inset-0 flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-28 max-[300px]:pb-8">
+                  <div className="max-w-3xl space-y-4 max-[300px]:space-y-2 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
                     {/* tag */}
                     <span className="inline-block bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs max-[300px]:text-[10px] max-[300px]:px-2 font-semibold px-4 py-1">
                       🌿 100% Farm Raised
