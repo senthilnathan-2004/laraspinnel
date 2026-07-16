@@ -156,7 +156,7 @@ export default function Navbar() {
         }`}
       >
         {/* Links */}
-        <nav className="flex-1 overflow-y-auto py-2 space-y-1.5">
+        <nav className="flex-1 overflow-y-auto py-2 space-y-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -164,7 +164,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-5 py-4 text-lg font-bold rounded-xl transition-all duration-300 ${
+                className={`block px-4 py-2.5 text-lg font-bold rounded-xl transition-all duration-300 ${
                   isActive 
                     ? "bg-goat-tint text-goat-primary translate-x-1" 
                     : "text-brand-black hover:bg-brand-light-gray hover:text-goat-primary hover:translate-x-1"
