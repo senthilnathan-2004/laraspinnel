@@ -18,6 +18,15 @@ interface Banner {
   buttonTheme: "green" | "red";
 }
 
+const imageKitLoader = ({ src, width, quality }: { src: string, width: number, quality?: number }) => {
+  if (src.startsWith('https://ik.imagekit.io')) {
+    const params = [`w-${width}`];
+    if (quality) params.push(`q-${quality}`);
+    return `${src}?tr=${params.join(",")}`;
+  }
+  return src;
+};
+
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function HeroSlider({ initialBanners = [] }: { initialBanners?: Banner[] }) {
@@ -105,6 +114,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
               >
                 {slide.imageUrl && (
                   <Image
+                    loader={imageKitLoader}
                     src={slide.imageUrl}
                     alt={slide.headline}
                     fill

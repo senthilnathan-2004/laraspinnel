@@ -6,6 +6,15 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Leaf, Flame } from "@phosphor-icons/react";
 
+const imageKitLoader = ({ src, width, quality }: { src: string, width: number, quality?: number }) => {
+  if (src.startsWith('https://ik.imagekit.io')) {
+    const params = [`w-${width}`];
+    if (quality) params.push(`q-${quality}`);
+    return `${src}?tr=${params.join(",")}`;
+  }
+  return src;
+};
+
 interface PremiumCardProps {
   image: string;
   name: string;
@@ -36,6 +45,7 @@ export default function PremiumCard({
       <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-900">
         {image ? (
           <Image
+            loader={imageKitLoader}
             src={image}
             alt={name}
             fill
