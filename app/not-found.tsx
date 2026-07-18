@@ -25,7 +25,7 @@ export default function NotFound() {
             <h1 className="font-display text-7xl md:text-8xl text-brand-black tracking-tight drop-shadow-sm">
               404
             </h1>
-            <h2 className="font-display text-2xl md:text-3xl text-brand-black">
+            <h2 className="font-display text-2xl md:text-2xl md:text-3xl text-brand-black">
               Oops! You&apos;ve wandered off the farm.
             </h2>
             <p className="text-base text-brand-gray/80 font-medium max-w-md mx-auto leading-relaxed">

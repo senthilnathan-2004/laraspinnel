@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import GoatsClientList from "./GoatsClientList";
 import { connectToDatabase } from "@/lib/db";
 import GoatVariety from "@/models/GoatVariety";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Leaf } from "lucide-react";
 
 export const revalidate = 60; // Cache for 60 seconds
 
@@ -19,11 +19,13 @@ export default async function GoatsListingPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-6 md:space-y-10">
         {/* Page Header */}
         <div className="space-y-3 border-b border-brand-border pb-6">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">🌿 Live Livestock Catalog</span>
-          <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
+          <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
+            <Leaf size={14} className="text-goat-primary" /> Live Livestock Catalog
+          </span>
+          <h1 className="font-display text-2xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Live Goat Varieties — Pasture Raised Breeds for Sale
           </h1>
           <h2 className="font-display text-lg text-goat-text uppercase tracking-wide">

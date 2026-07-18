@@ -183,7 +183,7 @@ function BookingForm() {
 
               {/* Text */}
               <div className="space-y-2">
-                <h2 className="font-display text-3xl text-brand-black uppercase">
+                <h2 className="font-display text-2xl md:text-3xl text-brand-black uppercase">
                   Booking Received!
                 </h2>
                 <p className="text-sm font-medium text-brand-gray">
@@ -219,7 +219,7 @@ function BookingForm() {
             /* Main Booking Form Block */
             <div className="space-y-6">
               <div className="space-y-3 border-b border-brand-border pb-6">
-                <h1 className="font-display text-4xl text-brand-black uppercase tracking-wide">
+                <h1 className="font-display text-2xl md:text-4xl text-brand-black uppercase tracking-wide">
                   Book Live Goat or Fresh Mutton Online
                 </h1>
                 <p className="text-sm font-medium text-brand-gray">

@@ -2,7 +2,7 @@
 import React from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { CheckCircle2, Award, Shield, Compass } from "lucide-react";
+import { CheckCircle2, Award, Shield, Compass, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { useSettings } from "@/hooks/useSettings";
 import Image from "next/image";
@@ -32,11 +32,13 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-12 w-full space-y-16 animate-in fade-in">
+      <main className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-16 animate-in fade-in">
         {/* Page Header */}
         <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider block">🌾 Our Story</span>
-          <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
+          <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
+            <BookOpen size={14} className="text-goat-primary" /> Our Story
+          </span>
+          <h1 className="font-display text-3xl sm:text-5xl text-brand-black tracking-wide uppercase">
             {settings.about_intro_title || "About Ragu Goat Farm"}
           </h1>
           <p className="text-sm font-medium text-brand-gray">
@@ -56,7 +58,7 @@ export default function AboutPage() {
             />
           </div>
           <div className="space-y-4">
-            <h2 className="font-display text-2xl sm:text-3xl text-brand-black uppercase">
+            <h2 className="font-display text-2xl sm:text-2xl md:text-3xl text-brand-black uppercase">
               Our Goat Farming Philosophy in Villupuram
             </h2>
             <p className="text-sm text-brand-gray leading-relaxed text-justify">
@@ -71,7 +73,7 @@ export default function AboutPage() {
         {/* Core Values */}
         <div className="space-y-8 bg-brand-light-gray/40 border border-brand-border rounded-3xl p-3 md:p-8">
           <div className="text-center space-y-2 max-w-md mx-auto">
-            <h2 className="font-display text-2xl sm:text-3xl text-brand-black uppercase">
+            <h2 className="font-display text-2xl sm:text-2xl md:text-3xl text-brand-black uppercase">
               {settings.about_why_title || "Why Choose Ragu Goat Farm?"}
             </h2>
             <p className="text-xs text-brand-gray font-medium">
@@ -95,19 +97,19 @@ export default function AboutPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 select-none border-y border-brand-border py-8 text-center bg-white">
           <div className="space-y-1">
-            <span className="font-display text-3xl sm:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_1_val || "50+ ACRES"}</span>
+            <span className="font-display text-2xl sm:text-3xl md:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_1_val || "50+ ACRES"}</span>
             <span className="text-[10px] text-brand-gray uppercase font-bold tracking-wider block">{settings.about_stat_1_label || "Pasture Grazing"}</span>
           </div>
           <div className="space-y-1 border-l border-brand-border">
-            <span className="font-display text-3xl sm:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_2_val || "1,200+"}</span>
+            <span className="font-display text-2xl sm:text-3xl md:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_2_val || "1,200+"}</span>
             <span className="text-[10px] text-brand-gray uppercase font-bold tracking-wider block">{settings.about_stat_2_label || "Goats Reared"}</span>
           </div>
           <div className="space-y-1 border-l border-brand-border">
-            <span className="font-display text-3xl sm:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_3_val || "99.8%"}</span>
+            <span className="font-display text-2xl sm:text-3xl md:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_3_val || "99.8%"}</span>
             <span className="text-[10px] text-brand-gray uppercase font-bold tracking-wider block">{settings.about_stat_3_label || "Health Clearance"}</span>
           </div>
           <div className="space-y-1 border-l border-brand-border">
-            <span className="font-display text-3xl sm:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_4_val || "3,500+"}</span>
+            <span className="font-display text-2xl sm:text-3xl md:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_4_val || "3,500+"}</span>
             <span className="text-[10px] text-brand-gray uppercase font-bold tracking-wider block">{settings.about_stat_4_label || "Deliveries Completed"}</span>
           </div>
         </div>

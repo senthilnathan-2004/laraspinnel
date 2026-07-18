@@ -28,7 +28,7 @@ export default async function MuttonDetailsPage({ params }: { params: Promise<{ 
       <div className="min-h-screen bg-white flex flex-col justify-between">
         <Navbar />
         <div className="flex-1 max-w-xl mx-auto px-4 md:px-6 py-24 text-center space-y-6">
-          <h1 className="font-display text-3xl uppercase text-brand-black">Mutton Pack Not Found</h1>
+          <h1 className="font-display text-3xl md:text-3xl uppercase text-brand-black">Mutton Pack Not Found</h1>
           <p className="text-brand-gray text-sm">
             The mutton package you are looking for does not exist or has been deactivated.
           </p>

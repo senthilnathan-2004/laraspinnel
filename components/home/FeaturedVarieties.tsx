@@ -25,19 +25,37 @@ export default function FeaturedVarieties() {
   );
 
   return (
-    <section className="py-20 bg-brand-light-gray/40">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-8">
+    <section className="relative overflow-hidden py-20 bg-brand-light-gray/40 border-t border-brand-border">
+      {/* Background Grid Pattern */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.06] z-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40V0h40' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")`,
+        }}
+      ></div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
-          <h2 className="font-display text-3xl text-brand-black tracking-wide uppercase">
+          <style>{`
+            @keyframes arrowSlide {
+              0%, 100% { transform: translateX(0); }
+              50% { transform: translateX(4px); }
+            }
+            @media (max-width: 1023px) {
+              .animate-arrow-slide {
+                animation: arrowSlide 1.5s ease-in-out infinite;
+              }
+            }
+          `}</style>
+          <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
             Popular Goat Varieties
           </h2>
           <Link
             href="/goats"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-goat-primary hover:text-goat-hover transition-colors"
+            className="group inline-flex items-center gap-1 text-sm font-semibold text-goat-primary hover:text-goat-hover transition-colors"
           >
             <span>View All</span>
-            <ArrowRight size={14} />
+            <ArrowRight size={14} className="animate-arrow-slide lg:transition-transform lg:group-hover:translate-x-1" />
           </Link>
         </div>
 

@@ -134,8 +134,8 @@ export default function FilterBar({
           </div>
 
           {/* Tags List */}
-          <div className={`${isTagsExpanded ? 'flex' : 'hidden'} flex-wrap items-center gap-2 text-xs font-semibold select-none transition-all`}>
-            <span className="hidden lg:flex text-brand-gray uppercase tracking-wider font-bold mr-1 items-center gap-1">
+          <div className={`${isTagsExpanded ? 'flex' : 'hidden'} flex-col flex-wrap content-start items-start gap-2 max-h-[140px] overflow-x-auto pb-2 w-full text-xs font-semibold select-none transition-all`}>
+            <span className="hidden lg:flex text-brand-gray uppercase tracking-wider font-bold mr-1 items-center gap-1 self-center">
               <SlidersHorizontal size={12} />
               <span>Tags:</span>
             </span>

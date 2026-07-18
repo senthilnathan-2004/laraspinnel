@@ -10,7 +10,7 @@ export default function VillupuramLocationPage() {
   return (
     <main className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-display uppercase text-brand-black tracking-tight sm:text-5xl">
+        <h1 className="text-2xl md:text-4xl font-display uppercase text-brand-black tracking-tight sm:text-5xl">
           Villupuram's Trusted Goat Farm & Mutton Delivery
         </h1>
         <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto text-justify">
@@ -20,7 +20,7 @@ export default function VillupuramLocationPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div>
-          <h2 className="text-3xl font-bold mb-6">Why Choose Ragu Goat Farm in Villupuram?</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">Why Choose Ragu Goat Farm in Villupuram?</h2>
           <ul className="space-y-4 text-lg text-gray-700">
             <li className="flex items-start">
               <span className="text-green-600 mr-2">✓</span>

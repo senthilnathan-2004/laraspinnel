@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import ContactMessage from "@/models/ContactMessage";
 import { contactMessageSchema } from "@/lib/validations";
-import { rateLimit } from "@/lib/rateLimit";
+import { formRateLimit } from "@/lib/rateLimit";
 import { sendEmail } from "@/lib/email/sendEmail";
 import { getAdminNewContactEmailHtml } from "@/lib/email/adminNewContact";
 import { getCustomerContactConfirmationEmailHtml } from "@/lib/email/customerContactConfirmation";
@@ -12,10 +12,11 @@ export async function POST(req: NextRequest) {
   try {
     // 1. Rate Limiting Check
     const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
-    const limiter = rateLimit(ip, 5, 60 * 1000); // 5 contacts/min limit
-    if (!limiter.success) {
+    const { success } = await formRateLimit.limit(`ratelimit_contact_${ip}`);
+    
+    if (!success) {
       return NextResponse.json(
-        { error: "Too many requests. Please try again in a minute." },
+        { error: "You can only submit one contact message per 24 hours to prevent spam." },
         { status: 429 }
       );
     }

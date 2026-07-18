@@ -18,11 +18,11 @@ export default function ShopByCategory({ settings }: { settings: any }) {
   }
 
   return (
-    <section className="py-24 bg-brand-light-gray/20">
+    <section className="py-24 bg-brand-light-gray border-t border-brand-border">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-4">
-          <h2 className="font-display text-4xl md:text-5xl text-brand-black tracking-wide uppercase">
+          <h2 className="font-display text-2xl md:text-5xl text-brand-black tracking-wide uppercase">
             {settings.home_shop_title || "What Are You Looking For?"}
           </h2>
           <p className="text-base font-medium text-brand-gray/80">

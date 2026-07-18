@@ -6,9 +6,20 @@ import { sendEmail } from "@/lib/email/sendEmail";
 import { adminNewFestivalBookingTemplate } from "@/lib/email/adminNewFestivalBooking";
 import { customerFestivalConfirmationTemplate } from "@/lib/email/customerFestivalConfirmation";
 import SiteSettings from "@/models/SiteSettings";
+import { formRateLimit } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const { success } = await formRateLimit.limit(`ratelimit_festival_${ip}`);
+    
+    if (!success) {
+      return NextResponse.json(
+        { error: "You can only submit one festival booking per 24 hours. Please contact us for larger orders." },
+        { status: 429 }
+      );
+    }
+
     await connectToDatabase();
     const body = await req.json();
 

@@ -18,14 +18,17 @@ export async function PUT(
     await connectToDatabase();
     const body = await req.json();
 
-    const { name, location, review, isActive } = body;
+    const { name, location, goal, outcome, rating, refId, isActive } = body;
 
     const initial = name ? name.charAt(0).toUpperCase() : undefined;
 
     const updateData: any = {
       ...(name && { name, initial }),
       ...(location && { location }),
-      ...(review && { review }),
+      ...(goal && { goal }),
+      ...(outcome && { outcome }),
+      ...(rating && { rating: Number(rating) }),
+      ...(refId && { refId }),
       ...(isActive !== undefined && { isActive }),
     };
 

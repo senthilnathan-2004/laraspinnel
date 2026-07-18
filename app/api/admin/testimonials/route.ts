@@ -39,11 +39,11 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
     const body = await req.json();
 
-    const { name, location, review, isActive } = body;
+    const { name, location, goal, outcome, rating, refId, isActive } = body;
 
-    if (!name || !location || !review) {
+    if (!name || !location || !goal || !outcome) {
       return NextResponse.json(
-        { error: "Name, location, and review are required" },
+        { error: "Name, location, goal, and outcome are required" },
         { status: 400 }
       );
     }
@@ -54,8 +54,11 @@ export async function POST(req: NextRequest) {
     const newTestimonial = await Testimonial.create({
       name,
       location,
-      review,
+      goal,
+      outcome,
       initial,
+      rating: Number(rating) || 5,
+      refId: refId || "ADMIN-CREATED",
       isActive: isActive !== undefined ? isActive : true,
     });
 

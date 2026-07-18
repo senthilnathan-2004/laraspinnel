@@ -106,7 +106,7 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
                     </span>
                   </div>
                 </summary>
-                <div className="flex flex-wrap items-center gap-2 pt-3">
+                <div className="flex flex-col flex-wrap content-start items-start gap-2 pt-3 max-h-[140px] overflow-x-auto pb-2 w-full">
                   <TagButtons />
                 </div>
               </details>

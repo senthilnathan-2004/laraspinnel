@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { connectToDatabase } from "@/lib/db";
 import BlogPost from "@/models/BlogPost";
 import BlogListContainer from "@/components/blog/BlogListContainer";
+import { Newspaper } from "lucide-react";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -23,11 +24,13 @@ export default async function BlogListingPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-6 md:space-y-10">
         {/* Page Header */}
         <div className="space-y-3 border-b border-brand-border pb-6">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">📰 Articles &amp; Updates</span>
-          <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
+          <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
+            <Newspaper size={14} className="text-goat-primary" /> Articles &amp; Updates
+          </span>
+          <h1 className="font-display text-2xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Goat Farming &amp; Mutton Guides — Ragu Farm Blog
           </h1>
           <h2 className="font-display text-lg text-goat-text uppercase tracking-wide">

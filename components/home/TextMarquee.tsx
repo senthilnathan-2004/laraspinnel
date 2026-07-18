@@ -32,7 +32,7 @@ export default function TextMarquee({
           <div key={setIndex} className="flex items-center">
             {items.map((item, idx) => (
               <div key={`${setIndex}-${idx}`} className="flex items-center">
-                <span className={`font-display text-2xl sm:text-3xl tracking-widest uppercase mx-8 ${textColor}`}>
+                <span className={`font-display text-2xl sm:text-2xl md:text-3xl tracking-widest uppercase mx-8 ${textColor}`}>
                   {item}
                 </span>
                 <span className={`text-2xl ${dividerColor}`}>✦</span>

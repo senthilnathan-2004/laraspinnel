@@ -80,7 +80,7 @@ export default function FestivalBookingPage() {
             <CalendarHeart size={14} />
             <span>Festival & Special Functions</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-brand-black mb-4">
+          <h1 className="text-2xl md:text-5xl font-display font-bold text-brand-black mb-4">
             Festival &amp; Bakrid Goat Booking Custom Order
           </h1>
           <p className="text-brand-gray text-base font-medium">
@@ -93,7 +93,7 @@ export default function FestivalBookingPage() {
             <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle size={40} className="text-green-600" />
             </div>
-            <h2 className="text-3xl font-display font-bold text-brand-black mb-4">Request Received!</h2>
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-black mb-4">Request Received!</h2>
             <p className="text-brand-gray text-lg mb-6 max-w-md mx-auto">
               Your festival goat requirement has been successfully submitted. Our team will review your specific needs and contact you shortly.
             </p>

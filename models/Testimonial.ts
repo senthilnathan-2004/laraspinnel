@@ -3,8 +3,11 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface ITestimonial extends Document {
   name: string;
   location: string;
-  review: string;
+  goal: string;
+  outcome: string;
   initial: string;
+  rating: number;
+  refId: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -14,8 +17,11 @@ const TestimonialSchema = new Schema<ITestimonial>(
   {
     name: { type: String, required: true },
     location: { type: String, required: true },
-    review: { type: String, required: true },
+    goal: { type: String, required: true },
+    outcome: { type: String, required: true },
     initial: { type: String, required: true },
+    rating: { type: Number, required: true, min: 1, max: 5, default: 5 },
+    refId: { type: String, required: true },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }

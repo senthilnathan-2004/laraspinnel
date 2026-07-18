@@ -81,11 +81,13 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-12">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-12">
         {/* Page Header */}
         <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider block">📞 Get in touch</span>
-          <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
+          <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
+            <Phone size={14} className="text-goat-primary" /> Get in touch
+          </span>
+          <h1 className="font-display text-3xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Contact Ragu Goat Farm
           </h1>
           <p className="text-sm font-medium text-brand-gray">

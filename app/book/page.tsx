@@ -180,7 +180,7 @@ function BookingForm() {
 
             {/* Text */}
             <div className="space-y-2">
-              <h2 className="font-display text-3xl text-brand-black uppercase">
+              <h2 className="font-display text-2xl md:text-3xl text-brand-black uppercase">
                 Booking Received!
               </h2>
               <p className="text-sm font-medium text-brand-gray">
@@ -708,9 +708,9 @@ export default function BookingFormPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-3xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 select-none">
+      <main className="flex-1 max-w-3xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-8 select-none">
         <div className="space-y-3 border-b border-brand-border pb-6">
-          <h1 className="font-display text-4xl text-brand-black uppercase tracking-wide">
+          <h1 className="font-display text-3xl md:text-4xl text-brand-black uppercase tracking-wide">
             Book Live Goat or Fresh Mutton Online
           </h1>
           <p className="text-sm font-medium text-brand-gray">

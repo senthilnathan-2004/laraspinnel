@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Search, ChevronLeft, ChevronRight, X, Image as ImageIcon, Loader2 } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, X, Image as ImageIcon, Loader2, Camera } from "lucide-react";
 import { MagnifyingGlassPlus } from "@phosphor-icons/react";
 import useSWR from "swr";
 import Image from "next/image";
@@ -56,11 +56,13 @@ export default function GalleryPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10 pb-20">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-6 md:space-y-10 pb-20">
         {/* Page Header */}
         <div className="space-y-3 border-b border-brand-border pb-6">
-          <span className="text-xs font-semibold text-goat-text uppercase tracking-wider">📸 Media Gallery</span>
-          <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
+          <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
+            <Camera size={14} className="text-goat-primary" /> Media Gallery
+          </span>
+          <h1 className="font-display text-2xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Inside Ragu Goat Farm — Live Goats &amp; Fresh Mutton
           </h1>
           <h2 className="font-display text-lg text-goat-text uppercase tracking-wide">

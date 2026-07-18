@@ -1,85 +1,298 @@
 "use client";
 
-import React from "react";
-import { Quote, Users, MapPin, ShieldCheck } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Quote, Users, MapPin, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import { Star } from "@phosphor-icons/react";
 import useSWR from "swr";
+import { X, CheckCircle2, Loader2 } from "lucide-react";
+import SwipeButton from "@/components/shared/SwipeButton";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const ReviewCard = ({ rev, className = "" }: { rev: any; className?: string }) => (
+  <div className={`bg-white p-5 md:p-6 rounded-2xl border border-brand-border shadow-card flex flex-col justify-between relative group hover:-translate-y-0.5 transition-transform duration-200 h-full ${className}`}>
+    <Quote className="text-goat-primary/10 absolute top-5 right-5 group-hover:scale-105 transition-transform" size={36} />
+
+    {/* Review Text */}
+    <div className="space-y-4">
+      <div className="flex gap-0.5">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} weight={i < (rev.rating || 5) ? "fill" : "regular"} size={16} className={i < (rev.rating || 5) ? "text-[#F59E0B]" : "text-brand-gray/30"} />
+        ))}
+      </div>
+      <div className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-3">
+        <p className="text-justify"><strong className="text-brand-black">Goal:</strong> {rev.goal}</p>
+        <p className="text-justify"><strong className="text-brand-black">Outcome:</strong> {rev.outcome}</p>
+      </div>
+    </div>
+
+    {/* Customer Info */}
+    <div className="flex items-center gap-3 pt-6 border-t border-brand-border mt-6">
+      <div className="w-10 h-10 rounded-full bg-goat-tint text-goat-text font-bold text-sm flex items-center justify-center border border-goat-primary/10 shrink-0">
+        {rev.initial}
+      </div>
+      <div>
+        <h3 className="font-semibold text-brand-black text-sm">{rev.name}</h3>
+        <p className="text-[10px] text-brand-gray mt-0.5 font-medium">{rev.location}</p>
+      </div>
+    </div>
+  </div>
+);
+
+const AddReviewModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [formData, setFormData] = useState({ name: "", location: "", goal: "", outcome: "", rating: 5, refId: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/testimonials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setErrorMessage(data.error || "Failed to submit review");
+        setStatus("error");
+      }
+    } catch (err) {
+      setErrorMessage("Network error. Please try again.");
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="bg-white rounded-3xl p-4 sm:p-8 w-full max-w-lg shadow-2xl relative animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-brand-light-gray rounded-full text-brand-gray hover:text-brand-black transition-colors z-10">
+          <X size={20} />
+        </button>
+
+        {status === "success" ? (
+          <div className="text-center py-8 space-y-4">
+            <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle2 size={32} />
+            </div>
+            <h3 className="text-2xl font-display uppercase tracking-wide text-brand-black">Thank You!</h3>
+            <p className="text-brand-gray">Your review has been submitted and is pending approval.</p>
+            <button onClick={onClose} className="mt-4 px-6 py-3 bg-brand-black text-white rounded-xl font-bold uppercase tracking-wider text-sm hover:bg-neutral-800 transition-colors">
+              Close
+            </button>
+          </div>
+        ) : (
+          <>
+            <h3 className="font-display text-2xl uppercase tracking-wide text-brand-black mb-1">Write a Review</h3>
+            <p className="text-sm text-brand-gray mb-6">Share your experience with Ragu Goat Farm.</p>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="flex flex-col items-center gap-1 mb-4">
+                <label className="text-xs font-bold text-brand-black uppercase tracking-wider">Rating</label>
+                <div className="flex gap-1 justify-center">
+                  {[...Array(5)].map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, rating: i + 1 })}
+                      className="focus:outline-none transition-transform active:scale-90"
+                    >
+                      <Star weight={i < formData.rating ? "fill" : "regular"} size={32} className={i < formData.rating ? "text-[#F59E0B]" : "text-brand-gray/30"} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-brand-black uppercase tracking-wider pl-1">Name *</label>
+                  <input required type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full h-12 px-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm" placeholder="e.g. Ramesh Kumar" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-brand-black uppercase tracking-wider pl-1">Location *</label>
+                  <input required type="text" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} className="w-full h-12 px-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm" placeholder="e.g. Villupuram, TN" />
+                </div>
+              </div>
+              
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-brand-black uppercase tracking-wider pl-1">Order Ref ID *</label>
+                <input required type="text" value={formData.refId} onChange={(e) => setFormData({ ...formData, refId: e.target.value })} className="w-full h-12 px-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm uppercase" placeholder="e.g. BKG-12345" />
+                <p className="text-[10px] text-brand-gray pl-1">Found in your booking confirmation SMS/Email.</p>
+              </div>
+              
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-brand-black uppercase tracking-wider pl-1">Goal *</label>
+                <textarea required rows={2} value={formData.goal} onChange={(e) => setFormData({ ...formData, goal: e.target.value })} className="w-full p-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm resize-none" placeholder="What were you looking for? (e.g., Sourcing 15 healthy live goats)"></textarea>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-brand-black uppercase tracking-wider pl-1">Outcome *</label>
+                <textarea required rows={3} value={formData.outcome} onChange={(e) => setFormData({ ...formData, outcome: e.target.value })} className="w-full p-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm resize-none" placeholder="Tell us about the result..."></textarea>
+              </div>
+
+              {status === "error" && <p className="text-red-500 text-xs font-medium text-center bg-red-50 p-2 rounded-lg">{errorMessage}</p>}
+
+              <button type="submit" disabled={status === "loading"} className="w-full h-12 bg-goat-primary text-white font-bold uppercase tracking-wider text-sm rounded-xl hover:bg-goat-primary/90 transition-colors flex items-center justify-center gap-2 mt-4">
+                {status === "loading" ? <><Loader2 size={18} className="animate-spin" /> Submitting...</> : "Submit Review"}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default function Testimonials() {
   const { data: settings = {} } = useSWR("/api/settings", fetcher);
   const { data: testimonials = [] } = useSWR("/api/admin/testimonials?activeOnly=true", fetcher);
   
-  // Use either the dynamic testimonials or fallback to empty array
   const reviews = testimonials.length > 0 ? testimonials : [
     {
       name: "Ramesh Kumar",
       location: "Coimbatore, TN",
-      review: "<strong>Goal:</strong> Sourcing 15 healthy live goats for a large family celebration.<br/><br/><strong>Outcome:</strong> Exceptional breed quality delivered right on time in excellent health. Ragu Goat Farm provided the most reliable farm-to-door service we've experienced in Tamil Nadu.",
+      goal: "Sourcing 15 healthy live goats for a large family celebration.",
+      outcome: "Exceptional breed quality delivered right on time in excellent health. Ragu Goat Farm provided the most reliable farm-to-door service we've experienced in Tamil Nadu.",
       initial: "R",
+      rating: 5,
     },
     {
       name: "Revathi S.",
       location: "Villupuram, TN",
-      review: "<strong>Goal:</strong> Finding a consistent, hygienic source for weekly bulk mutton family packs.<br/><br/><strong>Outcome:</strong> Fresh, clean cuts delivered regularly in hygienic food-grade packaging. Ragu Goat Farm is now our default source for all mutton needs.",
+      goal: "Finding a consistent, hygienic source for weekly bulk mutton family packs.",
+      outcome: "Fresh, clean cuts delivered regularly in hygienic food-grade packaging. Ragu Goat Farm is now our default source for all mutton needs.",
       initial: "R",
+      rating: 5,
     },
     {
       name: "Mohamed Asif",
       location: "Tiruppur, TN",
-      review: "<strong>Goal:</strong> Purchasing premium Boer goats for festival breeding and rearing.<br/><br/><strong>Outcome:</strong> The farm team helped select the optimal weight classes and provided expert care guidance. Very professional service with honest, transparent farm pricing.",
+      goal: "Purchasing premium Boer goats for festival breeding and rearing.",
+      outcome: "The farm team helped select the optimal weight classes and provided expert care guidance. Very professional service with honest, transparent farm pricing.",
       initial: "M",
+      rating: 5,
     },
   ];
+
+  const [visibleItems, setVisibleItems] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const updateVisible = () => {
+      if (window.innerWidth >= 640 && window.innerWidth < 900) setVisibleItems(2);
+      else setVisibleItems(1);
+    };
+    updateVisible();
+    window.addEventListener("resize", updateVisible);
+    return () => window.removeEventListener("resize", updateVisible);
+  }, []);
+
+  const maxSlide = Math.max(0, reviews.length - visibleItems);
+
+  useEffect(() => {
+    if (currentSlide > maxSlide) {
+      setCurrentSlide(maxSlide);
+    }
+  }, [maxSlide, currentSlide]);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+  }, [maxSlide]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+  }, [maxSlide]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
 
   return (
     <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto space-y-2">
-          <h2 className="font-display text-4xl text-brand-black tracking-wide uppercase">
+          <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
             {settings.home_testimonials_title || "What Our Customers Say"}
           </h2>
           <p className="text-sm font-medium text-brand-gray">
             {settings.home_testimonials_subtitle || "Stories of satisfaction from farmers, families, and commercial buyers."}
           </p>
+          <p className="text-sm font-medium text-brand-gray mt-1 flex items-center gap-1.5 justify-center">
+            <ShieldCheck size={16} className="text-goat-primary" /> Verified Purchases Only
+          </p>
+          <div className="pt-4 w-full max-w-[280px] mx-auto">
+            <div className="hidden sm:block">
+              <button onClick={() => setIsModalOpen(true)} className="px-6 py-3 w-full bg-white border-2 border-brand-black text-brand-black font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-brand-black hover:text-white transition-all shadow-sm active:scale-95">
+                Add Your Review
+              </button>
+            </div>
+            <div className="block sm:hidden w-full">
+              <SwipeButton onSwipeComplete={() => setIsModalOpen(true)} text="Slide to Review" />
+            </div>
+          </div>
         </div>
 
-        {/* 3 Review Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Desktop View: Grid (>= 900px) */}
+        <div className="hidden min-[900px]:grid grid-cols-3 gap-8">
           {reviews.map((rev: any, idx: number) => (
-            <div
-              key={idx}
-              className={`bg-white p-3 md:p-6 rounded-2xl border border-brand-border shadow-card flex-col justify-between relative group hover:-translate-y-0.5 transition-transform duration-200 ${idx >= 2 ? "hidden md:flex" : "flex"}`}
-            >
-              <Quote className="text-goat-primary/10 absolute top-5 right-5 group-hover:scale-105 transition-transform" size={36} />
-
-              {/* Review Text */}
-              <div className="space-y-4">
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} weight="fill" size={16} className="text-[#F59E0B]" />
-                  ))}
-                </div>
-                <div 
-                  className="text-xs text-brand-gray leading-relaxed relative z-10 text-justify"
-                  dangerouslySetInnerHTML={{ __html: rev.review }}
-                />
-              </div>
-
-              {/* Customer Info */}
-              <div className="flex items-center gap-3 pt-6 border-t border-brand-border mt-6">
-                <div className="w-10 h-10 rounded-full bg-goat-tint text-goat-text font-bold text-sm flex items-center justify-center border border-goat-primary/10">
-                  {rev.initial}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-brand-black text-sm">{rev.name}</h3>
-                  <p className="text-[10px] text-brand-gray mt-0.5 font-medium">{rev.location}</p>
-                </div>
-              </div>
-            </div>
+            <ReviewCard key={idx} rev={rev} />
           ))}
+        </div>
+
+        {/* Mobile & Tablet View: Carousel (< 900px) */}
+        <div className="block min-[900px]:hidden relative -mx-4 overflow-hidden">
+          <div 
+            className="flex transition-transform duration-500 ease-in-out items-stretch"
+            style={{ transform: `translateX(-${currentSlide * (100 / visibleItems)}%)` }}
+          >
+            {reviews.map((rev: any, idx: number) => (
+              <div key={idx} className="w-full sm:w-1/2 shrink-0 px-4 pb-2 h-auto">
+                <ReviewCard rev={rev} />
+              </div>
+            ))}
+          </div>
+
+          {/* Controls */}
+          {maxSlide > 0 && (
+            <div className="flex items-center justify-center gap-5 mt-6">
+              <button 
+                onClick={prevSlide}
+                className="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              
+              <div className="flex gap-2.5">
+                {[...Array(maxSlide + 1)].map((_, idx: number) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                      currentSlide === idx ? "w-8 bg-brand-black" : "w-2.5 bg-brand-border"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button 
+                onClick={nextSlide}
+                className="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Trust Badges Strip */}
@@ -133,6 +346,7 @@ export default function Testimonials() {
           </div>
         </div>
       </div>
+      <AddReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

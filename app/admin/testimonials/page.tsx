@@ -17,7 +17,10 @@ export default function AdminTestimonialsPage() {
   const [currentTestimonial, setCurrentTestimonial] = useState<any>({
     name: "",
     location: "",
-    review: "",
+    goal: "",
+    outcome: "",
+    rating: 5,
+    refId: "ADMIN-CREATED",
     isActive: true,
   });
   const [isSaving, setIsSaving] = useState(false);
@@ -43,7 +46,7 @@ export default function AdminTestimonialsPage() {
 
   const handleOpenCreate = () => {
     setModalMode("create");
-    setCurrentTestimonial({ name: "", location: "", review: "", isActive: true });
+    setCurrentTestimonial({ name: "", location: "", goal: "", outcome: "", rating: 5, refId: "ADMIN-CREATED", isActive: true });
     setError("");
     setIsModalOpen(true);
   };
@@ -152,17 +155,17 @@ export default function AdminTestimonialsPage() {
                 } p-3 md:p-6 shadow-sm flex flex-col relative group transition-all hover:shadow-md`}
               >
                 {!t.isActive && (
-                  <span className="absolute top-4 right-4 bg-red-100 text-red-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase">
-                    Inactive
+                  <span className="absolute top-4 right-4 bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase border border-orange-200">
+                    Pending / Inactive
                   </span>
                 )}
                 
                 <div className="flex-1 space-y-4">
                   <Quote size={24} className="text-goat-primary/20" />
-                  <div 
-                    className="text-sm text-brand-gray leading-relaxed italic line-clamp-4 space-y-1"
-                    dangerouslySetInnerHTML={{ __html: `"${t.review}"` }}
-                  />
+                  <div className="text-sm text-brand-gray leading-relaxed space-y-2">
+                    <p className="line-clamp-2"><strong>Goal:</strong> {t.goal}</p>
+                    <p className="line-clamp-2"><strong>Outcome:</strong> {t.outcome}</p>
+                  </div>
                 </div>
                 
                 <div className="mt-6 pt-4 border-t border-brand-border flex items-center justify-between">
@@ -251,16 +254,27 @@ export default function AdminTestimonialsPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-brand-black uppercase block">Review Text</label>
+                <label className="text-xs font-semibold text-brand-black uppercase block">Goal</label>
                 <textarea
                   required
-                  rows={4}
-                  value={currentTestimonial.review}
-                  onChange={(e) => setCurrentTestimonial({ ...currentTestimonial, review: e.target.value })}
+                  rows={2}
+                  value={currentTestimonial.goal}
+                  onChange={(e) => setCurrentTestimonial({ ...currentTestimonial, goal: e.target.value })}
                   className="w-full border border-brand-border rounded-xl p-3 md:p-4 text-sm resize-none"
-                  placeholder="What did they say about the farm?"
+                  placeholder="What was their goal?"
                 />
-                <span className="text-xs text-brand-gray mt-1 block">Supports HTML tags like &lt;strong&gt; and &lt;br/&gt;</span>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-brand-black uppercase block">Outcome</label>
+                <textarea
+                  required
+                  rows={3}
+                  value={currentTestimonial.outcome}
+                  onChange={(e) => setCurrentTestimonial({ ...currentTestimonial, outcome: e.target.value })}
+                  className="w-full border border-brand-border rounded-xl p-3 md:p-4 text-sm resize-none"
+                  placeholder="What was the result?"
+                />
               </div>
 
               <label className="flex items-center gap-3 cursor-pointer p-3 md:p-4 border border-brand-border rounded-xl bg-brand-light-gray/30 hover:bg-brand-light-gray transition-colors">

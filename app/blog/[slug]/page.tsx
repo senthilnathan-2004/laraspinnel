@@ -32,7 +32,7 @@ export default async function BlogDetailsPage({ params }: Props) {
       <div className="min-h-screen bg-white flex flex-col justify-between">
         <Navbar />
         <div className="flex-1 max-w-xl mx-auto px-4 md:px-6 py-24 text-center space-y-6">
-          <h1 className="font-display text-3xl uppercase text-brand-black">Article Not Found</h1>
+          <h1 className="font-display text-3xl md:text-3xl uppercase text-brand-black">Article Not Found</h1>
           <p className="text-brand-gray text-sm">
             The article you are looking for does not exist or has been archived.
           </p>
@@ -113,7 +113,7 @@ export default async function BlogDetailsPage({ params }: Props) {
         }}
       />
 
-      <main className="flex-1 max-w-6xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 lg:space-y-12 pb-20">
+      <main className="flex-1 max-w-6xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-8 lg:space-y-12 pb-20">
         
         {/* Top Section: Header & Image (Full Width) */}
         <div className="space-y-8 lg:space-y-10">
@@ -121,35 +121,35 @@ export default async function BlogDetailsPage({ params }: Props) {
           {/* Meta & Headers */}
           <div className="space-y-6 lg:space-y-8">
             <div className="space-y-4">
-              {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
-              <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
-                <ol className="flex flex-wrap items-center gap-1.5">
-                  <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
-                  <li aria-hidden="true">/</li>
-                  <li><Link href="/blog" className="hover:text-brand-black transition-colors">Blog</Link></li>
-                  <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{p.title}</li>
-                </ol>
-              </nav>
 
               {/* Back Link */}
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-1 text-sm font-semibold text-brand-gray hover:text-brand-black transition-colors"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-brand-gray hover:text-brand-black transition-colors -ml-1.5"
               >
                 <ChevronLeft size={16} />
                 <span>Back to Blog Articles</span>
               </Link>
+              {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
+              <nav aria-label="Breadcrumb" className="text-xs text-brand-gray w-full overflow-hidden">
+                <ol className="flex flex-nowrap items-center gap-1.5 whitespace-nowrap">
+                  <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
+                  <li aria-hidden="true">/</li>
+                  <li><Link href="/blog" className="hover:text-brand-black transition-colors">Blog</Link></li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page" className="text-brand-black font-medium truncate max-w-[10rem] sm:max-w-[16rem]">{p.title}</li>
+                </ol>
+              </nav>
             </div>
 
             {/* Article Header block */}
             <div className="space-y-4">
               {p.tags?.[0] && (
-                <span className="bg-goat-tint text-goat-text text-xs uppercase font-bold px-3 py-1 rounded-lg border border-goat-primary/10">
+                <span className="inline-block mb-2 bg-goat-tint text-goat-text text-xs uppercase font-bold px-3 py-1 rounded-lg border border-goat-primary/10">
                   {p.tags[0]}
                 </span>
               )}
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-brand-black uppercase leading-tight tracking-wide">
+              <h1 className="font-display text-3xl sm:text-3xl md:text-5xl text-brand-black uppercase leading-tight tracking-wide">
                 {p.title}
               </h1>
               <p className="text-sm md:text-base font-medium text-brand-gray leading-normal text-justify">{p.excerpt}</p>

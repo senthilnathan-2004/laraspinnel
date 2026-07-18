@@ -5,7 +5,7 @@ import MuttonClientList from "./MuttonClientList";
 import { connectToDatabase } from "@/lib/db";
 import MuttonPack from "@/models/MuttonPack";
 import SiteSettings from "@/models/SiteSettings";
-import { MapPin, Info, ChevronDown } from "lucide-react";
+import { MapPin, Info, ChevronDown, Beef } from "lucide-react";
 
 export const revalidate = 60; // Cache for 60 seconds
 
@@ -23,11 +23,13 @@ export default async function MuttonListingPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-10">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full flex flex-col gap-6 md:gap-10">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6">
-          <span className="text-xs font-semibold text-mutton-text uppercase tracking-wider">🥩 Premium Mutton Catalog</span>
-          <h1 className="font-display text-4xl sm:text-5xl text-brand-black tracking-wide uppercase">
+        <div className="space-y-3 border-b border-brand-border pb-6 order-1">
+          <span className="flex items-center justify-center gap-2 text-xs font-semibold text-mutton-text uppercase tracking-wider">
+            <Beef size={14} className="text-mutton-primary" /> Premium Mutton Catalog
+          </span>
+          <h1 className="font-display text-2xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Fresh Mutton Packs — Farm to Home Delivery
           </h1>
           <h2 className="font-display text-lg text-mutton-text uppercase tracking-wide">
@@ -47,7 +49,7 @@ export default async function MuttonListingPage() {
         </div>
 
         {/* District service banner */}
-        <div className="bg-mutton-tint/40 border border-mutton-primary/10 rounded-2xl p-3 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 select-none">
+        <div className="bg-mutton-tint/40 border border-mutton-primary/10 rounded-2xl p-3 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 select-none order-3 md:order-2">
           <div className="flex gap-3 items-start">
             <MapPin size={22} className="text-mutton-primary shrink-0 mt-0.5" />
             <div>
@@ -64,10 +66,12 @@ export default async function MuttonListingPage() {
         </div>
 
         {/* Client List with Filters */}
-        <MuttonClientList initialPacks={initialPacks} />
+        <div className="order-2 md:order-3 space-y-6 md:space-y-10 w-full">
+          <MuttonClientList initialPacks={initialPacks} />
+        </div>
 
         {/* SEO Content Block */}
-        <div className="bg-brand-light-gray/20 rounded-2xl p-3 lg:p-6 border border-brand-border mt-12 text-left w-full mx-auto">
+        <div className="bg-brand-light-gray/20 rounded-2xl p-3 lg:p-6 border border-brand-border mt-2 md:mt-12 text-left w-full mx-auto order-4">
           {/* Desktop View */}
           <section className="hidden lg:block space-y-4">
             <h3 className="font-display text-2xl text-brand-black uppercase tracking-wide">

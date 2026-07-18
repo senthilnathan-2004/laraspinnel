@@ -102,7 +102,7 @@ export default function AdminDeliverySchedulePage() {
           <div className="bg-mutton-tint/30 border border-mutton-primary/20 p-5 rounded-2xl flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-mutton-primary uppercase tracking-wider mb-1">Mutton Orders</p>
-              <h3 className="text-3xl font-display font-bold text-mutton-primary">
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-mutton-primary">
                 {totalMuttonQuantity} <span className="text-base font-sans font-medium text-mutton-primary/70">packs</span>
               </h3>
             </div>
@@ -114,7 +114,7 @@ export default function AdminDeliverySchedulePage() {
           <div className="bg-goat-tint/30 border border-goat-primary/20 p-5 rounded-2xl flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-goat-primary uppercase tracking-wider mb-1">Live Goat Orders</p>
-              <h3 className="text-3xl font-display font-bold text-goat-primary">
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-goat-primary">
                 {totalLiveGoatQuantity} <span className="text-base font-sans font-medium text-goat-primary/70">goats</span>
               </h3>
             </div>

@@ -126,26 +126,26 @@ export default function MuttonClientPage({ initialPack }: MuttonClientPageProps)
         }}
       />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-12 w-full space-y-8 pb-32 md:pb-16">
-        {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
-        <nav aria-label="Breadcrumb" className="text-xs text-brand-gray">
-          <ol className="flex flex-wrap items-center gap-1.5">
-            <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
-            <li aria-hidden="true">/</li>
-            <li><Link href="/mutton" className="hover:text-brand-black transition-colors">Mutton</Link></li>
-            <li aria-hidden="true">/</li>
-            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[16rem]">{pack.name}</li>
-          </ol>
-        </nav>
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-8 pb-32 md:pb-16">
 
         {/* Back Link */}
         <Link
           href="/mutton"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-brand-gray hover:text-brand-black transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-brand-gray hover:text-brand-black transition-colors -ml-1.5"
         >
           <ChevronLeft size={16} />
           <span>Back to Mutton Packs</span>
         </Link>
+        {/* Visible breadcrumb (matches BreadcrumbList JSON-LD above) */}
+        <nav aria-label="Breadcrumb" className="text-xs text-brand-gray w-full overflow-hidden">
+          <ol className="flex flex-nowrap items-center gap-1.5 whitespace-nowrap">
+            <li><Link href="/" className="hover:text-brand-black transition-colors">Home</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/mutton" className="hover:text-brand-black transition-colors">Mutton</Link></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-brand-black font-medium truncate max-w-[10rem] sm:max-w-[16rem]">{pack.name}</li>
+          </ol>
+        </nav>
 
         {/* Details Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -207,14 +207,14 @@ export default function MuttonClientPage({ initialPack }: MuttonClientPageProps)
               </div>
 
               {/* Title */}
-              <h1 className="font-display text-4xl sm:text-5xl text-brand-black uppercase leading-tight tracking-wide">
+              <h1 className="font-display text-3xl sm:text-5xl text-brand-black uppercase leading-tight tracking-wide">
                 {pack.name}
               </h1>
 
               {/* Pricing Rate */}
               <div className="space-y-1">
                 <span className="text-xs text-brand-gray font-semibold uppercase tracking-wider block">Price / Rate</span>
-                <span className="text-3xl font-extrabold text-mutton-primary block tracking-tight">
+                <span className="text-2xl md:text-3xl font-extrabold text-mutton-primary block tracking-tight">
                   {pack.price}
                 </span>
               </div>

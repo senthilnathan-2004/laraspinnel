@@ -33,7 +33,7 @@ export default async function FestivalGoatCTA() {
           <div className="w-12 h-12 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black mb-4 shadow-sm">
             <CalendarHeart size={24} strokeWidth={1.5} />
           </div>
-          <h2 className="text-3xl md:text-5xl font-display font-black text-brand-black uppercase tracking-tight mb-4 leading-none">
+          <h2 className="text-2xl md:text-5xl font-display font-black text-brand-black uppercase tracking-tight mb-4 leading-none">
             {title}
           </h2>
           <p className="text-brand-gray text-base md:text-lg font-medium leading-relaxed max-w-2xl">
@@ -51,46 +51,70 @@ export default async function FestivalGoatCTA() {
               <p className="text-brand-gray text-sm text-justify">We handpick and reserve the finest livestock specifically meeting the traditional requirements of your festivals and religious functions.</p>
             </div>
 
-            <div className="flex flex-col gap-4 flex-1">
+            <div className="flex flex-col gap-4 flex-1 relative">
+              <style>{`
+                @keyframes dashScroll360 {
+                  from { stroke-dashoffset: 360; }
+                  to { stroke-dashoffset: 0; }
+                }
+                .animate-dash-scroll {
+                  animation: dashScroll360 8s linear infinite;
+                }
+              `}</style>
               {/* Hindu Function */}
-              <div className="grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
-                <div className="w-10 h-10 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black shrink-0">
-                  <MdOutlineTempleHindu size={22} />
-                </div>
-                <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Hindu Temple Functions</h4>
-                <div className="col-span-2 lg:col-span-1 lg:flex-1">
-                  <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Hindu Temple Functions</h4>
-                  <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
-                    {hinduDesc}
-                  </p>
+              <div className="relative group p-3 md:p-4 bg-white rounded-xl flex-1">
+                <svg className="absolute inset-0 w-full h-full pointer-events-none rounded-xl">
+                  <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="11" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 10" className="text-brand-border/80 animate-dash-scroll" />
+                </svg>
+                <div className="relative z-10 grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4">
+                  <div className="w-10 h-10 rounded-full bg-brand-light-gray group-hover:bg-brand-black border border-brand-border flex items-center justify-center text-brand-black group-hover:text-white shrink-0 transition-colors duration-300">
+                    <MdOutlineTempleHindu size={22} />
+                  </div>
+                  <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Hindu Temple Functions</h4>
+                  <div className="col-span-2 lg:col-span-1 lg:flex-1">
+                    <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Hindu Temple Functions</h4>
+                    <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
+                      {hinduDesc}
+                    </p>
+                  </div>
                 </div>
               </div>
 
               {/* Muslim Function */}
-              <div className="grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
-                <div className="w-10 h-10 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black shrink-0">
-                  <MdOutlineMosque size={22} />
-                </div>
-                <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Muslim Festivals (Qurbani / Aqeeqah)</h4>
-                <div className="col-span-2 lg:col-span-1 lg:flex-1">
-                  <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Muslim Festivals (Qurbani / Aqeeqah)</h4>
-                  <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
-                    {muslimDesc}
-                  </p>
+              <div className="relative group p-3 md:p-4 bg-white rounded-xl flex-1">
+                <svg className="absolute inset-0 w-full h-full pointer-events-none rounded-xl">
+                  <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="11" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 10" className="text-brand-border/80 animate-dash-scroll" />
+                </svg>
+                <div className="relative z-10 grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4">
+                  <div className="w-10 h-10 rounded-full bg-brand-light-gray group-hover:bg-brand-black border border-brand-border flex items-center justify-center text-brand-black group-hover:text-white shrink-0 transition-colors duration-300">
+                    <MdOutlineMosque size={22} />
+                  </div>
+                  <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Muslim Festivals (Qurbani / Aqeeqah)</h4>
+                  <div className="col-span-2 lg:col-span-1 lg:flex-1">
+                    <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Muslim Festivals (Qurbani / Aqeeqah)</h4>
+                    <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
+                      {muslimDesc}
+                    </p>
+                  </div>
                 </div>
               </div>
 
               {/* Christian Function */}
-              <div className="grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4 p-3 md:p-4 rounded-xl bg-white border border-brand-border hover:shadow-sm transition-shadow flex-1">
-                <div className="w-10 h-10 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black shrink-0">
-                  <MdOutlineChurch size={22} />
-                </div>
-                <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Christian Feast Days</h4>
-                <div className="col-span-2 lg:col-span-1 lg:flex-1">
-                  <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Christian Feast Days</h4>
-                  <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
-                    {christianDesc}
-                  </p>
+              <div className="relative group p-3 md:p-4 bg-white rounded-xl flex-1">
+                <svg className="absolute inset-0 w-full h-full pointer-events-none rounded-xl">
+                  <rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="11" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 10" className="text-brand-border/80 animate-dash-scroll" />
+                </svg>
+                <div className="relative z-10 grid grid-cols-[auto_1fr] lg:flex lg:flex-row gap-x-3 gap-y-1 lg:gap-4">
+                  <div className="w-10 h-10 rounded-full bg-brand-light-gray group-hover:bg-brand-black border border-brand-border flex items-center justify-center text-brand-black group-hover:text-white shrink-0 transition-colors duration-300">
+                    <MdOutlineChurch size={22} />
+                  </div>
+                  <h4 className="self-center text-base font-bold text-brand-black lg:hidden">Christian Feast Days</h4>
+                  <div className="col-span-2 lg:col-span-1 lg:flex-1">
+                    <h4 className="hidden lg:block text-base font-bold text-brand-black mb-1">Christian Feast Days</h4>
+                    <p className="text-brand-gray text-sm leading-relaxed text-justify mt-1 lg:mt-0">
+                      {christianDesc}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

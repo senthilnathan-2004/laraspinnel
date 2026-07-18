@@ -3,7 +3,7 @@ import { connectToDatabase } from "@/lib/db";
 import Booking from "@/models/Booking";
 import { bookingSchema } from "@/lib/validations";
 import { generateRefId } from "@/lib/utils";
-import { rateLimit } from "@/lib/rateLimit";
+import { formRateLimit } from "@/lib/rateLimit";
 import { sendEmail } from "@/lib/email/sendEmail";
 import { getAdminNewBookingEmailHtml } from "@/lib/email/adminNewBooking";
 import { getCustomerConfirmationEmailHtml } from "@/lib/email/customerConfirmation";
@@ -13,10 +13,11 @@ export async function POST(req: NextRequest) {
   try {
     // 1. Rate Limiting Check
     const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
-    const limiter = rateLimit(ip, 5, 60 * 1000); // 5 bookings/min limit
-    if (!limiter.success) {
+    const { success } = await formRateLimit.limit(`ratelimit_booking_${ip}`);
+    
+    if (!success) {
       return NextResponse.json(
-        { error: "Too many requests. Please try again in a minute." },
+        { error: "You can only submit one booking per 24 hours to prevent spam." },
         { status: 429 }
       );
     }

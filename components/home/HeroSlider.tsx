@@ -5,7 +5,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Leaf } from "lucide-react";
 import Image from "next/image";
 
 interface Banner {
@@ -127,12 +127,12 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                 <div className="absolute inset-0 flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-6 pb-20 md:pb-28 max-[300px]:pb-8">
                   <div className="max-w-3xl space-y-4 max-[300px]:space-y-2 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
                     {/* tag */}
-                    <span className="inline-block bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs max-[300px]:text-[10px] max-[300px]:px-2 font-semibold px-4 py-1">
-                      🌿 100% Farm Raised
+                    <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs max-[300px]:text-[10px] max-[300px]:px-2 font-semibold px-4 py-1.5">
+                      <Leaf size={14} className="text-goat-primary" strokeWidth={2.5} /> 100% Farm Raised
                     </span>
 
                     {/* Title in display Anton font */}
-                    <Heading className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide max-[300px]:text-2xl max-[300px]:leading-tight">
+                    <Heading className="font-display text-white text-2xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide max-[300px]:text-2xl max-[300px]:leading-tight">
                       {slide.headline}
                     </Heading>
 

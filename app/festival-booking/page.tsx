@@ -75,13 +75,13 @@ export default function FestivalBookingPage() {
     <div className="min-h-screen bg-brand-light-gray flex flex-col font-sans">
       <Navbar />
 
-      <main className="flex-1 container mx-auto px-4 py-8 md:py-12 max-w-4xl">
+      <main className="flex-1 container mx-auto px-4 py-7 md:py-12 max-w-4xl">
         <div className="mb-8 md:mb-12 border-b border-brand-border pb-6">
           <div className="inline-flex items-center gap-2 bg-goat-primary/10 text-goat-primary px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-goat-primary/20">
             <CalendarHeart size={14} />
             <span>Festival & Special Functions</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-brand-black mb-4">
+          <h1 className="text-2xl md:text-5xl font-display font-bold text-brand-black mb-4">
             Festival &amp; Bakrid Goat Booking Custom Order
           </h1>
           <p className="text-brand-gray text-base font-medium">
@@ -94,7 +94,7 @@ export default function FestivalBookingPage() {
             <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle size={40} className="text-green-600" />
             </div>
-            <h2 className="text-3xl font-display font-bold text-brand-black mb-4">Request Received!</h2>
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-black mb-4">Request Received!</h2>
             <p className="text-brand-gray text-lg mb-6 max-w-md mx-auto">
               Your festival goat requirement has been successfully submitted. Our team will review your specific needs and contact you shortly.
             </p>

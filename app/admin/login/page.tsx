@@ -54,7 +54,7 @@ export default function AdminLoginPage() {
             <Horse size={36} weight="duotone" />
           </div>
           <div>
-            <h2 className="font-display text-3xl tracking-wide text-brand-black">
+            <h2 className="font-display text-2xl md:text-3xl tracking-wide text-brand-black">
               Welcome Back
             </h2>
             <p className="text-sm text-brand-gray mt-1 font-medium">

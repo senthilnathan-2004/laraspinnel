@@ -37,7 +37,7 @@ export default function Footer() {
                 alt={farmName}
                 width={200}
                 height={40}
-                className="h-10 w-auto object-contain"
+                className="h-10 w-auto object-contain rounded-md"
               />
             )}
             <span className="font-display text-white text-2xl tracking-wider uppercase">
@@ -225,22 +225,85 @@ export default function Footer() {
       </div>
 
       {/* Trust Badges (E-E-A-T Trust Signals) */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-neutral-800 grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center sm:gap-12">
-        <div className="flex items-center gap-2 text-neutral-400">
-          <ShieldCheck size={24} className="text-goat-primary shrink-0" />
-          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">FSSAI Registered</span>
-        </div>
-        <div className="flex items-center gap-2 text-neutral-400">
-          <Leaf size={24} className="text-[#25D366] shrink-0" />
-          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">100% Organic Pasture</span>
-        </div>
-        <div className="flex items-center gap-2 text-neutral-400">
-          <HeartHandshake size={24} className="text-mutton-primary shrink-0" />
-          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">Veterinarian Inspected</span>
-        </div>
-        <div className="flex items-center gap-2 text-neutral-400">
-          <Lock size={24} className="text-blue-400 shrink-0" />
-          <span className="text-[10px] sm:text-sm font-medium uppercase tracking-wide">Secure Booking</span>
+      <div className="max-w-7xl mx-auto md:px-6 mt-12">
+        <div className="pt-8 border-t border-neutral-800 overflow-hidden relative">
+          <style>{`
+            @keyframes footerMarquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            @media (max-width: 767px) {
+              .mobile-marquee {
+                animation: footerMarquee 15s linear infinite;
+                display: flex;
+                width: max-content;
+              }
+              .mobile-mask {
+                -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+                mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+              }
+            }
+          `}</style>
+          
+          {/* Mobile View: Scrolling Marquee (Edge to Edge) */}
+          <div className="block md:hidden mobile-mask">
+            <div className="mobile-marquee gap-8">
+              {/* Original Items */}
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <ShieldCheck size={18} className="text-goat-primary shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <Leaf size={18} className="text-[#25D366] shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <Lock size={18} className="text-blue-400 shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+              </div>
+              {/* Duplicated for seamless infinite loop */}
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <ShieldCheck size={18} className="text-goat-primary shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <Leaf size={18} className="text-[#25D366] shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+              </div>
+              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+                <Lock size={18} className="text-blue-400 shrink-0" />
+                <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop & Tablet View: Static Flex */}
+          <div className="hidden md:flex flex-wrap justify-center gap-8 lg:gap-12 px-4 md:px-0">
+            <div className="flex items-center gap-2 text-neutral-400">
+              <ShieldCheck size={18} className="text-goat-primary shrink-0" />
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">FSSAI Registered</span>
+            </div>
+            <div className="flex items-center gap-2 text-neutral-400">
+              <Leaf size={18} className="text-[#25D366] shrink-0" />
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">100% Organic Pasture</span>
+            </div>
+            <div className="flex items-center gap-2 text-neutral-400">
+              <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+            </div>
+            <div className="flex items-center gap-2 text-neutral-400">
+              <Lock size={18} className="text-blue-400 shrink-0" />
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Secure Booking</span>
+            </div>
+          </div>
         </div>
       </div>
 

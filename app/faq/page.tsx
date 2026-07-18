@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { connectToDatabase } from "@/lib/db";
 import FAQ from "@/models/FAQ";
+import { HelpCircle } from "lucide-react";
 import FAQClient from "@/components/faq/FAQClient";
 
 export const metadata: Metadata = {
@@ -45,10 +46,13 @@ export default async function FAQPage() {
     <div className="min-h-screen bg-brand-light-gray flex flex-col font-body text-brand-black">
       <Navbar />
 
-      <main className="flex-1 pt-12 md:pt-16 pb-16 px-4 md:px-6">
+      <main className="flex-1 pt-7 md:pt-16 pb-9 md:pb-16 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brand-black uppercase tracking-wide mb-6">
+          <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
+            <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider mb-4">
+              <HelpCircle size={14} className="text-goat-primary" /> Support Center
+            </span>
+            <h1 className="font-display text-3xl md:text-5xl lg:text-6xl text-brand-black uppercase tracking-wide mb-6">
               Frequently Asked Questions
             </h1>
             <p className="text-brand-gray text-lg md:text-xl">

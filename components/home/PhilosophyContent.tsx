@@ -23,14 +23,20 @@ export default function PhilosophyContent({ content }: { content: string }) {
         <div 
           ref={contentRef}
           className={`space-y-6 relative z-10 max-w-none prose prose-sm md:prose-base [&_p]:text-justify! prose-p:text-brand-gray prose-a:text-goat-primary [&_:is(h1,h2,h3,h4,h5,h6)]:text-xl! md:[&_:is(h1,h2,h3,h4,h5,h6)]:text-2xl! [&_:is(h1,h2,h3,h4,h5,h6)]:font-bold! [&_:is(h1,h2,h3,h4,h5,h6)]:text-brand-black! [&_:is(h1,h2,h3,h4,h5,h6)]:mt-8! [&_:is(h1,h2,h3,h4,h5,h6)]:mb-4! transition-all duration-500 overflow-hidden ${
-            !isExpanded ? "max-h-75 lg:max-h-100" : "max-h-[5000px]"
+            !isExpanded ? "max-h-75 lg:max-h-75" : "max-h-[5000px]"
           }`}
           dangerouslySetInnerHTML={{ __html: content }}
         />
         
         {/* Sleek Apple-style Frosted Glass Fade */}
         {!isExpanded && showToggle && (
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-linear-to-t from-white via-white/90 to-transparent backdrop-blur-[2px] z-20 pointer-events-none mask-[linear-gradient(to_top,black_50%,transparent)]" />
+          <div 
+            className="absolute -bottom-4 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/95 to-transparent backdrop-blur-[3px] z-20 pointer-events-none" 
+            style={{
+              maskImage: 'linear-gradient(to top, black 40%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to top, black 40%, transparent)'
+            }}
+          />
         )}
       </div>
 
