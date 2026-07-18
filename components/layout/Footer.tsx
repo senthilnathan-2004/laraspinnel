@@ -26,7 +26,7 @@ export default function Footer() {
   const whatsappUrl = `https://wa.me/${whatsappFormatted}`;
 
   return (
-    <footer className="bg-brand-black text-neutral-400 pt-16 pb-8 border-t border-neutral-800 mt-auto">
+    <footer className="bg-brand-black text-neutral-300 pt-16 pb-8 border-t border-neutral-800 mt-auto">
       <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Column 1: Brand */}
         <div className="space-y-4">
@@ -44,7 +44,7 @@ export default function Footer() {
               {farmName}
             </span>
           </Link>
-          <p className="text-sm leading-relaxed text-neutral-500 max-w-xs">
+          <p className="text-sm leading-relaxed text-neutral-400 max-w-xs">
             {tagline}
           </p>
           {/* Social icons */}
@@ -54,7 +54,7 @@ export default function Footer() {
                 href={settings.social_facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-white transition-colors"
+                className="text-neutral-400 hover:text-white transition-colors"
                 aria-label="Facebook"
               >
                 <FaFacebook size={20} />
@@ -65,7 +65,7 @@ export default function Footer() {
                 href={settings.social_instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-white transition-colors"
+                className="text-neutral-400 hover:text-white transition-colors"
                 aria-label="Instagram"
               >
                 <FaInstagram size={20} />
@@ -76,7 +76,7 @@ export default function Footer() {
                 href={settings.social_youtube}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-white transition-colors"
+                className="text-neutral-400 hover:text-white transition-colors"
                 aria-label="YouTube"
               >
                 <FaYoutube size={20} />
@@ -87,7 +87,7 @@ export default function Footer() {
                 href={settings.social_x}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-white transition-colors"
+                className="text-neutral-400 hover:text-white transition-colors"
                 aria-label="X (Twitter)"
               >
                 <FaXTwitter size={20} />
@@ -98,7 +98,7 @@ export default function Footer() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-[#25D366] transition-colors"
+                className="text-neutral-400 hover:text-[#25D366] transition-colors"
                 aria-label="WhatsApp"
               >
                 <FaWhatsapp size={20} />
@@ -166,7 +166,7 @@ export default function Footer() {
               <span className="font-semibold block text-xs uppercase tracking-wider text-goat-primary">
                 Live Goats
               </span>
-              <span className="text-xs text-neutral-500 mt-0.5 block">
+              <span className="text-xs text-neutral-400 mt-0.5 block">
                 Delivered across all districts of Tamil Nadu
               </span>
             </div>
@@ -174,7 +174,7 @@ export default function Footer() {
               <span className="font-semibold block text-xs uppercase tracking-wider text-mutton-primary">
                 Bulk Mutton
               </span>
-              <span className="text-xs text-neutral-500 mt-0.5 block">
+              <span className="text-xs text-neutral-400 mt-0.5 block">
                 Available in: {districts.join(", ")}
               </span>
             </div>
@@ -189,7 +189,7 @@ export default function Footer() {
           <address className="not-italic">
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2.5">
-                <Phone size={15} className="shrink-0 mt-0.5 text-neutral-500" />
+                <Phone size={15} className="shrink-0 mt-0.5 text-neutral-400" />
                 <a href={`tel:${phone}`} itemProp="telephone" className="hover:text-white transition-colors">
                   {phone}
                 </a>
@@ -206,17 +206,17 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
-                <Mail size={15} className="shrink-0 mt-0.5 text-neutral-500" />
+                <Mail size={15} className="shrink-0 mt-0.5 text-neutral-400" />
                 <a href={`mailto:${email}`} itemProp="email" className="hover:text-white transition-colors">
                   Email Us
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
-                <MapPin size={15} className="shrink-0 mt-1 text-neutral-500" />
+                <MapPin size={15} className="shrink-0 mt-1 text-neutral-400" />
                 <span itemProp="address" className="text-xs leading-relaxed">{address}</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Clock size={15} className="shrink-0 mt-0.5 text-neutral-500" />
+                <Clock size={15} className="shrink-0 mt-0.5 text-neutral-400" />
                 <span className="text-xs">{businessHours}</span>
               </li>
             </ul>
@@ -249,36 +249,36 @@ export default function Footer() {
           <div className="block md:hidden mobile-mask">
             <div className="mobile-marquee gap-8">
               {/* Original Items */}
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <ShieldCheck size={18} className="text-goat-primary shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
               </div>
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <Leaf size={18} className="text-[#25D366] shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
               </div>
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
               </div>
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <Lock size={18} className="text-blue-400 shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
               </div>
               {/* Duplicated for seamless infinite loop */}
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <ShieldCheck size={18} className="text-goat-primary shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
               </div>
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <Leaf size={18} className="text-[#25D366] shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
               </div>
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
               </div>
-              <div className="flex items-center gap-2 text-neutral-400 shrink-0">
+              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                 <Lock size={18} className="text-blue-400 shrink-0" />
                 <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
               </div>
@@ -287,19 +287,19 @@ export default function Footer() {
 
           {/* Desktop & Tablet View: Static Flex */}
           <div className="hidden md:flex flex-wrap justify-center gap-8 lg:gap-12 px-4 md:px-0">
-            <div className="flex items-center gap-2 text-neutral-400">
+            <div className="flex items-center gap-2 text-neutral-300">
               <ShieldCheck size={18} className="text-goat-primary shrink-0" />
               <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">FSSAI Registered</span>
             </div>
-            <div className="flex items-center gap-2 text-neutral-400">
+            <div className="flex items-center gap-2 text-neutral-300">
               <Leaf size={18} className="text-[#25D366] shrink-0" />
               <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">100% Organic Pasture</span>
             </div>
-            <div className="flex items-center gap-2 text-neutral-400">
+            <div className="flex items-center gap-2 text-neutral-300">
               <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
               <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Veterinarian Inspected</span>
             </div>
-            <div className="flex items-center gap-2 text-neutral-400">
+            <div className="flex items-center gap-2 text-neutral-300">
               <Lock size={18} className="text-blue-400 shrink-0" />
               <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Secure Booking</span>
             </div>
@@ -309,8 +309,8 @@ export default function Footer() {
 
       {/* Disclaimer (YMYL — livestock / food quality) */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 mt-8">
-        <p className="text-[11px] leading-relaxed text-neutral-600 text-justify">
-          <strong className="text-neutral-500 uppercase">Health & Medical Disclaimer:</strong> All livestock and mutton are sold subject to
+        <p className="text-[11px] leading-relaxed text-neutral-400 text-justify">
+          <strong className="text-neutral-400 uppercase">Health & Medical Disclaimer:</strong> All livestock and mutton are sold subject to
           availability and on-site inspection. Prices, weights, and delivery timelines are indicative and confirmed
           at the time of booking. {farmName} strictly follows local animal-welfare and food-hygiene practices. Customers are
           advised to verify product suitability for their specific dietary, religious, or agricultural needs before
@@ -321,12 +321,12 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
         <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-          <p className="text-neutral-600" suppressHydrationWarning>
+          <p className="text-neutral-400" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved. <br className="sm:hidden" />
             <span className="hidden sm:inline"> | </span> 
-            Content Last Updated: <time dateTime="2026-07-16" className="font-medium text-neutral-500">Jul 2026</time>
+            Content Last Updated: <time dateTime="2026-07-16" className="font-medium text-neutral-400">Jul 2026</time>
           </p>
-          <div className="flex items-center gap-3 text-neutral-600">
+          <div className="flex items-center gap-3 text-neutral-400">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <span>|</span>
             <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>

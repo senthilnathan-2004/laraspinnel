@@ -173,6 +173,7 @@ export default function BlogPreview() {
             <div className="flex items-center justify-center gap-5 mt-8">
               <button 
                 onClick={prevSlide}
+                aria-label="Previous slide"
                 className="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform"
               >
                 <ChevronLeft size={18} />
@@ -183,16 +184,19 @@ export default function BlogPreview() {
                   <button
                     key={idx}
                     onClick={() => setCurrentSlide(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      currentSlide === idx ? "w-8 bg-brand-black" : "w-2.5 bg-brand-border"
-                    }`}
+                    className="p-2 -m-2"
                     aria-label={`Go to slide ${idx + 1}`}
-                  />
+                  >
+                    <div className={`h-2.5 rounded-full transition-all duration-300 ${
+                      currentSlide === idx ? "w-8 bg-brand-black" : "w-2.5 bg-brand-border"
+                    }`} />
+                  </button>
                 ))}
               </div>
 
               <button 
                 onClick={nextSlide}
+                aria-label="Next slide"
                 className="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform"
               >
                 <ChevronRight size={18} />

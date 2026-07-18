@@ -25,7 +25,7 @@ export default function ShopByCategory({ settings }: { settings: any }) {
           <h2 className="font-display text-2xl md:text-5xl text-brand-black tracking-wide uppercase">
             {settings.home_shop_title || "What Are You Looking For?"}
           </h2>
-          <p className="text-base font-medium text-brand-gray/80">
+          <p className="text-base font-medium text-neutral-600">
             {settings.home_shop_subtitle || "Choose your category to browse healthy pasture livestock or fresh wholesale protein."}
           </p>
         </div>

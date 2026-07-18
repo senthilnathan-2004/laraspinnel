@@ -35,11 +35,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform translate-y-0 ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform translate-y-0 ${isScrolled
             ? "bg-white/85 backdrop-blur-md shadow-navbar border-b border-brand-border"
             : "bg-white border-b border-brand-border/60"
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           {/* Logo */}
@@ -69,11 +68,10 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-semibold relative py-1 transition-colors ${
-                    isActive
+                  className={`text-sm font-semibold relative py-1 transition-colors ${isActive
                       ? "text-goat-primary"
                       : "text-brand-black hover:text-goat-primary"
-                  }`}
+                    }`}
                 >
                   {link.name}
                   {isActive && (
@@ -144,16 +142,14 @@ export default function Navbar() {
       {/* Backdrop */}
       <div
         onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 top-16 bg-brand-black/60 z-30 backdrop-blur-sm xl:hidden transition-all duration-300 ${
-          mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-        }`}
+        className={`fixed inset-0 top-16 bg-brand-black/60 z-30 backdrop-blur-sm xl:hidden transition-all duration-300 ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+          }`}
       ></div>
 
       {/* Drawer starts below the main header */}
-      <div 
-        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm bg-white/95 backdrop-blur-xl z-40 shadow-2xl flex flex-col justify-between p-3 md:p-6 xl:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+      <div
+        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm bg-white/95 backdrop-blur-xl z-40 shadow-2xl flex flex-col justify-between p-3 md:p-6 xl:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         {/* Links */}
         <nav className="flex-1 overflow-y-auto py-2 space-y-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -164,11 +160,10 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-2.5 text-lg font-bold rounded-xl transition-all duration-300 ${
-                  isActive 
-                    ? "bg-goat-tint text-goat-primary translate-x-1" 
+                className={`block px-4 py-2.5 text-lg font-bold rounded-xl transition-all duration-300 ${isActive
+                    ? "bg-goat-tint text-goat-primary translate-x-1"
                     : "text-brand-black hover:bg-brand-light-gray hover:text-goat-primary hover:translate-x-1"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
