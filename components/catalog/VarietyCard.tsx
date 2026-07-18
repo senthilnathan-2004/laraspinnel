@@ -83,7 +83,7 @@ export default function VarietyCard({
         <div className="flex items-center gap-1 sm:gap-2 mt-0 sm:mt-1 max-[355px]:mt-0 overflow-hidden text-[10px] max-[355px]:text-[8.5px] sm:text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
           <span>View Details</span>
           <div
-            className={`flex items-center justify-center w-5 h-5 max-[355px]:w-4 max-[355px]:h-4 sm:w-8 sm:h-8 rounded-full transition-all duration-500 transform md:-translate-x-4 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
+            className={`flex items-center justify-center w-5 h-5 max-[355px]:w-4 max-[355px]:h-4 sm:w-8 sm:h-8 rounded-full transition-all duration-500 transform lg:-translate-x-4 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
               isGoat ? "bg-goat-primary" : "bg-mutton-primary"
             }`}
           >

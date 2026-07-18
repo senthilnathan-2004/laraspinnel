@@ -34,14 +34,16 @@ export default function HowItWorks() {
   return (
     <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
-        {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto space-y-2">
-          <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
-            How Booking Works
-          </h2>
-          <p className="text-sm font-medium text-brand-gray">
-            Order premium livestock or farm fresh meat in four simple steps.
-          </p>
+        {/* Header row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
+          <div>
+            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+              How Booking Works
+            </h2>
+            <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+              Order premium livestock or farm fresh meat in four simple steps.
+            </p>
+          </div>
         </div>
 
         <style>{`
@@ -80,9 +82,9 @@ export default function HowItWorks() {
         `}</style>
 
         {/* Desktop & Tab View */}
-        <div className="hidden md:grid grid-cols-4 gap-10 relative">
+        <div className="hidden md:grid grid-cols-4 gap-10 relative pt-10">
           {/* Connector Line with Moving Dot */}
-          <div className="absolute top-8 left-[12.5%] right-[12.5%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
+          <div className="absolute top-[72px] left-[12.5%] right-[12.5%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
             <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move shadow-[0_0_8px_rgba(22,163,74,0.8)]"></div>
           </div>
 
@@ -113,7 +115,7 @@ export default function HowItWorks() {
         </div>
 
         {/* Mobile View - Marquee */}
-        <div className="flex md:hidden overflow-hidden -mx-4 px-4 pt-4 pb-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div className="flex md:hidden overflow-hidden -mx-4 px-4 pt-14 pb-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <div className="flex animate-marquee-steps w-max" style={{ willChange: 'transform' }}>
             {[1, 2].map((setIndex) => (
               <div key={setIndex} className="flex gap-12 relative shrink-0 pr-12">

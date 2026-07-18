@@ -18,8 +18,8 @@ export default async function FestivalGoatCTA() {
     return acc;
   }, {});
 
-  const title = settings.festival_title || "READY TO ORDER FRESH QUALITY LIVESTOCK?";
-  const subtitle = settings.festival_subtitle || "Book your live goats or fresh mutton packages online. Our team will contact you to verify details and arrange scheduling.";
+  const title = settings.festival_title || "Order Your Festival Goat";
+  const subtitle = settings.festival_subtitle || "Special goats available for Hindu, Muslim, and Christian festivals.";
   const hinduDesc = settings.festival_hindu_desc || "Spotless, unblemished goats specifically chosen for Mariamman and Karuppasamy temple functions (Kidavettu). We ensure correct pallu (teeth) and color preferences according to tradition.";
   const muslimDesc = settings.festival_muslim_desc || "Healthy, age-appropriate (minimum 1 year old / 2 teeth) livestock fulfilling all Islamic requirements for Bakrid Qurbani and Aqeeqah ceremonies. Hand-fed and well-cared for.";
   const christianDesc = settings.festival_christian_desc || "Premium quality meat goats for church feasts, Christmas, and Easter celebrations. Available as live goats or bulk processed fresh mutton delivered to your venue.";
@@ -28,17 +28,21 @@ export default async function FestivalGoatCTA() {
     <section className="py-12 md:py-16 bg-white relative overflow-hidden border-t border-brand-border">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         
-        {/* Header Section */}
-        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-10">
-          <div className="w-12 h-12 rounded-full bg-brand-light-gray border border-brand-border flex items-center justify-center text-brand-black mb-4 shadow-sm">
-            <CalendarHeart size={24} strokeWidth={1.5} />
+        {/* Header row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0 mb-10">
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <div className="hidden md:flex w-12 h-12 shrink-0 rounded-full bg-brand-light-gray border border-brand-border items-center justify-center text-brand-black shadow-sm">
+              <CalendarHeart size={24} strokeWidth={1.5} />
+            </div>
+            <div>
+              <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
+                {title}
+              </h2>
+              <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+                {subtitle}
+              </p>
+            </div>
           </div>
-          <h2 className="text-2xl md:text-5xl font-display font-black text-brand-black uppercase tracking-tight mb-4 leading-none">
-            {title}
-          </h2>
-          <p className="text-brand-gray text-base md:text-lg font-medium leading-relaxed max-w-2xl">
-            {subtitle}
-          </p>
         </div>
 
         {/* Two Column Layout for Details & Booking */}

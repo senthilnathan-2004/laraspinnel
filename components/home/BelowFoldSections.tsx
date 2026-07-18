@@ -67,8 +67,10 @@ export default function BelowFoldSections({ philosophyContent }: BelowFoldSectio
       {/* Featured Live Goats Variety cards */}
       <FeaturedVarieties />
 
-      {/* Variety Image Marquee */}
-      <ImageMarquee />
+      {/* Variety Image Marquee - Hidden on desktop */}
+      <div className="lg:hidden">
+        <ImageMarquee />
+      </div>
 
       {/* Service areas banner */}
       <ServiceAreaBanner />
@@ -82,10 +84,6 @@ export default function BelowFoldSections({ philosophyContent }: BelowFoldSectio
       {/* Farm Gallery previews */}
       <GalleryPreview />
 
-      {/* Desktop-only second Marquee */}
-      <div className="hidden lg:block">
-        <ImageMarquee direction="right" bgColor="bg-transparent border-none" />
-      </div>
 
       {/* Customer Testimonials and Trust Badges */}
       <Testimonials />

@@ -41,10 +41,10 @@ export default function ImageMarquee({
   return (
     <div className={`relative overflow-hidden py-10 border-y border-brand-border/50 ${bgColor}`}>
       {/* Left Blur Gradient */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 md:w-16 lg:w-40 bg-gradient-to-r from-brand-light-gray to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 md:w-16 lg:w-[250px] xl:w-[400px] bg-gradient-to-r from-brand-light-gray via-brand-light-gray/80 to-transparent z-10" />
       
       {/* Right Blur Gradient */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 md:w-16 lg:w-40 bg-gradient-to-l from-brand-light-gray to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 md:w-16 lg:w-[250px] xl:w-[400px] bg-gradient-to-l from-brand-light-gray via-brand-light-gray/80 to-transparent z-10" />
 
       <style>{`
         @keyframes marquee-image {

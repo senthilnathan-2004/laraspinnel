@@ -20,14 +20,16 @@ export default function ShopByCategory({ settings }: { settings: any }) {
   return (
     <section className="py-24 bg-brand-light-gray border-t border-brand-border">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-4">
-          <h2 className="font-display text-2xl md:text-5xl text-brand-black tracking-wide uppercase">
-            {settings.home_shop_title || "What Are You Looking For?"}
-          </h2>
-          <p className="text-base font-medium text-neutral-600">
-            {settings.home_shop_subtitle || "Choose your category to browse healthy pasture livestock or fresh wholesale protein."}
-          </p>
+        {/* Header row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
+          <div>
+            <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
+              {settings.home_shop_title || "What Are You Looking For?"}
+            </h2>
+            <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+              {settings.home_shop_subtitle || "Choose your category to browse live farm goats or clean bulk mutton cuts."}
+            </p>
+          </div>
         </div>
 
         {/* Two cards container */}
@@ -75,7 +77,7 @@ export default function ShopByCategory({ settings }: { settings: any }) {
               <div className="flex items-center gap-1.5 md:gap-3 mt-1 md:mt-4 overflow-hidden">
                 <div className="flex items-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
                   <span className="text-xs md:text-base">Browse</span>
-                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-goat-primary transition-all duration-500 transform md:-translate-x-6 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
+                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-goat-primary transition-all duration-500 transform lg:-translate-x-6 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
                     <ArrowRight className="text-white w-3 h-3 md:w-4.5 md:h-4.5" />
                   </div>
                 </div>
@@ -126,7 +128,7 @@ export default function ShopByCategory({ settings }: { settings: any }) {
               <div className="flex items-center gap-1.5 md:gap-3 mt-1 md:mt-4 overflow-hidden">
                 <div className="flex items-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
                   <span className="text-xs md:text-base">Browse</span>
-                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-mutton-primary transition-all duration-500 transform md:-translate-x-6 md:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
+                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-mutton-primary transition-all duration-500 transform lg:-translate-x-6 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
                     <ArrowRight className="text-white w-3 h-3 md:w-4.5 md:h-4.5" />
                   </div>
                 </div>

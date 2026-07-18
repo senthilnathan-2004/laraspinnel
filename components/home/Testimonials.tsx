@@ -21,8 +21,8 @@ const ReviewCard = ({ rev, className = "" }: { rev: any; className?: string }) =
         ))}
       </div>
       <div className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-3">
-        <p className="text-justify"><strong className="text-brand-black">Goal:</strong> {rev.goal}</p>
-        <p className="text-justify"><strong className="text-brand-black">Outcome:</strong> {rev.outcome}</p>
+        <p className="text-justify line-clamp-2"><strong className="text-brand-black">Goal:</strong> {rev.goal}</p>
+        <p className="text-justify line-clamp-4"><strong className="text-brand-black">Outcome:</strong> {rev.outcome}</p>
       </div>
     </div>
 
@@ -185,7 +185,8 @@ export default function Testimonials() {
 
   useEffect(() => {
     const updateVisible = () => {
-      if (window.innerWidth >= 640 && window.innerWidth < 900) setVisibleItems(2);
+      if (window.innerWidth >= 1024) setVisibleItems(3);
+      else if (window.innerWidth >= 768) setVisibleItems(2);
       else setVisibleItems(1);
     };
     updateVisible();
@@ -219,20 +220,23 @@ export default function Testimonials() {
   return (
     <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
-        {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto space-y-2">
-          <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
-            {settings.home_testimonials_title || "What Our Customers Say"}
-          </h2>
-          <p className="text-sm font-medium text-brand-gray">
-            {settings.home_testimonials_subtitle || "Stories of satisfaction from farmers, families, and commercial buyers."}
-          </p>
-          <p className="text-sm font-medium text-brand-gray mt-1 flex items-center gap-1.5 justify-center">
-            <ShieldCheck size={16} className="text-goat-primary" /> Verified Purchases Only
-          </p>
-          <div className="pt-4 w-full max-w-[280px] mx-auto">
+        {/* Header row */}
+        <div className="flex flex-col md:flex-row md:items-start justify-between border-b border-brand-border pb-4 gap-4 md:gap-0">
+          <div>
+            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+              {settings.home_testimonials_title || "What Our Customers Say"}
+            </h2>
+            <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+              {settings.home_testimonials_subtitle || "Stories of satisfaction from farmers, families, and commercial buyers."}
+            </p>
+            <p className="text-sm font-medium text-brand-gray mt-1 flex items-center gap-1.5">
+              <ShieldCheck size={16} className="text-goat-primary" /> Verified Purchases Only
+            </p>
+          </div>
+          
+          <div className="w-full md:w-auto md:min-w-[200px]">
             <div className="hidden sm:block">
-              <button onClick={() => setIsModalOpen(true)} className="px-6 py-3 w-full bg-white border-2 border-brand-black text-brand-black font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-brand-black hover:text-white transition-all shadow-sm active:scale-95">
+              <button onClick={() => setIsModalOpen(true)} className="px-6 py-2.5 w-full bg-white border-2 border-brand-black text-brand-black font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-brand-black hover:text-white transition-all shadow-sm active:scale-95">
                 Add Your Review
               </button>
             </div>
@@ -242,21 +246,16 @@ export default function Testimonials() {
           </div>
         </div>
 
-        {/* Desktop View: Grid (>= 900px) */}
-        <div className="hidden min-[900px]:grid grid-cols-3 gap-8">
-          {reviews.map((rev: any, idx: number) => (
-            <ReviewCard key={idx} rev={rev} />
-          ))}
-        </div>
-
-        {/* Mobile & Tablet View: Carousel (< 900px) */}
-        <div className="block min-[900px]:hidden relative -mx-4 overflow-hidden">
+        {/* Content & Badges Wrapper */}
+        <div className="space-y-8">
+        {/* Carousel for all devices */}
+        <div className="relative -mx-4 overflow-hidden py-2">
           <div 
             className="flex transition-transform duration-500 ease-in-out items-stretch"
             style={{ transform: `translateX(-${currentSlide * (100 / visibleItems)}%)` }}
           >
             {reviews.map((rev: any, idx: number) => (
-              <div key={idx} className="w-full sm:w-1/2 shrink-0 px-4 pb-2 h-auto">
+              <div key={idx} className="w-full md:w-1/2 lg:w-1/3 shrink-0 px-4 pb-2 h-auto">
                 <ReviewCard rev={rev} />
               </div>
             ))}
@@ -300,7 +299,7 @@ export default function Testimonials() {
         </div>
 
         {/* Trust Badges Strip */}
-        <div className="pt-4">
+        <div>
           <style>{`
             @keyframes marquee {
               0% { transform: translateX(0); }
@@ -328,10 +327,14 @@ export default function Testimonials() {
           </div>
 
           {/* Mobile View - Marquee */}
-          <div className="flex sm:hidden overflow-hidden whitespace-nowrap -mx-6 px-4 md:px-6 mask-image-gradient">
-            <div className="flex animate-marquee gap-3 w-max">
+          <div className="flex sm:hidden relative overflow-hidden whitespace-nowrap -mx-4 px-4">
+            {/* Blurry fade overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-brand-light-gray to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-brand-light-gray to-transparent z-10" />
+            
+            <div className="flex animate-marquee w-max">
               {[1, 2].map((i) => (
-                <React.Fragment key={i}>
+                <div key={i} className="flex gap-3 pr-3 shrink-0">
                   <span className="inline-flex shrink-0 items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-brand-border text-brand-black font-semibold text-[11px] shadow-xs cursor-default">
                     <Users size={15} className="text-goat-primary shrink-0" />
                     <span className="whitespace-nowrap">{settings.home_stat_1 || "500+ Happy Customers"}</span>
@@ -344,10 +347,11 @@ export default function Testimonials() {
                     <ShieldCheck size={15} className="text-goat-primary shrink-0" />
                     <span className="whitespace-nowrap">{settings.home_stat_3 || "Fresh Quality Guaranteed"}</span>
                   </span>
-                </React.Fragment>
+                </div>
               ))}
             </div>
           </div>
+        </div>
         </div>
       </div>
       <AddReviewModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

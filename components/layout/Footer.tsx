@@ -247,40 +247,44 @@ export default function Footer() {
           
           {/* Mobile View: Scrolling Marquee (Edge to Edge) */}
           <div className="block md:hidden mobile-mask">
-            <div className="mobile-marquee gap-8">
-              {/* Original Items */}
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+            <div className="mobile-marquee">
+              <div className="flex gap-8 pr-8 shrink-0">
+                {/* Original Items */}
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <ShieldCheck size={18} className="text-goat-primary shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <Leaf size={18} className="text-[#25D366] shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <Lock size={18} className="text-blue-400 shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <Leaf size={18} className="text-[#25D366] shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
-              </div>
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
-              </div>
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <Lock size={18} className="text-blue-400 shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
-              </div>
-              {/* Duplicated for seamless infinite loop */}
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
-              </div>
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <Leaf size={18} className="text-[#25D366] shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
-              </div>
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
-              </div>
-              <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                <Lock size={18} className="text-blue-400 shrink-0" />
-                <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+              <div className="flex gap-8 pr-8 shrink-0">
+                {/* Duplicated for seamless infinite loop */}
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <ShieldCheck size={18} className="text-goat-primary shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <Leaf size={18} className="text-[#25D366] shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
+                  <Lock size={18} className="text-blue-400 shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+                </div>
               </div>
             </div>
           </div>
