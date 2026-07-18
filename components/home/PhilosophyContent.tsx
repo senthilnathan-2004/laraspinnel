@@ -42,7 +42,7 @@ export default function PhilosophyContent({ content }: { content: string }) {
 
       {/* Toggle Button (Hidden if content fits entirely) */}
       {showToggle && (
-        <div className={`flex justify-center relative z-30 transition-all duration-500 ${!isExpanded ? '-mt-6' : 'mt-8'}`}>
+        <div className={`flex justify-center relative z-20 transition-all duration-500 ${!isExpanded ? '-mt-6' : 'mt-8'}`}>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="group flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/90 backdrop-blur-md border border-neutral-200/50 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.12)] text-brand-black text-sm font-semibold tracking-wide hover:bg-white hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.18)] active:scale-95 transition-all duration-300 ease-out"

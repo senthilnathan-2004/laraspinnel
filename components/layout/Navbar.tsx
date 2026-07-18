@@ -142,17 +142,17 @@ export default function Navbar() {
       {/* Backdrop */}
       <div
         onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 top-16 bg-brand-black/60 z-30 backdrop-blur-sm xl:hidden transition-all duration-300 ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+        className={`fixed inset-0 top-16 bg-brand-black/60 z-40 backdrop-blur-sm xl:hidden transition-all duration-300 ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
           }`}
       ></div>
 
       {/* Drawer starts below the main header */}
       <div
-        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm bg-white/95 backdrop-blur-xl z-40 shadow-2xl flex flex-col justify-between p-3 md:p-6 xl:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm md:max-w-md bg-white/95 backdrop-blur-xl z-50 shadow-2xl flex flex-col justify-between p-3 md:p-6 xl:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
       >
         {/* Links */}
-        <nav className="flex-1 overflow-y-auto py-2 space-y-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2 space-y-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
