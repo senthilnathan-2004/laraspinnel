@@ -1,141 +1,68 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { Tag } from "@phosphor-icons/react/dist/ssr";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function ShopByCategory({ settings }: { settings: any }) {
-  let displayDistricts = "Coimbatore, Tiruppur, and Erode";
-  if (settings?.mutton_districts) {
-    const districtsList = settings.mutton_districts.split(',').map((d: string) => d.trim()).filter(Boolean);
-    if (districtsList.length <= 3) {
-      if (districtsList.length === 1) displayDistricts = districtsList[0];
-      else if (districtsList.length === 2) displayDistricts = `${districtsList[0]} and ${districtsList[1]}`;
-      else displayDistricts = `${districtsList.slice(0, -1).join(', ')}, and ${districtsList[districtsList.length - 1]}`;
-    } else {
-      displayDistricts = `${districtsList.slice(0, 3).join(', ')}...`;
-    }
-  }
+  const { data: categories = [], isLoading } = useSWR("/api/categories", fetcher);
 
   return (
-    <section className="py-24 bg-brand-light-gray border-t border-brand-border">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
+    <section className="py-20 bg-brand-light-gray border-t border-brand-border">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
           <div>
             <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
-              {settings.home_shop_title || "What Are You Looking For?"}
+              {settings.home_shop_title || "Handmade Gifts Crafted with Love"}
             </h2>
             <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
-              {settings.home_shop_subtitle || "Choose your category to browse live farm goats or clean bulk mutton cuts."}
+              {settings.home_shop_subtitle || "Browse our collection of hand-knitted crochet bouquets, customized frames, hampers, and accessories."}
             </p>
           </div>
         </div>
 
-        {/* Two cards container */}
-        <div className="grid grid-cols-2 gap-3 md:gap-8 lg:gap-12">
-          {/* Card 1: Live Goats */}
-          <Link
-            href="/goats"
-            className="group relative flex flex-col w-full min-h-[220px] md:min-h-[400px] rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
-          >
-            {/* Background Image */}
-            <div className="absolute inset-0 w-full h-full bg-brand-black">
-              <Image
-                src={settings.home_shop_image_1 || "/placeholder-goat.jpg"}
-                alt="Live Goats"
-                fill
-                sizes="(max-width: 768px) 100vw, 400px"
-                quality={75}
-                className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
-              />
-            </div>
-            
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-            {/* Top Tag */}
-            <div className="absolute top-3 left-3 right-3 md:top-8 md:left-8 md:right-auto z-10 flex">
-              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm max-w-full">
-                <Tag weight="fill" className="text-green-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5 shrink-0" />
-                <span className="truncate">Tamil Nadu Delivery</span>
+        {/* Dynamic Categories Grid */}
+        {isLoading ? (
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 md:gap-6">
+            {[...Array(6)].map((_, idx) => (
+              <div key={idx} className="space-y-3">
+                <div className="w-full aspect-square rounded-2xl md:rounded-[2rem] bg-neutral-200 animate-pulse" />
+                <div className="h-4 bg-neutral-200 rounded animate-pulse w-3/4 mx-auto" />
               </div>
-            </div>
-
-            {/* Content Bottom */}
-            <div className="relative z-10 mt-auto p-4 md:p-10 flex flex-col gap-2 md:gap-4 transform md:translate-y-4 translate-y-0 group-hover:translate-y-0 transition-transform duration-700">
-              <div className="space-y-1 md:space-y-3">
-                <h3 className="font-display text-white text-xl md:text-4xl lg:text-5xl leading-tight group-hover:text-white/90">
-                  Live Goats
-                </h3>
-                <p className="text-white/80 text-[10px] md:text-base leading-tight md:leading-relaxed max-w-sm line-clamp-2 md:line-clamp-none">
-                  Explore a wide breed variety, including Boer, Tellicherry, and native stock. We deliver right to your location.
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <div className="flex items-center gap-1.5 md:gap-3 mt-1 md:mt-4 overflow-hidden">
-                <div className="flex items-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
-                  <span className="text-xs md:text-base">Browse</span>
-                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-goat-primary transition-all duration-500 transform lg:-translate-x-6 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
-                    <ArrowRight className="text-white w-3 h-3 md:w-4.5 md:h-4.5" />
-                  </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 md:gap-6">
+            {categories.map((category: any) => (
+              <Link
+                key={category._id}
+                href={`/shop?category=${category.slug}`}
+                className="group flex flex-col items-center text-center gap-3 w-full"
+              >
+                {/* Rounded Square Card with Off-White Background */}
+                <div className="relative aspect-square w-full rounded-2xl md:rounded-[2rem] overflow-hidden bg-[#F3F4F6] border border-brand-border/40 transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    fill
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 200px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    quality={75}
+                  />
                 </div>
-              </div>
-            </div>
-          </Link>
 
-          {/* Card 2: Bulk Mutton */}
-          <Link
-            href="/mutton"
-            className="group relative flex flex-col w-full min-h-[220px] md:min-h-[400px] rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700"
-          >
-            {/* Background Image */}
-            <div className="absolute inset-0 w-full h-full bg-brand-black">
-              <Image
-                src={settings.home_shop_image_2 || "/placeholder-mutton.jpg"}
-                alt="Bulk Mutton"
-                fill
-                sizes="(max-width: 768px) 100vw, 400px"
-                quality={75}
-                className="object-cover opacity-90 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 group-hover:opacity-100"
-              />
-            </div>
-            
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-            {/* Top Tag */}
-            <div className="absolute top-3 left-3 right-3 md:top-8 md:left-8 md:right-auto z-10 flex">
-              <div className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-semibold tracking-wide shadow-sm max-w-full">
-                <Tag weight="fill" className="text-red-300 w-2.5 h-2.5 md:w-3.5 md:h-3.5 shrink-0" />
-                <span className="truncate">Select Districts</span>
-              </div>
-            </div>
-
-            {/* Content Bottom */}
-            <div className="relative z-10 mt-auto p-4 md:p-10 flex flex-col gap-2 md:gap-4 transform md:translate-y-4 translate-y-0 group-hover:translate-y-0 transition-transform duration-700">
-              <div className="space-y-1 md:space-y-3">
-                <h3 className="font-display text-white text-xl md:text-4xl lg:text-5xl leading-tight group-hover:text-white/90">
-                  Bulk Mutton
+                {/* Title Text Underneath */}
+                <h3 className="font-semibold text-brand-black text-xs md:text-base leading-tight transition-colors group-hover:text-goat-primary uppercase tracking-wide px-1">
+                  {category.name}
                 </h3>
-                <p className="text-white/80 text-[10px] md:text-base leading-tight md:leading-relaxed max-w-sm line-clamp-2 md:line-clamp-none">
-                  Fresh, prime, custom meat cuts packed cleanly. Available for delivery within {displayDistricts}.
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <div className="flex items-center gap-1.5 md:gap-3 mt-1 md:mt-4 overflow-hidden">
-                <div className="flex items-center gap-1.5 md:gap-3 text-xs md:text-sm font-semibold text-white/90 group-hover:text-white transition-colors">
-                  <span className="text-xs md:text-base">Browse</span>
-                  <div className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full bg-mutton-primary transition-all duration-500 transform lg:-translate-x-6 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 shadow-md">
-                    <ArrowRight className="text-white w-3 h-3 md:w-4.5 md:h-4.5" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

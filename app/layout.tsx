@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Inter } from "next/font/google";
+import { Baloo_Da_2, Poppins } from "next/font/google";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -8,8 +8,8 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const anton = Anton({
-  weight: "400",
+const balooDa2 = Baloo_Da_2({
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
@@ -17,7 +17,8 @@ const anton = Anton({
   adjustFontFallback: true,
 });
 
-const inter = Inter({
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
@@ -255,14 +256,14 @@ export default async function RootLayout({
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Goats",
-          "item": `${BASE_URL}/goats`
+          "name": "Shop",
+          "item": `${BASE_URL}/shop`
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Mutton",
-          "item": `${BASE_URL}/mutton`
+          "name": "Categories",
+          "item": `${BASE_URL}/categories`
         }
       ]
     },
@@ -272,18 +273,18 @@ export default async function RootLayout({
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Do you deliver mutton to Chennai from Villupuram?",
+          "name": "Do you deliver custom crochet orders?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, we provide bulk fresh mutton delivery to Chennai, Villupuram, and surrounding areas in Tamil Nadu."
+            "text": "Yes, we create custom crochet bouquets, amigurumi plushies, and gift hampers. Reach out to us on WhatsApp to customize."
           }
         },
         {
           "@type": "Question",
-          "name": "What breeds of live goats do you sell?",
+          "name": "Where are you located?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We specialize in healthy Tellicherry, Boer, and local Naatu Aadu goat breeds."
+            "text": "We are based in Villupuram, Tamil Nadu, and ship our handmade gifts all across India."
           }
         }
       ]
@@ -293,7 +294,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`${anton.variable} ${inter.variable} h-full antialiased`}
+      className={`${balooDa2.variable} ${poppins.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

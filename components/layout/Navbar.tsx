@@ -1,62 +1,68 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useScrollNavbar } from "@/hooks/useScrollNavbar";
 import { useSettings } from "@/hooks/useSettings";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, ShoppingCart, Home, ShoppingBag, LayoutGrid, Info } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
+import { useCart } from "@/hooks/useCart";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { visible, isScrolled } = useScrollNavbar();
+  const { isScrolled } = useScrollNavbar();
   const { settings } = useSettings();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   const phone = settings.contact_phone || "+91 9442379832";
   const whatsapp = settings.contact_whatsapp || "+91 9442379832";
-  // Format whatsapp link
   const whatsappFormatted = whatsapp.replace(/[^\d+]/g, "");
   const whatsappUrl = `https://wa.me/${whatsappFormatted}`;
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Live Goats", href: "/goats" },
-    { name: "Mutton", href: "/mutton" },
-    { name: "Blog", href: "/blog" },
-    { name: "Gallery", href: "/gallery" },
+    { name: "Shop", href: "/shop" },
+    { name: "Categories", href: "/categories" },
     { name: "About", href: "/about" },
-    { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/contact" },
+  ];
+
+  const bottomLinks = [
+    { name: "Home", href: "/", icon: Home },
+    { name: "Shop", href: "/shop", icon: ShoppingBag },
+    { name: "Categories", href: "/categories", icon: LayoutGrid },
+    { name: "About", href: "/about", icon: Info },
+    { name: "Contact", href: "/contact", icon: Phone },
   ];
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform translate-y-0 ${isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform translate-y-0 ${
+          isScrolled
             ? "bg-white/85 backdrop-blur-md shadow-navbar border-b border-brand-border"
             : "bg-white border-b border-brand-border/60"
-          }`}
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             {settings.logo_url && (
               <Image
                 src={settings.logo_url}
-                alt={settings.farm_name || "Ragu Goat Farm"}
+                alt={settings.farm_name || "Lara's Pinnal"}
                 width={200}
                 height={40}
                 sizes="200px"
                 quality={75}
                 priority
-                className="h-10 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
             )}
-            <span className="font-display text-2xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase truncate max-w-[130px] min-[375px]:max-w-[180px] sm:max-w-none">
-              {settings.farm_name || "RAGU FARM"}
+            <span className="font-display text-3xl md:text-4xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase truncate max-w-[130px] min-[375px]:max-w-[180px] sm:max-w-none leading-none translate-y-[2px]">
+              {settings.farm_name || "Lara's Pinnal"}
             </span>
           </Link>
 
@@ -68,10 +74,11 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-semibold relative py-1 transition-colors ${isActive
+                  className={`text-sm font-semibold relative py-1 transition-colors ${
+                    isActive
                       ? "text-goat-primary"
                       : "text-brand-black hover:text-goat-primary"
-                    }`}
+                  }`}
                 >
                   {link.name}
                   {isActive && (
@@ -82,7 +89,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Actions */}
+          {/* Right Actions (Desktop) */}
           <div className="hidden xl:flex items-center gap-4">
             {/* Phone */}
             <a
@@ -106,16 +113,17 @@ export default function Navbar() {
               <FaWhatsapp size={20} />
             </a>
 
-            {/* Book Now */}
+            {/* Cart Button */}
             <Link
-              href="/book"
-              className="bg-brand-black hover:bg-goat-primary text-white text-sm font-semibold px-5 py-2 rounded-full shadow-sm hover:shadow transition-all duration-200"
+              href="/cart"
+              className="bg-brand-black hover:bg-goat-primary text-white text-sm font-semibold px-5 py-2 rounded-full shadow-sm hover:shadow transition-all duration-200 flex items-center gap-2"
             >
-              Book Now
+              <ShoppingCart size={16} />
+              <span>Cart ({cartCount})</span>
             </Link>
           </div>
 
-          {/* Mobile controls */}
+          {/* Mobile controls (Mobile & Tablet) */}
           <div className="flex xl:hidden items-center gap-3">
             <a
               href={`tel:${phone}`}
@@ -124,80 +132,49 @@ export default function Navbar() {
             >
               <Phone size={18} />
             </a>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+
+            {/* Direct Cart Button for mobile/tablet */}
+            <Link
+              href="/cart"
+              className="relative p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
+              aria-label="View Cart"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+              <ShoppingCart size={20} />
+              {cartCount > 0 && (
+                <span className="absolute top-0.5 right-0.5 min-w-4 h-4 px-1 bg-rose-primary text-white text-[8px] font-bold rounded-full flex items-center justify-center shadow-xs">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
           </div>
         </div>
       </header>
 
       {/* Spacer to push page content down */}
-      <div className="h-16"></div>
+      <div className="h-14 md:h-16"></div>
 
-      {/* Mobile Slide-in Panel */}
-      {/* Backdrop */}
-      <div
-        onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 top-16 bg-brand-black/60 z-40 backdrop-blur-sm xl:hidden transition-all duration-300 ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-          }`}
-      ></div>
-
-      {/* Drawer starts below the main header */}
-      <div
-        className={`fixed inset-y-0 top-16 right-0 w-full sm:max-w-sm md:max-w-md bg-white/95 backdrop-blur-xl z-50 shadow-2xl flex flex-col justify-between p-3 md:p-6 xl:hidden border-l border-brand-border/40 transition-transform duration-300 ease-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-      >
-        {/* Links */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2 space-y-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {navLinks.map((link) => {
+      {/* Fixed Bottom Navigation Bar (Mobile & Tablet) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#111111] text-neutral-400 border-t border-neutral-800 xl:hidden h-16 shadow-[0_-2px_10px_rgba(0,0,0,0.15)]">
+        <div className="flex items-center justify-around h-full px-2 max-w-md mx-auto">
+          {bottomLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-2.5 text-lg font-bold rounded-xl transition-all duration-300 ${isActive
-                    ? "bg-goat-tint text-goat-primary translate-x-1"
-                    : "text-brand-black hover:bg-brand-light-gray hover:text-goat-primary hover:translate-x-1"
-                  }`}
+                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 transition-all duration-200 select-none ${
+                  isActive
+                    ? "text-goat-primary scale-105"
+                    : "text-neutral-400 hover:text-neutral-200"
+                }`}
               >
-                {link.name}
+                <link.icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+                <span className="text-[9px] font-bold uppercase tracking-wider">
+                  {link.name}
+                </span>
               </Link>
             );
           })}
-        </nav>
-
-        {/* Bottom Actions */}
-        <div className="border-t border-brand-border pt-6 space-y-4">
-          <div className="flex items-center justify-around">
-            <a
-              href={`tel:${phone}`}
-              className="flex items-center gap-2 text-sm font-semibold text-brand-black"
-            >
-              <Phone size={16} />
-              <span>Call Us</span>
-            </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-semibold text-[#25D366]"
-            >
-              <FaWhatsapp size={18} />
-              <span>WhatsApp</span>
-            </a>
-          </div>
-          <Link
-            href="/book"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block w-full text-center py-3 bg-brand-black hover:bg-goat-primary text-white font-semibold rounded-full shadow transition-colors"
-          >
-            Book Now
-          </Link>
         </div>
       </div>
     </>

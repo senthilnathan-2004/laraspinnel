@@ -1,39 +1,60 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { Leaf, Flame } from "@phosphor-icons/react";
+import { ShoppingCart, Sparkles } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
 
 interface PremiumCardProps {
-  image: string;
+  id?: string;
   name: string;
   price: string;
   tag?: string;
+  image?: string;
   slug: string;
-  theme: "goat" | "mutton";
+  theme?: "goat" | "mutton";
 }
 
 export default function PremiumCard({
-  image,
+  id,
   name,
   price,
   tag,
+  image,
   slug,
-  theme,
+  theme = "goat",
 }: PremiumCardProps) {
-  const isGoat = theme === "goat";
-  const url = isGoat ? `/goats/${slug}` : `/mutton/${slug}`;
+  const url = `/shop/${slug}`;
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Extract numeric price from format (e.g. "₹249" -> 249)
+    const numericPrice = parseFloat(price.replace(/[^\d.]/g, "")) || 0;
+
+    addItem({
+      productId: id || slug, // Fallback to slug if id not provided
+      name,
+      price: numericPrice,
+      image: image || "",
+    });
+
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   return (
     <Link
       href={url}
       prefetch={true}
-      className="group relative flex flex-col w-full overflow-hidden rounded-4xl bg-brand-black shadow-lg hover:shadow-2xl transition-all duration-700 aspect-square"
+      className="group relative flex flex-col w-full overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] bg-white border border-brand-border/60 shadow-xs hover:shadow-md transition-all duration-300 h-full"
     >
-      {/* Background Image with Zoom */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-900">
+      {/* Top Image Section */}
+      <div className="relative aspect-square w-full bg-brand-light-gray overflow-hidden">
         {image ? (
           <Image
             src={image}
@@ -41,59 +62,67 @@ export default function PremiumCard({
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             quality={75}
-            className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 opacity-90 group-hover:opacity-100"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center opacity-10">
-            {isGoat ? <Leaf size={64} /> : <Flame size={64} />}
+            <Sparkles size={48} className="text-brand-black" />
+          </div>
+        )}
+
+        {/* Top Sale/Save Tag */}
+        {tag && (
+          <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
+            <div className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-rose-primary text-white text-[8px] sm:text-[9px] font-bold uppercase tracking-wider shadow-sm">
+              <span>{tag}</span>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Dark Gradient Overlay for Text Readability */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-      {/* Top Tag */}
-      {tag && (
-        <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-10">
-          <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 max-[355px]:px-1.5 max-[355px]:py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] max-[355px]:text-[8px] sm:text-xs font-medium tracking-wide shadow-sm">
-            {isGoat ? (
-              <Leaf weight="fill" className="text-green-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
-            ) : (
-              <Flame weight="fill" className="text-red-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
-            )}
-            <span className="max-[355px]:max-w-[50px] max-[355px]:truncate">{tag}</span>
-          </div>
-        </div>
-      )}
-
-      {/* Content at Bottom */}
-      <div className="relative z-10 mt-auto p-4 sm:p-6 max-[355px]:p-2.5 flex flex-col gap-2 max-[355px]:gap-1 sm:gap-4 transform md:translate-y-2 translate-y-0 group-hover:translate-y-0 transition-transform duration-500">
-        <div className="space-y-0.5 sm:space-y-1 max-[355px]:space-y-0">
-          <h3 className="text-lg sm:text-2xl max-[355px]:text-[14px] font-display text-white tracking-wide leading-tight group-hover:text-white/90">
+      {/* Content Section at Bottom */}
+      <div className="p-3 sm:p-4 flex flex-col justify-between flex-1 gap-2 sm:gap-3 bg-white">
+        <div className="space-y-0.5 sm:space-y-1">
+          {/* Subtle Category/Tag indicator */}
+          <span className="text-[8px] sm:text-[9px] font-bold tracking-widest text-brand-gray uppercase">
+            {tag ? "Special Offer" : "Handcrafted"}
+          </span>
+          <h3 
+            className="text-xs sm:text-sm font-display font-extrabold text-brand-black tracking-wide leading-snug min-h-[2rem] sm:min-h-[2.4rem] group-hover:text-goat-primary transition-colors"
+            style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
+          >
             {name}
           </h3>
-          <p
-            className={`text-sm sm:text-lg max-[355px]:text-[11px] font-semibold tracking-tight ${
-              isGoat ? "text-green-400" : "text-red-400"
-            }`}
-          >
-            {price}
-          </p>
         </div>
 
-        {/* Action Button */}
-        <div className="flex items-center gap-3 mt-0 sm:mt-1 max-[355px]:mt-0 overflow-hidden">
-          <div className="flex items-center gap-1 sm:gap-2 text-[10px] max-[355px]:text-[8.5px] sm:text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
-            <span>View Details</span>
-            <div
-              className={`flex items-center justify-center w-5 h-5 max-[355px]:w-4 max-[355px]:h-4 sm:w-8 sm:h-8 rounded-full transition-all duration-500 transform lg:-translate-x-4 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
-                isGoat ? "bg-goat-primary" : "bg-mutton-primary"
-              }`}
-            >
-              <ArrowRight className="text-white w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3.5 sm:h-3.5" />
-            </div>
+        {/* Price and Add to Cart Row */}
+        <div className="flex items-center justify-between gap-1.5 mt-auto pt-2 border-t border-brand-border/40">
+          <div className="flex flex-col">
+            <span className="text-sm sm:text-base font-bold text-goat-primary">
+              {price}
+            </span>
           </div>
+
+          <button
+            onClick={handleAddToCart}
+            className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs cursor-pointer border ${
+              added
+                ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                : "bg-goat-primary text-white border-transparent hover:bg-goat-hover"
+            }`}
+          >
+            {added ? (
+              <>
+                <span className="text-[10px] sm:text-xs font-bold">✓</span>
+                <span>Added</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart size={10} className="sm:w-3 sm:h-3" />
+                <span>Add</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </Link>

@@ -1,8 +1,7 @@
 import { MetadataRoute } from "next";
 import { connectToDatabase } from "@/lib/db";
-import GoatVariety from "@/models/GoatVariety";
-import MuttonPack from "@/models/MuttonPack";
-import BlogPost from "@/models/BlogPost";
+import Product from "@/models/Product";
+import Category from "@/models/Category";
 import { SITE_URL } from "@/lib/siteUrl";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -11,19 +10,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes
   const staticRoutes = [
     "",
-    "/goats",
-    "/mutton",
-    "/blog",
-    "/gallery",
+    "/shop",
+    "/categories",
     "/about",
     "/contact",
-    "/book",
-    "/festival-booking",
-    "/faq",
-    "/locations/villupuram",
+    "/cart",
+    "/checkout",
     "/privacy-policy",
     "/terms-of-service",
-    "/editorial-policy",
+    "/shipping-policy",
+    "/refund-policy",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -36,38 +32,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     await connectToDatabase();
 
-    // Fetch dynamic goat breed pages
-    const goats = await GoatVariety.find({}).select("slug updatedAt");
-    const goatRoutes = goats.map((g) => ({
-      url: `${baseUrl}/goats/${g.slug}`,
-      lastModified: g.updatedAt || new Date(),
+    // Fetch dynamic product detail pages
+    const products = await Product.find({ isActive: true }).select("slug updatedAt");
+    const productRoutes = products.map((p) => ({
+      url: `${baseUrl}/shop/${p.slug}`,
+      lastModified: p.updatedAt || new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.6,
     }));
 
-    // Fetch dynamic mutton pack pages
-    const muttons = await MuttonPack.find({}).select("slug updatedAt");
-    const muttonRoutes = muttons.map((m) => ({
-      url: `${baseUrl}/mutton/${m.slug}`,
-      lastModified: m.updatedAt || new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.6,
-    }));
-
-    // Fetch dynamic blog posts
-    const blogs = await BlogPost.find({ isPublished: true }).select("slug publishedAt updatedAt");
-    const blogRoutes = blogs.map((b) => ({
-      url: `${baseUrl}/blog/${b.slug}`,
-      lastModified: b.updatedAt || b.publishedAt || new Date(),
+    // Fetch dynamic category search queries
+    const categories = await Category.find({ isActive: true }).select("slug updatedAt");
+    const categoryRoutes = categories.map((c) => ({
+      url: `${baseUrl}/shop?category=${c.slug}`,
+      lastModified: c.updatedAt || new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.5,
     }));
 
-    dynamicRoutes = [...goatRoutes, ...muttonRoutes, ...blogRoutes];
+    dynamicRoutes = [...productRoutes, ...categoryRoutes];
   } catch (error) {
     console.error("Sitemap generation error:", error);
   }
 
   return [...staticRoutes, ...dynamicRoutes];
 }
-export const revalidate = 0; // Always generate sitemap dynamically to include latest content
+export const revalidate = 0;

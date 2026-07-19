@@ -2,29 +2,27 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Leaf, Flame } from "@phosphor-icons/react";
 import Image from "next/image";
+import { ArrowRight, Tag as TagIcon, Sparkles } from "lucide-react";
 
 interface VarietyCardProps {
-  image: string;
   name: string;
   price: string;
   tag?: string;
+  image?: string;
   slug: string;
-  theme: "goat" | "mutton";
+  theme?: "goat" | "mutton";
 }
 
 export default function VarietyCard({
-  image,
   name,
   price,
   tag,
+  image,
   slug,
-  theme,
+  theme = "goat",
 }: VarietyCardProps) {
-  const isGoat = theme === "goat";
-  const url = isGoat ? `/goats/${slug}` : `/mutton/${slug}`;
+  const url = `/shop/${slug}`;
 
   return (
     <Link
@@ -40,11 +38,11 @@ export default function VarietyCard({
             alt={name}
             fill
             className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 opacity-90 group-hover:opacity-100"
-            sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 300px"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center opacity-10">
-            {isGoat ? <Leaf size={64} /> : <Flame size={64} />}
+            <Sparkles size={64} className="text-white" />
           </div>
         )}
       </div>
@@ -55,11 +53,7 @@ export default function VarietyCard({
       {/* Top Tag */}
       {tag && (
         <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-10 flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 max-[355px]:px-1.5 max-[355px]:py-0.5 max-[355px]:top-2 max-[355px]:left-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] max-[355px]:text-[8px] sm:text-xs font-medium tracking-wide shadow-sm">
-          {isGoat ? (
-            <Leaf weight="fill" className="text-green-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
-          ) : (
-            <Flame weight="fill" className="text-red-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
-          )}
+          <TagIcon className="text-green-300 w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3 sm:h-3" />
           <span className="max-[355px]:max-w-[50px] max-[355px]:truncate">{tag}</span>
         </div>
       )}
@@ -70,11 +64,7 @@ export default function VarietyCard({
           <h3 className="text-lg sm:text-2xl max-[355px]:text-[14px] font-display text-white tracking-wide leading-tight group-hover:text-white/90">
             {name}
           </h3>
-          <p
-            className={`text-sm sm:text-lg max-[355px]:text-[11px] font-semibold tracking-tight ${
-              isGoat ? "text-green-400" : "text-red-400"
-            }`}
-          >
+          <p className="text-sm sm:text-lg max-[355px]:text-[11px] font-semibold tracking-tight text-green-400">
             {price}
           </p>
         </div>
@@ -82,11 +72,7 @@ export default function VarietyCard({
         {/* Action Button */}
         <div className="flex items-center gap-1 sm:gap-2 mt-0 sm:mt-1 max-[355px]:mt-0 overflow-hidden text-[10px] max-[355px]:text-[8.5px] sm:text-sm font-semibold text-white/90 md:text-white/80 group-hover:text-white transition-colors">
           <span>View Details</span>
-          <div
-            className={`flex items-center justify-center w-5 h-5 max-[355px]:w-4 max-[355px]:h-4 sm:w-8 sm:h-8 rounded-full transition-all duration-500 transform lg:-translate-x-4 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 ${
-              isGoat ? "bg-goat-primary" : "bg-mutton-primary"
-            }`}
-          >
+          <div className="flex items-center justify-center w-5 h-5 max-[355px]:w-4 max-[355px]:h-4 sm:w-8 sm:h-8 rounded-full transition-all duration-500 transform lg:-translate-x-4 lg:opacity-0 translate-x-0 opacity-100 group-hover:translate-x-0 group-hover:opacity-100 bg-goat-primary">
             <ArrowRight className="text-white w-2.5 h-2.5 max-[355px]:w-2 max-[355px]:h-2 sm:w-3.5 sm:h-3.5" />
           </div>
         </div>

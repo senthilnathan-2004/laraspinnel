@@ -4,20 +4,55 @@
   --font-display: var(--font-display);
   --font-body: var(--font-body);
 
-  --color-brand-black: #111111;
+  /* Base */
+  --color-brand-black: #2B2420;
   --color-brand-gray: #6B7280;
   --color-brand-light-gray: #F7F7F7;
-  --color-brand-border: #E5E7EB;
+  --color-brand-border: #E8E1D8;
 
-  --color-goat-primary: #1E8A4C;
-  --color-goat-tint: #EAF7EF;
-  --color-goat-hover: #166D3C;
-  --color-goat-text: #145C34;
+  /* PRIMARY — Sage Green (main brand color: buttons, links, active states, header) */
+  --color-primary: #8FA88A;
+  --color-primary-tint: #EEF3EC;
+  --color-primary-hover: #708870;
+  --color-primary-text: #56695A;
 
-  --color-mutton-primary: #C0392B;
-  --color-mutton-tint: #FDECEA;
-  --color-mutton-hover: #9B2D22;
-  --color-mutton-text: #8B2219;
+  /* SECONDARY — Terracotta/Rust (CTAs, highlights, hover accents) */
+  --color-secondary: #C1622D;
+  --color-secondary-tint: #FBEEE5;
+  --color-secondary-hover: #A34F22;
+  --color-secondary-text: #8B4520;
+
+  /* ACCENT — Warm Gold (badges, prices, ribbon highlights) */
+  --color-gold-primary: #C9A15A;
+  --color-gold-tint: #FBF4E6;
+  --color-gold-hover: #A9813F;
+  --color-gold-text: #8C6B32;
+
+  /* SUPPORTING — Dusty Rose (festive/gift sections, sale tags) */
+  --color-rose-primary: #D98E97;
+  --color-rose-tint: #FBEDEE;
+  --color-rose-hover: #C06E78;
+  --color-rose-text: #A85560;
+
+  /* SUPPORTING — Wood Brown (footer, borders, text on cream, earthy accents) */
+  --color-brown-primary: #6B4A2E;
+  --color-brown-tint: #F1E9DF;
+  --color-brown-hover: #573A22;
+  --color-brown-text: #4A3320;
+
+  /* Neutral background */
+  --color-cream-bg: #FDF8F0;
+
+  /* Map old utility color variables to the updated layout settings */
+  --color-goat-primary: #8FA88A;
+  --color-goat-tint: #EEF3EC;
+  --color-goat-hover: #708870;
+  --color-goat-text: #56695A;
+
+  --color-mutton-primary: #C1622D;
+  --color-mutton-tint: #FBEEE5;
+  --color-mutton-hover: #A34F22;
+  --color-mutton-text: #8B4520;
 
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.07);
   --shadow-hover: 0 10px 40px rgba(0, 0, 0, 0.14);
@@ -30,14 +65,15 @@
 }
 
 body {
-  background-color: #ffffff;
-  color: #111111;
+  background-color: var(--color-cream-bg);
+  color: var(--color-brand-black);
   font-family: var(--font-body), sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, .font-display {
   font-family: var(--font-display), sans-serif;
   letter-spacing: 0.05em;
+  font-weight: 800;
 }
 
 /* Custom scrollbar matching premium theme */
@@ -47,16 +83,16 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 ::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: var(--color-cream-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: var(--color-brand-border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: var(--color-brand-gray);
 }
 
 /* Masonry layout support */
@@ -66,7 +102,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
   grid-gap: 20px;
 }
 
-/* Typography for rich text content (like Blog posts from TipTap) */
+/* Typography for rich text content */
 .prose {
   line-height: 1.5;
 }
@@ -127,4 +163,11 @@ h1, h2, h3, h4, h5, h6, .font-display {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
   border-radius: 0 8px 8px 0;
+}
+
+/* Push page content up to avoid clipping under fixed bottom navigation bar on mobile/tablet */
+@media (max-width: 1279px) {
+  body {
+    padding-bottom: 4rem;
+  }
 }

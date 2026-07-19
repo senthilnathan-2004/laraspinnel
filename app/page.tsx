@@ -6,13 +6,12 @@ import Footer from "@/components/layout/Footer";
 // Above-fold: static imports — rendered immediately, no deferred bundle
 import HeroSlider from "@/components/home/HeroSlider";
 import ShopByCategory from "@/components/home/ShopByCategory";
-import FestivalGoatCTA from "@/components/home/FestivalGoatCTA";
 
 // Near-fold text marquee with SSR for no layout shift
 import dynamic from "next/dynamic";
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), { ssr: true });
 
-// Below-fold sections — Client Component that defers JS bundles via ssr:false
+import BestSellers from "@/components/home/BestSellers";
 import BelowFoldSections from "@/components/home/BelowFoldSections";
 
 import { connectToDatabase } from "@/lib/db";
@@ -22,85 +21,60 @@ import SiteSettings from "@/models/SiteSettings";
 export const revalidate = 60; // Revalidate every 60 seconds
 
 export const metadata: Metadata = {
-  title: "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu",
+  title: "Lara's Pinnal | Handcrafted Crochet Gifts & Flowers in Tamil Nadu",
   description:
-    "Buy healthy live goats & fresh mutton from Ragu Goat Farm, Villupuram. Naatu aadu, Boer & Tellicherry breeds delivered across Tamil Nadu.",
+    "Buy beautiful handcrafted crochet flower bouquets, custom frames, baby amigurumi plushies, keychains, and gift hampers from Lara's Pinnal, Tamil Nadu.",
   keywords: [
-    "live goat for sale Tamil Nadu",
-    "goat farm Villupuram",
-    "naatu aadu vitpanai",
-    "Bakrid goat booking 2026",
-    "fresh mutton delivery Villupuram",
-    "Tellicherry goat for sale",
-    "Boer goat Tamil Nadu",
-    "mutton home delivery near me",
-    "bulk mutton order Villupuram",
-    "goat farm near Villupuram",
-    "goat online booking Tamil Nadu",
-    "country goat mutton naatu aadu",
+    "crochet bouquet online India",
+    "handmade gifts Chennai",
+    "crochet flowers Tamil Nadu",
+    "customized frames gifts",
+    "personalized amigurumi plushies",
+    "crochet keychain online buy",
+    "handmade hampers birthday",
+    "crochet Rakhi online",
+    "gifts under 999 online",
+    "crochet corner Tamil Nadu",
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Ragu Goat Farm | Live Goat & Fresh Mutton — Villupuram",
+    title: "Lara's Pinnal | Handcrafted Crochet Gifts & Flowers",
     description:
-      "Order pasture-raised live goats and bulk fresh mutton from Ragu Goat Farm. Tellicherry, Boer, Kanni Aadu breeds. Home delivery across Tamil Nadu.",
+      "Order pasture-raised wool and milk cotton crochet gifts. Unique flower bouquets, plushies, keychains, and custom hampers. Delivery across Tamil Nadu.",
     type: "website",
     locale: "en_IN",
-    siteName: "Ragu Goat Farm",
+    siteName: "Lara's Pinnal",
     url: "/",
     images: [
       {
-        url: "/placeholder-goat.jpg",
+        url: "https://images.unsplash.com/photo-1596436889106-be35e843f974?w=1200&auto=format&fit=crop&q=80",
         width: 1200,
         height: 630,
-        alt: "Ragu Goat Farm Boer Goat",
+        alt: "Lara's Pinnal Crochet Bouquet",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ragu Goat Farm | Live Goat & Fresh Mutton Delivery",
+    title: "Lara's Pinnal | Handcrafted Crochet Gifts & Flowers",
     description:
-      "Buy healthy live goats and farm-fresh bulk mutton from Ragu Goat Farm, Villupuram, Tamil Nadu.",
+      "Buy original handmade crochet items and customized gifts from Lara's Pinnal, Tamil Nadu.",
   },
 };
 
-
-
 const DEFAULT_PHILOSOPHY = `
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">At Ragu Estate, we take immense pride in raising healthy, pasture-fed animals across Villupuram and surrounding districts. Whether you are looking for premium Boer, Tellicherry, or native Naatu breeds for agriculture or festivals like Bakrid, we guarantee the highest standard of livestock. Our bulk delivery service ensures that you receive hygienic, freshly prepared cuts tailored for your special events and commercial needs, delivered promptly to your location. Through generations of dedicated animal husbandry, we have perfected the art of sustainable rearing. Our expansive grassy meadows offer the perfect environment for our herds to thrive naturally, ensuring optimal health and vitality. By fostering an ecosystem that prioritizes animal well-being, we consistently deliver unmatched excellence in every single order.</p>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">At Lara's Pinnal, we take immense pride in crafting beautiful, hand-knitted creations using premium milk cotton yarn. Whether you are looking for forever crochet bouquets, personalized frames, custom amigurumi plush toys, or gift hampers, we ensure the highest standard of durability and aesthetics. Every single order is hand-knitted with endless love and detail, making sure your special occasion is celebrated with a unique, long-lasting gift.</p>
 
-<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Sustainable Agriculture & Rearing Practices</h3>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">With years of expertise in animal husbandry, we prioritize animal welfare, organic feeding practices, and regular veterinary checkups. Buy directly from our pastures to enjoy unmatched excellence, transparent pricing, and reliable delivery across Tamil Nadu. Experience the difference of true source-to-table superiority today. Our flocks are allowed to roam freely on extensive green lands, consuming a natural diet that significantly enhances their health and vitality. We never use artificial growth promoters or harmful chemicals. Instead, we rely on the bountiful resources of nature to cultivate strong, resilient livestock. Our commitment to sustainability means that we employ rotational grazing techniques, which not only nourish our animals but also revitalize the soil, contributing to a healthier environment for future generations.</p>
+<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Passion for Yarn & Sustainable Craftsmanship</h3>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">Our studio uses only premium, hypoallergenic milk cotton yarn that is soft, vibrant, and safe for infants. By sourcing high-quality materials and utilizing intricate knitting methods, we ensure each item lasts a lifetime. Handcrafted items reduce machine production footprints, making our products highly sustainable and eco-friendly.</p>
 
-<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Hygienic Processing & Superior Standard</h3>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">When it comes to our premium protein offerings, hygiene is our utmost priority. Our processing facilities adhere strictly to modern cleanliness protocols, ensuring every batch of meat is safely handled, carefully inspected, and cleanly packaged. We avoid any artificial preservatives or hormones. This rigorous dedication guarantees that our clients always receive the freshest, most tender cuts available on the market, perfect for home cooking, large family gatherings, or catering services. Every step of our supply chain is meticulously monitored, from the pastures to your doorstep, maintaining an unbroken cold chain that preserves the natural flavor, texture, and nutritional value of the meat.</p>
-
-<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Committed to Community & Tradition</h3>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">We believe in upholding the agricultural traditions of Tamil Nadu while employing modern techniques to improve yield and animal health. Our estate works closely with local communities, providing employment and supporting sustainable local ecosystems. Every purchase directly supports these rural economies and helps preserve traditional rearing methods that have been passed down for generations. By choosing our services, you are investing in a system that values human connection, respects the environment, and honors the timeless practices of ethical animal stewardship.</p>
-
-<h4 class="text-lg font-bold text-brand-black pt-4 mb-2">A Sustainable Future for All</h4>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">Our vision is to continue expanding our green pastures while reducing our carbon footprint. We are constantly researching innovative methods to integrate renewable energy into our daily operations, minimizing waste, and maximizing resource efficiency. Our dedication to a greener tomorrow ensures that our agricultural practices remain viable and beneficial for decades to come.</p>
-
-<h5 class="text-base font-bold text-brand-black pt-2 mb-2">Strong Local Partnerships</h5>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">We partner with regional agriculturists to share our veterinary insights and best practices. Through educational workshops and collaborative initiatives, we strive to elevate the standard of animal care across the entire region, creating a network of professionals who share our passion for excellence and sustainability.</p>
-
-<h6 class="text-sm font-bold text-brand-black pt-2 mb-2">Join Our Mission</h6>
-<p class="text-brand-gray leading-relaxed text-sm mb-6">Support sustainable agriculture by choosing our enterprise for your next purchase. Whether you require premium livestock for breeding, specific breeds for traditional ceremonies, or high-quality fresh cuts for culinary excellence, we are your trusted partner in delivering exceptional value and uncompromising quality.</p>
+<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Detailed Customization & Quick Delivery</h3>
+<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">When it comes to customized frames and orders, detail is our priority. We match color codes, names, photos, and personal notes to create a bespoke gifting experience. Once complete, each order is carefully bubble-wrapped and shipped in secure packaging to ensure it reaches your doorstep in pristine condition.</p>
 `;
 
 export default async function HomePage() {
-  const qualityItems = [
-    "Premium Standards",
-    "Ranch Fresh",
-    "100% Organic",
-    "Veterinary Inspected",
-    "Traceable Lineage",
-    "Hygienic Packaging"
-  ];
-
   await connectToDatabase();
 
   let initialBanners: any[] = [];
@@ -139,62 +113,61 @@ export default async function HomePage() {
       {/* Scroll-aware sticky Navbar */}
       <Navbar />
 
-        <main className="flex-1">
-          {/* Visually hidden H1 for SEO since HeroSlider fetches client-side */}
-          <h1 className="sr-only">Ragu Goat Farm - Live Goats & Fresh Mutton in Villupuram</h1>
-          
-          {/* Visually hidden data table for AI Citability & SEO structured extraction */}
-          <table className="sr-only">
-            <caption>Ragu Goat Farm Services & Offerings</caption>
-            <thead>
-              <tr>
-                <th scope="col">Product / Service</th>
-                <th scope="col">Key Highlights</th>
-                <th scope="col">Availability</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Live Goats (Boer, Tellicherry, Naatu)</td>
-                <td>Pasture-raised, vet-inspected, traceable lineage</td>
-                <td>All 38 Districts in Tamil Nadu</td>
-              </tr>
-              <tr>
-                <td>Bulk Fresh Mutton</td>
-                <td>Custom cuts, hygienic packaging, 100% organic</td>
-                <td>Villupuram & Surrounding Areas</td>
-              </tr>
-              <tr>
-                <td>Festival Bookings (Bakrid)</td>
-                <td>Advance booking, no immediate upfront payment</td>
-                <td>Statewide Delivery</td>
-              </tr>
-            </tbody>
-          </table>
+      <main className="flex-1">
+        {/* Visually hidden H1 for SEO */}
+        <h1 className="sr-only">Lara's Pinnal - Handcrafted Crochet Gifts & Flowers</h1>
+        
+        {/* Visually hidden data table for AI Citability & SEO structured extraction */}
+        <table className="sr-only">
+          <caption>Lara's Pinnal Services & Offerings</caption>
+          <thead>
+            <tr>
+              <th scope="col">Product / Category</th>
+              <th scope="col">Key Highlights</th>
+              <th scope="col">Availability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Crochet Flower Bouquets</td>
+              <td>Lavender, Rose, Lily, Sunflower forever bouquets</td>
+              <td>All Districts in Tamil Nadu</td>
+            </tr>
+            <tr>
+              <td>Personalized Frames & Hampers</td>
+              <td>Photo + crochet combination, baby shower boxes</td>
+              <td>Pan-India Shipping Available</td>
+            </tr>
+            <tr>
+              <td>Cute Keychains & Accessories</td>
+              <td>Avocados, bees, totes, clips under ₹999</td>
+              <td>Ready to Ship in 2-4 days</td>
+            </tr>
+          </tbody>
+        </table>
 
-          {/* Hero Banner Slider */}
-          <HeroSlider initialBanners={initialBanners} />
+        {/* Hero Banner Slider */}
+        <HeroSlider initialBanners={initialBanners} />
 
-          {/* Desktop-only Marquee 1 */}
-          <div className="hidden lg:block">
-            <TextMarquee
-              items={["Wholesale Available", "Farm Direct Pricing", "Cash On Delivery", "Custom Cuts", "Lowest Price Guaranteed"]}
-              bgColor="bg-brand-light-gray"
-              textColor="text-brand-black"
-              dividerColor="text-brand-black/20"
-            />
-          </div>
+        {/* Desktop-only Marquee */}
+        <div className="hidden lg:block">
+          <TextMarquee
+            items={["100% Handcrafted", "Custom Colors Available", "Safe Baby Toys", "Premium Milk Cotton Yarn", "Secure Shipping"]}
+            bgColor="bg-brand-light-gray"
+            textColor="text-brand-black"
+            dividerColor="text-brand-black/20"
+          />
+        </div>
 
-          {/* Shop by Category cards */}
-          <ShopByCategory settings={allSettings} />
+        {/* Shop by Category cards */}
+        <ShopByCategory settings={allSettings} />
 
-          {/* Festival Goat CTA Block */}
-          <FestivalGoatCTA />
+        {/* Popular Best Sellers Section */}
+        <BestSellers />
 
-          {/* Below-fold sections: JS bundles are deferred via ssr:false
-              inside the BelowFoldSections Client Component wrapper */}
-          <BelowFoldSections philosophyContent={philosophyContent} />
-        </main>
+        {/* Below-fold sections */}
+        <BelowFoldSections philosophyContent={philosophyContent} />
+      </main>
 
       {/* Footer block */}
       <Footer />

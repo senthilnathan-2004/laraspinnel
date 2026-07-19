@@ -68,7 +68,7 @@ const DEFAULT_PHILOSOPHY = `
 `;
 
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<"branding" | "business" | "districts" | "seo" | "animations" | "policies" | "homepage">("branding");
+  const [activeTab, setActiveTab] = useState<"branding" | "business" | "seo" | "policies" | "homepage">("branding");
   const [settings, setSettings] = useState<any>({
     farm_name: "",
     tagline: "",
@@ -79,10 +79,8 @@ export default function AdminSettingsPage() {
     contact_email: "",
     contact_address: "",
     business_hours: "",
-    mutton_districts: "",
     seo_title: "",
     seo_description: "",
-    variety_marquee_images: "[]",
     privacy_policy_content: "",
     terms_of_service_content: "",
     editorial_policy_content: "",
@@ -128,7 +126,7 @@ export default function AdminSettingsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!settings.farm_name || !settings.contact_phone || !settings.contact_whatsapp || !settings.contact_email || !settings.contact_address || !settings.business_hours || !settings.mutton_districts || !settings.seo_title || !settings.seo_description) {
+    if (!settings.farm_name || !settings.contact_phone || !settings.contact_whatsapp || !settings.contact_email || !settings.contact_address || !settings.business_hours || !settings.seo_title || !settings.seo_description) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -211,18 +209,6 @@ export default function AdminSettingsPage() {
               </button>
 
               <button
-                onClick={() => setActiveTab("districts")}
-                className={`flex items-center gap-2 px-4 md:px-6 py-4 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors ${
-                  activeTab === "districts"
-                    ? "border-goat-primary text-goat-primary"
-                    : "border-transparent text-brand-gray hover:text-brand-black"
-                }`}
-              >
-                <Map size={16} />
-                <span>Districts</span>
-              </button>
-
-              <button
                 onClick={() => setActiveTab("seo")}
                 className={`flex items-center gap-2 px-4 md:px-6 py-4 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors ${
                   activeTab === "seo"
@@ -232,18 +218,6 @@ export default function AdminSettingsPage() {
               >
                 <Globe size={16} />
                 <span>SEO Defaults</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab("animations")}
-                className={`flex items-center gap-2 px-4 md:px-6 py-4 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors ${
-                  activeTab === "animations"
-                    ? "border-goat-primary text-goat-primary"
-                    : "border-transparent text-brand-gray hover:text-brand-black"
-                }`}
-              >
-                <ImageIcon size={16} />
-                <span>Animations</span>
               </button>
 
               <button
@@ -408,35 +382,6 @@ export default function AdminSettingsPage() {
                 </div>
               )}
 
-              {/* DISTRICTS TAB */}
-              {activeTab === "districts" && (
-                <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="bg-brand-light-gray p-3 md:p-4 rounded-xl border border-brand-border text-brand-black text-sm flex gap-3 items-start">
-                    <Info size={18} className="shrink-0 text-goat-primary mt-0.5" />
-                    <div>
-                      <p className="font-semibold">Mutton Delivery Service Districts</p>
-                      <p className="text-xs text-brand-gray mt-0.5">
-                        Districts entered here will constrain the mutton order form options and detail badge indicators on the public site.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
-                      Districts Coverage (comma separated)
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={settings.mutton_districts}
-                      onChange={(e) => handleChange("mutton_districts", e.target.value)}
-                      placeholder="Coimbatore, Tiruppur, Erode, Villupuram"
-                      className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
-                    />
-                  </div>
-                </div>
-              )}
-
               {/* SEO TAB */}
               {activeTab === "seo" && (
                 <div className="space-y-6 animate-in fade-in duration-200">
@@ -468,43 +413,6 @@ export default function AdminSettingsPage() {
                         className="w-full bg-white border border-brand-border rounded-xl p-3 md:p-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary resize-none"
                       ></textarea>
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* ANIMATIONS TAB */}
-              {activeTab === "animations" && (
-                <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="bg-brand-light-gray p-3 md:p-4 rounded-xl border border-brand-border text-brand-black text-sm flex gap-3 items-start">
-                    <Info size={18} className="shrink-0 text-goat-primary mt-0.5" />
-                    <div>
-                      <p className="font-semibold">Goat Varieties Scrolling Marquee</p>
-                      <p className="text-xs text-brand-gray mt-0.5">
-                        Upload up to 10 small images of different goat varieties to be displayed in the scrolling animation on the home page.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
-                      Marquee Images
-                    </label>
-                    <ImageUploadDropzone
-                      value={
-                        settings.variety_marquee_images
-                          ? (() => {
-                              try {
-                                const parsed = JSON.parse(settings.variety_marquee_images);
-                                return Array.isArray(parsed) ? parsed : [];
-                              } catch (e) {
-                                return [];
-                              }
-                            })()
-                          : []
-                      }
-                      onChange={(urls) => handleChange("variety_marquee_images", JSON.stringify(urls))}
-                      maxFiles={10}
-                    />
                   </div>
                 </div>
               )}

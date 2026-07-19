@@ -4,29 +4,25 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
-import { Phone, Mail, MapPin, Clock, Lock, ShieldCheck, Leaf, HeartHandshake } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Lock, ShieldCheck, Heart, Sparkles } from "lucide-react";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaYoutube, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   const { settings } = useSettings();
 
-  const farmName = settings.farm_name || "Ragu Goat Farm";
-  const tagline = settings.tagline || "Fresh, healthy, farm-raised live goats & bulk mutton";
+  const farmName = settings.farm_name || "Lara's Pinnal";
+  const tagline = settings.tagline || "Handcrafted crochet bouquets, customized frames, hampers, and accessories crafted with love.";
   const phone = settings.contact_phone || "+91 9442379832";
   const whatsapp = settings.contact_whatsapp || "+91 9442379832";
   const email = settings.contact_email || "senthilraguanthan2004@gmail.com";
-  const address = settings.contact_address || "2/90 MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
-  const businessHours = settings.business_hours || "Monday - Sunday: 6:00 AM - 8:00 PM";
-
-  const districts = settings.mutton_districts
-    ? settings.mutton_districts.split(",")
-    : ["Coimbatore", "Tiruppur", "Erode", "Villupuram"];
+  const address = settings.contact_address || "50, Mettu Street, Therkunam, Villupuram, Tamil Nadu - 604102";
+  const businessHours = settings.business_hours || "Monday - Sunday: 9:00 AM - 9:00 PM";
 
   const whatsappFormatted = whatsapp.replace(/[^\d+]/g, "");
   const whatsappUrl = `https://wa.me/${whatsappFormatted}`;
 
   return (
-    <footer className="bg-brand-black text-neutral-300 pt-16 pb-8 border-t border-neutral-800 mt-auto">
+    <footer className="bg-[#111111] text-neutral-300 pt-16 pb-8 border-t border-neutral-800 mt-auto">
       <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Column 1: Brand */}
         <div className="space-y-4">
@@ -37,7 +33,7 @@ export default function Footer() {
                 alt={farmName}
                 width={200}
                 height={40}
-                className="h-10 w-auto object-contain rounded-md"
+                className="h-8 w-auto object-contain rounded-md"
               />
             )}
             <span className="font-display text-white text-2xl tracking-wider uppercase">
@@ -119,23 +115,13 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/goats" className="hover:text-white transition-colors">
-                Live Goats
+              <Link href="/shop" className="hover:text-white transition-colors">
+                Shop Catalog
               </Link>
             </li>
             <li>
-              <Link href="/mutton" className="hover:text-white transition-colors">
-                Bulk Mutton
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:text-white transition-colors">
-                Blog Articles
-              </Link>
-            </li>
-            <li>
-              <Link href="/gallery" className="hover:text-white transition-colors">
-                Farm Gallery
+              <Link href="/categories" className="hover:text-white transition-colors">
+                Categories
               </Link>
             </li>
             <li>
@@ -144,41 +130,50 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/faq" className="hover:text-white transition-colors">
-                FAQ
+              <Link href="/contact" className="hover:text-white transition-colors">
+                Contact Us
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:text-white transition-colors">
-                Contact Us
+              <Link href="/cart" className="hover:text-white transition-colors">
+                Shopping Cart
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Column 3: Service Areas */}
+        {/* Column 3: Featured Categories */}
         <div className="space-y-4">
           <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
-            Service Areas
+            Popular Categories
           </h3>
-          <div className="space-y-3 text-sm">
-            <div>
-              <span className="font-semibold block text-xs uppercase tracking-wider text-goat-primary">
-                Live Goats
-              </span>
-              <span className="text-xs text-neutral-400 mt-0.5 block">
-                Delivered across all districts of Tamil Nadu
-              </span>
-            </div>
-            <div>
-              <span className="font-semibold block text-xs uppercase tracking-wider text-mutton-primary">
-                Bulk Mutton
-              </span>
-              <span className="text-xs text-neutral-400 mt-0.5 block">
-                Available in: {districts.join(", ")}
-              </span>
-            </div>
-          </div>
+          <ul className="space-y-2 text-sm text-neutral-400">
+            <li>
+              <Link href="/shop?category=bouquets" className="hover:text-white transition-colors">
+                Crochet Bouquets
+              </Link>
+            </li>
+            <li>
+              <Link href="/shop?category=customized-frames" className="hover:text-white transition-colors">
+                Customized Frames
+              </Link>
+            </li>
+            <li>
+              <Link href="/shop?category=birthday-gifts" className="hover:text-white transition-colors">
+                Birthday Gifts
+              </Link>
+            </li>
+            <li>
+              <Link href="/shop?category=hampers" className="hover:text-white transition-colors">
+                Gift Hampers
+              </Link>
+            </li>
+            <li>
+              <Link href="/shop?category=keychains" className="hover:text-white transition-colors">
+                Cute Keychains
+              </Link>
+            </li>
+          </ul>
         </div>
 
         {/* Column 4: Contact Info */}
@@ -224,7 +219,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Trust Badges (E-E-A-T Trust Signals) */}
+      {/* Trust Badges */}
       <div className="max-w-7xl mx-auto md:px-6 mt-12">
         <div className="pt-8 border-t border-neutral-800 overflow-hidden relative">
           <style>{`
@@ -245,80 +240,74 @@ export default function Footer() {
             }
           `}</style>
           
-          {/* Mobile View: Scrolling Marquee (Edge to Edge) */}
+          {/* Mobile View */}
           <div className="block md:hidden mobile-mask">
             <div className="mobile-marquee">
               <div className="flex gap-8 pr-8 shrink-0">
-                {/* Original Items */}
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                   <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Handcrafted</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Leaf size={18} className="text-[#25D366] shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
+                  <Sparkles size={18} className="text-amber-400 shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Customized Designs</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+                  <Heart size={18} className="text-red-400 shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Crafted with Love</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                   <Lock size={18} className="text-blue-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Checkout</span>
                 </div>
               </div>
               <div className="flex gap-8 pr-8 shrink-0">
-                {/* Duplicated for seamless infinite loop */}
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                   <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">FSSAI Registered</span>
+                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Handcrafted</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Leaf size={18} className="text-[#25D366] shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Organic Pasture</span>
+                  <Sparkles size={18} className="text-amber-400 shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Customized Designs</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+                  <Heart size={18} className="text-red-400 shrink-0" />
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Crafted with Love</span>
                 </div>
                 <div className="flex items-center gap-2 text-neutral-300 shrink-0">
                   <Lock size={18} className="text-blue-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Booking</span>
+                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Checkout</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Desktop & Tablet View: Static Flex */}
+          {/* Desktop & Tablet View */}
           <div className="hidden md:flex flex-wrap justify-center gap-8 lg:gap-12 px-4 md:px-0">
             <div className="flex items-center gap-2 text-neutral-300">
               <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">FSSAI Registered</span>
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">100% Handcrafted</span>
             </div>
             <div className="flex items-center gap-2 text-neutral-300">
-              <Leaf size={18} className="text-[#25D366] shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">100% Organic Pasture</span>
+              <Sparkles size={18} className="text-amber-400 shrink-0" />
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Customized Designs</span>
             </div>
             <div className="flex items-center gap-2 text-neutral-300">
-              <HeartHandshake size={18} className="text-mutton-primary shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Veterinarian Inspected</span>
+              <Heart size={18} className="text-red-400 shrink-0" />
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Crafted with Love</span>
             </div>
             <div className="flex items-center gap-2 text-neutral-300">
               <Lock size={18} className="text-blue-400 shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Secure Booking</span>
+              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Secure Checkout</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Disclaimer (YMYL — livestock / food quality) */}
+      {/* Disclaimer */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 mt-8">
         <p className="text-[11px] leading-relaxed text-neutral-400 text-justify">
-          <strong className="text-neutral-400 uppercase">Health & Medical Disclaimer:</strong> All livestock and mutton are sold subject to
-          availability and on-site inspection. Prices, weights, and delivery timelines are indicative and confirmed
-          at the time of booking. {farmName} strictly follows local animal-welfare and food-hygiene practices. Customers are
-          advised to verify product suitability for their specific dietary, religious, or agricultural needs before
-          purchase. Proper cooking temperatures must be followed; consumption of raw or undercooked meats may increase the risk of foodborne illness.
+          <strong className="text-neutral-400 uppercase">Product Disclaimer:</strong> Since all our products are 100% handcrafted and custom-made, slight variations in yarn shade, shape, and sizing may occur. These are not flaws but signs of authentic handmade art. Product delivery time depends on order complexity and custom details requested. Lara's Pinnal reserves the right to manage stocks and active categories dynamically.
         </p>
       </div>
 
@@ -328,25 +317,20 @@ export default function Footer() {
           <p className="text-neutral-400" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} {farmName}. All Rights Reserved. <br className="sm:hidden" />
             <span className="hidden sm:inline"> | </span> 
-            Content Last Updated: <time dateTime="2026-07-16" className="font-medium text-neutral-400">Jul 2026</time>
+            Content Last Updated: <time dateTime="2026-07-19" className="font-medium text-neutral-400">Jul 2026</time>
           </p>
           <div className="flex items-center gap-3 text-neutral-400">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <span>|</span>
             <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
             <span>|</span>
-            <Link href="/editorial-policy" className="hover:text-white transition-colors">Editorial Policy</Link>
+            <Link href="/shipping-policy" className="hover:text-white transition-colors">Shipping Policy</Link>
+            <span>|</span>
+            <Link href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-          <a
-            href="https://www.fiverr.com/senthilragu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-neutral-200 transition-colors"
-          >
-            Developed by <span className="font-medium">Senthil</span>
-          </a>
+          <span className="text-neutral-500">Made by hand, with passion.</span>
         </div>
       </div>
     </footer>

@@ -1,47 +1,53 @@
 "use client";
 
 import React from "react";
-import { MagnifyingGlass, ClipboardText, Phone, Truck } from "@phosphor-icons/react";
+import { Heart, ShieldCheck, Sparkles, Truck, Tag } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
       number: "1",
-      title: "Step 1: Browse Varieties",
-      description: "Explore premium goats or bulk mutton packs.",
-      icon: <MagnifyingGlass size={30} weight="duotone" className="text-goat-primary" />,
+      title: "Handmade with Love",
+      description: "100% hand-knitted creations with meticulous care and passion.",
+      icon: <Heart size={30} className="text-goat-primary" />,
     },
     {
       number: "2",
-      title: "Step 2: Select & Book",
-      description: "Fill a quick, easy booking form in minutes.",
-      icon: <ClipboardText size={30} weight="duotone" className="text-goat-primary" />,
+      title: "Premium Quality",
+      description: "Made with premium, hypoallergenic milk cotton yarn.",
+      icon: <ShieldCheck size={30} className="text-goat-primary" />,
     },
     {
       number: "3",
-      title: "Step 3: We Call to Confirm",
-      description: "Our farm team calls you to verify your order.",
-      icon: <Phone size={30} weight="duotone" className="text-goat-primary" />,
+      title: "Customized Gifts",
+      description: "We customize colors, names, and patterns for you.",
+      icon: <Sparkles size={30} className="text-goat-primary" />,
     },
     {
       number: "4",
-      title: "Step 4: Delivered Fresh",
-      description: "Receive your order fresh, right on schedule.",
-      icon: <Truck size={30} weight="duotone" className="text-goat-primary" />,
+      title: "Fast Delivery",
+      description: "Reliable and safe delivery across Tamil Nadu.",
+      icon: <Truck size={30} className="text-goat-primary" />,
+    },
+    {
+      number: "5",
+      title: "Affordable Pricing",
+      description: "Transparent prices direct from our local crochet artist.",
+      icon: <Tag size={30} className="text-goat-primary" />,
     },
   ];
 
   return (
-    <section className="py-20 bg-brand-light-gray">
+    <section className="py-20 bg-brand-light-gray border-t border-brand-border">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
           <div>
             <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
-              How Booking Works
+              Why Choose Us
             </h2>
             <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
-              Order premium livestock or farm fresh meat in four simple steps.
+              Every detail of our handcrafted gifts is designed to bring joy and lasting memories.
             </p>
           </div>
         </div>
@@ -52,7 +58,7 @@ export default function HowItWorks() {
             100% { transform: translateX(-50%); }
           }
           .animate-marquee-steps {
-            animation: marquee-steps 20s linear infinite;
+            animation: marquee-steps 25s linear infinite;
           }
           @keyframes dotMove {
             0% { left: 0%; opacity: 0; }
@@ -66,25 +72,25 @@ export default function HowItWorks() {
             5% { transform: scale(1.15); border-color: rgba(22, 163, 74, 1); box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4); }
           }
           .animate-dot-move {
-            animation: dotMove 12s linear infinite;
+            animation: dotMove 15s linear infinite;
           }
           .animate-icon-zoom {
-            animation: iconZoom 12s infinite;
+            animation: iconZoom 15s infinite;
           }
           
-          /* Mobile specific animations (synced with 20s marquee) */
+          /* Mobile specific animations */
           .animate-dot-move-mobile {
-            animation: dotMove 20s linear infinite;
+            animation: dotMove 25s linear infinite;
           }
           .animate-icon-zoom-mobile {
-            animation: iconZoom 20s infinite;
+            animation: iconZoom 25s infinite;
           }
         `}</style>
 
-        {/* Desktop & Tab View */}
-        <div className="hidden md:grid grid-cols-4 gap-10 relative pt-10">
+        {/* Desktop View */}
+        <div className="hidden md:grid grid-cols-5 gap-6 relative pt-10">
           {/* Connector Line with Moving Dot */}
-          <div className="absolute top-[72px] left-[12.5%] right-[12.5%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
+          <div className="absolute top-[72px] left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
             <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move shadow-[0_0_8px_rgba(22,163,74,0.8)]"></div>
           </div>
 
@@ -103,10 +109,10 @@ export default function HowItWorks() {
                 </span>
               </div>
               <div className="space-y-1 max-w-xs">
-                <h3 className="font-semibold text-brand-black text-base">
+                <h3 className="font-display font-extrabold text-brand-black text-sm sm:text-base">
                   {step.title}
                 </h3>
-                <p className="text-xs text-brand-gray leading-relaxed">
+                <p className="text-xs text-brand-gray font-medium leading-relaxed">
                   {step.description}
                 </p>
               </div>
@@ -127,7 +133,7 @@ export default function HowItWorks() {
                 {steps.map((step, idx) => (
                   <div
                     key={`${setIndex}-${idx}`}
-                    className="flex flex-col items-center text-center space-y-4 relative z-10 group shrink-0 w-[220px]"
+                    className="flex flex-col items-center text-center space-y-4 relative z-10 group shrink-0 w-[180px]"
                   >
                     <div
                       className="w-16 h-16 rounded-full bg-goat-tint border border-goat-primary/10 flex items-center justify-center relative shadow-sm transition-transform duration-200 animate-icon-zoom-mobile"
@@ -139,10 +145,10 @@ export default function HowItWorks() {
                       </span>
                     </div>
                     <div className="space-y-1 max-w-xs whitespace-normal">
-                      <h3 className="font-semibold text-brand-black text-base">
+                      <h3 className="font-display font-extrabold text-brand-black text-sm sm:text-base">
                         {step.title}
                       </h3>
-                      <p className="text-xs text-brand-gray leading-relaxed">
+                      <p className="text-xs text-brand-gray font-medium leading-relaxed">
                         {step.description}
                       </p>
                     </div>

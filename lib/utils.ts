@@ -23,7 +23,7 @@ export function generateRefId(): string {
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
   const rand = Math.floor(1000 + Math.random() * 9000); // 4 digit random number
-  return `RGF-${year}${month}${day}-${rand}`;
+  return `LPO-${year}${month}${day}-${rand}`;
 }
 
 export function formatDate(date: Date | string): string {

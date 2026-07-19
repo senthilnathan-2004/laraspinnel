@@ -1,0 +1,275 @@
+"use client";
+
+import React, { useState } from "react";
+import useSWR from "swr";
+import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import PremiumCard from "@/components/home/PremiumCard";
+import { useCart } from "@/hooks/useCart";
+import { ShoppingCart, ShoppingBag, Plus, Minus, ArrowLeft, Heart, Sparkles, ShieldCheck } from "lucide-react";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function ProductDetailPage() {
+  const params = useParams();
+  const router = useRouter();
+  const slug = params.slug as string;
+  const { addItem } = useCart();
+
+  const [quantity, setQuantity] = useState(1);
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const { data, isLoading, error } = useSWR(
+    slug ? `/api/products/${slug}` : null,
+    fetcher
+  );
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col justify-between">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center py-20">
+          <div className="w-10 h-10 border-4 border-goat-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !data || !data.product) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col justify-between">
+        <Navbar />
+        <div className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-20 text-center space-y-4">
+          <h2 className="text-xl font-bold text-red-600">Product Not Found</h2>
+          <p className="text-sm text-brand-gray">The product you are looking for does not exist or has been disabled.</p>
+          <Link href="/shop" className="inline-flex items-center gap-2 text-sm font-semibold text-goat-primary hover:underline">
+            <ArrowLeft size={16} /> Back to Shop
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const { product, relatedProducts = [] } = data;
+  const inStock = product.stock > 0;
+  const currentPrice = product.discountPrice || product.price;
+
+  const handleAddToCart = () => {
+    addItem({
+      productId: product._id,
+      name: product.name,
+      price: currentPrice,
+      image: product.images[0] || "",
+    }, quantity);
+
+    setSuccessMsg("Added to cart successfully!");
+    setTimeout(() => setSuccessMsg(""), 3000);
+  };
+
+  const handleBuyNow = () => {
+    addItem({
+      productId: product._id,
+      name: product.name,
+      price: currentPrice,
+      image: product.images[0] || "",
+    }, quantity);
+    router.push("/cart");
+  };
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col justify-between">
+      <Navbar />
+
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 w-full space-y-16 animate-in fade-in">
+        {/* Back Link */}
+        <div>
+          <Link href="/shop" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-black hover:text-goat-primary transition-colors">
+            <ArrowLeft size={16} /> Back to Catalog
+          </Link>
+        </div>
+
+        {/* Product Details Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* Gallery Column (5 cols) */}
+          <div className="lg:col-span-6 space-y-4">
+            {/* Active Image Frame */}
+            <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-brand-light-gray/40 border border-brand-border group">
+              <Image
+                src={product.images[activeImageIdx] || "/placeholder.jpg"}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 600px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority
+              />
+              {product.discountPrice && (
+                <span className="absolute top-4 left-4 px-3 py-1 bg-goat-primary text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-md">
+                  Offer
+                </span>
+              )}
+            </div>
+
+            {/* Thumbnails Row */}
+            {product.images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-1">
+                {product.images.map((img: string, idx: number) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImageIdx(idx)}
+                    className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
+                      activeImageIdx === idx ? "border-goat-primary scale-95 shadow-sm" : "border-brand-border hover:border-brand-gray"
+                    }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`${product.name} thumbnail ${idx + 1}`}
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Details Info Column (6 cols) */}
+          <div className="lg:col-span-6 space-y-6">
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-goat-tint border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-wider rounded-lg">
+                <Sparkles size={10} /> Handmade Collection
+              </span>
+              <h1 className="font-display text-2xl md:text-4xl text-brand-black uppercase leading-tight">
+                {product.name}
+              </h1>
+              <div className="flex items-center gap-2 text-xs font-semibold text-brand-gray">
+                <span>Category:</span>
+                <Link href={`/shop?category=${product.category.slug}`} className="text-goat-primary hover:underline uppercase">
+                  {product.category.name}
+                </Link>
+              </div>
+            </div>
+
+            {/* Price section */}
+            <div className="flex items-baseline gap-3 border-y border-brand-border py-4">
+              <span className="text-3xl font-extrabold text-brand-black">
+                ₹{currentPrice}
+              </span>
+              {product.discountPrice && (
+                <>
+                  <span className="text-lg text-brand-gray line-through">
+                    ₹{product.price}
+                  </span>
+                  <span className="text-sm font-bold text-red-600">
+                    ({Math.round(((product.price - product.discountPrice) / product.price) * 100)}% OFF)
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* Stock status & Description */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm font-semibold">
+                <span className="text-brand-gray">Availability:</span>
+                {inStock ? (
+                  <span className="text-goat-primary flex items-center gap-1">
+                    <ShieldCheck size={16} /> In Stock ({product.stock} left)
+                  </span>
+                ) : (
+                  <span className="text-red-600 font-bold">Out of Stock</span>
+                )}
+              </div>
+              
+              <div className="text-sm leading-relaxed text-brand-gray whitespace-pre-line text-justify">
+                {product.description}
+              </div>
+            </div>
+
+            {/* Cart Operations */}
+            {inStock && (
+              <div className="space-y-4 pt-4 border-t border-brand-border">
+                {/* Quantity picker */}
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-semibold text-brand-gray">Quantity:</span>
+                  <div className="flex items-center border border-brand-border rounded-xl bg-brand-light-gray/30 h-10 overflow-hidden">
+                    <button
+                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                      className="px-3 h-full hover:bg-brand-light-gray transition-colors text-brand-black"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="w-10 text-center text-sm font-bold text-brand-black">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
+                      className="px-3 h-full hover:bg-brand-light-gray transition-colors text-brand-black"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Checkout buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <button
+                    onClick={handleAddToCart}
+                    className="flex-1 bg-white hover:bg-brand-light-gray text-brand-black border border-brand-border font-bold py-3 px-6 rounded-full transition-all flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <ShoppingCart size={18} /> Add to Cart
+                  </button>
+                  <button
+                    onClick={handleBuyNow}
+                    className="flex-1 bg-brand-black hover:bg-goat-primary text-white font-bold py-3 px-6 rounded-full transition-all flex items-center justify-center gap-2 shadow-md"
+                  >
+                    <ShoppingBag size={18} /> Buy Now
+                  </button>
+                </div>
+
+                {/* Success alert message */}
+                {successMsg && (
+                  <p className="text-sm text-goat-primary font-semibold text-center mt-2 animate-pulse">
+                    {successMsg}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Related Products Grid */}
+        {relatedProducts.length > 0 && (
+          <div className="space-y-6 pt-10 border-t border-brand-border">
+            <h2 className="font-display text-2xl md:text-3xl text-brand-black uppercase tracking-wide">
+              Related Products
+            </h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+              {relatedProducts.map((p: any) => (
+                <div key={p._id}>
+                  <PremiumCard
+                    name={p.name}
+                    price={p.discountPrice ? `₹${p.discountPrice}` : `₹${p.price}`}
+                    tag={p.discountPrice ? `SAVE ₹${p.price - p.discountPrice}` : undefined}
+                    image={p.images?.[0]}
+                    slug={p.slug}
+                    theme="goat"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

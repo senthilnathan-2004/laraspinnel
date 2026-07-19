@@ -4,8 +4,8 @@ import "../globals.css";
 // Static metadata — no per-navigation DB call. Admin pages must never be
 // indexed (they sit behind auth), so robots is noindex/nofollow.
 export const metadata: Metadata = {
-  title: "Admin | Ragu Goat Farm",
-  description: "Ragu Goat Farm admin dashboard.",
+  title: "Admin | Lara's Pinnal",
+  description: "Lara's Pinnal admin dashboard.",
   robots: { index: false, follow: false },
 };
 
