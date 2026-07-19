@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import PremiumCard from "./PremiumCard";
 import SkeletonCard from "../shared/SkeletonCard";
+import { sortInStockFirst } from "@/lib/utils";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -16,23 +17,19 @@ interface Product {
   discountPrice?: number;
   images: string[];
   slug: string;
+  stock?: number;
 }
 
 export default function FeaturedProducts() {
-  const { data: products = [], isLoading, error } = useSWR<Product[]>(
+  const { data: rawProducts = [], isLoading, error } = useSWR<Product[]>(
     "/api/products?featured=true",
     fetcher
   );
+  // Out-of-stock items fall to the end; they return to their normal spot once restocked.
+  const products = sortInStockFirst(rawProducts);
 
   return (
-    <section className="relative overflow-hidden py-20 bg-brand-light-gray/40 border-t border-brand-border">
-      {/* Background Grid Pattern */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.06] z-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40V0h40' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")`,
-        }}
-      ></div>
+    <section className="relative overflow-hidden py-20 bg-brand-light-gray/40">
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
@@ -61,7 +58,7 @@ export default function FeaturedProducts() {
 
         {/* List Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             <div className="block"><SkeletonCard /></div>
             <div className="block"><SkeletonCard /></div>
             <div className="block"><SkeletonCard /></div>
@@ -76,7 +73,7 @@ export default function FeaturedProducts() {
             <p className="text-sm font-semibold">No featured products set up.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {products.slice(0, 8).map((product, idx) => (
               <div 
                 key={product._id}
@@ -90,6 +87,7 @@ export default function FeaturedProducts() {
                   image={product.images?.[0]}
                   slug={product.slug}
                   theme="goat"
+                  stock={product.stock}
                 />
               </div>
             ))}

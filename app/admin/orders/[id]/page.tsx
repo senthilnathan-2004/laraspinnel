@@ -15,6 +15,7 @@ interface OrderItem {
   price: number;
   quantity: number;
   image: string;
+  customText?: string;
 }
 
 interface Order {
@@ -172,7 +173,12 @@ export default function OrderDetailPage() {
                             </div>
                           </td>
                           <td className="px-4 py-4 font-semibold text-brand-black">
-                            {item.name}
+                            <div>{item.name}</div>
+                            {item.customText && (
+                              <p className="mt-1 text-xs font-medium text-goat-text bg-goat-tint border border-goat-primary/20 rounded-lg px-2 py-1 inline-block max-w-xs italic">
+                                Customization: {item.customText}
+                              </p>
+                            )}
                           </td>
                           <td className="px-4 py-4 text-center text-brand-black font-semibold">
                             ₹{item.price}

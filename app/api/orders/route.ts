@@ -63,6 +63,7 @@ export async function POST(req: NextRequest) {
         price: price,
         quantity: item.quantity,
         image: product.images[0] || "",
+        customText: item.customText?.trim() || undefined,
       });
     }
 

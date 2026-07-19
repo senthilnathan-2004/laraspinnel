@@ -14,6 +14,7 @@ interface PremiumCardProps {
   image?: string;
   slug: string;
   theme?: "goat" | "mutton";
+  stock?: number;
 }
 
 export default function PremiumCard({
@@ -24,14 +25,18 @@ export default function PremiumCard({
   image,
   slug,
   theme = "goat",
+  stock,
 }: PremiumCardProps) {
   const url = `/shop/${slug}`;
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const outOfStock = typeof stock === "number" && stock <= 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (outOfStock) return;
 
     // Extract numeric price from format (e.g. "₹249" -> 249)
     const numericPrice = parseFloat(price.replace(/[^\d.]/g, "")) || 0;
@@ -51,7 +56,9 @@ export default function PremiumCard({
     <Link
       href={url}
       prefetch={true}
-      className="group relative flex flex-col w-full overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] bg-white border border-brand-border/60 shadow-xs hover:shadow-md transition-all duration-300 h-full"
+      className={`group relative flex flex-col w-full overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] bg-white border border-brand-border/60 shadow-xs transition-all duration-300 h-full ${
+        outOfStock ? "opacity-60 hover:shadow-xs" : "hover:shadow-md"
+      }`}
     >
       {/* Top Image Section */}
       <div className="relative aspect-square w-full bg-brand-light-gray overflow-hidden">
@@ -62,7 +69,9 @@ export default function PremiumCard({
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             quality={75}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`object-cover transition-transform duration-500 ${
+              outOfStock ? "grayscale" : "group-hover:scale-105"
+            }`}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center opacity-10">
@@ -71,10 +80,19 @@ export default function PremiumCard({
         )}
 
         {/* Top Sale/Save Tag */}
-        {tag && (
+        {tag && !outOfStock && (
           <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
             <div className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-rose-primary text-white text-[8px] sm:text-[9px] font-bold uppercase tracking-wider shadow-sm">
               <span>{tag}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Out of Stock overlay badge */}
+        {outOfStock && (
+          <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
+            <div className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-brand-black/80 text-white text-[8px] sm:text-[9px] font-bold uppercase tracking-wider shadow-sm">
+              <span>Out of Stock</span>
             </div>
           </div>
         )}
@@ -102,13 +120,18 @@ export default function PremiumCard({
 
           <button
             onClick={handleAddToCart}
-            className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs cursor-pointer border ${
-              added
-                ? "bg-emerald-50 text-emerald-600 border-emerald-200"
-                : "bg-goat-primary text-white border-transparent hover:bg-goat-hover"
+            disabled={outOfStock}
+            className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs border ${
+              outOfStock
+                ? "bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
+                : added
+                ? "bg-emerald-50 text-emerald-600 border-emerald-200 cursor-pointer"
+                : "bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
             }`}
           >
-            {added ? (
+            {outOfStock ? (
+              <span>Sold Out</span>
+            ) : added ? (
               <>
                 <span className="text-[10px] sm:text-xs font-bold">✓</span>
                 <span>Added</span>

@@ -124,10 +124,33 @@ export default function Navbar() {
           </div>
 
           {/* Mobile controls (Mobile & Tablet) */}
-          <div className="flex xl:hidden items-center gap-3">
+          <div className="flex xl:hidden items-center gap-1 md:gap-2">
+            {/* Tablet-only icon nav */}
+            <div className="hidden md:flex xl:hidden items-center gap-1 pr-2 mr-1 border-r border-brand-border">
+              {bottomLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    title={link.name}
+                    aria-label={link.name}
+                    className={`p-2 rounded-full transition-colors ${
+                      isActive
+                        ? "text-goat-primary bg-goat-tint"
+                        : "text-brand-black hover:bg-brand-light-gray hover:text-goat-primary"
+                    }`}
+                  >
+                    <link.icon size={18} strokeWidth={isActive ? 2.2 : 1.8} />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Phone — mobile only */}
             <a
               href={`tel:${phone}`}
-              className="p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
+              className="md:hidden p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
               aria-label="Call Us"
             >
               <Phone size={18} />
@@ -153,8 +176,8 @@ export default function Navbar() {
       {/* Spacer to push page content down */}
       <div className="h-14 md:h-16"></div>
 
-      {/* Fixed Bottom Navigation Bar (Mobile & Tablet) */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#111111] text-neutral-400 border-t border-neutral-800 xl:hidden h-16 shadow-[0_-2px_10px_rgba(0,0,0,0.15)]">
+      {/* Fixed Bottom Navigation Bar (Mobile only) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#111111] text-neutral-400 border-t border-neutral-800 md:hidden h-16 shadow-[0_-2px_10px_rgba(0,0,0,0.15)]">
         <div className="flex items-center justify-around h-full px-2 max-w-md mx-auto">
           {bottomLinks.map((link) => {
             const isActive = pathname === link.href;

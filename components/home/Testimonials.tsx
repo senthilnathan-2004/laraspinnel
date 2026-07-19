@@ -17,7 +17,7 @@ const ReviewCard = ({ rev, className = "" }: { rev: any; className?: string }) =
     <div className="space-y-4">
       <div className="flex gap-0.5">
         {[...Array(5)].map((_, i) => (
-          <Star key={i} weight={i < (rev.rating || 5) ? "fill" : "regular"} size={16} className={i < (rev.rating || 5) ? "text-[#F59E0B]" : "text-brand-gray/30"} />
+          <Star key={i} weight={i < (rev.rating || 5) ? "fill" : "regular"} size={16} className={i < (rev.rating || 5) ? "text-gold-primary" : "text-brand-gray/30"} />
         ))}
       </div>
       <div className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-3">
@@ -102,7 +102,7 @@ const AddReviewModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                       onClick={() => setFormData({ ...formData, rating: i + 1 })}
                       className="focus:outline-none transition-transform active:scale-90"
                     >
-                      <Star weight={i < formData.rating ? "fill" : "regular"} size={32} className={i < formData.rating ? "text-[#F59E0B]" : "text-brand-gray/30"} />
+                      <Star weight={i < formData.rating ? "fill" : "regular"} size={32} className={i < formData.rating ? "text-gold-primary" : "text-brand-gray/30"} />
                     </button>
                   ))}
                 </div>
@@ -218,11 +218,11 @@ export default function Testimonials() {
   }, [nextSlide]);
 
   return (
-    <section className="py-20 bg-brand-light-gray">
+    <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Header row */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between border-b border-brand-border pb-4 gap-4 md:gap-0">
-          <div>
+        <div className="flex flex-col md:flex-row md:items-start justify-between border-b border-brand-border pb-6 gap-4 md:gap-8">
+          <div className="md:pr-6">
             <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
               {settings.home_testimonials_title || "What Our Customers Say"}
             </h2>
@@ -233,10 +233,10 @@ export default function Testimonials() {
               <ShieldCheck size={16} className="text-goat-primary" /> Verified Purchases Only
             </p>
           </div>
-          
+
           <div className="w-full md:w-auto md:min-w-[200px]">
             <div className="hidden sm:block">
-              <button onClick={() => setIsModalOpen(true)} className="px-6 py-2.5 w-full bg-white border-2 border-brand-black text-brand-black font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-brand-black hover:text-white transition-all shadow-sm active:scale-95">
+              <button onClick={() => setIsModalOpen(true)} className="px-8 py-3 w-full bg-goat-primary border-2 border-transparent text-white font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-goat-hover transition-all shadow-sm active:scale-95">
                 Add Your Review
               </button>
             </div>

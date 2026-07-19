@@ -8,9 +8,16 @@ import Footer from "@/components/layout/Footer";
 import PremiumCard from "@/components/home/PremiumCard";
 import SkeletonCard from "@/components/shared/SkeletonCard";
 import CustomSelect from "@/components/shared/CustomSelect";
-import { Search, ShoppingBag } from "lucide-react";
+import { sortInStockFirst } from "@/lib/utils";
+import { Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const SORT_OPTIONS = [
+  { label: "Latest Arrivals", value: "latest" },
+  { label: "Price (Low to High)", value: "price-asc" },
+  { label: "Price (High to Low)", value: "price-desc" },
+];
 
 function ShopPageContent() {
   const searchParams = useSearchParams();
@@ -35,16 +42,26 @@ function ShopPageContent() {
   // Fetch Categories
   const { data: categories = [] } = useSWR("/api/categories", fetcher);
 
+  // Reflect the selected category in the page header
+  const selectedCategory =
+    category !== "all" ? categories.find((c: any) => c.slug === category) : undefined;
+  const pageTitle = selectedCategory ? selectedCategory.name : "Shop Handmade Gifts";
+  const pageSubtitle =
+    selectedCategory?.description?.trim() ||
+    "Explore our collection of custom crochet bouquets, frames, keychains, and hampers.";
+
   // Fetch Products
   const queryParams = new URLSearchParams();
   if (category && category !== "all") queryParams.append("category", category);
   if (searchTerm) queryParams.append("search", searchTerm);
   if (sort) queryParams.append("sort", sort);
 
-  const { data: products = [], isLoading, error } = useSWR(
+  const { data: rawProducts = [], isLoading, error } = useSWR(
     `/api/products?${queryParams.toString()}`,
     fetcher
   );
+  // Out-of-stock items fall to the end; they return to their normal spot once restocked.
+  const products = sortInStockFirst(rawProducts);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,114 +80,220 @@ function ShopPageContent() {
     router.push(`/shop?${params.toString()}`);
   };
 
+  const hasActiveFilters = category !== "all" || searchTerm !== "" || sort !== "latest";
+  const clearFilters = () => {
+    setCategory("all");
+    setSearchTerm("");
+    setSort("latest");
+    router.push("/shop");
+  };
+
   return (
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-8 animate-in fade-in">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full animate-in fade-in">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6 text-center">
+        <div className="space-y-3 pb-6 md:pb-10 text-center">
           <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
             <ShoppingBag size={14} className="text-goat-primary" /> Gift Catalog
           </span>
           <h1 className="font-display text-3xl sm:text-5xl text-brand-black tracking-wide uppercase">
-            Shop Handmade Gifts
+            {pageTitle}
           </h1>
           <p className="text-sm font-medium text-brand-gray">
-            Explore our collection of custom crochet bouquets, frames, keychains, and hampers.
+            {pageSubtitle}
           </p>
         </div>
 
-        {/* Filter and Search Bar */}
-        <div className="bg-white border border-brand-border rounded-xl md:rounded-2xl p-2.5 md:p-5 space-y-4 shadow-xs md:shadow-card">
-          <div className="flex flex-col lg:flex-row gap-2.5 md:gap-4 items-center">
+        <div className="lg:flex lg:items-start lg:gap-8 lg:border-t lg:border-brand-border lg:pt-8">
+          {/* Desktop Sidebar — detailed filters */}
+          <aside className="hidden lg:block lg:w-64 xl:w-72 shrink-0 sticky top-28 space-y-7">
             {/* Search */}
-            <form onSubmit={handleSearchSubmit} className="relative w-full lg:flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-brand-gray">
-                <Search size={16} />
-              </div>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search products by name..."
-                className="w-full h-10 md:h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-lg md:rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
-              />
-              <button type="submit" className="sr-only">Search</button>
-            </form>
-
-            {/* Selects */}
-            <div className="flex w-full lg:w-auto items-center gap-2 md:gap-3">
-              {/* Category Filter */}
-              <div className="flex-1 min-w-0 lg:flex-none lg:w-48">
-                <CustomSelect
-                  options={[
-                    { label: "All Categories", value: "all" },
-                    ...categories.map((c: any) => ({ label: c.name, value: c.slug })),
-                  ]}
-                  value={category}
-                  onChange={(val) => {
-                    setCategory(val);
-                    updateUrlParams({ category: val });
-                  }}
-                  theme="goat"
+            <div>
+              <h3 className="flex items-center gap-2 text-xs font-bold text-brand-black uppercase tracking-wider mb-3">
+                <Search size={14} className="text-goat-primary" /> Search
+              </h3>
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search products..."
+                  className="w-full h-10 px-3.5 bg-brand-light-gray/50 border border-brand-border rounded-lg text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                 />
-              </div>
+                <button type="submit" className="sr-only">Search</button>
+              </form>
+            </div>
 
-              {/* Sort selector */}
-              <div className="flex-1 min-w-0 lg:flex-none lg:w-48">
-                <CustomSelect
-                  options={[
-                    { label: "Latest Arrivals", value: "latest" },
-                    { label: "Price (Low to High)", value: "price-asc" },
-                    { label: "Price (High to Low)", value: "price-desc" },
-                  ]}
-                  value={sort}
-                  onChange={(val) => {
-                    setSort(val);
-                    updateUrlParams({ sort: val });
+            {/* Categories */}
+            <div>
+              <h3 className="flex items-center gap-2 text-xs font-bold text-brand-black uppercase tracking-wider mb-3">
+                <SlidersHorizontal size={14} className="text-goat-primary" /> Categories
+              </h3>
+              <div className="space-y-1">
+                <button
+                  onClick={() => {
+                    setCategory("all");
+                    updateUrlParams({ category: "all" });
                   }}
-                  theme="goat"
-                />
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    category === "all"
+                      ? "bg-goat-tint text-goat-primary"
+                      : "text-brand-gray hover:bg-brand-light-gray hover:text-brand-black"
+                  }`}
+                >
+                  All Categories
+                </button>
+                {categories.map((c: any) => (
+                  <button
+                    key={c.slug}
+                    onClick={() => {
+                      setCategory(c.slug);
+                      updateUrlParams({ category: c.slug });
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                      category === c.slug
+                        ? "bg-goat-tint text-goat-primary"
+                        : "text-brand-gray hover:bg-brand-light-gray hover:text-brand-black"
+                    }`}
+                  >
+                    {c.name}
+                  </button>
+                ))}
               </div>
             </div>
+
+            {/* Sort */}
+            <div>
+              <h3 className="text-xs font-bold text-brand-black uppercase tracking-wider mb-3">
+                Sort By
+              </h3>
+              <div className="space-y-1">
+                {SORT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => {
+                      setSort(opt.value);
+                      updateUrlParams({ sort: opt.value });
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                      sort === opt.value
+                        ? "bg-goat-tint text-goat-primary"
+                        : "text-brand-gray hover:bg-brand-light-gray hover:text-brand-black"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Clear filters */}
+            {hasActiveFilters && (
+              <button
+                onClick={clearFilters}
+                className="flex items-center gap-1.5 text-xs font-bold text-red-600 hover:underline"
+              >
+                <X size={13} /> Clear all filters
+              </button>
+            )}
+          </aside>
+
+          {/* Main content column */}
+          <div className="flex-1 min-w-0 space-y-6 md:space-y-8">
+            {/* Mobile / tablet compact filter bar */}
+            <div className="lg:hidden bg-white border border-brand-border rounded-xl md:rounded-2xl p-2.5 md:p-4 space-y-4 shadow-xs md:shadow-card">
+              <div className="flex flex-col sm:flex-row gap-2.5 md:gap-3 items-center">
+                <form onSubmit={handleSearchSubmit} className="relative w-full sm:flex-1">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-brand-gray">
+                    <Search size={16} />
+                  </div>
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search products by name..."
+                    className="w-full h-10 md:h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-lg md:rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+                  />
+                  <button type="submit" className="sr-only">Search</button>
+                </form>
+
+                <div className="flex w-full sm:w-auto items-center gap-2 md:gap-3">
+                  <div className="flex-1 min-w-0 sm:flex-none sm:w-44">
+                    <CustomSelect
+                      options={[
+                        { label: "All Categories", value: "all" },
+                        ...categories.map((c: any) => ({ label: c.name, value: c.slug })),
+                      ]}
+                      value={category}
+                      onChange={(val) => {
+                        setCategory(val);
+                        updateUrlParams({ category: val });
+                      }}
+                      theme="goat"
+                    />
+                  </div>
+
+                  <div className="flex-1 min-w-0 sm:flex-none sm:w-44">
+                    <CustomSelect
+                      options={SORT_OPTIONS}
+                      value={sort}
+                      onChange={(val) => {
+                        setSort(val);
+                        updateUrlParams({ sort: val });
+                      }}
+                      theme="goat"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Results count */}
+            {!isLoading && !error && (
+              <p className="text-xs font-semibold text-brand-gray uppercase tracking-wide">
+                {products.length} {products.length === 1 ? "product" : "products"} found
+              </p>
+            )}
+
+            {/* Products Grid */}
+            {isLoading ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
+                {[...Array(8)].map((_, idx) => (
+                  <div key={idx} className="block"><SkeletonCard key={idx} /></div>
+                ))}
+              </div>
+            ) : error ? (
+              <p className="text-center text-red-600 text-sm font-semibold py-8">
+                Failed to load products list.
+              </p>
+            ) : products.length === 0 ? (
+              <div className="text-center text-brand-gray py-20 border border-brand-border border-dashed rounded-3xl bg-brand-light-gray/20">
+                <ShoppingBag className="mx-auto mb-3 text-neutral-300 animate-bounce" size={48} />
+                <p className="text-sm font-semibold text-brand-black">No products found</p>
+                <p className="text-xs mt-1">Try adjusting your filters or search terms.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
+                {products.map((product: any) => (
+                  <div key={product._id}>
+                    <PremiumCard
+                      id={product._id}
+                      name={product.name}
+                      price={product.discountPrice ? `₹${product.discountPrice}` : `₹${product.price}`}
+                      tag={product.discountPrice ? `SAVE ₹${product.price - product.discountPrice}` : undefined}
+                      image={product.images?.[0]}
+                      slug={product.slug}
+                      theme="goat"
+                      stock={product.stock}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Products Grid */}
-        {isLoading ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            {[...Array(8)].map((_, idx) => (
-              <div key={idx} className="block"><SkeletonCard key={idx} /></div>
-            ))}
-          </div>
-        ) : error ? (
-          <p className="text-center text-red-600 text-sm font-semibold py-8">
-            Failed to load products list.
-          </p>
-        ) : products.length === 0 ? (
-          <div className="text-center text-brand-gray py-20 border border-brand-border border-dashed rounded-3xl bg-brand-light-gray/20">
-            <ShoppingBag className="mx-auto mb-3 text-neutral-300 animate-bounce" size={48} />
-            <p className="text-sm font-semibold text-brand-black">No products found</p>
-            <p className="text-xs mt-1">Try adjusting your filters or search terms.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            {products.map((product: any) => (
-              <div key={product._id}>
-                <PremiumCard
-                  id={product._id}
-                  name={product.name}
-                  price={product.discountPrice ? `₹${product.discountPrice}` : `₹${product.price}`}
-                  tag={product.discountPrice ? `SAVE ₹${product.price - product.discountPrice}` : undefined}
-                  image={product.images?.[0]}
-                  slug={product.slug}
-                  theme="goat"
-                />
-              </div>
-            ))}
-          </div>
-        )}
       </main>
 
       <Footer />

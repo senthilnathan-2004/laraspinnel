@@ -8,13 +8,18 @@ export interface CartItem {
   price: number;
   quantity: number;
   image: string;
+  /** Optional customer-written customization note (e.g. "Add name 'Priya', pink ribbon"). */
+  customText?: string;
 }
+
+// Same product with a different customization note is treated as a distinct cart line.
+const lineKey = (productId: string, customText?: string) => `${productId}::${(customText || "").trim()}`;
 
 interface CartContextType {
   cart: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  removeItem: (productId: string, customText?: string) => void;
+  updateQuantity: (productId: string, quantity: number, customText?: string) => void;
   clearCart: () => void;
   cartCount: number;
   cartTotal: number;
@@ -48,10 +53,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = (item: Omit<CartItem, "quantity">, quantity = 1) => {
     setCart((prev) => {
-      const existing = prev.find((i) => i.productId === item.productId);
+      const key = lineKey(item.productId, item.customText);
+      const existing = prev.find((i) => lineKey(i.productId, i.customText) === key);
       if (existing) {
         return prev.map((i) =>
-          i.productId === item.productId
+          lineKey(i.productId, i.customText) === key
             ? { ...i, quantity: i.quantity + quantity }
             : i
         );
@@ -60,17 +66,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const removeItem = (productId: string) => {
-    setCart((prev) => prev.filter((i) => i.productId !== productId));
+  const removeItem = (productId: string, customText?: string) => {
+    const key = lineKey(productId, customText);
+    setCart((prev) => prev.filter((i) => lineKey(i.productId, i.customText) !== key));
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (productId: string, quantity: number, customText?: string) => {
     if (quantity <= 0) {
-      removeItem(productId);
+      removeItem(productId, customText);
       return;
     }
+    const key = lineKey(productId, customText);
     setCart((prev) =>
-      prev.map((i) => (i.productId === productId ? { ...i, quantity } : i))
+      prev.map((i) => (lineKey(i.productId, i.customText) === key ? { ...i, quantity } : i))
     );
   };
 

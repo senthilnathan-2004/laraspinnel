@@ -69,6 +69,7 @@ export default function CheckoutPage() {
         price: item.price,
         quantity: item.quantity,
         image: item.image,
+        customText: item.customText,
       }));
 
       const payload = {
@@ -300,10 +301,15 @@ export default function CheckoutPage() {
 
               <div className="divide-y divide-brand-border/60 max-h-60 overflow-y-auto pr-1">
                 {cart.map((item) => (
-                  <div key={item.productId} className="py-3 flex justify-between gap-3 text-sm">
+                  <div key={`${item.productId}-${item.customText || ""}`} className="py-3 flex justify-between gap-3 text-sm">
                     <div className="min-w-0">
                       <p className="font-semibold text-brand-black truncate">{item.name}</p>
                       <p className="text-xs text-brand-gray font-medium">Qty: {item.quantity} &times; ₹{item.price}</p>
+                      {item.customText && (
+                        <p className="text-xs text-goat-text italic truncate mt-0.5" title={item.customText}>
+                          Custom: {item.customText}
+                        </p>
+                      )}
                     </div>
                     <span className="font-bold text-brand-black shrink-0">₹{item.price * item.quantity}</span>
                   </div>

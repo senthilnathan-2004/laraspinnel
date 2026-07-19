@@ -14,7 +14,7 @@ export default function FinalCTA() {
   const ctaLink = settings.home_cta_link || CONTENT_DEFAULTS.home_cta_link;
 
   return (
-    <section className="relative py-24 bg-brand-light-gray text-center border-t border-brand-border overflow-hidden">
+    <section className="relative py-24 bg-brand-light-gray text-center overflow-hidden">
       {/* Background Grid Pattern */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-10 z-0 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_50%)] [-webkit-mask-image:-webkit-radial-gradient(ellipse_at_center,transparent_20%,black_50%)]"

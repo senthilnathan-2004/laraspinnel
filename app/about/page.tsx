@@ -47,8 +47,8 @@ export default function AboutPage() {
         </div>
 
         {/* Story Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-brand-light-gray border border-brand-border select-none shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div className="order-1 md:order-2 lg:order-1 lg:row-span-2 relative aspect-4/3 rounded-2xl overflow-hidden bg-brand-light-gray border border-brand-border select-none shadow-sm">
             <Image
               src={settings.about_intro_image || "/placeholder-goat.jpg"}
               alt="Lara's Pinnal Handmade Crochet Gifts"
@@ -57,10 +57,10 @@ export default function AboutPage() {
               sizes="(max-w-768px) 100vw, 500px"
             />
           </div>
-          <div className="space-y-4">
-            <h2 className="font-display text-2xl sm:text-2xl md:text-3xl text-brand-black uppercase">
-              Our Crochet Craft Philosophy in Villupuram
-            </h2>
+          <h2 className="order-2 md:order-1 lg:order-2 font-display text-2xl sm:text-2xl md:text-3xl text-brand-black uppercase">
+            Our Crochet Craft Philosophy in Villupuram
+          </h2>
+          <div className="order-3 space-y-4">
             <p className="text-sm text-brand-gray leading-relaxed text-justify">
               {settings.about_intro_p1 || "At Lara's Pinnal, we believe that a beautiful gift begins with heartfelt craftsmanship. Based in Villupuram, we hand-knit every crochet flower, plush toy, and keepsake using premium milk cotton yarn, so each piece is soft, durable, and made to last."}
             </p>

@@ -26,7 +26,7 @@ export default function HowItWorks() {
   }));
 
   return (
-    <section className="py-20 bg-brand-light-gray border-t border-brand-border">
+    <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">

@@ -9,6 +9,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PremiumCard from "@/components/home/PremiumCard";
 import { useCart } from "@/hooks/useCart";
+import { sortInStockFirst } from "@/lib/utils";
 import { ShoppingCart, ShoppingBag, Plus, Minus, ArrowLeft, Heart, Sparkles, ShieldCheck } from "lucide-react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -22,6 +23,7 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [successMsg, setSuccessMsg] = useState("");
+  const [customText, setCustomText] = useState("");
 
   const { data, isLoading, error } = useSWR(
     slug ? `/api/products/${slug}` : null,
@@ -56,7 +58,9 @@ export default function ProductDetailPage() {
     );
   }
 
-  const { product, relatedProducts = [] } = data;
+  const { product, relatedProducts: rawRelatedProducts = [] } = data;
+  // Out-of-stock items fall to the end; they return to their normal spot once restocked.
+  const relatedProducts = sortInStockFirst(rawRelatedProducts);
   const inStock = product.stock > 0;
   const currentPrice = product.discountPrice || product.price;
 
@@ -66,6 +70,7 @@ export default function ProductDetailPage() {
       name: product.name,
       price: currentPrice,
       image: product.images[0] || "",
+      customText: customText.trim() || undefined,
     }, quantity);
 
     setSuccessMsg("Added to cart successfully!");
@@ -78,6 +83,7 @@ export default function ProductDetailPage() {
       name: product.name,
       price: currentPrice,
       image: product.images[0] || "",
+      customText: customText.trim() || undefined,
     }, quantity);
     router.push("/cart");
   };
@@ -87,24 +93,25 @@ export default function ProductDetailPage() {
       <Navbar />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 w-full space-y-16 animate-in fade-in">
-        {/* Back Link */}
-        <div>
-          <Link href="/shop" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-black hover:text-goat-primary transition-colors">
-            <ArrowLeft size={16} /> Back to Catalog
-          </Link>
-        </div>
+        <div className="space-y-4 md:space-y-16">
+          {/* Back Link */}
+          <div>
+            <Link href="/shop" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-black hover:text-goat-primary transition-colors">
+              <ArrowLeft size={16} /> Back to Catalog
+            </Link>
+          </div>
 
-        {/* Product Details Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Gallery Column (5 cols) */}
-          <div className="lg:col-span-6 space-y-4">
+          {/* Product Details Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-6 lg:gap-12">
+          {/* Gallery Column — small & paired with buy actions in tablet view */}
+          <div className="order-1 md:order-1 lg:order-1 lg:col-span-6 lg:row-span-2 space-y-4">
             {/* Active Image Frame */}
             <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-brand-light-gray/40 border border-brand-border group">
               <Image
                 src={product.images[activeImageIdx] || "/placeholder.jpg"}
                 alt={product.name}
                 fill
-                sizes="(max-width: 1024px) 100vw, 600px"
+                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 600px"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 priority
               />
@@ -139,8 +146,8 @@ export default function ProductDetailPage() {
             )}
           </div>
 
-          {/* Details Info Column (6 cols) */}
-          <div className="lg:col-span-6 space-y-6">
+          {/* Info: title, price, description */}
+          <div className="order-2 md:order-3 md:col-span-2 lg:order-2 lg:col-span-6 space-y-6">
             <div className="space-y-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-goat-tint border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-wider rounded-lg">
                 <Sparkles size={10} /> Handmade Collection
@@ -186,14 +193,43 @@ export default function ProductDetailPage() {
                 )}
               </div>
               
-              <div className="text-sm leading-relaxed text-brand-gray whitespace-pre-line text-justify">
-                {product.description}
-              </div>
+              {/\<[a-z][\s\S]*>/i.test(product.description) ? (
+                // Rich-text description (written with the formatting editor)
+                <div
+                  className="prose text-sm leading-relaxed text-brand-gray text-justify"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
+              ) : (
+                // Legacy plain-text description saved before rich formatting was added
+                <div className="text-sm leading-relaxed text-brand-gray whitespace-pre-line text-justify">
+                  {product.description}
+                </div>
+              )}
             </div>
+          </div>
 
-            {/* Cart Operations */}
-            {inStock && (
-              <div className="space-y-4 pt-4 border-t border-brand-border">
+          {/* Purchase: quantity + Add to Cart / Buy Now — paired with the small image in tablet view */}
+          {inStock && (
+            <div className="order-3 md:order-2 lg:order-3 lg:col-span-6 space-y-4 pt-4 border-t border-brand-border">
+                {/* Custom design instructions */}
+                <div className="space-y-1.5">
+                  <div className="flex items-baseline justify-between">
+                    <label htmlFor="customText" className="text-sm font-semibold text-brand-gray">
+                      Customize Your Order
+                    </label>
+                    <span className="text-[10px] text-brand-gray">Optional</span>
+                  </div>
+                  <textarea
+                    id="customText"
+                    rows={2}
+                    maxLength={300}
+                    value={customText}
+                    onChange={(e) => setCustomText(e.target.value)}
+                    placeholder="e.g. Add name 'Priya', change ribbon color to pink..."
+                    className="w-full p-3 bg-brand-light-gray/30 border border-brand-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
+                  />
+                </div>
+
                 {/* Quantity picker */}
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-semibold text-brand-gray">Quantity:</span>
@@ -219,7 +255,7 @@ export default function ProductDetailPage() {
                 </div>
 
                 {/* Checkout buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <div className="flex flex-col lg:flex-row gap-3 pt-2">
                   <button
                     onClick={handleAddToCart}
                     className="flex-1 bg-white hover:bg-brand-light-gray text-brand-black border border-brand-border font-bold py-3 px-6 rounded-full transition-all flex items-center justify-center gap-2 shadow-sm"
@@ -261,6 +297,7 @@ export default function ProductDetailPage() {
                     image={p.images?.[0]}
                     slug={p.slug}
                     theme="goat"
+                    stock={p.stock}
                   />
                 </div>
               ))}

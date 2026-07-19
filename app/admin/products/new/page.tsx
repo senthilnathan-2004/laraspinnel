@@ -6,6 +6,7 @@ import AdminTopbar from "@/components/admin/AdminTopbar";
 import Link from "next/link";
 import CustomSelect from "@/components/shared/CustomSelect";
 import ImageUploader from "@/components/admin/ImageUploader";
+import TiptapEditor from "@/components/admin/TiptapEditor";
 import { ArrowLeft, Save } from "lucide-react";
 
 export default function NewProductPage() {
@@ -205,13 +206,12 @@ export default function NewProductPage() {
           {/* Description */}
           <div className="space-y-1.5">
             <label htmlFor="description" className="text-xs font-bold text-brand-black uppercase">Description</label>
-            <textarea
-              id="description"
-              rows={4}
+            <p className="text-[10px] text-brand-gray">
+              Tell customers about the design, colors, yarn used, dimensions. Use bold, headings, and lists to make it easy to scan.
+            </p>
+            <TiptapEditor
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Tell customers about the design, colors, yarn used, dimensions..."
-              className="w-full p-4 bg-brand-light-gray/30 border border-brand-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
+              onChange={(html) => setFormData({ ...formData, description: html })}
             />
           </div>
 
