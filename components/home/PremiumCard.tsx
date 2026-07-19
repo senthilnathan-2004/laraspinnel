@@ -54,7 +54,7 @@ export default function PremiumCard({
       className="group relative flex flex-col w-full overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] bg-white border border-brand-border/60 shadow-xs hover:shadow-md transition-all duration-300 h-full"
     >
       {/* Top Image Section */}
-      <div className="relative aspect-square w-full bg-brand-light-gray overflow-hidden">
+      <div className="relative aspect-[4/3] w-full bg-brand-light-gray overflow-hidden">
         {image ? (
           <Image
             src={image}
@@ -84,13 +84,10 @@ export default function PremiumCard({
       <div className="p-3 sm:p-4 flex flex-col justify-between flex-1 gap-2 sm:gap-3 bg-white">
         <div className="space-y-0.5 sm:space-y-1">
           {/* Subtle Category/Tag indicator */}
-          <span className="text-[8px] sm:text-[9px] font-bold tracking-widest text-brand-gray uppercase">
+          <span className="block truncate text-[8px] sm:text-[9px] font-bold tracking-widest text-brand-gray uppercase">
             {tag ? "Special Offer" : "Handcrafted"}
           </span>
-          <h3 
-            className="text-xs sm:text-sm font-display font-extrabold text-brand-black tracking-wide leading-snug min-h-[2rem] sm:min-h-[2.4rem] group-hover:text-goat-primary transition-colors"
-            style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}
-          >
+          <h3 className="truncate text-xs sm:text-sm font-display font-extrabold text-brand-black tracking-wide leading-snug group-hover:text-goat-primary transition-colors">
             {name}
           </h3>
         </div>
