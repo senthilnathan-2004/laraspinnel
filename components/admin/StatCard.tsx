@@ -25,16 +25,16 @@ export default function StatCard({ title, value, icon, badge }: StatCardProps) {
   };
 
   return (
-    <div className="bg-white p-3 md:p-6 rounded-2xl border border-brand-border shadow-card flex items-center justify-between transition-transform duration-200 hover:-translate-y-0.5">
-      <div className="space-y-2">
-        <p className="text-sm font-medium text-brand-gray">{title}</p>
-        <div className="flex items-center gap-3">
-          <span className="text-3xl font-bold tracking-tight text-brand-black">
+    <div className="bg-white p-3 md:p-6 rounded-2xl border border-brand-border shadow-card flex items-center justify-between gap-3 transition-transform duration-200 hover:-translate-y-0.5">
+      <div className="space-y-2 min-w-0 flex-1">
+        <p className="text-sm font-medium text-brand-gray truncate">{title}</p>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="text-2xl md:text-3xl font-bold tracking-tight text-brand-black">
             {value}
           </span>
           {badge && (
             <span
-              className={`text-xs px-2 py-0.5 rounded-full font-semibold border ${getBadgeClasses(
+              className={`whitespace-nowrap text-xs px-2 py-0.5 rounded-full font-semibold border ${getBadgeClasses(
                 badge.variant
               )}`}
             >
@@ -43,7 +43,7 @@ export default function StatCard({ title, value, icon, badge }: StatCardProps) {
           )}
         </div>
       </div>
-      <div className="p-3 bg-brand-light-gray rounded-xl text-brand-gray border border-brand-border">
+      <div className="shrink-0 p-3 bg-brand-light-gray rounded-xl text-brand-gray border border-brand-border">
         {icon}
       </div>
     </div>

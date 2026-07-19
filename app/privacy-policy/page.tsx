@@ -5,8 +5,8 @@ import { connectToDatabase } from "@/lib/db";
 import SiteSettings from "@/models/SiteSettings";
 
 export const metadata = {
-  title: "Privacy Policy | Ragu Goat Farm",
-  description: "Privacy Policy for Ragu Goat Farm.",
+  title: "Privacy Policy | Lara's Pinnal",
+  description: "Privacy Policy for Lara's Pinnal.",
 };
 
 const DEFAULT_CONTENT = `
@@ -16,7 +16,7 @@ const DEFAULT_CONTENT = `
 </section>
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. How We Use Your Information</h2>
-  <p>We use the information we collect to fulfill your orders, provide customer service, improve our website, and send you important updates regarding your purchases or our farming practices.</p>
+  <p>We use the information we collect to fulfill your orders, provide customer service, improve our website, and send you important updates regarding your purchases or our handmade crochet collections.</p>
 </section>
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Information Sharing</h2>

@@ -5,8 +5,8 @@ import { connectToDatabase } from "@/lib/db";
 import SiteSettings from "@/models/SiteSettings";
 
 export const metadata = {
-  title: "Terms of Service | Ragu Goat Farm",
-  description: "Terms of Service for Ragu Goat Farm.",
+  title: "Terms of Service | Lara's Pinnal",
+  description: "Terms of Service for Lara's Pinnal.",
 };
 
 const DEFAULT_CONTENT = `
@@ -16,11 +16,11 @@ const DEFAULT_CONTENT = `
 </section>
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. Products and Orders</h2>
-  <p>All livestock and meat orders are subject to availability. We reserve the right to refuse service, cancel orders, or limit quantities at our discretion. Prices are subject to change without notice.</p>
+  <p>All handmade crochet products are subject to availability. As each item is hand-knitted to order, slight variations in colour and finish may occur. We reserve the right to refuse service, cancel orders, or limit quantities at our discretion. Prices are subject to change without notice.</p>
 </section>
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Delivery and Refunds</h2>
-  <p>Delivery times are estimates and may vary. Due to the perishable nature of our products (meat) and the complexities of livestock transport, refund and return policies are handled on a case-by-case basis. Please contact customer service for any issues with your delivery.</p>
+  <p>Delivery times are estimates and may vary, especially for custom and made-to-order pieces. Because our products are handmade and often personalized, refund and return policies are handled on a case-by-case basis. Please contact customer service for any issues with your delivery.</p>
 </section>
 `;
 

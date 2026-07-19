@@ -7,11 +7,11 @@
  *   3. Production fallback    (the real domain)
  *
  * Set NEXT_PUBLIC_APP_URL in Vercel:
- *   - now:            https://ragugoatform.vercel.app
- *   - after purchase: https://ragugoatform.com
+ *   - now:            https://laraspinnal.vercel.app
+ *   - after purchase: https://laraspinnal.com
  */
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_APP_URL ||
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://ragugoatform.com"
+  "https://laraspinnal.com"
 ).replace(/\/$/, "");

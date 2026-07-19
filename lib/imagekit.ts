@@ -1,6 +1,6 @@
 import ImageKit from "imagekit";
 
-const publicFolder = "ragugoatfarm";
+const publicFolder = "laraspinnal";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",

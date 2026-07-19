@@ -1,5 +1,5 @@
 export function getAdminNewContactEmailHtml(message: any): string {
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
   
 
   return `
@@ -8,7 +8,7 @@ export function getAdminNewContactEmailHtml(message: any): string {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>New Contact Message - Ragu Goat Farm</title>
+      <title>New Contact Message - Lara's Pinnal</title>
       <style>
         body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
         .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -68,7 +68,7 @@ export function getAdminNewContactEmailHtml(message: any): string {
           </div>
         </div>
         <div class="footer">
-          <p>System Generated Email &middot; Ragu Goat Farm Admin</p>
+          <p>System Generated Email &middot; Lara's Pinnal Admin</p>
         </div>
       </div>
     </body>

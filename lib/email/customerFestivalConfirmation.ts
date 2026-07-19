@@ -10,7 +10,7 @@ export function customerFestivalConfirmationTemplate(data: any, settings: any): 
     customerName,
   } = data;
 
-  const farmName = settings?.farm_name || "Ragu Farm";
+  const farmName = settings?.farm_name || "Lara's Pinnal";
 
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
@@ -21,7 +21,7 @@ export function customerFestivalConfirmationTemplate(data: any, settings: any): 
       
       <div style="padding: 30px 24px;">
         <p style="color: #334155; font-size: 16px; margin-top: 0;">Dear <strong>${customerName}</strong>,</p>
-        <p style="color: #475569; font-size: 15px; line-height: 1.6;">We have successfully received your custom festival goat requirement. Our team is reviewing your specific needs and will contact you shortly to confirm availability and exact pricing.</p>
+        <p style="color: #475569; font-size: 15px; line-height: 1.6;">We have successfully received your custom festival crochet gift requirement. Our team is reviewing your specific needs and will contact you shortly to confirm availability and exact pricing.</p>
         
         <div style="background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; margin: 24px 0; text-align: center;">
           <p style="color: #64748b; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5px 0;">Reference ID</p>

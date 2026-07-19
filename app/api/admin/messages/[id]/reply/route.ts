@@ -35,7 +35,7 @@ export async function POST(
     // Send email using sendEmail helper
     const emailHtml = `
       <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto;">
-        <h2>Reply from Ragu Goat Farm</h2>
+        <h2>Reply from Lara's Pinnal</h2>
         <p>Dear ${message.name},</p>
         <div style="padding: 16px; background-color: #f7f7f7; border-radius: 8px; margin: 16px 0; white-space: pre-wrap;">${replyText}</div>
         <br />
@@ -45,13 +45,13 @@ export async function POST(
           ${message.message}
         </blockquote>
         <br />
-        <p>Best regards,<br/>Ragu Goat Farm Team</p>
+        <p>Best regards,<br/>Lara's Pinnal Team</p>
       </div>
     `;
 
     const emailRes = await sendEmail({
       to: message.email,
-      subject: `Re: ${message.subject} - Ragu Goat Farm`,
+      subject: `Re: ${message.subject} - Lara's Pinnal`,
       html: emailHtml
     });
 

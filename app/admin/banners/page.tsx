@@ -211,7 +211,7 @@ export default function AdminBannersPage() {
                     required
                     value={headline}
                     onChange={(e) => setHeadline(e.target.value)}
-                    placeholder="e.g. Premium Live Goats, Delivered Across Tamil Nadu"
+                    placeholder="e.g. Handmade Crochet Gifts, Delivered Across Tamil Nadu"
                     className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                   />
                 </div>
@@ -225,7 +225,7 @@ export default function AdminBannersPage() {
                     type="text"
                     value={subtext}
                     onChange={(e) => setSubtext(e.target.value)}
-                    placeholder="e.g. Wide variety of breeds available. Book now for home delivery."
+                    placeholder="e.g. Bouquets, amigurumi, and custom gifts. Order now for home delivery."
                     className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                   />
                 </div>
@@ -239,7 +239,7 @@ export default function AdminBannersPage() {
                     type="text"
                     value={buttonText}
                     onChange={(e) => setButtonText(e.target.value)}
-                    placeholder="e.g. Explore Goats"
+                    placeholder="e.g. Shop Crochet Gifts"
                     className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                   />
                 </div>
@@ -253,7 +253,7 @@ export default function AdminBannersPage() {
                     type="text"
                     value={buttonLink}
                     onChange={(e) => setButtonLink(e.target.value)}
-                    placeholder="e.g. /goats"
+                    placeholder="e.g. /shop"
                     className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                   />
                 </div>
@@ -268,8 +268,8 @@ export default function AdminBannersPage() {
                     onChange={(e) => setButtonTheme(e.target.value as "green" | "red")}
                     className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                   >
-                    <option value="green">Goat Theme (Green Button)</option>
-                    <option value="red">Mutton Theme (Red Button)</option>
+                    <option value="green">Green Button</option>
+                    <option value="red">Red Button</option>
                   </select>
                 </div>
 

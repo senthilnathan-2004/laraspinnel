@@ -9,21 +9,106 @@ import ContactMessage from "@/models/ContactMessage";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import StatCard from "@/components/admin/StatCard";
 import StatusBadge, { OrderStatus } from "@/components/admin/StatusBadge";
-import { ShoppingBag, Clock, IndianRupee, MessageSquare, ArrowRight, Phone } from "lucide-react";
+import DashboardAnalytics from "@/components/admin/DashboardAnalytics";
+import { ShoppingBag, Clock, IndianRupee, MessageSquare, ArrowRight, Phone, Truck, Package, Calculator, CalendarDays } from "lucide-react";
 import Link from "next/link";
+
+const STATUS_LABELS: Record<OrderStatus, string> = {
+  pending: "Pending",
+  confirmed: "Confirmed",
+  preparing: "Preparing",
+  ready: "Ready to Ship",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+};
 
 async function getDashboardData() {
   await connectToDatabase();
 
   const totalOrders = await Order.countDocuments();
   const pendingOrders = await Order.countDocuments({ status: "pending" });
-  
+  const deliveredOrders = await Order.countDocuments({ status: "delivered" });
+  const nonCancelledCount = await Order.countDocuments({ status: { $ne: "cancelled" } });
+  const totalProducts = await Product.countDocuments();
+
   // Calculate total revenue from non-cancelled orders
   const revenueResult = await Order.aggregate([
     { $match: { status: { $ne: "cancelled" } } },
     { $group: { _id: null, total: { $sum: "$totalAmount" } } }
   ]);
   const totalRevenue = revenueResult[0]?.total || 0;
+  const avgOrderValue = nonCancelledCount > 0 ? Math.round(totalRevenue / nonCancelledCount) : 0;
+
+  // Revenue this month (server-local month start)
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthRevenueRes = await Order.aggregate([
+    { $match: { status: { $ne: "cancelled" }, createdAt: { $gte: startOfMonth } } },
+    { $group: { _id: null, total: { $sum: "$totalAmount" } } },
+  ]);
+  const revenueThisMonth = monthRevenueRes[0]?.total || 0;
+
+  // ---- Analytics: revenue trend for the last 14 days (bucketed in IST) ----
+  const istKey = (d: Date) =>
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(d); // en-CA => YYYY-MM-DD
+  const dayNum = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", day: "2-digit" });
+  const dayFull = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", day: "2-digit", month: "short" });
+
+  const start14 = new Date(now.getTime() - 13 * 24 * 60 * 60 * 1000);
+  const trendOrders = await Order.find({
+    status: { $ne: "cancelled" },
+    createdAt: { $gte: start14 },
+  })
+    .select("totalAmount createdAt")
+    .lean();
+
+  const trendMap = new Map<string, number>();
+  for (const o of trendOrders as any[]) {
+    const k = istKey(new Date(o.createdAt));
+    trendMap.set(k, (trendMap.get(k) || 0) + o.totalAmount);
+  }
+  const revenueTrend = Array.from({ length: 14 }, (_, i) => {
+    const d = new Date(now.getTime() - (13 - i) * 24 * 60 * 60 * 1000);
+    const k = istKey(d);
+    return { day: dayNum.format(d), label: dayFull.format(d), total: trendMap.get(k) || 0 };
+  });
+  const revenueToday = revenueTrend[revenueTrend.length - 1]?.total || 0;
+
+  // ---- Analytics: orders grouped by status ----
+  const statusRaw = await Order.aggregate([
+    { $group: { _id: "$status", count: { $sum: 1 } } },
+  ]);
+  const statusCountMap = new Map<string, number>(statusRaw.map((s: any) => [s._id, s.count]));
+  const ordersByStatus = (Object.keys(STATUS_LABELS) as OrderStatus[]).map((status) => ({
+    status,
+    label: STATUS_LABELS[status],
+    count: statusCountMap.get(status) || 0,
+  }));
+
+  // ---- Analytics: top selling products (by quantity, non-cancelled) ----
+  const topProductsRaw = await Order.aggregate([
+    { $match: { status: { $ne: "cancelled" } } },
+    { $unwind: "$items" },
+    {
+      $group: {
+        _id: "$items.name",
+        qty: { $sum: "$items.quantity" },
+        revenue: { $sum: { $multiply: ["$items.price", "$items.quantity"] } },
+      },
+    },
+    { $sort: { qty: -1 } },
+    { $limit: 5 },
+  ]);
+  const topProducts = topProductsRaw.map((p: any) => ({
+    name: p._id || "Unknown",
+    qty: p.qty,
+    revenue: p.revenue,
+  }));
 
   // New Messages (unread)
   const newMessages = await ContactMessage.countDocuments({ status: "new" });
@@ -52,9 +137,18 @@ async function getDashboardData() {
   return {
     totalOrders,
     pendingOrders,
+    deliveredOrders,
+    nonCancelledCount,
+    totalProducts,
     totalRevenue,
+    avgOrderValue,
+    revenueThisMonth,
+    revenueToday,
     newMessages,
     recentOrders,
+    revenueTrend,
+    ordersByStatus,
+    topProducts,
   };
 }
 
@@ -73,11 +167,22 @@ export default async function AdminDashboardPage() {
     data = {
       totalOrders: 0,
       pendingOrders: 0,
+      deliveredOrders: 0,
+      nonCancelledCount: 0,
+      totalProducts: 0,
       totalRevenue: 0,
+      avgOrderValue: 0,
+      revenueThisMonth: 0,
+      revenueToday: 0,
       newMessages: 0,
       recentOrders: [],
+      revenueTrend: [],
+      ordersByStatus: [],
+      topProducts: [],
     };
   }
+
+  const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
   return (
     <div className="flex-1 flex flex-col min-h-screen">
@@ -125,7 +230,7 @@ export default async function AdminDashboardPage() {
           />
           <StatCard
             title="Total Revenue"
-            value={`₹${data.totalRevenue}`}
+            value={inr(data.totalRevenue)}
             icon={<IndianRupee size={22} className="text-green-600" />}
           />
           <StatCard
@@ -139,6 +244,42 @@ export default async function AdminDashboardPage() {
             }
           />
         </div>
+
+        {/* Secondary KPI Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard
+            title="Revenue This Month"
+            value={inr(data.revenueThisMonth)}
+            icon={<CalendarDays size={22} className="text-goat-primary" />}
+            badge={
+              data.revenueToday > 0
+                ? { text: `${inr(data.revenueToday)} today`, variant: "green" }
+                : undefined
+            }
+          />
+          <StatCard
+            title="Avg Order Value"
+            value={inr(data.avgOrderValue)}
+            icon={<Calculator size={22} className="text-amber-500" />}
+          />
+          <StatCard
+            title="Delivered Orders"
+            value={data.deliveredOrders}
+            icon={<Truck size={22} className="text-green-600" />}
+          />
+          <StatCard
+            title="Total Products"
+            value={data.totalProducts}
+            icon={<Package size={22} className="text-blue-500" />}
+          />
+        </div>
+
+        {/* Analytics */}
+        <DashboardAnalytics
+          revenueTrend={data.revenueTrend}
+          ordersByStatus={data.ordersByStatus}
+          topProducts={data.topProducts}
+        />
 
         {/* Recent Orders Section */}
         <div className="bg-white border border-brand-border rounded-2xl shadow-card overflow-hidden">

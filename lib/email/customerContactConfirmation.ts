@@ -1,5 +1,5 @@
 export function getCustomerContactConfirmationEmailHtml(message: any): string {
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
   
 
   return `
@@ -8,7 +8,7 @@ export function getCustomerContactConfirmationEmailHtml(message: any): string {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>We've Received Your Message - Ragu Goat Farm</title>
+      <title>We've Received Your Message - Lara's Pinnal</title>
       <style>
         body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
         .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -34,7 +34,7 @@ export function getCustomerContactConfirmationEmailHtml(message: any): string {
         </div>
         <div class="content">
           <p>Dear ${message.name},</p>
-          <p>Thank you for reaching out to Ragu Goat Farm. This email is to confirm that we have successfully received your message.</p>
+          <p>Thank you for reaching out to Lara's Pinnal. This email is to confirm that we have successfully received your message.</p>
           <p>Our team will review your inquiry and get back to you as soon as possible.</p>
 
           <h3 style="font-size: 14px; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin-top: 24px; margin-bottom: 12px; font-weight: bold;">Your Message Summary</h3>
@@ -46,7 +46,7 @@ export function getCustomerContactConfirmationEmailHtml(message: any): string {
           </p>
         </div>
         <div class="footer">
-          <p>Ragu Goat Farm &middot; Villupuram, Tamil Nadu &copy; ${new Date().getFullYear()}</p>
+          <p>Lara's Pinnal &middot; Tamil Nadu, India &copy; ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>

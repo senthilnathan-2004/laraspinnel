@@ -19,7 +19,7 @@ export function getCustomerStatusUpdateEmailHtml(booking: any): string {
   const currentStatusColor = statusColors[booking.status as keyof typeof statusColors] || themeColor;
   const currentStatusLabel = statusLabels[booking.status as keyof typeof statusLabels] || booking.status;
   
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
   
 
   return `
@@ -28,7 +28,7 @@ export function getCustomerStatusUpdateEmailHtml(booking: any): string {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Booking Status Update - Ragu Goat Farm</title>
+      <title>Order Status Update - Lara's Pinnal</title>
       <style>
         body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
         .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -60,7 +60,7 @@ export function getCustomerStatusUpdateEmailHtml(booking: any): string {
         </div>
         <div class="content">
           <p>Dear ${booking.customerName},</p>
-          <p>The status of your booking with Ragu Goat Farm has been updated.</p>
+          <p>The status of your order with Lara's Pinnal has been updated.</p>
 
           <div class="ref-card">
             <span class="ref-label">Your Reference ID</span>
@@ -88,7 +88,7 @@ export function getCustomerStatusUpdateEmailHtml(booking: any): string {
           </p>
         </div>
         <div class="footer">
-          <p>Ragu Goat Farm &middot; Villupuram, Tamil Nadu &copy; ${new Date().getFullYear()}</p>
+          <p>Lara's Pinnal &middot; Tamil Nadu, India &copy; ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>

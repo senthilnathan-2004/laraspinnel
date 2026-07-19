@@ -58,7 +58,7 @@ export default function AdminLoginPage() {
               Welcome Back
             </h2>
             <p className="text-sm text-brand-gray mt-1 font-medium">
-              Sign in to manage Ragu Goat Farm dashboard
+              Sign in to manage LARA'S PINNAL dashboard
             </p>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full h-12 bg-white border border-brand-border rounded-xl pl-11 pr-4 text-sm text-brand-black placeholder-brand-gray focus:ring-2 focus:ring-goat-primary focus:border-transparent outline-none transition-all"
-                placeholder="admin@ragugoatform.com"
+                placeholder="admin@laraspinnal.com"
               />
             </div>
           </div>

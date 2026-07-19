@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lara's Pinnal | Handcrafted Crochet Gifts & Flowers",
     description:
-      "Order pasture-raised wool and milk cotton crochet gifts. Unique flower bouquets, plushies, keychains, and custom hampers. Delivery across Tamil Nadu.",
+      "Order premium milk cotton yarn crochet gifts, hand-knitted with love. Unique flower bouquets, plushies, keychains, and custom hampers. Delivery across Tamil Nadu.",
     type: "website",
     locale: "en_IN",
     siteName: "Lara's Pinnal",
@@ -64,16 +64,6 @@ export const metadata: Metadata = {
   },
 };
 
-const DEFAULT_PHILOSOPHY = `
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">At Lara's Pinnal, we take immense pride in crafting beautiful, hand-knitted creations using premium milk cotton yarn. Whether you are looking for forever crochet bouquets, personalized frames, custom amigurumi plush toys, or gift hampers, we ensure the highest standard of durability and aesthetics. Every single order is hand-knitted with endless love and detail, making sure your special occasion is celebrated with a unique, long-lasting gift.</p>
-
-<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Passion for Yarn & Sustainable Craftsmanship</h3>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">Our studio uses only premium, hypoallergenic milk cotton yarn that is soft, vibrant, and safe for infants. By sourcing high-quality materials and utilizing intricate knitting methods, we ensure each item lasts a lifetime. Handcrafted items reduce machine production footprints, making our products highly sustainable and eco-friendly.</p>
-
-<h3 class="text-xl font-bold text-brand-black pt-4 mb-2">Detailed Customization & Quick Delivery</h3>
-<p class="text-brand-gray leading-relaxed text-sm md:text-base mb-6">When it comes to customized frames and orders, detail is our priority. We match color codes, names, photos, and personal notes to create a bespoke gifting experience. Once complete, each order is carefully bubble-wrapped and shipped in secure packaging to ensure it reaches your doorstep in pristine condition.</p>
-`;
-
 export default async function HomePage() {
   await connectToDatabase();
 
@@ -93,17 +83,12 @@ export default async function HomePage() {
     console.error("Failed to load initial banners", err);
   }
 
-  let philosophyContent = DEFAULT_PHILOSOPHY;
   let allSettings: Record<string, string> = {};
   try {
     const settingsList = await SiteSettings.find({}).lean();
     settingsList.forEach((s: any) => {
       allSettings[s.key] = s.value;
     });
-    
-    if (allSettings["philosophy_content"] && allSettings["philosophy_content"].trim() !== "") {
-      philosophyContent = allSettings["philosophy_content"];
-    }
   } catch (err) {
     console.error("Failed to load settings", err);
   }
@@ -166,7 +151,7 @@ export default async function HomePage() {
         <BestSellers />
 
         {/* Below-fold sections */}
-        <BelowFoldSections philosophyContent={philosophyContent} />
+        <BelowFoldSections />
       </main>
 
       {/* Footer block */}

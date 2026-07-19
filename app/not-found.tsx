@@ -26,7 +26,7 @@ export default function NotFound() {
               404
             </h1>
             <h2 className="font-display text-2xl md:text-2xl md:text-3xl text-brand-black">
-              Oops! You&apos;ve wandered off the farm.
+              Oops! This thread came unravelled.
             </h2>
             <p className="text-base text-brand-gray/80 font-medium max-w-md mx-auto leading-relaxed">
               We couldn&apos;t find the page you were looking for. It might have been moved, deleted, or perhaps you just took a wrong turn.

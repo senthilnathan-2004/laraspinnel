@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 import { Providers } from "@/components/Providers";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import { ToastProvider } from "@/components/admin/Toast";
 
 export default async function AdminLayout({
   children,
@@ -21,7 +22,9 @@ export default async function AdminLayout({
     <div className="flex h-screen overflow-hidden bg-brand-light-gray/20 w-full relative">
       <AdminSidebar />
       <div className="flex-1 overflow-y-auto w-full relative flex flex-col">
-        <Providers>{children}</Providers>
+        <Providers>
+          <ToastProvider>{children}</ToastProvider>
+        </Providers>
       </div>
     </div>
   );

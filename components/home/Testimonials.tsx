@@ -89,7 +89,7 @@ const AddReviewModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
         ) : (
           <>
             <h3 className="font-display text-2xl uppercase tracking-wide text-brand-black mb-1">Write a Review</h3>
-            <p className="text-sm text-brand-gray mb-6">Share your experience with Ragu Goat Farm.</p>
+            <p className="text-sm text-brand-gray mb-6">Share your experience with Lara's Pinnal.</p>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex flex-col items-center gap-1 mb-4">
@@ -127,7 +127,7 @@ const AddReviewModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
               
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-brand-black uppercase tracking-wider pl-1">Goal *</label>
-                <textarea required rows={2} value={formData.goal} onChange={(e) => setFormData({ ...formData, goal: e.target.value })} className="w-full p-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm resize-none" placeholder="What were you looking for? (e.g., Sourcing 15 healthy live goats)"></textarea>
+                <textarea required rows={2} value={formData.goal} onChange={(e) => setFormData({ ...formData, goal: e.target.value })} className="w-full p-4 rounded-xl border border-brand-border bg-brand-light-gray/30 outline-none focus:border-brand-black focus:ring-1 focus:ring-brand-black transition-all text-sm resize-none" placeholder="What were you looking for? (e.g., A custom crochet flower bouquet)"></textarea>
               </div>
 
               <div className="space-y-1.5">
@@ -156,24 +156,24 @@ export default function Testimonials() {
     {
       name: "Ramesh Kumar",
       location: "Coimbatore, TN",
-      goal: "Sourcing 15 healthy live goats for a large family celebration.",
-      outcome: "Exceptional breed quality delivered right on time in excellent health. Ragu Goat Farm provided the most reliable farm-to-door service we've experienced in Tamil Nadu.",
+      goal: "Ordering a custom crochet flower bouquet for a large family celebration.",
+      outcome: "Exceptional craftsmanship delivered right on time in perfect condition. Lara's Pinnal provided the most reliable handmade-to-door service we've experienced.",
       initial: "R",
       rating: 5,
     },
     {
       name: "Revathi S.",
       location: "Villupuram, TN",
-      goal: "Finding a consistent, hygienic source for weekly bulk mutton family packs.",
-      outcome: "Fresh, clean cuts delivered regularly in hygienic food-grade packaging. Ragu Goat Farm is now our default source for all mutton needs.",
+      goal: "Finding a reliable source for personalized crochet gift hampers.",
+      outcome: "Beautifully finished pieces delivered in lovely gift-ready packaging. Lara's Pinnal is now our default choice for all handmade gifts.",
       initial: "R",
       rating: 5,
     },
     {
       name: "Mohamed Asif",
       location: "Tiruppur, TN",
-      goal: "Purchasing premium Boer goats for festival breeding and rearing.",
-      outcome: "The farm team helped select the optimal weight classes and provided expert care guidance. Very professional service with honest, transparent farm pricing.",
+      goal: "Commissioning custom amigurumi plush toys and keychains as gifts.",
+      outcome: "The team helped choose the perfect colors and yarn and provided thoughtful guidance. Very professional service with honest, transparent pricing.",
       initial: "M",
       rating: 5,
     },
@@ -227,7 +227,7 @@ export default function Testimonials() {
               {settings.home_testimonials_title || "What Our Customers Say"}
             </h2>
             <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
-              {settings.home_testimonials_subtitle || "Stories of satisfaction from farmers, families, and commercial buyers."}
+              {settings.home_testimonials_subtitle || "Stories of satisfaction from gift-givers, families, and loyal customers."}
             </p>
             <p className="text-sm font-medium text-brand-gray mt-1 flex items-center gap-1.5">
               <ShieldCheck size={16} className="text-goat-primary" /> Verified Purchases Only
@@ -318,11 +318,11 @@ export default function Testimonials() {
             </span>
             <span className="inline-flex shrink-0 items-center gap-2 bg-white px-4 py-2 rounded-full border border-brand-border text-brand-black font-semibold text-xs shadow-xs transition-colors hover:bg-neutral-50 cursor-default">
               <MapPin size={15} className="text-goat-primary shrink-0" />
-              <span className="whitespace-nowrap">{settings.home_stat_2 || "Tamil Nadu Wide Goats"}</span>
+              <span className="whitespace-nowrap">{settings.home_stat_2 || "Ships Across India"}</span>
             </span>
             <span className="inline-flex shrink-0 items-center gap-2 bg-white px-4 py-2 rounded-full border border-brand-border text-brand-black font-semibold text-xs shadow-xs transition-colors hover:bg-neutral-50 cursor-default">
               <ShieldCheck size={15} className="text-goat-primary shrink-0" />
-              <span className="whitespace-nowrap">{settings.home_stat_3 || "Fresh Quality Guaranteed"}</span>
+              <span className="whitespace-nowrap">{settings.home_stat_3 || "Handmade Quality Guaranteed"}</span>
             </span>
           </div>
 
@@ -341,11 +341,11 @@ export default function Testimonials() {
                   </span>
                   <span className="inline-flex shrink-0 items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-brand-border text-brand-black font-semibold text-[11px] shadow-xs cursor-default">
                     <MapPin size={15} className="text-goat-primary shrink-0" />
-                    <span className="whitespace-nowrap">{settings.home_stat_2 || "Tamil Nadu Wide Goats"}</span>
+                    <span className="whitespace-nowrap">{settings.home_stat_2 || "Ships Across India"}</span>
                   </span>
                   <span className="inline-flex shrink-0 items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-brand-border text-brand-black font-semibold text-[11px] shadow-xs cursor-default">
                     <ShieldCheck size={15} className="text-goat-primary shrink-0" />
-                    <span className="whitespace-nowrap">{settings.home_stat_3 || "Fresh Quality Guaranteed"}</span>
+                    <span className="whitespace-nowrap">{settings.home_stat_3 || "Handmade Quality Guaranteed"}</span>
                   </span>
                 </div>
               ))}

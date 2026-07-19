@@ -130,13 +130,13 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.home_shop_subtitle || ""}
                       onChange={(e) => handleChange("home_shop_subtitle", e.target.value)}
-                      placeholder="Choose your category to browse live farm goats or clean bulk mutton cuts."
+                      placeholder="Choose a category to browse crochet bouquets, amigurumi plush, keychains, and custom gift hampers."
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-brand-black uppercase block">Goat Category Image</label>
+                      <label className="text-xs font-semibold text-brand-black uppercase block">Bouquets Category Image</label>
                       <ImageUploadDropzone
                         value={settings.home_shop_image_1 ? [settings.home_shop_image_1] : []}
                         onChange={(urls) => handleChange("home_shop_image_1", urls[0] || "")}
@@ -144,7 +144,7 @@ export default function AdminContentPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-brand-black uppercase block">Mutton Category Image</label>
+                      <label className="text-xs font-semibold text-brand-black uppercase block">Amigurumi Category Image</label>
                       <ImageUploadDropzone
                         value={settings.home_shop_image_2 ? [settings.home_shop_image_2] : []}
                         onChange={(urls) => handleChange("home_shop_image_2", urls[0] || "")}
@@ -175,7 +175,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.home_testimonials_subtitle || ""}
                       onChange={(e) => handleChange("home_testimonials_subtitle", e.target.value)}
-                      placeholder="Stories of satisfaction from farmers, families, and commercial buyers."
+                      placeholder="Stories of joy from gift-givers, brides, and happy families."
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -195,7 +195,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.home_stat_2 || ""}
                       onChange={(e) => handleChange("home_stat_2", e.target.value)}
-                      placeholder="Tamil Nadu Wide Goats"
+                      placeholder="Tamil Nadu Wide Delivery"
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -205,7 +205,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.home_stat_3 || ""}
                       onChange={(e) => handleChange("home_stat_3", e.target.value)}
-                      placeholder="Fresh Quality Guaranteed"
+                      placeholder="Handmade Quality Guaranteed"
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -227,7 +227,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.about_intro_title || ""}
                       onChange={(e) => handleChange("about_intro_title", e.target.value)}
-                      placeholder="About Ragu Goat Farm"
+                      placeholder="About Lara's Pinnal"
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -237,7 +237,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.about_intro_subtitle || ""}
                       onChange={(e) => handleChange("about_intro_subtitle", e.target.value)}
-                      placeholder="Pioneering organic, pasture-raised livestock farming..."
+                      placeholder="Handcrafting heartfelt crochet gifts and flowers, one stitch at a time..."
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -247,7 +247,7 @@ export default function AdminContentPage() {
                       rows={3}
                       value={settings.about_intro_p1 || ""}
                       onChange={(e) => handleChange("about_intro_p1", e.target.value)}
-                      placeholder="At Ragu Goat Farm, we believe that premium quality begins with wholesome care..."
+                      placeholder="At Lara's Pinnal, we believe that a meaningful gift begins with premium milk cotton yarn and careful handwork..."
                       className="w-full border border-brand-border rounded-xl p-3 md:p-4 text-sm"
                     />
                   </div>
@@ -257,7 +257,7 @@ export default function AdminContentPage() {
                       rows={3}
                       value={settings.about_intro_p2 || ""}
                       onChange={(e) => handleChange("about_intro_p2", e.target.value)}
-                      placeholder="We started with a vision to streamline livestock ordering..."
+                      placeholder="We started with a vision to bring handmade, personalised crochet gifts to every celebration..."
                       className="w-full border border-brand-border rounded-xl p-3 md:p-4 text-sm"
                     />
                   </div>
@@ -282,7 +282,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.about_why_title || ""}
                       onChange={(e) => handleChange("about_why_title", e.target.value)}
-                      placeholder="Why Choose Ragu Farm?"
+                      placeholder="Why Choose Lara's Pinnal?"
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -292,7 +292,7 @@ export default function AdminContentPage() {
                       type="text"
                       value={settings.about_why_subtitle || ""}
                       onChange={(e) => handleChange("about_why_subtitle", e.target.value)}
-                      placeholder="We stand by rigorous quality markers..."
+                      placeholder="We stand by rigorous handmade quality markers..."
                       className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                     />
                   </div>
@@ -305,7 +305,7 @@ export default function AdminContentPage() {
                           type="text"
                           value={settings[`about_why_${i}_title`] || ""}
                           onChange={(e) => handleChange(`about_why_${i}_title`, e.target.value)}
-                          placeholder={i===1 ? "Hygienic Care Standards" : i===2 ? "Traceable Quality Breeds" : "Safe specialized transit"}
+                          placeholder={i===1 ? "Premium Milk Cotton Yarn" : i===2 ? "Custom & Personalised Designs" : "Safe Nationwide Delivery"}
                           className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                         />
                       </div>
@@ -315,7 +315,7 @@ export default function AdminContentPage() {
                           rows={2}
                           value={settings[`about_why_${i}_desc`] || ""}
                           onChange={(e) => handleChange(`about_why_${i}_desc`, e.target.value)}
-                          placeholder={i===1 ? "Our Villupuram farm employs..." : i===2 ? "We focus on premium breeds..." : "We own customized animal transport fleets..."}
+                          placeholder={i===1 ? "We use soft, skin-friendly premium milk cotton yarn for every piece..." : i===2 ? "We craft custom bouquets, frames, and amigurumi to match your occasion..." : "We pack every order securely for safe delivery across India..."}
                           className="w-full border border-brand-border rounded-xl p-3 md:p-4 text-sm"
                         />
                       </div>
@@ -336,7 +336,7 @@ export default function AdminContentPage() {
                           type="text"
                           value={settings[`about_stat_${i}_val`] || ""}
                           onChange={(e) => handleChange(`about_stat_${i}_val`, e.target.value)}
-                          placeholder={i===1 ? "50+ ACRES" : i===2 ? "1,200+" : i===3 ? "99.8%" : "3,500+"}
+                          placeholder={i===1 ? "100% HANDMADE" : i===2 ? "1,200+" : i===3 ? "4.9/5" : "3,500+"}
                           className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                         />
                       </div>
@@ -346,7 +346,7 @@ export default function AdminContentPage() {
                           type="text"
                           value={settings[`about_stat_${i}_label`] || ""}
                           onChange={(e) => handleChange(`about_stat_${i}_label`, e.target.value)}
-                          placeholder={i===1 ? "Pasture Grazing" : i===2 ? "Goats Reared" : i===3 ? "Health Clearance" : "Deliveries Completed"}
+                          placeholder={i===1 ? "Crafted by Hand" : i===2 ? "Gifts Crafted" : i===3 ? "Customer Rating" : "Deliveries Completed"}
                           className="w-full h-11 border border-brand-border rounded-xl px-4 text-sm"
                         />
                       </div>

@@ -2,35 +2,35 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Contact Ragu Goat Farm | Goat Farm Phone Number & WhatsApp — Villupuram",
+  title: "Contact Lara's Pinnal | Crochet Gifts Phone Number & WhatsApp — Villupuram",
   description:
-    "Contact Ragu Goat Farm in Villupuram, Tamil Nadu. Call or WhatsApp for live goat booking, mutton delivery enquiries, wholesale pricing, and bulk orders. We respond within hours.",
+    "Contact Lara's Pinnal in Villupuram, Tamil Nadu. Call or WhatsApp for custom crochet orders, gift enquiries, bouquet bookings, and bulk gift hampers. We respond within hours.",
   keywords: [
-    "Ragu Goat Farm contact number",
-    "goat farm phone number Villupuram",
-    "contact goat farm Tamil Nadu",
-    "WhatsApp goat order Villupuram",
-    "goat farm address Villupuram",
-    "mutton delivery enquiry Tamil Nadu",
-    "goat farm business hours",
-    "bulk mutton enquiry Villupuram",
+    "Lara's Pinnal contact number",
+    "crochet gifts phone number Villupuram",
+    "contact crochet studio Tamil Nadu",
+    "WhatsApp crochet order Villupuram",
+    "crochet gifts address Villupuram",
+    "custom crochet enquiry Tamil Nadu",
+    "crochet studio business hours",
+    "bulk crochet gift hampers Villupuram",
   ],
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
-    title: "Contact Ragu Goat Farm | Phone & WhatsApp — Villupuram",
+    title: "Contact Lara's Pinnal | Phone & WhatsApp — Villupuram",
     description:
-      "Reach Ragu Goat Farm for live goat bookings, fresh mutton delivery, and wholesale enquiries. Call, WhatsApp, or fill the form.",
+      "Reach Lara's Pinnal for custom crochet orders, flower bouquets, and gift hamper enquiries. Call, WhatsApp, or fill the form.",
     type: "website",
     locale: "en_IN",
-    siteName: "Ragu Goat Farm",
+    siteName: "Lara's Pinnal",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Ragu Goat Farm | Villupuram",
+    title: "Contact Lara's Pinnal | Villupuram",
     description:
-      "Get in touch for live goat booking, mutton delivery, or wholesale enquiries — Ragu Goat Farm, Villupuram, Tamil Nadu.",
+      "Get in touch for custom crochet orders, flower bouquets, or gift hamper enquiries — Lara's Pinnal, Villupuram, Tamil Nadu.",
   },
 };
 

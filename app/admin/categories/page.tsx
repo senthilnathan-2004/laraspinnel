@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import { useToast } from "@/components/admin/Toast";
 import { Plus, Search, Pencil, Trash2, FolderHeart } from "lucide-react";
 
 interface Category {
@@ -16,6 +17,7 @@ interface Category {
 }
 
 export default function AdminCategoriesPage() {
+  const { showToast } = useToast();
   const [categories, setCategories] = useState<Category[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,11 +69,12 @@ export default function AdminCategoriesPage() {
       const data = await res.json();
       if (res.ok) {
         setCategories(categories.filter((c) => c._id !== id));
+        showToast("Category deleted successfully.", { variant: "success" });
       } else {
-        alert(data.error || "Failed to delete category");
+        showToast(data.error || "Failed to delete category", { variant: "error" });
       }
     } catch (err) {
-      alert("Failed to delete category");
+      showToast("Failed to delete category", { variant: "error" });
     }
   };
 

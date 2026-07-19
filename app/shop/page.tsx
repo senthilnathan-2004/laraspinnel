@@ -82,8 +82,8 @@ function ShopPageContent() {
         </div>
 
         {/* Filter and Search Bar */}
-        <div className="bg-white border border-brand-border rounded-2xl p-3 md:p-5 space-y-4 shadow-card">
-          <div className="flex flex-col lg:flex-row gap-4 items-center">
+        <div className="bg-white border border-brand-border rounded-xl md:rounded-2xl p-2.5 md:p-5 space-y-4 shadow-xs md:shadow-card">
+          <div className="flex flex-col lg:flex-row gap-2.5 md:gap-4 items-center">
             {/* Search */}
             <form onSubmit={handleSearchSubmit} className="relative w-full lg:flex-1">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-brand-gray">
@@ -94,13 +94,13 @@ function ShopPageContent() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search products by name..."
-                className="w-full h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+                className="w-full h-10 md:h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-lg md:rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
               />
               <button type="submit" className="sr-only">Search</button>
             </form>
 
             {/* Selects */}
-            <div className="flex w-full lg:w-auto items-center gap-3">
+            <div className="flex w-full lg:w-auto items-center gap-2 md:gap-3">
               {/* Category Filter */}
               <div className="flex-1 min-w-0 lg:flex-none lg:w-48">
                 <CustomSelect

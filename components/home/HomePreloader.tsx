@@ -35,7 +35,7 @@ export default function HomePreloader({ children }: { children: React.ReactNode 
   }, []);
 
   const logoUrl = (settings as any).logo_url;
-  const farmName = (settings as any).farm_name || "RAGU FARM";
+  const farmName = (settings as any).farm_name || "LARA'S PINNAL";
 
   return (
     <>

@@ -5,7 +5,8 @@ import { useRouter, useParams } from "next/navigation";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import Link from "next/link";
 import CustomSelect from "@/components/shared/CustomSelect";
-import { ArrowLeft, Save, Upload, AlertCircle } from "lucide-react";
+import ImageUploader from "@/components/admin/ImageUploader";
+import { ArrowLeft, Save } from "lucide-react";
 
 export default function EditProductPage() {
   const router = useRouter();
@@ -27,9 +28,12 @@ export default function EditProductPage() {
   const [categories, setCategories] = useState<{ label: string; value: string }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState("");
-  const [uploadError, setUploadError] = useState("");
+
+  const imageList = formData.images
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -70,49 +74,6 @@ export default function EditProductPage() {
       fetchInitialData();
     }
   }, [id]);
-
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    setIsUploading(true);
-    setUploadError("");
-
-    try {
-      const uploadedUrls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const body = new FormData();
-        body.append("file", files[i]);
-
-        const res = await fetch("/api/admin/upload", {
-          method: "POST",
-          body,
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-          uploadedUrls.push(data.url);
-        } else {
-          setUploadError(data.error || `Failed to upload ${files[i].name}`);
-        }
-      }
-
-      if (uploadedUrls.length > 0) {
-        setFormData((prev) => {
-          const currentImages = prev.images.trim();
-          const appended = uploadedUrls.join(", ");
-          return {
-            ...prev,
-            images: currentImages ? `${currentImages}, ${appended}` : appended,
-          };
-        });
-      }
-    } catch (err) {
-      setUploadError("Failed to upload image");
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -283,50 +244,13 @@ export default function EditProductPage() {
               />
             </div>
 
-            {/* Image Upload + URLs Inputs Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-brand-light-gray/20 border border-brand-border rounded-2xl">
-              {/* Device file upload */}
-              <div className="space-y-3">
-                <span className="text-xs font-bold text-brand-black uppercase block">Upload Product Images</span>
-                
-                <div className="flex flex-col gap-2">
-                  <input
-                    type="file"
-                    id="product-file-upload"
-                    accept="image/*"
-                    multiple
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor="product-file-upload"
-                    className="flex items-center justify-center gap-2 border border-dashed border-neutral-300 hover:border-goat-primary bg-white rounded-xl py-6 px-4 cursor-pointer transition-all text-sm font-semibold text-brand-black"
-                  >
-                    <Upload size={18} className={isUploading ? "animate-bounce text-goat-primary" : "text-brand-gray"} />
-                    {isUploading ? "Uploading file(s)..." : "Choose from Device (Select Multiple)"}
-                  </label>
-                  {uploadError && (
-                    <p className="text-xs text-red-600 font-semibold flex items-center gap-1">
-                      <AlertCircle size={12} /> {uploadError}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Manual URL entry */}
-              <div className="space-y-3">
-                <label htmlFor="images" className="text-xs font-bold text-brand-black uppercase block font-mono">Image URLs (Comma separated)</label>
-                <textarea
-                  id="images"
-                  rows={3}
-                  value={formData.images}
-                  onChange={(e) => setFormData({ ...formData, images: e.target.value })}
-                  placeholder="e.g. https://example.com/img1.jpg, https://example.com/img2.jpg"
-                  className="w-full p-3 bg-white border border-brand-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
-                />
-                <p className="text-[9px] text-brand-gray font-medium">URLs uploaded or typed here. The first one is the main cover thumbnail.</p>
-              </div>
-            </div>
+            {/* Image Upload + Preview Gallery */}
+            <ImageUploader
+              images={imageList}
+              onChange={(imgs) => setFormData({ ...formData, images: imgs.join(", ") })}
+              multiple
+              label="Product Images"
+            />
 
             {/* Featured & Active checkboxes */}
             <div className="flex flex-col sm:flex-row gap-4">
@@ -360,7 +284,7 @@ export default function EditProductPage() {
             <div className="pt-4 border-t border-brand-border flex gap-3">
               <button
                 type="submit"
-                disabled={isSubmitting || isUploading}
+                disabled={isSubmitting}
                 className="bg-brand-black hover:bg-goat-primary text-white font-bold py-2.5 px-6 rounded-xl transition-all flex items-center gap-2 shadow-sm text-sm disabled:bg-neutral-400"
               >
                 {isSubmitting ? "Saving..." : <><Save size={16} /> Save Changes</>}

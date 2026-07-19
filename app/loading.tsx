@@ -10,7 +10,7 @@ export default function Loading() {
   const { data: settings = {} } = useSWR("/api/settings", fetcher);
   
   const logoUrl = settings.logo_url;
-  const farmName = settings.farm_name || "RAGU FARM";
+  const farmName = settings.farm_name || "LARA'S PINNAL";
 
   return (
     <div className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center min-h-screen">

@@ -2,35 +2,35 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "About Ragu Goat Farm | Trusted Goat Supplier, Villupuram, Tamil Nadu",
+  title: "About Lara's Pinnal | Handmade Crochet Gifts, Villupuram, Tamil Nadu",
   description:
-    "Ragu Goat Farm is a family-run, pasture-raised goat farm in Villupuram, Tamil Nadu. 50+ acres of organic grazing land, 1200+ goats reared annually. Trusted naatu aadu supplier.",
+    "Lara's Pinnal is a family-run handmade crochet gifts studio in Villupuram, Tamil Nadu. Crochet flower bouquets, amigurumi plush, photo frames, and gift hampers made with premium milk cotton yarn. Shipping across India.",
   keywords: [
-    "about Ragu Goat Farm",
-    "goat farm Villupuram Tamil Nadu",
-    "trusted goat supplier Tamil Nadu",
-    "organic pasture-raised goat farm",
-    "naatu aadu panni Villupuram",
-    "genuine goat farm Tamil Nadu",
-    "pasture-raised goat farm",
-    "healthy goat farm Tamil Nadu",
+    "about Lara's Pinnal",
+    "handmade crochet gifts Villupuram Tamil Nadu",
+    "crochet flower bouquets Tamil Nadu",
+    "amigurumi plush toys India",
+    "custom crochet photo frames",
+    "milk cotton yarn crochet gifts",
+    "handcrafted crochet keychains",
+    "crochet gift hampers Tamil Nadu",
   ],
   alternates: {
     canonical: "/about",
   },
   openGraph: {
-    title: "About Ragu Goat Farm | Organic Pasture-Raised Goat Farm, Villupuram",
+    title: "About Lara's Pinnal | Handmade Crochet Gifts & Flowers, Villupuram",
     description:
-      "Learn about Ragu Goat Farm — trusted naatu aadu and live goat supplier in Villupuram, Tamil Nadu. 50+ acres pasture, 3500+ successful deliveries.",
+      "Learn about Lara's Pinnal — handcrafted crochet flowers, amigurumi, and gift hampers made with love in Villupuram, Tamil Nadu. Shipping across India, 3500+ happy gifts delivered.",
     type: "website",
     locale: "en_IN",
-    siteName: "Ragu Goat Farm",
+    siteName: "Lara's Pinnal",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Ragu Goat Farm | Villupuram Goat Farm",
+    title: "About Lara's Pinnal | Handmade Crochet Gifts, Villupuram",
     description:
-      "50+ acres of organic pasture, 1200+ goats reared, 3500+ deliveries — Ragu Goat Farm, Villupuram, Tamil Nadu.",
+      "Handcrafted crochet flowers, amigurumi, and gift hampers made with premium milk cotton yarn — Lara's Pinnal, Villupuram, Tamil Nadu.",
   },
 };
 

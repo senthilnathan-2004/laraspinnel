@@ -1,7 +1,7 @@
 export function getCustomerConfirmationEmailHtml(booking: any): string {
   const isGoat = booking.productType === "goat";
   const themeColor = isGoat ? "#1E8A4C" : "#C0392B";
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
    // Fallback to local logo
 
   return `
@@ -10,7 +10,7 @@ export function getCustomerConfirmationEmailHtml(booking: any): string {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Your Booking Confirmation - Ragu Goat Farm</title>
+      <title>Your Order Confirmation - Lara's Pinnal</title>
       <style>
         body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
         .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -41,11 +41,11 @@ export function getCustomerConfirmationEmailHtml(booking: any): string {
       <div class="container">
         <div class="header">
           
-          <h1>Booking Request Received</h1>
+          <h1>Order Request Received</h1>
         </div>
         <div class="content">
           <p>Dear ${booking.customerName},</p>
-          <p>We have successfully received your booking reservation request. Here is a summary of your order details:</p>
+          <p>We have successfully received your handmade crochet gift order request. Here is a summary of your order details:</p>
 
           <div class="ref-card">
             <span class="ref-label">Your Reference ID</span>
@@ -54,14 +54,14 @@ export function getCustomerConfirmationEmailHtml(booking: any): string {
 
           <div class="info-box">
             <strong>What's Next?</strong><br>
-            Our farm coordinator will call you shortly on <strong>${booking.phone}</strong> to confirm your weight selections, schedule, and finalize delivery arrangements.
+            Our order coordinator will call you shortly on <strong>${booking.phone}</strong> to confirm your customization details, schedule, and finalize delivery arrangements.
           </div>
 
           <h3 class="section-title">Order Details</h3>
           <div class="data-grid">
             <div class="data-row">
               <div class="data-label">Product Type:</div>
-              <div class="data-value">${isGoat ? "Live Goat" : "Bulk Mutton"}</div>
+              <div class="data-value">${isGoat ? "Crochet Bouquet" : "Gift Hamper"}</div>
             </div>
             <div class="data-row">
               <div class="data-label">Variety/Pack:</div>
@@ -99,7 +99,7 @@ export function getCustomerConfirmationEmailHtml(booking: any): string {
           </p>
         </div>
         <div class="footer">
-          <p>Ragu Goat Farm &middot; Villupuram, Tamil Nadu &copy; ${new Date().getFullYear()}</p>
+          <p>Lara's Pinnal &middot; Tamil Nadu, India &copy; ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>

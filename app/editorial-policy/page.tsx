@@ -5,18 +5,18 @@ import { connectToDatabase } from "@/lib/db";
 import SiteSettings from "@/models/SiteSettings";
 
 export const metadata = {
-  title: "Editorial Policy | Ragu Goat Farm",
-  description: "Editorial Policy and Content Guidelines for Ragu Goat Farm.",
+  title: "Editorial Policy | Lara's Pinnal",
+  description: "Editorial Policy and Content Guidelines for Lara's Pinnal.",
 };
 
 const DEFAULT_CONTENT = `
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3">1. Author Expertise & Integrity</h2>
-  <p>All content published on the Ragu Goat Farm website, including blog articles, livestock care guides, and nutritional information, is written, reviewed, and approved by our internal team of experienced agricultural specialists, farmers, and veterinary consultants. We are committed to sharing accurate, safe, and reliable farming practices.</p>
+  <p>All content published on the Lara's Pinnal website, including blog articles, crochet care guides, and craft tips, is written, reviewed, and approved by our internal team of experienced crochet artisans and designers. We are committed to sharing accurate, helpful, and reliable crochet and gifting guidance.</p>
 </section>
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">2. Content Review Process</h2>
-  <p>Our content undergoes a strict review process to ensure that all animal husbandry advice aligns with modern veterinary science and sustainable agricultural practices before it is published.</p>
+  <p>Our content undergoes a strict review process to ensure that all crochet care and craft advice aligns with proven techniques and best practices before it is published.</p>
 </section>
 <section>
   <h2 class="text-2xl font-bold text-brand-black mb-3 mt-8">3. Corrections and Updates</h2>

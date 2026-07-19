@@ -54,7 +54,7 @@ export default function PremiumCard({
       className="group relative flex flex-col w-full overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] bg-white border border-brand-border/60 shadow-xs hover:shadow-md transition-all duration-300 h-full"
     >
       {/* Top Image Section */}
-      <div className="relative aspect-[4/3] w-full bg-brand-light-gray overflow-hidden">
+      <div className="relative aspect-square w-full bg-brand-light-gray overflow-hidden">
         {image ? (
           <Image
             src={image}

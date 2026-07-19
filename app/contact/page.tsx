@@ -27,7 +27,7 @@ export default function ContactPage() {
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  const farmName = settings.farm_name || "Ragu Goat Farm";
+  const farmName = settings.farm_name || "Lara's Pinnal";
   const phone = settings.contact_phone || "+91 9442379832";
   const whatsapp = settings.contact_whatsapp || "+91 9442379832";
   const email = settings.contact_email || "senthilraguanthan2004@gmail.com";
@@ -88,10 +88,10 @@ export default function ContactPage() {
             <Phone size={14} className="text-goat-primary" /> Get in touch
           </span>
           <h1 className="font-display text-3xl sm:text-5xl text-brand-black tracking-wide uppercase">
-            Contact Ragu Goat Farm
+            Contact Lara's Pinnal
           </h1>
           <p className="text-sm font-medium text-brand-gray">
-            Have questions about goat breeds, Bakrid booking, mutton delivery, or wholesale pricing? Fill out the form or chat with us on WhatsApp.
+            Have questions about custom crochet orders, flower bouquets, gift hampers, or bulk enquiries? Fill out the form or chat with us on WhatsApp.
           </p>
         </div>
 
@@ -99,7 +99,7 @@ export default function ContactPage() {
           {/* Left Column: Form details */}
           <div className="flex flex-col h-full">
             <h2 className="font-display text-2xl text-brand-black uppercase tracking-wide mb-6">
-              Send Your Booking or Delivery Enquiry
+              Send Your Custom Order or Gift Enquiry
             </h2>
 
             {submitError && (
@@ -203,7 +203,7 @@ export default function ContactPage() {
                   <input
                     type="text"
                     {...register("subject")}
-                    placeholder="e.g. Breed Availability Query"
+                    placeholder="e.g. Custom Crochet Bouquet Query"
                     className="w-full h-11 bg-brand-light-gray/40 border border-brand-border rounded-xl pl-10 pr-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
                   />
                 </div>
@@ -258,13 +258,13 @@ export default function ContactPage() {
           <div className="flex flex-col gap-6 h-full justify-between">
             <div className="space-y-6">
               <h2 className="font-display text-2xl text-brand-black uppercase tracking-wide">
-                Farm Contact Details
+                Studio Contact Details
               </h2>
               <div className="bg-brand-light-gray border border-brand-border rounded-2xl p-3 md:p-6 space-y-5 text-sm select-none">
                 <div className="flex items-start gap-3">
                   <MapPin size={18} className="text-goat-primary shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[10px] text-brand-gray font-bold uppercase tracking-wider block">Farm Location</span>
+                    <span className="text-[10px] text-brand-gray font-bold uppercase tracking-wider block">Studio Location</span>
                     <span className="font-semibold text-brand-black block mt-0.5">{address}</span>
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function ContactPage() {
                 <div className="flex items-start gap-3">
                   <Clock size={18} className="text-goat-primary shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[10px] text-brand-gray font-bold uppercase tracking-wider block">Farm Hours</span>
+                    <span className="text-[10px] text-brand-gray font-bold uppercase tracking-wider block">Studio Hours</span>
                     <span className="font-semibold text-brand-black block mt-0.5">{businessHours}</span>
                   </div>
                 </div>

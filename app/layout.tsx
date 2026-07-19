@@ -33,9 +33,9 @@ import { SITE_URL } from "@/lib/siteUrl";
 const BASE_URL = SITE_URL;
 
 export async function generateMetadata(): Promise<Metadata> {
-  let title = "Ragu Goat Farm | Live Goats & Mutton in Tamil Nadu";
+  let title = "Lara's Pinnal | Handmade Crochet Gifts & Flowers in Tamil Nadu";
   let description =
-    "Buy healthy live goats & fresh mutton from Ragu Goat Farm, Villupuram. Naatu aadu, Boer & Tellicherry breeds delivered across Tamil Nadu.";
+    "Shop handmade crochet gifts from Lara's Pinnal, Tamil Nadu. Crochet flower bouquets, amigurumi plushies, custom frames, keychains & gift hampers shipped across India.";
   let favicon = "/icon.svg";
 
   try {
@@ -57,20 +57,20 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     keywords: [
-      "live goat for sale Tamil Nadu",
-      "goat farm Villupuram",
-      "naatu aadu vitpanai",
-      "Bakrid goat booking",
-      "fresh mutton delivery Villupuram",
-      "Tellicherry goat",
-      "Boer goat Tamil Nadu",
-      "mutton home delivery",
-      "bulk mutton order",
-      "goat farm near Villupuram",
-      "Ragu Goat Farm",
+      "handmade crochet gifts Tamil Nadu",
+      "crochet flower bouquet",
+      "crochet flowers online India",
+      "amigurumi plush toys India",
+      "custom crochet frames",
+      "crochet keychains online",
+      "crochet baby gifts",
+      "crochet gift hampers",
+      "milk cotton yarn crochet",
+      "handmade crochet gifts online India",
+      "Lara's Pinnal",
     ],
-    authors: [{ name: "Ragu Goat Farm", url: BASE_URL }],
-    creator: "Ragu Goat Farm",
+    authors: [{ name: "Lara's Pinnal", url: BASE_URL }],
+    creator: "Lara's Pinnal",
     metadataBase: new URL(BASE_URL),
     alternates: {
       canonical: "/",
@@ -93,7 +93,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "en_IN",
       url: BASE_URL,
-      siteName: "Ragu Goat Farm",
+      siteName: "Lara's Pinnal",
       title,
       description,
       images: [
@@ -101,7 +101,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "/placeholder-goat.jpg",
           width: 1200,
           height: 630,
-          alt: "Ragu Goat Farm Boer Goat",
+          alt: "Lara's Pinnal Handmade Crochet Bouquet",
         },
       ],
     },
@@ -133,7 +133,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let farmName = "Ragu Goat Farm";
+  let farmName = "Lara's Pinnal";
   let phone = "+91 9442379832";
   let email = "senthilraguanthan2004@gmail.com";
   let address = " MettuStreet, Therkunam, Villupuram, Tamil Nadu - 604102";
@@ -219,10 +219,10 @@ export default async function RootLayout({
       "founder": {
         "@type": "Person",
         "name": "Senthil Ragu",
-        "jobTitle": "Lead Farmer & Founder",
-        "knowsAbout": ["Animal Husbandry", "Organic Farming", "Livestock Management"]
+        "jobTitle": "Lead Artisan & Founder",
+        "knowsAbout": ["Crochet", "Amigurumi", "Handicrafts", "Fibre Arts"]
       },
-      "knowsAbout": ["Live Goats", "Fresh Mutton", "Farming", "Meat Processing"]
+      "knowsAbout": ["Crochet Gifts", "Crochet Flowers", "Amigurumi Plush Toys", "Handmade Handicrafts"]
     },
     {
       "@context": "https://schema.org",

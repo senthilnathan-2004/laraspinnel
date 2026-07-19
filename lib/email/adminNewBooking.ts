@@ -1,7 +1,7 @@
 export function getAdminNewBookingEmailHtml(booking: any): string {
   const isGoat = booking.productType === "goat";
   const themeColor = isGoat ? "#1E8A4C" : "#C0392B";
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ragugoatform.com";
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
   
 
   return `
@@ -53,7 +53,7 @@ export function getAdminNewBookingEmailHtml(booking: any): string {
           <div class="data-grid">
             <div class="data-row">
               <div class="data-label">Product Type:</div>
-              <div class="data-value">${isGoat ? "Live Goat" : "Bulk Mutton"}</div>
+              <div class="data-value">${isGoat ? "Crochet Bouquet" : "Gift Hamper"}</div>
             </div>
             <div class="data-row">
               <div class="data-label">Variety/Pack:</div>
@@ -122,7 +122,7 @@ export function getAdminNewBookingEmailHtml(booking: any): string {
           </div>
         </div>
         <div class="footer">
-          <p>System Generated Email &middot; Ragu Goat Farm Admin</p>
+          <p>System Generated Email &middot; Lara's Pinnal Admin</p>
         </div>
       </div>
     </body>

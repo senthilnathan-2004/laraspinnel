@@ -27,7 +27,7 @@ export default function BlogShareSidebar({ title, slug }: BlogShareSidebarProps)
     }
   };
 
-  const shareText = encodeURIComponent(`Check out this article: ${title} at Ragu Goat Farm`);
+  const shareText = encodeURIComponent(`Check out this article: ${title} at Lara's Pinnal`);
   const shareUrl = encodeURIComponent(currentUrl);
 
   return (

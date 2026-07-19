@@ -57,7 +57,7 @@ export default function FilterBar({
             onChange={(e) => onSearchChange(e.target.value)}
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-            placeholder={isGoat ? "Search breed name..." : "Search packages..."}
+            placeholder={isGoat ? "Search product name..." : "Search packages..."}
             className={`w-full h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-xl text-sm text-brand-black outline-none focus:ring-2 transition-all ${
               isGoat ? "focus:ring-goat-primary" : "focus:ring-mutton-primary"
             }`}
@@ -88,7 +88,7 @@ export default function FilterBar({
             <div className="flex-1 min-w-0 lg:flex-none lg:w-44">
               <CustomSelect
                 options={[
-                  { label: "All Breeds", value: "all" },
+                  { label: "All Categories", value: "all" },
                   ...breeds.map((breed) => ({ label: breed, value: breed }))
                 ]}
                 value={selectedBreed}

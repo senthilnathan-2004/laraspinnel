@@ -2,16 +2,16 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Ragu Goat Farm",
-    short_name: "Ragu Farm",
+    name: "Lara's Pinnal",
+    short_name: "Lara's Pinnal",
     description:
-      "Buy healthy live goats and fresh bulk mutton from Ragu Goat Farm, Villupuram, Tamil Nadu. Delivery across Tamil Nadu.",
+      "Shop handmade crochet gifts and flowers from Lara's Pinnal, Tamil Nadu. Crochet bouquets, amigurumi plushies, custom frames, keychains, and gift hampers shipped across India.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#1a1a1a",
     lang: "en-IN",
-    categories: ["shopping", "food", "business"],
+    categories: ["shopping", "lifestyle", "business"],
     icons: [
       {
         src: "/icon.svg",
