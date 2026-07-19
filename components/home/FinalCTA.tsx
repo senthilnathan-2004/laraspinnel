@@ -3,8 +3,16 @@
 import React from "react";
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
+import { useSettings } from "@/hooks/useSettings";
+import { CONTENT_DEFAULTS } from "@/lib/siteContent";
 
 export default function FinalCTA() {
+  const { settings } = useSettings();
+  const ctaTitle = settings.home_cta_title || CONTENT_DEFAULTS.home_cta_title;
+  const ctaText = settings.home_cta_text || CONTENT_DEFAULTS.home_cta_text;
+  const ctaButton = settings.home_cta_button || CONTENT_DEFAULTS.home_cta_button;
+  const ctaLink = settings.home_cta_link || CONTENT_DEFAULTS.home_cta_link;
+
   return (
     <section className="relative py-24 bg-brand-light-gray text-center border-t border-brand-border overflow-hidden">
       {/* Background Grid Pattern */}
@@ -24,10 +32,10 @@ export default function FinalCTA() {
         {/* Text */}
         <div className="space-y-2 max-w-xl">
           <h2 className="font-display text-2xl sm:text-5xl text-brand-black tracking-wide uppercase leading-tight">
-            Ready to Shop Handmade Gifts?
+            {ctaTitle}
           </h2>
           <p className="text-sm font-medium text-brand-gray">
-            Explore our handcrafted catalog of crochet flowers, personalized frames, keychains, and accessories. Custom orders are made with love.
+            {ctaText}
           </p>
         </div>
 
@@ -71,10 +79,10 @@ export default function FinalCTA() {
           `}</style>
           
           <Link
-            href="/shop"
+            href={ctaLink}
             className="water-btn inline-flex items-center justify-center px-8 py-3.5 rounded-full shadow-lg group hover:-translate-y-1 transition-all duration-300 text-white text-base font-semibold"
           >
-            Start Shopping Now
+            {ctaButton}
           </Link>
         </div>
       </div>

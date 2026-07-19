@@ -17,6 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Quote,
+  LayoutTemplate,
 } from "lucide-react";
 import useSWR from "swr";
 
@@ -90,6 +91,11 @@ export default function AdminSidebar() {
       name: "Testimonials",
       href: "/admin/testimonials",
       icon: <Quote size={18} />,
+    },
+    {
+      name: "Website Content",
+      href: "/admin/content",
+      icon: <LayoutTemplate size={18} />,
     },
     {
       name: "Settings",

@@ -2,40 +2,28 @@
 
 import React from "react";
 import { Heart, ShieldCheck, Sparkles, Truck, Tag } from "lucide-react";
+import { useSettings } from "@/hooks/useSettings";
+import { CONTENT_DEFAULTS, DEFAULT_WHY_STEPS, parseList, WhyStep } from "@/lib/siteContent";
+
+const STEP_ICONS = [
+  <Heart key="h" size={30} className="text-goat-primary" />,
+  <ShieldCheck key="s" size={30} className="text-goat-primary" />,
+  <Sparkles key="sp" size={30} className="text-goat-primary" />,
+  <Truck key="t" size={30} className="text-goat-primary" />,
+  <Tag key="tg" size={30} className="text-goat-primary" />,
+];
 
 export default function HowItWorks() {
-  const steps = [
-    {
-      number: "1",
-      title: "Handmade with Love",
-      description: "100% hand-knitted creations with meticulous care and passion.",
-      icon: <Heart size={30} className="text-goat-primary" />,
-    },
-    {
-      number: "2",
-      title: "Premium Quality",
-      description: "Made with premium, hypoallergenic milk cotton yarn.",
-      icon: <ShieldCheck size={30} className="text-goat-primary" />,
-    },
-    {
-      number: "3",
-      title: "Customized Gifts",
-      description: "We customize colors, names, and patterns for you.",
-      icon: <Sparkles size={30} className="text-goat-primary" />,
-    },
-    {
-      number: "4",
-      title: "Fast Delivery",
-      description: "Reliable and safe delivery across Tamil Nadu.",
-      icon: <Truck size={30} className="text-goat-primary" />,
-    },
-    {
-      number: "5",
-      title: "Affordable Pricing",
-      description: "Transparent prices direct from our local crochet artist.",
-      icon: <Tag size={30} className="text-goat-primary" />,
-    },
-  ];
+  const { settings } = useSettings();
+  const whyTitle = settings.home_why_title || CONTENT_DEFAULTS.home_why_title;
+  const whySubtitle = settings.home_why_subtitle || CONTENT_DEFAULTS.home_why_subtitle;
+
+  const steps = parseList<WhyStep>(settings.home_why_steps, DEFAULT_WHY_STEPS).map((s, i) => ({
+    number: String(i + 1),
+    title: s.title,
+    description: s.desc,
+    icon: STEP_ICONS[i % STEP_ICONS.length],
+  }));
 
   return (
     <section className="py-20 bg-brand-light-gray border-t border-brand-border">
@@ -44,10 +32,10 @@ export default function HowItWorks() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
           <div>
             <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
-              Why Choose Us
+              {whyTitle}
             </h2>
             <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
-              Every detail of our handcrafted gifts is designed to bring joy and lasting memories.
+              {whySubtitle}
             </p>
           </div>
         </div>

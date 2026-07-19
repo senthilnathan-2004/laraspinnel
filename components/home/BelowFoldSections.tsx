@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useSettings } from "@/hooks/useSettings";
+import { DEFAULT_MARQUEE_ITEMS, parseList } from "@/lib/siteContent";
 
 const FeaturedProducts = dynamic(() => import("@/components/home/FeaturedProducts"), {
   ssr: false,
@@ -28,6 +30,9 @@ const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), {
 });
 
 export default function BelowFoldSections() {
+  const { settings } = useSettings();
+  const marqueeItems = parseList<string>(settings.home_marquee, DEFAULT_MARQUEE_ITEMS);
+
   return (
     <>
       {/* Featured Products catalog */}
@@ -41,7 +46,7 @@ export default function BelowFoldSections() {
 
       {/* Gift Categories / Marketing Marquee */}
       <TextMarquee
-        items={["Crochet Bouquets", "Custom Frames", "Baby Plushies", "Desk Decor", "Keychains", "Festive Rakhis", "Gifts Under ₹999"]}
+        items={marqueeItems}
         bgColor="bg-brand-black"
         textColor="text-white"
         dividerColor="text-white/20"

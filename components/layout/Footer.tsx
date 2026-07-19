@@ -6,6 +6,21 @@ import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
 import { Phone, Mail, MapPin, Clock, Lock, ShieldCheck, Heart, Sparkles } from "lucide-react";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaYoutube, FaXTwitter } from "react-icons/fa6";
+import {
+  parseList,
+  CONTENT_DEFAULTS,
+  DEFAULT_FOOTER_QUICKLINKS,
+  DEFAULT_FOOTER_CATEGORIES,
+  DEFAULT_FOOTER_BADGES,
+  LinkItem,
+} from "@/lib/siteContent";
+
+const BADGE_ICONS = [
+  <ShieldCheck key="0" size={18} className="text-goat-primary shrink-0" />,
+  <Sparkles key="1" size={18} className="text-amber-400 shrink-0" />,
+  <Heart key="2" size={18} className="text-red-400 shrink-0" />,
+  <Lock key="3" size={18} className="text-blue-400 shrink-0" />,
+];
 
 export default function Footer() {
   const { settings } = useSettings();
@@ -17,6 +32,12 @@ export default function Footer() {
   const email = settings.contact_email || "senthilraguanthan2004@gmail.com";
   const address = settings.contact_address || "50, Mettu Street, Therkunam, Villupuram, Tamil Nadu - 604102";
   const businessHours = settings.business_hours || "Monday - Sunday: 9:00 AM - 9:00 PM";
+
+  const quickLinks = parseList<LinkItem>(settings.footer_quicklinks, DEFAULT_FOOTER_QUICKLINKS);
+  const categoryLinks = parseList<LinkItem>(settings.footer_categories, DEFAULT_FOOTER_CATEGORIES);
+  const badges = parseList<string>(settings.footer_badges, DEFAULT_FOOTER_BADGES);
+  const disclaimer = settings.footer_disclaimer || CONTENT_DEFAULTS.footer_disclaimer;
+  const footerNote = settings.footer_note || CONTENT_DEFAULTS.footer_note;
 
   const whatsappFormatted = whatsapp.replace(/[^\d+]/g, "");
   const whatsappUrl = `https://wa.me/${whatsappFormatted}`;
@@ -109,36 +130,13 @@ export default function Footer() {
             Quick Links
           </h3>
           <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="/" className="hover:text-white transition-colors">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/shop" className="hover:text-white transition-colors">
-                Shop Catalog
-              </Link>
-            </li>
-            <li>
-              <Link href="/categories" className="hover:text-white transition-colors">
-                Categories
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-white transition-colors">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-white transition-colors">
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/cart" className="hover:text-white transition-colors">
-                Shopping Cart
-              </Link>
-            </li>
+            {quickLinks.map((link, i) => (
+              <li key={i}>
+                <Link href={link.href || "#"} className="hover:text-white transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -148,31 +146,13 @@ export default function Footer() {
             Popular Categories
           </h3>
           <ul className="space-y-2 text-sm text-neutral-400">
-            <li>
-              <Link href="/shop?category=bouquets" className="hover:text-white transition-colors">
-                Crochet Bouquets
-              </Link>
-            </li>
-            <li>
-              <Link href="/shop?category=customized-frames" className="hover:text-white transition-colors">
-                Customized Frames
-              </Link>
-            </li>
-            <li>
-              <Link href="/shop?category=birthday-gifts" className="hover:text-white transition-colors">
-                Birthday Gifts
-              </Link>
-            </li>
-            <li>
-              <Link href="/shop?category=hampers" className="hover:text-white transition-colors">
-                Gift Hampers
-              </Link>
-            </li>
-            <li>
-              <Link href="/shop?category=keychains" className="hover:text-white transition-colors">
-                Cute Keychains
-              </Link>
-            </li>
+            {categoryLinks.map((link, i) => (
+              <li key={i}>
+                <Link href={link.href || "#"} className="hover:text-white transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -243,63 +223,27 @@ export default function Footer() {
           {/* Mobile View */}
           <div className="block md:hidden mobile-mask">
             <div className="mobile-marquee">
-              <div className="flex gap-8 pr-8 shrink-0">
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Handcrafted</span>
+              {[0, 1].map((setIdx) => (
+                <div key={setIdx} className="flex gap-8 pr-8 shrink-0">
+                  {badges.map((badge, i) => (
+                    <div key={i} className="flex items-center gap-2 text-neutral-300 shrink-0">
+                      {BADGE_ICONS[i % BADGE_ICONS.length]}
+                      <span className="text-[10px] font-medium uppercase tracking-wide">{badge}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Sparkles size={18} className="text-amber-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Customized Designs</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Heart size={18} className="text-red-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Crafted with Love</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Lock size={18} className="text-blue-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Checkout</span>
-                </div>
-              </div>
-              <div className="flex gap-8 pr-8 shrink-0">
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">100% Handcrafted</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Sparkles size={18} className="text-amber-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Customized Designs</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Heart size={18} className="text-red-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Crafted with Love</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-300 shrink-0">
-                  <Lock size={18} className="text-blue-400 shrink-0" />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">Secure Checkout</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Desktop & Tablet View */}
           <div className="hidden md:flex flex-wrap justify-center gap-8 lg:gap-12 px-4 md:px-0">
-            <div className="flex items-center gap-2 text-neutral-300">
-              <ShieldCheck size={18} className="text-goat-primary shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">100% Handcrafted</span>
-            </div>
-            <div className="flex items-center gap-2 text-neutral-300">
-              <Sparkles size={18} className="text-amber-400 shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Customized Designs</span>
-            </div>
-            <div className="flex items-center gap-2 text-neutral-300">
-              <Heart size={18} className="text-red-400 shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Crafted with Love</span>
-            </div>
-            <div className="flex items-center gap-2 text-neutral-300">
-              <Lock size={18} className="text-blue-400 shrink-0" />
-              <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">Secure Checkout</span>
-            </div>
+            {badges.map((badge, i) => (
+              <div key={i} className="flex items-center gap-2 text-neutral-300">
+                {BADGE_ICONS[i % BADGE_ICONS.length]}
+                <span className="text-xs lg:text-sm font-medium uppercase tracking-wide">{badge}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -307,7 +251,7 @@ export default function Footer() {
       {/* Disclaimer */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 mt-8">
         <p className="text-[11px] leading-relaxed text-neutral-400 text-justify">
-          <strong className="text-neutral-400 uppercase">Product Disclaimer:</strong> Since all our products are 100% handcrafted and custom-made, slight variations in yarn shade, shape, and sizing may occur. These are not flaws but signs of authentic handmade art. Product delivery time depends on order complexity and custom details requested. Lara's Pinnal reserves the right to manage stocks and active categories dynamically.
+          <strong className="text-neutral-400 uppercase">Product Disclaimer:</strong> {disclaimer}
         </p>
       </div>
 
@@ -330,7 +274,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-          <span className="text-neutral-500">Made by hand, with passion.</span>
+          <span className="text-neutral-500">{footerNote}</span>
         </div>
       </div>
     </footer>
