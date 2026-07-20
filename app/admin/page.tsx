@@ -204,7 +204,7 @@ export default async function AdminDashboardPage() {
           <Link
             href="/"
             target="_blank"
-            className="inline-flex items-center gap-2 bg-brand-black text-white hover:bg-goat-primary px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200"
+            className="shrink-0 inline-flex items-center gap-2 bg-brand-black text-white hover:bg-goat-primary px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 whitespace-nowrap"
           >
             <span>View Public Site</span>
             <ArrowRight size={14} />

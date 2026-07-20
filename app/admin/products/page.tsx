@@ -258,7 +258,7 @@ export default function AdminProductsPage() {
           {/* Add Product Button */}
           <Link
             href="/admin/products/new"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-black hover:bg-goat-primary text-white font-semibold text-sm h-10 px-4 rounded-xl transition-colors duration-200 shadow-sm"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-brand-black hover:bg-goat-primary text-white font-semibold text-sm h-10 px-4 rounded-xl transition-colors duration-200 shadow-sm whitespace-nowrap"
           >
             <Plus size={16} />
             <span>Add Product</span>
