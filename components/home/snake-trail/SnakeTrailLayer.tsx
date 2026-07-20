@@ -6,7 +6,7 @@ import { ScrollTrigger, ensureScrollTriggerRegistered } from "./gsapSetup";
 import { getTrailGeometry, getRandomizedPathD, type TrailVariant } from "./paths";
 import { getTrailGradientStops } from "@/lib/utils";
 
-const ARC_COUNT = 8;
+const ARC_COUNT = 12; // matches the 12-point loop authored in paths.ts
 const ARC_DURATION_SECONDS = 2.4;
 const HEAD_RADIUS = 4;
 const TAIL_FRACTION = 0.14; // portion of the loop rendered as the glowing comet tail

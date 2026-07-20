@@ -28,35 +28,50 @@ export type TrailGeometry = {
   accentMaskRegions: AccentMaskRegion[];
 };
 
-// Loop points alternate between "inside the card" and "outside the card,
-// out to the canvas edge" — the outside points (x=0 or x=width) are what the
-// outside-card mask reveals as the trail dips out and back in.
+// Loop points alternate between "inside the card" and "outside the card, out
+// toward the canvas edge" — the outside points (x near 0 or near width) are
+// what the outside-card mask reveals as the trail dips out and back in.
+//
+// Each outside excursion is 3 points (in / apex / out), not a single spike:
+// going from an inside point straight to one outside point and back is a
+// near-180° reversal that no bezier tension can round into a real curve —
+// it always reads as a zigzag point, not a snake-body sweep. Spreading that
+// reversal's direction change across 3 points turns it into a gentle bulge
+// that the same Catmull-Rom smoothing renders as an actual rounded arc.
 const MOBILE_LOOP_POINTS: Point[] = [
-  [178, 60],
-  [300, 90],
-  [356, 200],
-  [300, 340],
-  [178, 396],
-  [56, 340],
-  [0, 200],
-  [56, 90],
+  [178, 60], // 0: top center (fixed anchor — never jittered, shared lap start)
+  [300, 90], // 1: upper right, inside
+  [340, 145], // 2: right bulge, entering outside
+  [356, 200], // 3: right apex, outside
+  [340, 255], // 4: right bulge, returning inside
+  [300, 340], // 5: lower right, inside
+  [178, 396], // 6: bottom center, inside
+  [56, 340], // 7: lower left, inside
+  [16, 255], // 8: left bulge, entering outside
+  [0, 200], // 9: left apex, outside
+  [16, 145], // 10: left bulge, returning inside
+  [56, 90], // 11: upper left, inside
 ];
 
 const TABLET_LOOP_POINTS: Point[] = [
-  [228, 56],
-  [370, 84],
-  [456, 178],
-  [370, 272],
-  [228, 300],
-  [86, 272],
-  [0, 178],
-  [86, 84],
+  [228, 56], // 0: top center (fixed anchor — never jittered, shared lap start)
+  [370, 84], // 1: upper right, inside
+  [440, 130], // 2: right bulge, entering outside
+  [456, 178], // 3: right apex, outside
+  [440, 226], // 4: right bulge, returning inside
+  [370, 272], // 5: lower right, inside
+  [228, 300], // 6: bottom center, inside
+  [86, 272], // 7: lower left, inside
+  [16, 226], // 8: left bulge, entering outside
+  [0, 178], // 9: left apex, outside
+  [16, 130], // 10: left bulge, returning inside
+  [86, 84], // 11: upper left, inside
 ];
 
 const MOBILE_CARD_RECT: CardRect = { x: 28, y: 28, width: 300, height: 400, rx: 24 };
 const TABLET_CARD_RECT: CardRect = { x: 28, y: 28, width: 400, height: 300, rx: 24 };
 
-// Positioned near loop points [1] and [5] of each variant so the trail
+// Positioned near loop points [1] and [7] of each variant so the trail
 // visibly threads past where DecorativeAccents renders its flourishes.
 const MOBILE_ACCENTS: AccentMaskRegion[] = [
   { id: "top-right-flourish", x: 272, y: 62, width: 56, height: 56, rx: 14 },
@@ -68,19 +83,18 @@ const TABLET_ACCENTS: AccentMaskRegion[] = [
   { id: "bottom-left-flourish", x: 58, y: 244, width: 56, height: 56, rx: 14 },
 ];
 
-// Raised from 0.2: at that tension the sharp inside-to-outside reversals
-// (e.g. mobile points [1]->[2]->[3]) read as an angular "zigzag" instead of
-// a rounded snake-body curve. 0.32 keeps the loop from self-crossing while
-// giving those direction changes a visibly rounded sweep.
+// Combined with the bulge points above (rather than relying on tension
+// alone to fake roundness), 0.32 renders every direction change — including
+// the outside excursions — as a genuine rounded sweep with no self-crossing.
 const TENSION = 0.32;
 
 // Per-lap jitter so the trail doesn't retrace an identical route every
 // cycle. Point [0] (the loop's start/end) is never jittered, so consecutive
-// laps still hand off from the exact same pixel — no seam. The radius stays
-// comfortably inside the smallest card-edge/canvas-edge margin in the point
-// tables above (28 units), so a jittered point can't flip from "outside the
-// card" to "inside" or vice versa.
-const JITTER_RADIUS = 18;
+// laps still hand off from the exact same pixel — no seam. The bulge points
+// (e.g. mobile [340,145]) sit only ~12 units from the card edge, the
+// tightest clearance in either point table, so the radius stays under that
+// to keep "outside" bulge points from jittering across the card boundary.
+const JITTER_RADIUS = 10;
 
 function jitterPoint([x, y]: Point, radius: number, width: number, height: number): Point {
   const angle = Math.random() * Math.PI * 2;
