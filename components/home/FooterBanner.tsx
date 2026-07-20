@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
 import { getThemeAccentHex } from "@/lib/siteContent";
 import { hexToRgba } from "@/lib/utils";
+import DecorativeAccents from "./snake-trail/DecorativeAccents";
 
 const CARD_CLASSES =
   "relative w-full overflow-hidden rounded-2xl bg-brand-light-gray ring-1 ring-goat-primary/15 shadow-[0_8px_30px_rgba(0,0,0,0.06)]";
@@ -75,6 +76,7 @@ export default function FooterBanner() {
             style={{ opacity: imageOpacity }}
           />
           <CardDecoration colorHex={decorationColor} />
+          <DecorativeAccents variant="mobile" colorHex={decorationColor} />
         </div>
       )}
 
@@ -90,6 +92,7 @@ export default function FooterBanner() {
             style={{ opacity: imageOpacity }}
           />
           <CardDecoration colorHex={decorationColor} />
+          <DecorativeAccents variant="tablet" colorHex={decorationColor} />
         </div>
       )}
     </div>
