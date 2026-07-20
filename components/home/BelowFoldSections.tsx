@@ -34,6 +34,11 @@ const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), {
   loading: () => <div className="min-h-[48px]" />,
 });
 
+const FooterBanner = dynamic(() => import("@/components/home/FooterBanner"), {
+  ssr: false,
+  loading: () => null,
+});
+
 export default function BelowFoldSections() {
   const { settings } = useSettings();
   const marqueeItems = parseList<string>(settings.home_marquee, DEFAULT_MARQUEE_ITEMS);
@@ -63,6 +68,9 @@ export default function BelowFoldSections() {
         dividerColor="text-white/20"
         borderColor="border-white/10"
       />
+
+      {/* 16:9 promotional banner — last section before the footer */}
+      <FooterBanner />
     </>
   );
 }

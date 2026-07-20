@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { User, LogOut, ChevronDown, Bell, Menu } from "lucide-react";
 import useSWR from "swr";
 import Link from "next/link";
+import { useAdminSidebar } from "./AdminSidebarContext";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -14,15 +15,24 @@ interface AdminTopbarProps {
 
 export default function AdminTopbar({ title }: AdminTopbarProps) {
   const { data: session } = useSession();
+  const { isCollapsed } = useAdminSidebar();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { data: messagesData } = useSWR("/api/admin/messages/unread-count", fetcher, { 
-    refreshInterval: 60000 
+  const { data: messagesData } = useSWR("/api/admin/messages/unread-count", fetcher, {
+    refreshInterval: 60000
   });
   const unreadCount = messagesData?.count || 0;
 
+  // position: fixed (not sticky) — pinned to the viewport unconditionally,
+  // regardless of any ancestor scroll-container quirks. Its left offset is
+  // synced to the sidebar's current width via shared context so it never
+  // overlaps it; the spacer div below reserves the equivalent height in
+  // normal flow so page content isn't hidden underneath.
+  const leftOffsetClass = isCollapsed ? "md:left-16" : "md:left-60";
+
   return (
-    <header className="bg-white border-b border-brand-border h-16 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
+    <>
+    <header className={`fixed top-0 left-0 right-0 ${leftOffsetClass} bg-white border-b border-brand-border h-16 px-4 md:px-6 flex items-center justify-between z-30 transition-all duration-300`}>
       <div className="flex items-center gap-3">
         {/* Mobile Sidebar Toggle */}
         <button 
@@ -101,5 +111,8 @@ export default function AdminTopbar({ title }: AdminTopbarProps) {
         </div>
       </div>
     </header>
+    {/* Spacer — reserves the fixed header's height in normal document flow */}
+    <div className="h-16 shrink-0" />
+    </>
   );
 }

@@ -17,6 +17,7 @@ export default function CheckoutPage() {
   const [formData, setFormData] = useState({
     customerName: "",
     phone: "",
+    email: "",
     address: "",
     city: "",
     pincode: "",
@@ -39,6 +40,9 @@ export default function CheckoutPage() {
       tempErrors.phone = "Mobile number is required.";
     } else if (!/^[6-9]\d{9}$/.test(formData.phone.trim())) {
       tempErrors.phone = "Enter a valid 10-digit mobile number.";
+    }
+    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      tempErrors.email = "Enter a valid email address.";
     }
     if (!formData.address.trim()) tempErrors.address = "Delivery address is required.";
     if (!formData.city.trim()) tempErrors.city = "City is required.";
@@ -119,6 +123,7 @@ export default function CheckoutPage() {
             </p>
             <p className="text-xs text-brand-gray max-w-sm mx-auto leading-relaxed">
               Thank you for supporting handcrafted art! We will contact you shortly on WhatsApp or phone to confirm shipping details and delivery date.
+              {formData.email.trim() && ` A confirmation email is also on its way to ${formData.email.trim()}.`}
             </p>
           </div>
 
@@ -226,6 +231,24 @@ export default function CheckoutPage() {
                   className={`w-full h-11 px-4 bg-brand-light-gray/30 border ${errors.phone ? "border-red-500" : "border-brand-border"} rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all`}
                 />
                 {errors.phone && <p className="text-xs font-medium text-red-500">{errors.phone}</p>}
+              </div>
+
+              {/* Email Address */}
+              <div className="space-y-1.5">
+                <div className="flex items-baseline justify-between">
+                  <label htmlFor="email" className="text-xs font-bold text-brand-black uppercase">Email Address</label>
+                  <span className="text-[10px] text-brand-gray">Optional</span>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="you@example.com — for an order confirmation email"
+                  className={`w-full h-11 px-4 bg-brand-light-gray/30 border ${errors.email ? "border-red-500" : "border-brand-border"} rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all`}
+                />
+                {errors.email && <p className="text-xs font-medium text-red-500">{errors.email}</p>}
               </div>
 
               {/* Address */}

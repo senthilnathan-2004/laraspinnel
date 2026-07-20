@@ -1,55 +1,70 @@
-export function getCustomerContactConfirmationEmailHtml(message: any): string {
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
-  
+import {
+  DEFAULT_CONTACT_CONFIRMATION_SUBJECT_TEMPLATE,
+  DEFAULT_CONTACT_CONFIRMATION_INTRO_TEMPLATE,
+  DEFAULT_CONTACT_CONFIRMATION_FOOTER_TEMPLATE,
+  renderEmailText,
+} from "@/lib/emailTemplate";
 
-  return `
+interface ContactMessageInput {
+  name: string;
+  subject: string;
+  message: string;
+}
+
+interface GetContactConfirmationEmailOptions {
+  shopName: string;
+  subjectTemplate?: string;
+  introTemplate?: string;
+  footerTemplate?: string;
+}
+
+// Renders the "we received your message" email sent back to whoever submits
+// the public contact form — same admin-editable-text pattern as the order
+// emails: fixed layout, editable subject/intro/footer.
+export function getContactConfirmationEmail(
+  contact: ContactMessageInput,
+  { shopName, subjectTemplate, introTemplate, footerTemplate }: GetContactConfirmationEmailOptions
+): { subject: string; html: string } {
+  const data = {
+    customerName: contact.name,
+    shopName,
+    messageSubject: contact.subject,
+  };
+
+  const subject = renderEmailText(subjectTemplate || DEFAULT_CONTACT_CONFIRMATION_SUBJECT_TEMPLATE, data);
+  const intro = renderEmailText(introTemplate || DEFAULT_CONTACT_CONFIRMATION_INTRO_TEMPLATE, data);
+  const footer = renderEmailText(footerTemplate || DEFAULT_CONTACT_CONFIRMATION_FOOTER_TEMPLATE, data);
+
+  const html = `
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>We've Received Your Message - Lara's Pinnal</title>
-      <style>
-        body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
-        .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .header { background-color: #111111; color: #ffffff; padding: 24px; text-align: center; border-top: 4px solid #1E8A4C; }
-        .header img { max-height: 60px; margin-bottom: 12px; border-radius: 8px; }
-        .header h1 { margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; color: #1E8A4C; }
-        .content { padding: 24px; }
-        .message-box { background-color: #f9fafb; border-left: 4px solid #1E8A4C; padding: 16px; border-radius: 0 8px 8px 0; font-size: 14px; margin: 16px 0; white-space: pre-wrap; font-style: italic; color: #4b5563; }
-        .footer { background-color: #f9fafb; border-top: 1px solid #e5e7eb; color: #6b7280; text-align: center; padding: 16px; font-size: 11px; }
-        
-        @media only screen and (max-width: 600px) {
-          .container { margin: 10px; border-radius: 8px; }
-          .header { padding: 16px 12px; }
-          .content { padding: 16px 12px; }
-        }
-      </style>
+      <title>${subject}</title>
     </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          
-          <h1>Message Received</h1>
+    <body style="font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7;">
+      <div style="max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
+        <div style="background-color: #8FA88A; color: #ffffff; padding: 24px; text-align: center;">
+          <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Message Received</h1>
         </div>
-        <div class="content">
-          <p>Dear ${message.name},</p>
-          <p>Thank you for reaching out to Lara's Pinnal. This email is to confirm that we have successfully received your message.</p>
-          <p>Our team will review your inquiry and get back to you as soon as possible.</p>
+        <div style="padding: 24px;">
+          <p style="white-space: pre-line;">${intro}</p>
 
-          <h3 style="font-size: 14px; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin-top: 24px; margin-bottom: 12px; font-weight: bold;">Your Message Summary</h3>
-          <div style="font-size: 14px;"><strong>Subject:</strong> ${message.subject}</div>
-          <div class="message-box">${message.message}</div>
+          <div style="background-color: #F7F7F7; border-left: 4px solid #8FA88A; border-radius: 6px; padding: 14px 16px; margin: 20px 0;">
+            <p style="margin: 0 0 4px 0; font-size: 11px; text-transform: uppercase; color: #6b7280; font-weight: bold;">Your Message — ${contact.subject}</p>
+            <p style="margin: 0; font-size: 13px; color: #374151; white-space: pre-wrap;">${contact.message}</p>
+          </div>
 
-          <p style="font-size: 12px; color: #6b7280; margin-top: 24px;">
-            If you need immediate assistance, please call or WhatsApp us at +91 9442379832.
-          </p>
+          <p style="white-space: pre-line; font-size: 13px; color: #374151; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">${footer}</p>
         </div>
-        <div class="footer">
-          <p>Lara's Pinnal &middot; Tamil Nadu, India &copy; ${new Date().getFullYear()}</p>
+        <div style="background-color: #111111; color: #9ca3af; text-align: center; padding: 16px; font-size: 11px;">
+          <p style="margin: 0;">${shopName} &copy; ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>
     </html>
   `;
+
+  return { subject, html };
 }

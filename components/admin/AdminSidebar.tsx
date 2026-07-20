@@ -18,8 +18,11 @@ import {
   ChevronRight,
   Quote,
   LayoutTemplate,
+  Mail,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import useSWR from "swr";
+import { useAdminSidebar } from "./AdminSidebarContext";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -32,7 +35,7 @@ interface SidebarItem {
 
 export default function AdminSidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed, setIsCollapsed } = useAdminSidebar();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -86,6 +89,21 @@ export default function AdminSidebar() {
       href: "/admin/messages",
       icon: <MessageSquare size={18} />,
       badge: unreadCount,
+    },
+    {
+      name: "WhatsApp Message",
+      href: "/admin/whatsapp",
+      icon: <FaWhatsapp size={18} />,
+    },
+    {
+      name: "Order Email",
+      href: "/admin/order-email",
+      icon: <Mail size={18} />,
+    },
+    {
+      name: "Contact Email",
+      href: "/admin/contact-email",
+      icon: <MessageSquare size={18} />,
     },
     {
       name: "Testimonials",
@@ -153,7 +171,12 @@ export default function AdminSidebar() {
           {/* Navigation Items */}
           <nav className="p-3 space-y-1">
             {sidebarItems.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+              // The dashboard root ("/admin") is a prefix of every other admin route, so it
+              // must match exactly — otherwise it lights up as active on every sub-page too.
+              const isActive =
+                item.href === "/admin"
+                  ? pathname === "/admin"
+                  : pathname === item.href || pathname.startsWith(item.href + "/");
               return (
                 <Link
                   key={item.name}

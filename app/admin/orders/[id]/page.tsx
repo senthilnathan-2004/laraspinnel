@@ -7,7 +7,12 @@ import Image from "next/image";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import CustomSelect from "@/components/shared/CustomSelect";
 import StatusBadge, { OrderStatus } from "@/components/admin/StatusBadge";
-import { ArrowLeft, Save, Calendar, Phone, MapPin, User, FileText, ShoppingCart } from "lucide-react";
+import TypeToConfirmDialog from "@/components/admin/TypeToConfirmDialog";
+import { useToast } from "@/components/admin/Toast";
+import { useSettings } from "@/hooks/useSettings";
+import { ArrowLeft, Save, Calendar, Phone, MapPin, User, FileText, ShoppingCart, Trash2 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
+import { DEFAULT_WHATSAPP_ORDER_TEMPLATE, renderWhatsAppTemplate, getWhatsAppLink } from "@/lib/whatsappTemplate";
 
 interface OrderItem {
   productId: string;
@@ -24,6 +29,7 @@ interface Order {
   orderNumber: string;
   customerName: string;
   phone: string;
+  email?: string;
   address: string;
   city: string;
   pincode: string;
@@ -35,10 +41,24 @@ interface Order {
   updatedAt: string;
 }
 
+// Renders the admin-configurable WhatsApp template (falls back to the
+// default) with this order's real data substituted in.
+function buildWhatsAppMessage(order: Order, shopName: string, template: string): string {
+  return renderWhatsAppTemplate(template || DEFAULT_WHATSAPP_ORDER_TEMPLATE, {
+    customerName: order.customerName,
+    shopName,
+    orderNumber: order.orderNumber,
+    items: order.items,
+    totalAmount: order.totalAmount,
+  });
+}
+
 export default function OrderDetailPage() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
+  const { settings } = useSettings();
+  const { showToast } = useToast();
 
   const [order, setOrder] = useState<Order | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus>("pending");
@@ -46,6 +66,8 @@ export default function OrderDetailPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchOrderDetails = async () => {
     setIsLoading(true);
@@ -98,6 +120,27 @@ export default function OrderDetailPage() {
       setError("Failed to update status");
     } finally {
       setIsUpdating(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!order) return;
+
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/orders/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        showToast(`Order ${order.orderNumber} deleted successfully.`, { variant: "success" });
+        router.push("/admin/orders");
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast(data.error || "Failed to delete order.", { variant: "error" });
+      }
+    } catch (err) {
+      showToast("Failed to delete order.", { variant: "error" });
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteConfirm(false);
     }
   };
 
@@ -248,6 +291,29 @@ export default function OrderDetailPage() {
                       <Phone size={13} /> {order.phone}
                     </a>
                   </div>
+                  {order.email && (
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold text-brand-gray uppercase block">Email Address</span>
+                      <a href={`mailto:${order.email}`} className="font-semibold text-goat-primary hover:underline break-all">
+                        {order.email}
+                      </a>
+                    </div>
+                  )}
+                  <a
+                    href={getWhatsAppLink(
+                      order.phone,
+                      buildWhatsAppMessage(
+                        order,
+                        settings.farm_name || "Lara's Pinnal",
+                        settings.whatsapp_order_template || DEFAULT_WHATSAPP_ORDER_TEMPLATE
+                      )
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-[#25D366] hover:bg-[#1DA851] text-white font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm text-sm"
+                  >
+                    <FaWhatsapp size={17} /> Message on WhatsApp
+                  </a>
                   <div className="space-y-1">
                     <span className="text-[10px] font-bold text-brand-gray uppercase block">Delivery Address</span>
                     <span className="text-brand-black font-semibold flex items-start gap-1">
@@ -303,10 +369,43 @@ export default function OrderDetailPage() {
                   </p>
                 )}
               </div>
+
+              {/* Danger Zone Card */}
+              <div className="bg-white border border-red-200 rounded-2xl p-5 space-y-3 shadow-card">
+                <h3 className="font-bold text-sm text-red-600 uppercase tracking-wider border-b border-red-100 pb-3 flex items-center gap-2">
+                  <Trash2 size={18} /> Danger Zone
+                </h3>
+                <p className="text-xs text-brand-gray">
+                  Permanently delete this order and its record. This cannot be undone.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 text-sm"
+                >
+                  <Trash2 size={16} /> Delete Order
+                </button>
+              </div>
             </div>
           </div>
         )}
       </div>
+
+      <TypeToConfirmDialog
+        isOpen={showDeleteConfirm}
+        title="Delete this order?"
+        message={
+          order
+            ? `This will permanently delete order ${order.orderNumber} for ${order.customerName}. This cannot be undone.`
+            : ""
+        }
+        confirmWord={order?.orderNumber || ""}
+        confirmLabel="Delete Order"
+        cancelLabel="Cancel"
+        isLoading={isDeleting}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteConfirm(false)}
+      />
     </div>
   );
 }

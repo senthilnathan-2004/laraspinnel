@@ -5,6 +5,7 @@ import { connectToDatabase } from "@/lib/db";
 import Product from "@/models/Product";
 import { productSchema } from "@/lib/validations";
 import { slugify } from "@/lib/utils";
+import { deleteImageByUrl } from "@/lib/imagekit";
 
 export async function GET(
   req: NextRequest,
@@ -101,6 +102,13 @@ export async function DELETE(
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
+
+    // Free up ImageKit storage — best-effort, never blocks the delete response.
+    await Promise.all(
+      (product.images || []).map((url: string) =>
+        deleteImageByUrl(url).catch((err) => console.error("Failed to delete product image from ImageKit:", err))
+      )
+    );
 
     return NextResponse.json({ message: "Product deleted successfully" });
   } catch (error: any) {

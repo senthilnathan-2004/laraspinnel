@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/db";
 import Banner from "@/models/Banner";
 import { bannerSchema } from "@/lib/validations";
+import { deleteImageByUrl } from "@/lib/imagekit";
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -69,6 +70,13 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     const banner = await Banner.findByIdAndDelete(id);
     if (!banner) {
       return NextResponse.json({ error: "Banner not found" }, { status: 444 });
+    }
+
+    // Free up ImageKit storage — best-effort, never blocks the delete response.
+    if (banner.imageUrl) {
+      await deleteImageByUrl(banner.imageUrl).catch((err) =>
+        console.error("Failed to delete banner image from ImageKit:", err)
+      );
     }
 
     return NextResponse.json({ message: "Banner deleted successfully" });

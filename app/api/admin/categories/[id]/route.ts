@@ -6,6 +6,7 @@ import Category from "@/models/Category";
 import Product from "@/models/Product";
 import { categorySchema } from "@/lib/validations";
 import { slugify } from "@/lib/utils";
+import { deleteImageByUrl } from "@/lib/imagekit";
 
 export async function GET(
   req: NextRequest,
@@ -110,6 +111,13 @@ export async function DELETE(
 
     if (!category) {
       return NextResponse.json({ error: "Category not found" }, { status: 404 });
+    }
+
+    // Free up ImageKit storage — best-effort, never blocks the delete response.
+    if (category.image) {
+      await deleteImageByUrl(category.image).catch((err) =>
+        console.error("Failed to delete category image from ImageKit:", err)
+      );
     }
 
     return NextResponse.json({ message: "Category deleted successfully" });

@@ -64,6 +64,11 @@
   --radius-chip: 8px;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   background-color: var(--color-cream-bg);
   color: var(--color-brand-black);
@@ -76,10 +81,15 @@ h1, h2, h3, h4, h5, h6, .font-display {
   font-weight: 800;
 }
 
-/* Custom scrollbar matching premium theme */
+/* Custom scrollbar matching premium theme — thin, on every page (public + admin) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-border) var(--color-cream-bg);
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {

@@ -1,97 +1,99 @@
-export function getCustomerStatusUpdateEmailHtml(booking: any): string {
-  const isGoat = booking.productType === "goat";
-  const themeColor = isGoat ? "#1E8A4C" : "#C0392B";
-  
-  const statusColors = {
-    pending: "#eab308",
-    confirmed: "#1E8A4C",
-    cancelled: "#ef4444",
-    completed: "#3b82f6",
-  };
-  
-  const statusLabels = {
-    pending: "Pending",
-    confirmed: "Confirmed",
-    cancelled: "Cancelled",
-    completed: "Completed",
+import {
+  DEFAULT_STATUS_EMAIL_SUBJECT_TEMPLATE,
+  DEFAULT_STATUS_EMAIL_INTRO_TEMPLATE,
+  DEFAULT_STATUS_EMAIL_FOOTER_TEMPLATE,
+  renderEmailText,
+} from "@/lib/emailTemplate";
+
+type OrderStatus = "pending" | "confirmed" | "preparing" | "ready" | "delivered" | "cancelled";
+
+const STATUS_LABELS: Record<OrderStatus, string> = {
+  pending: "Pending Verification",
+  confirmed: "Confirmed",
+  preparing: "Preparing / Crafting",
+  ready: "Ready to Ship",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+};
+
+const STATUS_COLORS: Record<OrderStatus, string> = {
+  pending: "#eab308",
+  confirmed: "#8FA88A",
+  preparing: "#3b82f6",
+  ready: "#8FA88A",
+  delivered: "#111111",
+  cancelled: "#ef4444",
+};
+
+interface StatusUpdateOrder {
+  orderNumber: string;
+  customerName: string;
+  status: OrderStatus;
+}
+
+interface GetStatusUpdateEmailOptions {
+  shopName: string;
+  subjectTemplate?: string;
+  introTemplate?: string;
+  footerTemplate?: string;
+}
+
+// Renders the order status-update email — same pattern as the order
+// confirmation email: fixed HTML layout, admin-editable text blocks.
+export function getOrderStatusUpdateEmail(
+  order: StatusUpdateOrder,
+  { shopName, subjectTemplate, introTemplate, footerTemplate }: GetStatusUpdateEmailOptions
+): { subject: string; html: string } {
+  const statusLabel = STATUS_LABELS[order.status] || order.status;
+  const statusColor = STATUS_COLORS[order.status] || "#111111";
+
+  const data = {
+    customerName: order.customerName,
+    shopName,
+    orderNumber: order.orderNumber,
+    totalAmount: 0,
+    statusLabel,
   };
 
-  const currentStatusColor = statusColors[booking.status as keyof typeof statusColors] || themeColor;
-  const currentStatusLabel = statusLabels[booking.status as keyof typeof statusLabels] || booking.status;
-  
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
-  
+  const subject = renderEmailText(subjectTemplate || DEFAULT_STATUS_EMAIL_SUBJECT_TEMPLATE, data);
+  const intro = renderEmailText(introTemplate || DEFAULT_STATUS_EMAIL_INTRO_TEMPLATE, data);
+  const footer = renderEmailText(footerTemplate || DEFAULT_STATUS_EMAIL_FOOTER_TEMPLATE, data);
 
-  return `
+  const html = `
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Order Status Update - Lara's Pinnal</title>
-      <style>
-        body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
-        .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .header { background-color: #111111; color: #ffffff; padding: 24px; text-align: center; border-top: 4px solid ${currentStatusColor}; }
-        .header img { max-height: 60px; margin-bottom: 12px; border-radius: 8px; }
-        .header h1 { margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; color: ${currentStatusColor}; }
-        .content { padding: 24px; }
-        .ref-card { background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 24px; }
-        .ref-label { font-size: 10px; text-transform: uppercase; color: #6b7280; font-weight: bold; }
-        .ref-val { font-family: monospace; font-size: 18px; font-weight: bold; color: #111111; margin-top: 4px; display: block; }
-        .status-badge { display: inline-block; padding: 4px 12px; background-color: ${currentStatusColor}; color: white; border-radius: 4px; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-top: 12px; }
-        .section-title { font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin-top: 24px; margin-bottom: 12px; font-weight: bold; }
-        .notes-box { background-color: #f3f4f6; border-left: 4px solid #111; color: #374151; padding: 12px 16px; font-size: 13px; margin: 16px 0; }
-        .footer { background-color: #111111; color: #9ca3af; text-align: center; padding: 16px; font-size: 11px; }
-        
-        @media only screen and (max-width: 600px) {
-          .container { margin: 10px; border-radius: 8px; }
-          .header { padding: 16px 12px; }
-          .content { padding: 16px 12px; }
-          .ref-card { padding: 12px; }
-        }
-      </style>
+      <title>${subject}</title>
     </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          
-          <h1>Booking Status Update</h1>
+    <body style="font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7;">
+      <div style="max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; border-top: 4px solid ${statusColor};">
+        <div style="background-color: #111111; color: #ffffff; padding: 24px; text-align: center;">
+          <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Order Status Update</h1>
         </div>
-        <div class="content">
-          <p>Dear ${booking.customerName},</p>
-          <p>The status of your order with Lara's Pinnal has been updated.</p>
+        <div style="padding: 24px;">
+          <p style="white-space: pre-line;">${intro}</p>
 
-          <div class="ref-card">
-            <span class="ref-label">Your Reference ID</span>
-            <span class="ref-val">${booking.bookingRefId}</span>
-            <span class="status-badge">${currentStatusLabel}</span>
+          <div style="background-color: #F7F7F7; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; margin: 20px 0;">
+            <span style="font-size: 10px; text-transform: uppercase; color: #6b7280; font-weight: bold;">Order Reference</span>
+            <span style="font-family: monospace; font-size: 18px; font-weight: bold; color: #111111; margin-top: 4px; display: block;">
+              #${order.orderNumber}
+            </span>
+            <span style="display: inline-block; margin-top: 12px; padding: 4px 12px; background-color: ${statusColor}; color: #ffffff; border-radius: 4px; font-weight: bold; font-size: 12px; text-transform: uppercase;">
+              ${statusLabel}
+            </span>
           </div>
 
-          ${booking.status === "confirmed" ? `
-          <p style="font-size: 14px; font-weight: bold; color: #166534;">Great news! Your booking has been confirmed and scheduled for delivery/pickup.</p>
-          ` : ""}
-          
-          ${booking.status === "cancelled" ? `
-          <p style="font-size: 14px; font-weight: bold; color: #991b1b;">Your booking has been cancelled. If this was a mistake, please contact us.</p>
-          ` : ""}
-
-          ${booking.adminNotes ? `
-          <h3 class="section-title">Message from Admin</h3>
-          <div class="notes-box">
-            ${booking.adminNotes}
-          </div>
-          ` : ""}
-
-          <p style="font-size: 12px; color: #6b7280; margin-top: 24px;">
-            If you have any questions, please call or WhatsApp us at +91 9442379832.
-          </p>
+          <p style="white-space: pre-line; font-size: 13px; color: #374151; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">${footer}</p>
         </div>
-        <div class="footer">
-          <p>Lara's Pinnal &middot; Tamil Nadu, India &copy; ${new Date().getFullYear()}</p>
+        <div style="background-color: #111111; color: #9ca3af; text-align: center; padding: 16px; font-size: 11px;">
+          <p style="margin: 0;">${shopName} &copy; ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>
     </html>
   `;
+
+  return { subject, html };
 }

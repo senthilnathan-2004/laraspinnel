@@ -1,108 +1,130 @@
-export function getCustomerConfirmationEmailHtml(booking: any): string {
-  const isGoat = booking.productType === "goat";
-  const themeColor = isGoat ? "#1E8A4C" : "#C0392B";
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://laraspinnal.com";
-   // Fallback to local logo
+import {
+  DEFAULT_EMAIL_SUBJECT_TEMPLATE,
+  DEFAULT_EMAIL_INTRO_TEMPLATE,
+  DEFAULT_EMAIL_FOOTER_TEMPLATE,
+  renderEmailText,
+} from "@/lib/emailTemplate";
 
-  return `
+interface OrderConfirmationOrder {
+  orderNumber: string;
+  customerName: string;
+  address: string;
+  city: string;
+  pincode: string;
+  totalAmount: number;
+  items: {
+    name: string;
+    price: number;
+    quantity: number;
+    customText?: string;
+  }[];
+}
+
+interface GetOrderConfirmationEmailOptions {
+  shopName: string;
+  subjectTemplate?: string;
+  introTemplate?: string;
+  footerTemplate?: string;
+}
+
+function buildItemsTableRows(items: OrderConfirmationOrder["items"]): string {
+  return items
+    .map(
+      (item) => `
+        <tr>
+          <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
+            <div style="font-weight: bold; color: #111111; font-size: 13px;">${item.name}</div>
+            ${item.customText ? `<div style="font-size: 11px; color: #56695A; font-style: italic; margin-top: 2px;">Customization: ${item.customText}</div>` : ""}
+          </td>
+          <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; text-align: center; font-size: 13px; color: #111111;">
+            ${item.quantity}
+          </td>
+          <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: bold; font-size: 13px; color: #111111;">
+            ₹${item.price * item.quantity}
+          </td>
+        </tr>`
+    )
+    .join("");
+}
+
+// Renders the customer order-confirmation email — a fixed HTML layout
+// (safe from admin typos) with three text blocks (subject/intro/footer)
+// substituted from admin-editable templates, defaulting when unset.
+export function getOrderConfirmationEmail(
+  order: OrderConfirmationOrder,
+  { shopName, subjectTemplate, introTemplate, footerTemplate }: GetOrderConfirmationEmailOptions
+): { subject: string; html: string } {
+  const data = {
+    customerName: order.customerName,
+    shopName,
+    orderNumber: order.orderNumber,
+    totalAmount: order.totalAmount,
+  };
+
+  const subject = renderEmailText(subjectTemplate || DEFAULT_EMAIL_SUBJECT_TEMPLATE, data);
+  const intro = renderEmailText(introTemplate || DEFAULT_EMAIL_INTRO_TEMPLATE, data);
+  const footer = renderEmailText(footerTemplate || DEFAULT_EMAIL_FOOTER_TEMPLATE, data);
+
+  const html = `
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Your Order Confirmation - Lara's Pinnal</title>
-      <style>
-        body { font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7; }
-        .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .header { background-color: ${themeColor}; color: #ffffff; padding: 24px; text-align: center; }
-        .header img { max-height: 60px; margin-bottom: 12px; border-radius: 8px; }
-        .header h1 { margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        .content { padding: 24px; }
-        .ref-card { background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 24px; }
-        .ref-label { font-size: 10px; text-transform: uppercase; color: #6b7280; font-weight: bold; }
-        .ref-val { font-family: monospace; font-size: 18px; font-weight: bold; color: #111111; margin-top: 4px; display: block; }
-        .section-title { font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin-top: 24px; margin-bottom: 12px; font-weight: bold; }
-        .data-grid { display: table; width: 100%; }
-        .data-row { display: table-row; }
-        .data-label { display: table-cell; padding: 6px 0; color: #6b7280; font-size: 13px; width: 40%; font-weight: 500; }
-        .data-value { display: table-cell; padding: 6px 0; font-weight: bold; color: #111111; font-size: 13px; }
-        .info-box { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 12px; border-radius: 8px; font-size: 13px; margin: 16px 0; }
-        .footer { background-color: #111111; color: #9ca3af; text-align: center; padding: 16px; font-size: 11px; }
-        
-        @media only screen and (max-width: 600px) {
-          .container { margin: 10px; border-radius: 8px; }
-          .header { padding: 16px 12px; }
-          .content { padding: 16px 12px; }
-          .ref-card { padding: 12px; }
-        }
-      </style>
+      <title>${subject}</title>
     </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          
-          <h1>Order Request Received</h1>
+    <body style="font-family: sans-serif; color: #111111; line-height: 1.5; margin: 0; padding: 0; background-color: #f7f7f7;">
+      <div style="max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
+        <div style="background-color: #8FA88A; color: #ffffff; padding: 24px; text-align: center;">
+          <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Order Confirmation</h1>
         </div>
-        <div class="content">
-          <p>Dear ${booking.customerName},</p>
-          <p>We have successfully received your handmade crochet gift order request. Here is a summary of your order details:</p>
+        <div style="padding: 24px;">
+          <p style="white-space: pre-line;">${intro}</p>
 
-          <div class="ref-card">
-            <span class="ref-label">Your Reference ID</span>
-            <span class="ref-val">${booking.bookingRefId}</span>
+          <div style="background-color: #F7F7F7; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; margin: 20px 0;">
+            <span style="font-size: 10px; text-transform: uppercase; color: #6b7280; font-weight: bold;">Order Reference</span>
+            <span style="font-family: monospace; font-size: 18px; font-weight: bold; color: #111111; margin-top: 4px; display: block;">
+              #${order.orderNumber}
+            </span>
           </div>
 
-          <div class="info-box">
-            <strong>What's Next?</strong><br>
-            Our order coordinator will call you shortly on <strong>${booking.phone}</strong> to confirm your customization details, schedule, and finalize delivery arrangements.
+          <h3 style="font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; font-weight: bold;">
+            Ordered Items
+          </h3>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 8px;">
+            <thead>
+              <tr>
+                <th style="text-align: left; font-size: 11px; color: #6b7280; padding-bottom: 6px;">Product</th>
+                <th style="text-align: center; font-size: 11px; color: #6b7280; padding-bottom: 6px;">Qty</th>
+                <th style="text-align: right; font-size: 11px; color: #6b7280; padding-bottom: 6px;">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${buildItemsTableRows(order.items)}
+            </tbody>
+          </table>
+
+          <div style="display: flex; justify-content: space-between; padding-top: 16px; font-size: 15px; font-weight: bold;">
+            <span>Total Amount</span>
+            <span>₹${order.totalAmount}</span>
           </div>
 
-          <h3 class="section-title">Order Details</h3>
-          <div class="data-grid">
-            <div class="data-row">
-              <div class="data-label">Product Type:</div>
-              <div class="data-value">${isGoat ? "Crochet Bouquet" : "Gift Hamper"}</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Variety/Pack:</div>
-              <div class="data-value">${booking.varietyOrPackName}</div>
-            </div>
-            ${booking.weightSelection ? `
-            <div class="data-row">
-              <div class="data-label">Weight/KG:</div>
-              <div class="data-value">${booking.weightSelection}</div>
-            </div>` : ""}
-            <div class="data-row">
-              <div class="data-label">Quantity:</div>
-              <div class="data-value">${booking.quantity}</div>
-            </div>
-            <div class="data-row">
-              <div class="data-label">Preferred Date:</div>
-              <div class="data-value">
-                ${new Date(booking.preferredDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}
-              </div>
-            </div>
-            ${booking.deliveryTiming ? `
-            <div class="data-row">
-              <div class="data-label">Delivery Timing:</div>
-              <div class="data-value">${booking.deliveryTiming}</div>
-            </div>` : ""}
-            ${booking.district ? `
-            <div class="data-row">
-              <div class="data-label">District:</div>
-              <div class="data-value">${booking.district}</div>
-            </div>` : ""}
-          </div>
-
-          <p style="font-size: 12px; color: #6b7280; margin-top: 24px;">
-            If you need to make changes to your booking, please call or WhatsApp us at +91 9442379832.
+          <h3 style="font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin-top: 24px; font-weight: bold;">
+            Delivery Address
+          </h3>
+          <p style="font-size: 13px; color: #111111; margin-top: 8px;">
+            ${order.address}, ${order.city} - ${order.pincode}
           </p>
+
+          <p style="white-space: pre-line; font-size: 13px; color: #374151; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">${footer}</p>
         </div>
-        <div class="footer">
-          <p>Lara's Pinnal &middot; Tamil Nadu, India &copy; ${new Date().getFullYear()}</p>
+        <div style="background-color: #111111; color: #9ca3af; text-align: center; padding: 16px; font-size: 11px;">
+          <p style="margin: 0;">${shopName} &copy; ${new Date().getFullYear()}</p>
         </div>
       </div>
     </body>
     </html>
   `;
+
+  return { subject, html };
 }

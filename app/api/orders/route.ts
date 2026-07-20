@@ -6,6 +6,8 @@ import { orderSchema } from "@/lib/validations";
 import { generateRefId } from "@/lib/utils";
 import { formRateLimit } from "@/lib/rateLimit";
 import SiteSettings from "@/models/SiteSettings";
+import { sendEmail } from "@/lib/email/sendEmail";
+import { getOrderConfirmationEmail } from "@/lib/email/customerConfirmation";
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,7 +34,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { customerName, phone, address, city, pincode, notes, items } = result.data;
+    const { customerName, phone, email, address, city, pincode, notes, items } = result.data;
 
     // Verify stock and update product quantities in a loop/transaction
     let totalAmount = 0;
@@ -75,6 +77,7 @@ export async function POST(req: NextRequest) {
       orderNumber,
       customerName,
       phone,
+      email: email?.trim() || undefined,
       address,
       city,
       pincode,
@@ -91,8 +94,35 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Retrieve admin email from settings to log alert (emails can be dispatched here optionally)
     console.log(`Order created successfully: ${orderNumber}. Total: ₹${totalAmount}`);
+
+    // Send the customer a confirmation email if they provided one.
+    // Best-effort — a failed/misconfigured email must never fail the order itself.
+    if (email?.trim()) {
+      try {
+        const settingsList = await SiteSettings.find({
+          key: { $in: ["farm_name", "email_order_subject", "email_order_intro", "email_order_footer"] },
+        }).lean();
+        const settingsMap = settingsList.reduce((acc: Record<string, string>, s: any) => {
+          acc[s.key] = s.value;
+          return acc;
+        }, {});
+
+        const { subject, html } = getOrderConfirmationEmail(
+          { orderNumber, customerName, address, city, pincode, totalAmount, items: finalItems },
+          {
+            shopName: settingsMap.farm_name || "Lara's Pinnal",
+            subjectTemplate: settingsMap.email_order_subject,
+            introTemplate: settingsMap.email_order_intro,
+            footerTemplate: settingsMap.email_order_footer,
+          }
+        );
+
+        await sendEmail({ to: email.trim(), subject, html });
+      } catch (emailError) {
+        console.error("Order confirmation email failed to send:", emailError);
+      }
+    }
 
     return NextResponse.json(
       { message: "Order placed successfully", orderNumber, id: order._id },

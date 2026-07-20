@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import AdminTopbar from "@/components/admin/AdminTopbar";
-import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import TypeToConfirmDialog from "@/components/admin/TypeToConfirmDialog";
 import CustomSelect from "@/components/shared/CustomSelect";
 import { useToast } from "@/components/admin/Toast";
 import { Plus, Search, Pencil, Trash2, ShoppingBag, FolderOpen } from "lucide-react";
@@ -35,6 +35,7 @@ export default function AdminProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [isDeletingSingle, setIsDeletingSingle] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [confirmBulk, setConfirmBulk] = useState(false);
   const [isBulkDeleting, setIsBulkDeleting] = useState(false);
@@ -118,7 +119,8 @@ export default function AdminProductsPage() {
   const doDelete = async () => {
     if (!confirmDeleteId) return;
     const id = confirmDeleteId;
-    setConfirmDeleteId(null);
+
+    setIsDeletingSingle(true);
     try {
       const res = await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
       const data = await res.json();
@@ -130,6 +132,9 @@ export default function AdminProductsPage() {
       }
     } catch (err) {
       showToast("Failed to delete product", { variant: "error" });
+    } finally {
+      setIsDeletingSingle(false);
+      setConfirmDeleteId(null);
     }
   };
 
@@ -157,7 +162,6 @@ export default function AdminProductsPage() {
   const clearSelection = () => setSelectedIds(new Set());
 
   const doBulkDelete = async () => {
-    setConfirmBulk(false);
     const ids = Array.from(selectedIds);
     if (ids.length === 0) return;
 
@@ -188,25 +192,34 @@ export default function AdminProductsPage() {
       }
     } finally {
       setIsBulkDeleting(false);
+      setConfirmBulk(false);
     }
   };
 
   return (
     <div className="flex-1 flex flex-col min-h-screen">
-      <ConfirmDialog
+      <TypeToConfirmDialog
         isOpen={!!confirmDeleteId}
-        title="Delete Product"
-        message="Are you sure you want to delete this product? This action cannot be undone."
-        confirmLabel="Delete"
+        title="Delete this product?"
+        message={
+          confirmDeleteId
+            ? `This will permanently delete "${products.find((p) => p._id === confirmDeleteId)?.name || "this product"}". This cannot be undone.`
+            : ""
+        }
+        confirmWord={products.find((p) => p._id === confirmDeleteId)?.name || ""}
+        confirmLabel="Delete Product"
+        isLoading={isDeletingSingle}
         onConfirm={doDelete}
         onCancel={() => setConfirmDeleteId(null)}
       />
 
-      <ConfirmDialog
+      <TypeToConfirmDialog
         isOpen={confirmBulk}
-        title="Delete Selected Products"
-        message={`Are you sure you want to delete ${selectedIds.size} selected product(s)? This action cannot be undone.`}
-        confirmLabel="Delete All"
+        title="Delete selected products?"
+        message={`This will permanently delete ${selectedIds.size} selected product(s). This cannot be undone.`}
+        confirmWord="DELETE"
+        confirmLabel={`Delete ${selectedIds.size} Product(s)`}
+        isLoading={isBulkDeleting}
         onConfirm={doBulkDelete}
         onCancel={() => setConfirmBulk(false)}
       />

@@ -5,8 +5,9 @@ import Link from "next/link";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import CustomSelect from "@/components/shared/CustomSelect";
 import StatusBadge, { OrderStatus } from "@/components/admin/StatusBadge";
+import TypeToConfirmDialog from "@/components/admin/TypeToConfirmDialog";
 import { useToast } from "@/components/admin/Toast";
-import { Search, FileText, Phone, CalendarDays, RefreshCw, X } from "lucide-react";
+import { Search, FileText, Phone, CalendarDays, RefreshCw, X, Trash2 } from "lucide-react";
 
 // Selectable order statuses (shared by the filter and the bulk-update bar).
 const STATUS_CHOICES: { label: string; value: OrderStatus }[] = [
@@ -43,6 +44,10 @@ export default function AdminOrdersPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkStatus, setBulkStatus] = useState<OrderStatus>("confirmed");
   const [isBulkUpdating, setIsBulkUpdating] = useState(false);
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
+  const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
+  const [orderPendingDelete, setOrderPendingDelete] = useState<Order | null>(null);
+  const [isDeletingSingle, setIsDeletingSingle] = useState(false);
 
   const fetchOrders = async () => {
     setIsLoading(true);
@@ -197,6 +202,68 @@ export default function AdminOrdersPage() {
     }
   };
 
+  const doBulkDelete = async () => {
+    const ids = Array.from(selectedIds);
+    if (ids.length === 0) return;
+
+    setIsBulkDeleting(true);
+    try {
+      const results = await Promise.all(
+        ids.map((id) =>
+          fetch(`/api/admin/orders/${id}`, { method: "DELETE" })
+            .then((res) => ({ id, ok: res.ok }))
+            .catch(() => ({ id, ok: false }))
+        )
+      );
+
+      const deletedIds = new Set(results.filter((r) => r.ok).map((r) => r.id));
+      const failedCount = results.length - deletedIds.size;
+
+      if (deletedIds.size > 0) {
+        setOrders((prev) => prev.filter((o) => !deletedIds.has(o._id)));
+      }
+      setSelectedIds((prev) => new Set(Array.from(prev).filter((id) => !deletedIds.has(id))));
+
+      if (failedCount > 0) {
+        showToast(`${failedCount} order(s) could not be deleted. Please try again.`, {
+          variant: "error",
+        });
+      } else if (deletedIds.size > 0) {
+        showToast(`${deletedIds.size} order(s) deleted successfully.`, { variant: "success" });
+      }
+    } finally {
+      setIsBulkDeleting(false);
+      setShowBulkDeleteConfirm(false);
+    }
+  };
+
+  const doDeleteSingle = async () => {
+    if (!orderPendingDelete) return;
+    const order = orderPendingDelete;
+
+    setIsDeletingSingle(true);
+    try {
+      const res = await fetch(`/api/admin/orders/${order._id}`, { method: "DELETE" });
+      if (res.ok) {
+        setOrders((prev) => prev.filter((o) => o._id !== order._id));
+        setSelectedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(order._id);
+          return next;
+        });
+        showToast(`Order ${order.orderNumber} deleted successfully.`, { variant: "success" });
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast(data.error || "Failed to delete order. Please try again.", { variant: "error" });
+      }
+    } catch (err) {
+      showToast("Failed to delete order. Please try again.", { variant: "error" });
+    } finally {
+      setIsDeletingSingle(false);
+      setOrderPendingDelete(null);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col min-h-screen">
       <AdminTopbar title="Customer Orders" />
@@ -286,6 +353,14 @@ export default function AdminOrdersPage() {
                 >
                   <RefreshCw size={15} className={isBulkUpdating ? "animate-spin" : ""} />
                   {isBulkUpdating ? "Updating..." : "Update status"}
+                </button>
+                <button
+                  onClick={() => setShowBulkDeleteConfirm(true)}
+                  disabled={isBulkDeleting}
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 text-sm font-bold text-red-600 bg-white border border-red-200 hover:bg-red-50 h-9 px-4 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  <Trash2 size={15} />
+                  Delete
                 </button>
               </div>
             </div>
@@ -407,12 +482,21 @@ export default function AdminOrdersPage() {
                               <StatusBadge status={order.status} />
                             </td>
                             <td className="px-4 md:px-6 py-4 text-right">
-                              <Link
-                                href={`/admin/orders/${order._id}`}
-                                className="inline-flex items-center justify-center h-8 px-3 text-xs font-semibold rounded-full border border-brand-border text-brand-black hover:bg-brand-light-gray transition-colors"
-                              >
-                                Manage
-                              </Link>
+                              <div className="inline-flex items-center gap-2">
+                                <Link
+                                  href={`/admin/orders/${order._id}`}
+                                  className="inline-flex items-center justify-center h-8 px-3 text-xs font-semibold rounded-full border border-brand-border text-brand-black hover:bg-brand-light-gray transition-colors"
+                                >
+                                  Manage
+                                </Link>
+                                <button
+                                  onClick={() => setOrderPendingDelete(order)}
+                                  aria-label={`Delete order ${order.orderNumber}`}
+                                  className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-brand-border text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         );
@@ -425,6 +509,36 @@ export default function AdminOrdersPage() {
           </div>
         )}
       </div>
+
+      {/* Single-order delete confirmation */}
+      <TypeToConfirmDialog
+        isOpen={!!orderPendingDelete}
+        title="Delete this order?"
+        message={
+          orderPendingDelete
+            ? `This will permanently delete order ${orderPendingDelete.orderNumber} for ${orderPendingDelete.customerName}. This cannot be undone.`
+            : ""
+        }
+        confirmWord={orderPendingDelete?.orderNumber || ""}
+        confirmLabel="Delete Order"
+        cancelLabel="Cancel"
+        isLoading={isDeletingSingle}
+        onConfirm={doDeleteSingle}
+        onCancel={() => setOrderPendingDelete(null)}
+      />
+
+      {/* Bulk delete confirmation */}
+      <TypeToConfirmDialog
+        isOpen={showBulkDeleteConfirm}
+        title="Delete selected orders?"
+        message={`This will permanently delete ${selectedIds.size} order(s). This cannot be undone.`}
+        confirmWord="DELETE"
+        confirmLabel={`Delete ${selectedIds.size} Order(s)`}
+        cancelLabel="Cancel"
+        isLoading={isBulkDeleting}
+        onConfirm={doBulkDelete}
+        onCancel={() => setShowBulkDeleteConfirm(false)}
+      />
     </div>
   );
 }

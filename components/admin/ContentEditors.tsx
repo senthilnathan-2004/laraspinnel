@@ -176,14 +176,14 @@ export function ListEditor<T>({
               </button>
             </div>
 
-            <div className="flex-1 min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="flex-1 min-w-0 grid grid-cols-1 lg:grid-cols-2 gap-2">
               {isStringList ? (
                 <input
                   type="text"
                   value={item as string}
                   onChange={(e) => update(index, e.target.value as T)}
                   placeholder={hint}
-                  className="sm:col-span-2 w-full h-10 px-3 bg-white border border-brand-border rounded-lg text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+                  className="lg:col-span-2 w-full h-10 px-3 bg-white border border-brand-border rounded-lg text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                 />
               ) : (
                 fields!.map((f) => (
@@ -308,7 +308,7 @@ export function PromoCardListEditor({
                 label="Card Image"
               />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <input
                   type="text"
                   value={item.title}
@@ -328,7 +328,7 @@ export function PromoCardListEditor({
                   value={item.buttonLink}
                   onChange={(e) => update(index, { ...item, buttonLink: e.target.value })}
                   placeholder="Button link, e.g. /shop?category=bouquets"
-                  className="sm:col-span-2 w-full h-10 px-3 bg-white border border-brand-border rounded-lg text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+                  className="lg:col-span-2 w-full h-10 px-3 bg-white border border-brand-border rounded-lg text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                 />
               </div>
 

@@ -29,6 +29,7 @@ export const productSchema = z.object({
 export const orderSchema = z.object({
   customerName: z.string().min(2, "Name must be at least 2 characters"),
   phone: z.string().regex(phoneRegex, "Please enter a valid 10-digit phone number"),
+  email: z.string().email("Invalid email address").optional().or(z.literal("")),
   address: z.string().min(10, "Address must be at least 10 characters"),
   city: z.string().min(2, "City must be at least 2 characters"),
   pincode: z.string().regex(pincodeRegex, "Please enter a valid 6-digit pin code"),

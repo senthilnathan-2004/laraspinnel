@@ -171,7 +171,7 @@ export default function EditProductPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Category selection */}
               <div className="space-y-1.5">
                 <label htmlFor="category" className="text-xs font-bold text-brand-black uppercase">Category</label>
@@ -200,7 +200,7 @@ export default function EditProductPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Price */}
               <div className="space-y-1.5">
                 <label htmlFor="price" className="text-xs font-bold text-brand-black uppercase">Original Price (₹)</label>

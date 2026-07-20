@@ -167,14 +167,14 @@ export default function AdminBannersPage() {
 
       <div className="flex-1 p-3 md:p-6 space-y-6 w-full">
         {/* Controls */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-sm text-brand-gray">
             Manage auto-playing slides shown on the public homepage hero banner slider.
           </p>
           {!isFormOpen && (
             <button
               onClick={openAddForm}
-              className="inline-flex items-center gap-2 bg-brand-black hover:bg-goat-primary text-white font-semibold text-sm h-10 px-4 rounded-xl transition-colors duration-200 shadow-sm"
+              className="inline-flex items-center justify-center gap-2 bg-brand-black hover:bg-goat-primary text-white font-semibold text-sm h-10 px-4 rounded-xl transition-colors duration-200 shadow-sm shrink-0"
             >
               <Plus size={16} />
               <span>Add Banner</span>
@@ -200,9 +200,9 @@ export default function AdminBannersPage() {
             {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
 
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Headline */}
-                <div className="space-y-1.5 col-span-2">
+                <div className="space-y-1.5 lg:col-span-2">
                   <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
                     Headline / Title (Anton Font)
                   </label>
@@ -217,7 +217,7 @@ export default function AdminBannersPage() {
                 </div>
 
                 {/* Subtext */}
-                <div className="space-y-1.5 col-span-2">
+                <div className="space-y-1.5 lg:col-span-2">
                   <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
                     Subtext / Subtitle
                   </label>
