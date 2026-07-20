@@ -89,12 +89,14 @@ const TABLET_ACCENTS: AccentMaskRegion[] = [
 const TENSION = 0.32;
 
 // Per-lap jitter so the trail doesn't retrace an identical route every
-// cycle. Point [0] (the loop's start/end) is never jittered, so consecutive
-// laps still hand off from the exact same pixel — no seam. The bulge points
-// (e.g. mobile [340,145]) sit only ~12 units from the card edge, the
-// tightest clearance in either point table, so the radius stays under that
-// to keep "outside" bulge points from jittering across the card boundary.
-const JITTER_RADIUS = 10;
+// cycle — including the outside excursions, not just the inside portion.
+// Point [0] (the loop's start/end) is never jittered, so every lap still
+// hands off from the exact same pixel. The canvas-edge clamp in jitterPoint
+// keeps a jittered point from ever rendering off-canvas; occasionally
+// nudging a bulge point a few units across the card's edge is fine — it
+// just makes that lap's outside dip a little smaller or bigger, which reads
+// as more organic, not broken.
+const JITTER_RADIUS = 16;
 
 function jitterPoint([x, y]: Point, radius: number, width: number, height: number): Point {
   const angle = Math.random() * Math.PI * 2;
@@ -104,36 +106,62 @@ function jitterPoint([x, y]: Point, radius: number, width: number, height: numbe
   return [Math.max(2, Math.min(width - 2, jitteredX)), Math.max(2, Math.min(height - 2, jitteredY))];
 }
 
+function dimensionsFor(variant: TrailVariant): { width: number; height: number } {
+  return variant === "mobile" ? { width: 356, height: 456 } : { width: 456, height: 356 };
+}
+
+function basePointsFor(variant: TrailVariant): Point[] {
+  return variant === "mobile" ? MOBILE_LOOP_POINTS : TABLET_LOOP_POINTS;
+}
+
 export function getTrailGeometry(variant: TrailVariant): TrailGeometry {
   const isMobile = variant === "mobile";
-  const points = isMobile ? MOBILE_LOOP_POINTS : TABLET_LOOP_POINTS;
-  const width = isMobile ? 356 : 456;
-  const height = isMobile ? 456 : 356;
+  const { width, height } = dimensionsFor(variant);
 
   return {
     viewBox: `0 0 ${width} ${height}`,
     width,
     height,
     cardRect: isMobile ? MOBILE_CARD_RECT : TABLET_CARD_RECT,
-    pathD: arcsToPathD(catmullRomLoopToBezier(points, TENSION)),
+    pathD: arcsToPathD(catmullRomLoopToBezier(basePointsFor(variant), TENSION)),
     accentMaskRegions: isMobile ? MOBILE_ACCENTS : TABLET_ACCENTS,
   };
 }
 
+/** The fixed anchor points for a variant, before any per-lap jitter. */
+export function getBaseLoopPoints(variant: TrailVariant): Point[] {
+  return basePointsFor(variant).map((p): Point => [p[0], p[1]]);
+}
+
 /**
- * A fresh closed path for one lap, jittered from the same anchor points used
- * by getTrailGeometry so the trail travels a different, still-smooth route
- * each cycle instead of repeating an identical loop. Call once per lap.
+ * A fresh set of loop points for one lap, jittered from the same anchor
+ * points used by getTrailGeometry (point [0] excepted) so the trail travels
+ * a different, still-smooth route each cycle instead of repeating an
+ * identical loop. Call once per lap; feed the result through
+ * loopPointsToPathD (directly, or via lerpLoopPoints for a smooth morph).
+ */
+export function getRandomizedLoopPoints(variant: TrailVariant): Point[] {
+  const { width, height } = dimensionsFor(variant);
+  return basePointsFor(variant).map((point, i) => (i === 0 ? point : jitterPoint(point, JITTER_RADIUS, width, height)));
+}
+
+export function loopPointsToPathD(points: readonly Point[]): string {
+  return arcsToPathD(catmullRomLoopToBezier(points, TENSION));
+}
+
+/** Linearly interpolates every point of two same-length loops, for morphing one lap's shape into the next's. */
+export function lerpLoopPoints(from: readonly Point[], to: readonly Point[], t: number): Point[] {
+  return from.map(([fx, fy], i) => {
+    const [tx, ty] = to[i];
+    return [fx + (tx - fx) * t, fy + (ty - fy) * t] as Point;
+  });
+}
+
+/**
+ * A fresh closed path for one lap in a single call — convenience wrapper
+ * over getRandomizedLoopPoints + loopPointsToPathD for callers that don't
+ * need to morph between lap shapes.
  */
 export function getRandomizedPathD(variant: TrailVariant): string {
-  const isMobile = variant === "mobile";
-  const points = isMobile ? MOBILE_LOOP_POINTS : TABLET_LOOP_POINTS;
-  const width = isMobile ? 356 : 456;
-  const height = isMobile ? 456 : 356;
-
-  const jittered: Point[] = points.map((point, i) =>
-    i === 0 ? point : jitterPoint(point, JITTER_RADIUS, width, height)
-  );
-
-  return arcsToPathD(catmullRomLoopToBezier(jittered, TENSION));
+  return loopPointsToPathD(getRandomizedLoopPoints(variant));
 }

@@ -3,7 +3,14 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger, ensureScrollTriggerRegistered } from "./gsapSetup";
-import { getTrailGeometry, getRandomizedPathD, type TrailVariant } from "./paths";
+import {
+  getTrailGeometry,
+  getBaseLoopPoints,
+  getRandomizedLoopPoints,
+  lerpLoopPoints,
+  loopPointsToPathD,
+  type TrailVariant,
+} from "./paths";
 import { getTrailGradientStops } from "@/lib/utils";
 
 const ARC_COUNT = 12; // matches the 12-point loop authored in paths.ts
@@ -12,6 +19,7 @@ const HEAD_RADIUS = 4;
 const TAIL_FRACTION = 0.14; // portion of the loop rendered as the glowing comet tail
 const PARTICLE_COUNT = 7;
 const PARTICLE_INTERVAL_SECONDS = 0.75;
+const MORPH_DURATION_SECONDS = 0.6;
 
 export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailVariant; colorHex: string }) {
   const geometry = getTrailGeometry(variant);
@@ -35,22 +43,19 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
     if (paths.length !== 3 || heads.length !== 3) return;
 
     let cancelled = false;
-    const activeTimeline: { current: gsap.core.Timeline | null } = { current: null };
+    const activeTimeline: { current: gsap.core.Timeline | gsap.core.Tween | null } = { current: null };
     const progress = { distance: 0 };
+    let currentPoints = getBaseLoopPoints(variant);
 
-    // Each lap gets its own freshly-randomized path (see getRandomizedPathD)
-    // so the trail never retraces an identical route twice, and its own
-    // one-shot timeline — chaining onComplete instead of `repeat: -1` means
-    // there's no fixed "restart point" for the loop to snap back to.
-    function runLap() {
-      if (cancelled) return;
-
-      const pathD = getRandomizedPathD(variant);
+    function applyShape(points: readonly (readonly [number, number])[]) {
+      const d = loopPointsToPathD(points);
       for (const path of paths) {
-        path.setAttribute("d", pathD);
+        path.setAttribute("d", d);
       }
+      return paths[0].getTotalLength();
+    }
 
-      const totalLength = paths[0].getTotalLength();
+    function setDashForLength(totalLength: number) {
       const tailLength = totalLength * TAIL_FRACTION;
       for (const path of paths) {
         // Dash pattern sums to totalLength (tailLength + the gap), matching
@@ -59,37 +64,81 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
         // first frame) — no phase jump at the handoff.
         path.style.strokeDasharray = `${tailLength} ${totalLength - tailLength}`;
       }
+    }
 
-      const timeline = gsap.timeline({
+    function placeHeadsAndTailAt(distance: number) {
+      const point = paths[0].getPointAtLength(distance);
+      for (const head of heads) {
+        head.setAttribute("cx", String(point.x));
+        head.setAttribute("cy", String(point.y));
+      }
+      for (const path of paths) {
+        path.style.strokeDashoffset = String(-distance);
+      }
+    }
+
+    // Each lap travels a freshly-randomized shape (see getRandomizedLoopPoints)
+    // so the trail never retraces an identical route twice. Rather than
+    // hard-cutting the path's `d` at the lap boundary — which reshapes the
+    // visible tail segment in a single frame — the head first sits at the
+    // shared start point while morphSettle smoothly reshapes the curve
+    // around it into the new lap's form, then the arc-traversal begins on
+    // the now-stable shape. Chaining onComplete (instead of `repeat: -1`)
+    // means there's no fixed "restart point" for the loop to snap back to.
+    function morphSettle(onSettled: () => void) {
+      const fromPoints = currentPoints;
+      const toPoints = getRandomizedLoopPoints(variant);
+      const morph = { t: 0 };
+
+      const tween = gsap.to(morph, {
+        t: 1,
+        duration: MORPH_DURATION_SECONDS,
+        ease: "power1.inOut",
+        onUpdate: () => {
+          const shape = lerpLoopPoints(fromPoints, toPoints, morph.t);
+          const totalLength = applyShape(shape);
+          setDashForLength(totalLength);
+          placeHeadsAndTailAt(0);
+        },
         onComplete: () => {
-          if (!cancelled) runLap();
+          currentPoints = toPoints;
+          if (!cancelled) onSettled();
         },
       });
-      activeTimeline.current = timeline;
+      activeTimeline.current = tween;
+    }
 
-      for (let i = 0; i < ARC_COUNT; i++) {
-        const arcStart = (i / ARC_COUNT) * totalLength;
-        const arcEnd = ((i + 1) / ARC_COUNT) * totalLength;
-        timeline.fromTo(
-          progress,
-          { distance: arcStart },
-          {
-            distance: arcEnd,
-            duration: ARC_DURATION_SECONDS,
-            ease: "power1.inOut",
-            onUpdate: () => {
-              const point = paths[0].getPointAtLength(progress.distance);
-              for (const head of heads) {
-                head.setAttribute("cx", String(point.x));
-                head.setAttribute("cy", String(point.y));
-              }
-              for (const path of paths) {
-                path.style.strokeDashoffset = String(-progress.distance);
-              }
-            },
-          }
-        );
-      }
+    function runLap() {
+      if (cancelled) return;
+
+      morphSettle(() => {
+        const totalLength = applyShape(currentPoints);
+        setDashForLength(totalLength);
+
+        const timeline = gsap.timeline({
+          onComplete: () => {
+            if (!cancelled) runLap();
+          },
+        });
+        activeTimeline.current = timeline;
+
+        for (let i = 0; i < ARC_COUNT; i++) {
+          const arcStart = (i / ARC_COUNT) * totalLength;
+          const arcEnd = ((i + 1) / ARC_COUNT) * totalLength;
+          timeline.fromTo(
+            progress,
+            { distance: arcStart },
+            {
+              distance: arcEnd,
+              duration: ARC_DURATION_SECONDS,
+              ease: "power1.inOut",
+              onUpdate: () => {
+                placeHeadsAndTailAt(progress.distance);
+              },
+            }
+          );
+        }
+      });
     }
 
     runLap();
