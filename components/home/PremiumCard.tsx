@@ -125,7 +125,7 @@ export default function PremiumCard({
               outOfStock
                 ? "bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
                 : added
-                ? "bg-emerald-50 text-emerald-600 border-emerald-200 cursor-pointer"
+                ? "bg-goat-tint text-goat-primary border-goat-primary/30 cursor-pointer"
                 : "bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
             }`}
           >

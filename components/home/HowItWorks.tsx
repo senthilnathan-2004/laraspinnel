@@ -56,8 +56,8 @@ export default function HowItWorks() {
             100% { left: 100%; opacity: 0; }
           }
           @keyframes iconZoom {
-            0%, 20%, 100% { transform: scale(1); border-color: rgba(22, 163, 74, 0.1); box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-            5% { transform: scale(1.15); border-color: rgba(22, 163, 74, 1); box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4); }
+            0%, 20%, 100% { transform: scale(1); border-color: rgba(143, 168, 138, 0.1); box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+            5% { transform: scale(1.15); border-color: rgba(143, 168, 138, 1); box-shadow: 0 4px 15px rgba(143, 168, 138, 0.4); }
           }
           .animate-dot-move {
             animation: dotMove 15s linear infinite;
@@ -79,7 +79,7 @@ export default function HowItWorks() {
         <div className="hidden md:grid grid-cols-5 gap-6 relative pt-10">
           {/* Connector Line with Moving Dot */}
           <div className="absolute top-[72px] left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
-            <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move shadow-[0_0_8px_rgba(22,163,74,0.8)]"></div>
+            <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move shadow-[0_0_8px_rgba(143,168,138,0.8)]"></div>
           </div>
 
           {steps.map((step, idx) => (
@@ -115,7 +115,7 @@ export default function HowItWorks() {
               <div key={setIndex} className="flex gap-12 relative shrink-0 pr-12">
                 {/* Connector Line with Moving Dot for Mobile */}
                 <div className="absolute top-8 left-[110px] right-[158px] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
-                  <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move-mobile shadow-[0_0_8px_rgba(22,163,74,0.8)]" style={{ animationDelay: '-1.6s' }}></div>
+                  <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move-mobile shadow-[0_0_8px_rgba(143,168,138,0.8)]" style={{ animationDelay: '-1.6s' }}></div>
                 </div>
 
                 {steps.map((step, idx) => (

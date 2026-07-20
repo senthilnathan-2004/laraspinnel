@@ -15,8 +15,14 @@ export default function TextMarquee({
   dividerColor = "text-white/30",
   borderColor = "border-brand-border/10",
 }: TextMarqueeProps) {
+  const fadeFrom = bgColor.replace("bg-", "from-");
+
   return (
-    <div className={`overflow-hidden py-5 flex items-center border-y ${borderColor} ${bgColor}`}>
+    <div className={`relative overflow-hidden py-5 px-4 md:px-6 flex items-center border-t ${borderColor} ${bgColor}`}>
+      {/* Edge fade overlays */}
+      <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-24 md:w-48 bg-gradient-to-r ${fadeFrom} to-transparent`} />
+      <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-24 md:w-48 bg-gradient-to-l ${fadeFrom} to-transparent`} />
+
       <style>{`
         @keyframes marquee-text {
           0% { transform: translateX(0); }

@@ -44,10 +44,10 @@
   --color-cream-bg: #FDF8F0;
 
   /* Map old utility color variables to the updated layout settings */
-  --color-goat-primary: #8FA88A;
-  --color-goat-tint: #EEF3EC;
-  --color-goat-hover: #708870;
-  --color-goat-text: #56695A;
+  --color-goat-primary: var(--color-primary);
+  --color-goat-tint: var(--color-primary-tint);
+  --color-goat-hover: var(--color-primary-hover);
+  --color-goat-text: var(--color-primary-text);
 
   --color-mutton-primary: #C1622D;
   --color-mutton-tint: #FBEEE5;

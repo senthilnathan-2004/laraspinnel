@@ -90,9 +90,9 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
   ];
 
   return (
-    <section className="relative overflow-hidden group select-none bg-brand-light-gray px-4 pt-4 pb-4 md:px-6 md:pt-6 md:pb-6 lg:p-0">
+    <section className="relative overflow-hidden group select-none bg-brand-light-gray px-4 pt-4 pb-4 md:px-6 md:pt-6 md:pb-6 lg:px-8 lg:pt-8 lg:pb-8">
       {/* Viewport */}
-      <div className="overflow-hidden rounded-2xl lg:rounded-none" ref={emblaRef}>
+      <div className="relative overflow-hidden rounded-2xl" ref={emblaRef}>
         <div className="flex">
           {slides.map((slide, index) => {
             // The page's single <h1> is the sr-only heading in app/page.tsx.
@@ -163,36 +163,36 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
             );
           })}
         </div>
-      </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={scrollPrev}
-        className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft size={24} strokeWidth={2} />
-      </button>
+        {/* Navigation Arrows */}
+        <button
+          onClick={scrollPrev}
+          className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={24} strokeWidth={2} />
+        </button>
 
-      <button
-        onClick={scrollNext}
-        className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
-        aria-label="Next slide"
-      >
-        <ChevronRight size={24} strokeWidth={2} />
-      </button>
+        <button
+          onClick={scrollNext}
+          className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={24} strokeWidth={2} />
+        </button>
 
-      {/* Dots navigation */}
-      <div className="absolute bottom-8 lg:bottom-6 left-0 right-0 flex justify-center gap-2">
-        {scrollSnaps.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollTo(index)}
-            className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
-              }`}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
-        ))}
+        {/* Dots navigation */}
+        <div className="absolute bottom-8 lg:bottom-6 left-0 right-0 flex justify-center gap-2">
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollTo(index)}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
+                }`}
+              aria-label={`Go to slide ${index + 1}`}
+            ></button>
+          ))}
+        </div>
       </div>
     </section>
   );
