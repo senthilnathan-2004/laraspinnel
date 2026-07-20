@@ -9,6 +9,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PremiumCard from "@/components/home/PremiumCard";
 import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
+import StickyBox from "@/components/shared/StickyBox";
 import { useCart } from "@/hooks/useCart";
 import { sortInStockFirst } from "@/lib/utils";
 import { ShoppingCart, ShoppingBag, Plus, Minus, ArrowLeft, Heart, Sparkles, ShieldCheck } from "lucide-react";
@@ -106,16 +107,18 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Product Details Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-6 lg:gap-12">
-          {/* Gallery Column — small & paired with buy actions in tablet view */}
-          <div className="order-1 md:order-1 lg:order-1 lg:col-span-6 lg:row-span-2 lg:sticky lg:top-28 lg:self-start xl:static space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 lg:gap-12">
+          {/* Gallery Column — mirrors the desktop layout from tablet width up */}
+          <div className="order-1 md:order-1 md:col-span-5 md:row-span-2 relative">
+          <StickyBox topOffset={112} enableFrom={768}>
+            <div className="space-y-4">
             {/* Active Image Frame */}
             <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-brand-light-gray/40 border border-brand-border group">
               <Image
                 src={product.images[activeImageIdx] || "/placeholder.jpg"}
                 alt={product.name}
                 fill
-                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 600px"
+                sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 500px"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 priority
               />
@@ -148,10 +151,12 @@ export default function ProductDetailPage() {
                 ))}
               </div>
             )}
+            </div>
+          </StickyBox>
           </div>
 
           {/* Info: title, price, description */}
-          <div className="order-2 md:order-3 md:col-span-2 lg:order-2 lg:col-span-6 space-y-6">
+          <div className="order-2 md:order-2 md:col-span-7 space-y-6">
             <div className="space-y-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-goat-tint border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-wider rounded-lg">
                 <Sparkles size={10} /> Handmade Collection
@@ -212,9 +217,9 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Purchase: quantity + Add to Cart / Buy Now — paired with the small image in tablet view */}
+          {/* Purchase: quantity + Add to Cart / Buy Now */}
           {inStock && (
-            <div className="order-3 md:order-2 lg:order-3 lg:col-span-6 space-y-4 pt-4 border-t border-brand-border">
+            <div className="order-3 md:order-3 md:col-span-7 space-y-4 pt-4 border-t border-brand-border">
                 {/* Custom design instructions */}
                 <div className="space-y-1.5">
                   <div className="flex items-baseline justify-between">

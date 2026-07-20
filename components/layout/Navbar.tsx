@@ -155,6 +155,14 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+              <Link
+                href="/shop"
+                title="Search"
+                aria-label="Search"
+                className="p-2 rounded-full text-brand-black hover:bg-brand-light-gray hover:text-goat-primary transition-colors"
+              >
+                <Search size={18} strokeWidth={1.8} />
+              </Link>
             </div>
 
             {/* Search — mobile only */}

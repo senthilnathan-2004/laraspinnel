@@ -60,7 +60,10 @@ export default function BelowFoldSections() {
       {/* Customer Testimonials */}
       <Testimonials />
 
-      {/* Gift Categories / Marketing Marquee */}
+      {/* 16:9 promotional banner */}
+      <FooterBanner />
+
+      {/* Gift Categories / Marketing Marquee — last section before the footer */}
       <TextMarquee
         items={marqueeItems}
         bgColor="bg-[#111111]"
@@ -68,9 +71,6 @@ export default function BelowFoldSections() {
         dividerColor="text-white/20"
         borderColor="border-white/10"
       />
-
-      {/* 16:9 promotional banner — last section before the footer */}
-      <FooterBanner />
     </>
   );
 }

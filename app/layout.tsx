@@ -309,7 +309,7 @@ export default async function RootLayout({
         >
           Skip to main content
         </a>
-        <div className="flex flex-col min-h-screen overflow-x-clip w-full relative" id="main-content">
+        <div className="flex flex-col min-h-screen w-full relative" id="main-content">
           <Providers>{children}</Providers>
         </div>
         {jsonLd.map((schema, index) => (

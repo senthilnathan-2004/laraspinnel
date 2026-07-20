@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 import PremiumCard from "@/components/home/PremiumCard";
 import SkeletonCard from "@/components/shared/SkeletonCard";
 import CustomSelect from "@/components/shared/CustomSelect";
+import StickyBox from "@/components/shared/StickyBox";
 import { sortInStockFirst } from "@/lib/utils";
 import { Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
 
@@ -130,9 +131,10 @@ function ShopPageContent() {
           </p>
         </div>
 
-        <div className="lg:flex lg:items-start lg:gap-8 lg:border-t lg:border-brand-border lg:pt-8">
+        <div className="relative lg:grid lg:grid-cols-[16rem_1fr] xl:grid-cols-[18rem_1fr] lg:items-start lg:gap-8 lg:border-t lg:border-brand-border lg:pt-8">
           {/* Desktop Sidebar — detailed filters */}
-          <aside className="hidden lg:block lg:w-64 xl:w-72 shrink-0 sticky top-28 space-y-7">
+          <StickyBox topOffset={112} enableFrom={1024} className="hidden lg:block">
+          <aside className="space-y-7">
             {/* Search */}
             <div>
               <h3 className="flex items-center gap-2 text-xs font-bold text-brand-black uppercase tracking-wider mb-3">
@@ -239,9 +241,10 @@ function ShopPageContent() {
               </button>
             )}
           </aside>
+          </StickyBox>
 
           {/* Main content column */}
-          <div className="flex-1 min-w-0 space-y-6 md:space-y-8">
+          <div className="min-w-0 space-y-6 md:space-y-8">
             {/* Mobile / tablet compact filter bar */}
             <div className="lg:hidden space-y-4">
               <div className="flex flex-col sm:flex-row gap-2.5 md:gap-3 items-center">
