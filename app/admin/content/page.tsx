@@ -10,6 +10,7 @@ import {
   ImageField,
   ListEditor,
   ListFieldDef,
+  PromoCardListEditor,
 } from "@/components/admin/ContentEditors";
 import {
   CONTENT_DEFAULTS,
@@ -19,9 +20,11 @@ import {
   DEFAULT_FOOTER_QUICKLINKS,
   DEFAULT_FOOTER_CATEGORIES,
   DEFAULT_FOOTER_BADGES,
+  DEFAULT_PROMO_CARDS,
   parseList,
   WhyStep,
   LinkItem,
+  PromoCard,
 } from "@/lib/siteContent";
 import {
   Loader2,
@@ -205,6 +208,17 @@ export default function AdminContentPage() {
                   <TextField label="Stat 3" value={val("home_stat_3")} onChange={(v) => setVal("home_stat_3", v)} placeholder={ph("home_stat_3")} />
                 </div>
                 <p className="text-[10px] text-brand-gray">The reviews themselves are managed under Testimonials in the sidebar.</p>
+              </Section>
+
+              <Section title="Promo Showcase — rotating cards below reviews">
+                <PromoCardListEditor
+                  items={listVal<PromoCard>("home_promo_cards", DEFAULT_PROMO_CARDS)}
+                  onChange={(arr) => setListVal("home_promo_cards", arr)}
+                />
+                <p className="text-[10px] text-brand-gray">
+                  These cards auto-scroll in a 3D rotating carousel on the homepage, directly below the
+                  customer reviews section.
+                </p>
               </Section>
 
               <Section title="Scrolling Marquee">
