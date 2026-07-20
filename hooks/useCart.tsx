@@ -10,16 +10,19 @@ export interface CartItem {
   image: string;
   /** Optional customer-written customization note (e.g. "Add name 'Priya', pink ribbon"). */
   customText?: string;
+  /** Optional customer-uploaded reference image for the customization request. */
+  customImage?: string;
 }
 
-// Same product with a different customization note is treated as a distinct cart line.
-const lineKey = (productId: string, customText?: string) => `${productId}::${(customText || "").trim()}`;
+// Same product with a different customization note/image is treated as a distinct cart line.
+const lineKey = (productId: string, customText?: string, customImage?: string) =>
+  `${productId}::${(customText || "").trim()}::${customImage || ""}`;
 
 interface CartContextType {
   cart: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
-  removeItem: (productId: string, customText?: string) => void;
-  updateQuantity: (productId: string, quantity: number, customText?: string) => void;
+  removeItem: (productId: string, customText?: string, customImage?: string) => void;
+  updateQuantity: (productId: string, quantity: number, customText?: string, customImage?: string) => void;
   clearCart: () => void;
   cartCount: number;
   cartTotal: number;
@@ -53,11 +56,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = (item: Omit<CartItem, "quantity">, quantity = 1) => {
     setCart((prev) => {
-      const key = lineKey(item.productId, item.customText);
-      const existing = prev.find((i) => lineKey(i.productId, i.customText) === key);
+      const key = lineKey(item.productId, item.customText, item.customImage);
+      const existing = prev.find((i) => lineKey(i.productId, i.customText, i.customImage) === key);
       if (existing) {
         return prev.map((i) =>
-          lineKey(i.productId, i.customText) === key
+          lineKey(i.productId, i.customText, i.customImage) === key
             ? { ...i, quantity: i.quantity + quantity }
             : i
         );
@@ -66,19 +69,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const removeItem = (productId: string, customText?: string) => {
-    const key = lineKey(productId, customText);
-    setCart((prev) => prev.filter((i) => lineKey(i.productId, i.customText) !== key));
+  const removeItem = (productId: string, customText?: string, customImage?: string) => {
+    const key = lineKey(productId, customText, customImage);
+    setCart((prev) => prev.filter((i) => lineKey(i.productId, i.customText, i.customImage) !== key));
   };
 
-  const updateQuantity = (productId: string, quantity: number, customText?: string) => {
+  const updateQuantity = (productId: string, quantity: number, customText?: string, customImage?: string) => {
     if (quantity <= 0) {
-      removeItem(productId, customText);
+      removeItem(productId, customText, customImage);
       return;
     }
-    const key = lineKey(productId, customText);
+    const key = lineKey(productId, customText, customImage);
     setCart((prev) =>
-      prev.map((i) => (lineKey(i.productId, i.customText) === key ? { ...i, quantity } : i))
+      prev.map((i) => (lineKey(i.productId, i.customText, i.customImage) === key ? { ...i, quantity } : i))
     );
   };
 

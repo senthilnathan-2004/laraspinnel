@@ -16,6 +16,7 @@ interface OrderItem {
   quantity: number;
   image: string;
   customText?: string;
+  customImage?: string;
 }
 
 interface Order {
@@ -178,6 +179,28 @@ export default function OrderDetailPage() {
                               <p className="mt-1 text-xs font-medium text-goat-text bg-goat-tint border border-goat-primary/20 rounded-lg px-2 py-1 inline-block max-w-xs italic">
                                 Customization: {item.customText}
                               </p>
+                            )}
+                            {item.customImage && (
+                              <a
+                                href={item.customImage}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-1.5 flex items-center gap-2 group/img"
+                                title="View full-size reference image"
+                              >
+                                <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-goat-primary/30 shrink-0">
+                                  <Image
+                                    src={item.customImage}
+                                    alt="Customer reference image"
+                                    fill
+                                    sizes="48px"
+                                    className="object-cover group-hover/img:scale-105 transition-transform"
+                                  />
+                                </div>
+                                <span className="text-xs font-semibold text-goat-primary group-hover/img:underline">
+                                  Reference Image
+                                </span>
+                              </a>
                             )}
                           </td>
                           <td className="px-4 py-4 text-center text-brand-black font-semibold">

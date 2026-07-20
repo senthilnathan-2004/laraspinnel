@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
         quantity: item.quantity,
         image: product.images[0] || "",
         customText: item.customText?.trim() || undefined,
+        customImage: item.customImage || undefined,
       });
     }
 

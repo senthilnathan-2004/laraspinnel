@@ -61,7 +61,18 @@ export default function ImageUploader({
   };
 
   const handleRemove = (index: number) => {
+    const removedUrl = images[index];
     onChange(images.filter((_, i) => i !== index));
+
+    // Best-effort: also delete the file from ImageKit storage so removed
+    // images don't keep taking up space. Never blocks the UI on failure.
+    if (removedUrl) {
+      fetch("/api/admin/upload", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: removedUrl }),
+      }).catch(() => {});
+    }
   };
 
   const handleMakeCover = (index: number) => {

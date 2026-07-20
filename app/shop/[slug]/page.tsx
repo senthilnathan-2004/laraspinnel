@@ -8,6 +8,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PremiumCard from "@/components/home/PremiumCard";
+import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
 import { useCart } from "@/hooks/useCart";
 import { sortInStockFirst } from "@/lib/utils";
 import { ShoppingCart, ShoppingBag, Plus, Minus, ArrowLeft, Heart, Sparkles, ShieldCheck } from "lucide-react";
@@ -24,6 +25,7 @@ export default function ProductDetailPage() {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [successMsg, setSuccessMsg] = useState("");
   const [customText, setCustomText] = useState("");
+  const [customImage, setCustomImage] = useState("");
 
   const { data, isLoading, error } = useSWR(
     slug ? `/api/products/${slug}` : null,
@@ -71,6 +73,7 @@ export default function ProductDetailPage() {
       price: currentPrice,
       image: product.images[0] || "",
       customText: customText.trim() || undefined,
+      customImage: customImage || undefined,
     }, quantity);
 
     setSuccessMsg("Added to cart successfully!");
@@ -84,6 +87,7 @@ export default function ProductDetailPage() {
       price: currentPrice,
       image: product.images[0] || "",
       customText: customText.trim() || undefined,
+      customImage: customImage || undefined,
     }, quantity);
     router.push("/cart");
   };
@@ -227,6 +231,22 @@ export default function ProductDetailPage() {
                     onChange={(e) => setCustomText(e.target.value)}
                     placeholder="e.g. Add name 'Priya', change ribbon color to pink..."
                     className="w-full p-3 bg-brand-light-gray/30 border border-brand-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
+                  />
+                </div>
+
+                {/* Reference image upload */}
+                <div className="space-y-1.5">
+                  <div className="flex items-baseline justify-between">
+                    <label className="text-sm font-semibold text-brand-gray">
+                      Upload Reference Image
+                    </label>
+                    <span className="text-[10px] text-brand-gray">Optional</span>
+                  </div>
+                  <ImageUploadDropzone
+                    value={customImage ? [customImage] : []}
+                    onChange={(urls) => setCustomImage(urls[urls.length - 1] || "")}
+                    maxFiles={1}
+                    endpoint="/api/customer-upload"
                   />
                 </div>
 

@@ -65,8 +65,19 @@ export default function ImageUploadDropzone({
   };
 
   const removeImage = (indexToRemove: number) => {
+    const removedUrl = value[indexToRemove];
     const updated = value.filter((_, idx) => idx !== indexToRemove);
     onChange(updated);
+
+    // Best-effort: also delete the file from ImageKit storage so removed
+    // images don't keep taking up space. Never blocks the UI on failure.
+    if (removedUrl) {
+      fetch(endpoint, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: removedUrl }),
+      }).catch(() => {});
+    }
   };
 
   return (
@@ -128,7 +139,7 @@ export default function ImageUploadDropzone({
                   e.stopPropagation();
                   removeImage(idx);
                 }}
-                className="absolute top-1.5 right-1.5 bg-brand-black/75 hover:bg-red-600 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1.5 right-1.5 bg-brand-black/75 hover:bg-red-600 text-white p-1 rounded-full opacity-100 transition-opacity"
                 aria-label="Remove image"
               >
                 <X size={12} />

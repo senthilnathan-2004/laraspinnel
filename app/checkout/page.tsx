@@ -70,6 +70,7 @@ export default function CheckoutPage() {
         quantity: item.quantity,
         image: item.image,
         customText: item.customText,
+        customImage: item.customImage,
       }));
 
       const payload = {
@@ -301,7 +302,7 @@ export default function CheckoutPage() {
 
               <div className="divide-y divide-brand-border/60 max-h-60 overflow-y-auto pr-1">
                 {cart.map((item) => (
-                  <div key={`${item.productId}-${item.customText || ""}`} className="py-3 flex justify-between gap-3 text-sm">
+                  <div key={`${item.productId}-${item.customText || ""}-${item.customImage || ""}`} className="py-3 flex justify-between gap-3 text-sm">
                     <div className="min-w-0">
                       <p className="font-semibold text-brand-black truncate">{item.name}</p>
                       <p className="text-xs text-brand-gray font-medium">Qty: {item.quantity} &times; ₹{item.price}</p>
@@ -309,6 +310,17 @@ export default function CheckoutPage() {
                         <p className="text-xs text-goat-text italic truncate mt-0.5" title={item.customText}>
                           Custom: {item.customText}
                         </p>
+                      )}
+                      {item.customImage && (
+                        <div className="relative w-8 h-8 rounded-md overflow-hidden border border-goat-primary/30 mt-1">
+                          <Image
+                            src={item.customImage}
+                            alt="Customization reference"
+                            fill
+                            sizes="32px"
+                            className="object-cover"
+                          />
+                        </div>
                       )}
                     </div>
                     <span className="font-bold text-brand-black shrink-0">₹{item.price * item.quantity}</span>

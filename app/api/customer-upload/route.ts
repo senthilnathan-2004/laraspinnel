@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { uploadImageToImageKit, deleteImageByUrl } from "@/lib/imagekit";
+import { rateLimit } from "@/lib/rateLimit";
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
+
+// Public endpoint — customers use this to attach a reference image to their
+// order customization request (e.g. a photo to recreate, a color swatch).
 export async function POST(req: NextRequest) {
   try {
-    // 1. Verify admin session
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const { success } = rateLimit(`customer_upload_${ip}`, 10, 60 * 1000);
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many uploads. Please wait a moment and try again." },
+        { status: 429 }
+      );
     }
 
-    // 2. Parse FormData
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
 
@@ -19,9 +25,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // 2b. Validate file type and size
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-    const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"];
     if (!ALLOWED_TYPES.includes(file.type)) {
       return NextResponse.json(
         { error: "Unsupported file type. Allowed: JPEG, PNG, WebP, AVIF, GIF." },
@@ -35,14 +38,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 3. Read file as buffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // 4. Upload to ImageKit
     const uploadResponse = await uploadImageToImageKit(
       buffer,
-      file.name || `image_${Date.now()}`
+      file.name || `customization_${Date.now()}`,
+      "laraspinnal/customer-uploads"
     );
 
     return NextResponse.json({
@@ -50,7 +52,7 @@ export async function POST(req: NextRequest) {
       fileId: uploadResponse.fileId,
     });
   } catch (error: any) {
-    console.error("Upload route error:", error);
+    console.error("Customer upload route error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to upload image" },
       { status: 500 }
@@ -58,11 +60,14 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// Lets a customer remove a reference image they just uploaded (before placing
+// the order) without leaving an orphaned file sitting in ImageKit storage.
 export async function DELETE(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const { success } = rateLimit(`customer_upload_delete_${ip}`, 20, 60 * 1000);
+    if (!success) {
+      return NextResponse.json({ error: "Too many requests. Please wait a moment." }, { status: 429 });
     }
 
     const { url } = await req.json();
@@ -74,7 +79,7 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json({ message: "Image deleted" });
   } catch (error: any) {
-    console.error("Upload DELETE route error:", error);
+    console.error("Customer upload DELETE route error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to delete image" },
       { status: 500 }

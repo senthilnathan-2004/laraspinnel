@@ -41,6 +41,7 @@ export const orderSchema = z.object({
       quantity: z.number().int().min(1),
       image: z.string().min(1),
       customText: z.string().max(300, "Customization note is too long").optional().or(z.literal("")),
+      customImage: z.string().url("Invalid image URL").optional().or(z.literal("")),
     })
   ).min(1, "Cart cannot be empty"),
 });

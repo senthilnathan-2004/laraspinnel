@@ -136,35 +136,35 @@ export default function PromoShowcase() {
                     <div className="absolute inset-0 z-0 pointer-events-none">
                       {/* Dot-grid texture */}
                       <div
-                        className="absolute inset-0 opacity-[0.12]"
+                        className="absolute inset-0 opacity-[0.22]"
                         style={{
                           backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)",
                           backgroundSize: "18px 18px",
                         }}
                       />
                       {/* Soft glow blobs */}
-                      <div className="absolute -top-14 -right-14 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
-                      <div className="absolute -bottom-16 -left-10 w-40 h-40 rounded-full bg-black/10 blur-3xl" />
-                      <div className="absolute top-1/3 -left-16 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
-                      <div className="absolute bottom-1/4 -right-10 w-28 h-28 rounded-full bg-white/10 blur-2xl" />
+                      <div className="absolute -top-14 -right-14 w-48 h-48 rounded-full bg-white/25 blur-3xl" />
+                      <div className="absolute -bottom-16 -left-10 w-40 h-40 rounded-full bg-black/20 blur-3xl" />
+                      <div className="absolute top-1/3 -left-16 w-32 h-32 rounded-full bg-white/20 blur-2xl" />
+                      <div className="absolute bottom-1/4 -right-10 w-28 h-28 rounded-full bg-white/20 blur-2xl" />
 
                       {/* Outline ring accents */}
-                      <div className="absolute top-6 -right-6 w-24 h-24 rounded-full border border-white/20" />
-                      <div className="absolute top-14 -right-2 w-10 h-10 rounded-full border border-white/20" />
-                      <div className="absolute bottom-10 left-6 w-16 h-16 rounded-full border border-dashed border-white/15" />
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-white/10" />
+                      <div className="absolute top-6 -right-6 w-24 h-24 rounded-full border border-white/35" />
+                      <div className="absolute top-14 -right-2 w-10 h-10 rounded-full border border-white/35" />
+                      <div className="absolute bottom-10 left-6 w-16 h-16 rounded-full border border-dashed border-white/25" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-white/20" />
 
                       {/* Scattered sparkle marks */}
-                      <span className="absolute top-10 left-8 text-white/25 text-xl leading-none rotate-12">✦</span>
-                      <span className="absolute top-1/3 right-10 text-white/20 text-sm leading-none -rotate-6">✦</span>
-                      <span className="absolute bottom-1/3 left-1/4 text-white/15 text-xs leading-none rotate-45">✦</span>
-                      <span className="absolute bottom-8 right-1/3 text-white/20 text-lg leading-none">✦</span>
+                      <span className="absolute top-10 left-8 text-white/40 text-xl leading-none rotate-12">✦</span>
+                      <span className="absolute top-1/3 right-10 text-white/35 text-sm leading-none -rotate-6">✦</span>
+                      <span className="absolute bottom-1/3 left-1/4 text-white/30 text-xs leading-none rotate-45">✦</span>
+                      <span className="absolute bottom-8 right-1/3 text-white/35 text-lg leading-none">✦</span>
 
                       {/* Corner bracket accent */}
-                      <div className="absolute bottom-5 right-5 w-10 h-10 border-b-2 border-r-2 border-white/20 rounded-br-2xl" />
+                      <div className="absolute bottom-5 right-5 w-10 h-10 border-b-2 border-r-2 border-white/35 rounded-br-2xl" />
 
                       {/* Diagonal sheen */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/5" />
                     </div>
 
                     <div className="relative z-10 space-y-4 w-full pr-2">
