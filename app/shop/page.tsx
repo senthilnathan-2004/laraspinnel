@@ -203,7 +203,7 @@ function ShopPageContent() {
           {/* Main content column */}
           <div className="flex-1 min-w-0 space-y-6 md:space-y-8">
             {/* Mobile / tablet compact filter bar */}
-            <div className="lg:hidden bg-white border border-brand-border rounded-xl md:rounded-2xl p-2.5 md:p-4 space-y-4 shadow-xs md:shadow-card">
+            <div className="lg:hidden space-y-4">
               <div className="flex flex-col sm:flex-row gap-2.5 md:gap-3 items-center">
                 <form onSubmit={handleSearchSubmit} className="relative w-full sm:flex-1">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-brand-gray">

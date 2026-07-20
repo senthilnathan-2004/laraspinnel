@@ -5,16 +5,18 @@ interface TextMarqueeProps {
   bgColor?: string;
   textColor?: string;
   dividerColor?: string;
+  borderColor?: string;
 }
 
-export default function TextMarquee({ 
-  items, 
-  bgColor = "bg-brand-black", 
+export default function TextMarquee({
+  items,
+  bgColor = "bg-brand-black",
   textColor = "text-white",
-  dividerColor = "text-white/30"
+  dividerColor = "text-white/30",
+  borderColor = "border-brand-border/10",
 }: TextMarqueeProps) {
   return (
-    <div className={`overflow-hidden py-5 flex items-center border-y border-brand-border/10 ${bgColor}`}>
+    <div className={`overflow-hidden py-5 flex items-center border-y ${borderColor} ${bgColor}`}>
       <style>{`
         @keyframes marquee-text {
           0% { transform: translateX(0); }

@@ -92,8 +92,8 @@ export default function ProductDetailPage() {
     <div className="min-h-screen bg-white flex flex-col justify-between">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 w-full space-y-16 animate-in fade-in">
-        <div className="space-y-4 md:space-y-16">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-9 w-full space-y-16 animate-in fade-in">
+        <div className="space-y-4 md:space-y-6">
           {/* Back Link */}
           <div>
             <Link href="/shop" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-black hover:text-goat-primary transition-colors">
@@ -104,7 +104,7 @@ export default function ProductDetailPage() {
           {/* Product Details Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-6 lg:gap-12">
           {/* Gallery Column — small & paired with buy actions in tablet view */}
-          <div className="order-1 md:order-1 lg:order-1 lg:col-span-6 lg:row-span-2 space-y-4">
+          <div className="order-1 md:order-1 lg:order-1 lg:col-span-6 lg:row-span-2 lg:sticky lg:top-28 lg:self-start xl:static space-y-4">
             {/* Active Image Frame */}
             <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-brand-light-gray/40 border border-brand-border group">
               <Image
@@ -221,7 +221,7 @@ export default function ProductDetailPage() {
                   </div>
                   <textarea
                     id="customText"
-                    rows={2}
+                    rows={4}
                     maxLength={300}
                     value={customText}
                     onChange={(e) => setCustomText(e.target.value)}

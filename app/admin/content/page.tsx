@@ -217,15 +217,6 @@ export default function AdminContentPage() {
                 />
               </Section>
 
-              <Section title="Final Call-to-Action">
-                <TextField label="Heading" value={val("home_cta_title")} onChange={(v) => setVal("home_cta_title", v)} />
-                <TextAreaField label="Text" value={val("home_cta_text")} onChange={(v) => setVal("home_cta_text", v)} />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <TextField label="Button Label" value={val("home_cta_button")} onChange={(v) => setVal("home_cta_button", v)} />
-                  <TextField label="Button Link" value={val("home_cta_link")} onChange={(v) => setVal("home_cta_link", v)} />
-                </div>
-              </Section>
-
               <p className="text-xs text-brand-gray border-t border-brand-border pt-4">
                 Hero banners, product cards, and categories are managed on their own admin pages
                 (Banners, Products, Categories).

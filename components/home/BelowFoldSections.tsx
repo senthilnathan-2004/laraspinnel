@@ -19,11 +19,6 @@ const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
   loading: () => <div className="min-h-[300px]" />,
 });
 
-const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"), {
-  ssr: false,
-  loading: () => <div className="min-h-[150px]" />,
-});
-
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), {
   ssr: false,
   loading: () => <div className="min-h-[48px]" />,
@@ -50,10 +45,8 @@ export default function BelowFoldSections() {
         bgColor="bg-brand-black"
         textColor="text-white"
         dividerColor="text-white/20"
+        borderColor="border-white/10"
       />
-
-      {/* Centered final Checkout CTA */}
-      <FinalCTA />
     </>
   );
 }

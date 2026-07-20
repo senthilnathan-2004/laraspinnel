@@ -80,12 +80,6 @@ export const CONTENT_DEFAULTS: Record<string, string> = {
   home_why_title: "Why Choose Us",
   home_why_subtitle: "Every detail of our handcrafted gifts is designed to bring joy and lasting memories.",
   home_why_steps: JSON.stringify(DEFAULT_WHY_STEPS),
-  // Home — Final CTA
-  home_cta_title: "Ready to Shop Handmade Gifts?",
-  home_cta_text:
-    "Explore our handcrafted catalog of crochet flowers, personalized frames, keychains, and accessories. Custom orders are made with love.",
-  home_cta_button: "Start Shopping Now",
-  home_cta_link: "/shop",
   // Home — marquee
   home_marquee: JSON.stringify(DEFAULT_MARQUEE_ITEMS),
   // Footer

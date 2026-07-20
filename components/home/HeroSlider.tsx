@@ -90,9 +90,9 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
   ];
 
   return (
-    <section className="relative overflow-hidden group select-none">
+    <section className="relative overflow-hidden group select-none bg-brand-light-gray px-4 pt-4 pb-4 md:px-6 md:pt-6 md:pb-6 lg:p-0">
       {/* Viewport */}
-      <div className="overflow-hidden" ref={emblaRef}>
+      <div className="overflow-hidden rounded-2xl lg:rounded-none" ref={emblaRef}>
         <div className="flex">
           {slides.map((slide, index) => {
             // The page's single <h1> is the sr-only heading in app/page.tsx.
@@ -183,7 +183,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
       </button>
 
       {/* Dots navigation */}
-      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2">
+      <div className="absolute bottom-8 lg:bottom-6 left-0 right-0 flex justify-center gap-2">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
