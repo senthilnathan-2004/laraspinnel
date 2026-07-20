@@ -113,7 +113,7 @@ export default function PromoShowcase() {
   if (cards.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-20 bg-brand-light-gray/40 overflow-hidden">
+    <section className="py-20 md:py-28 bg-cream-bg overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div
           className="overflow-hidden"
@@ -130,7 +130,7 @@ export default function PromoShowcase() {
                   <div
                     className={`relative rounded-[28px] ${getPromoCardColorClass(
                       card.bgColor
-                    )} p-6 h-72 sm:h-80 overflow-hidden flex flex-col`}
+                    )} p-6 h-96 sm:h-[28rem] overflow-hidden flex flex-col`}
                   >
                     <div className="relative z-10 space-y-4 w-full pr-2">
                       <h3 className="text-white font-display text-lg sm:text-xl leading-snug drop-shadow-sm truncate">
@@ -142,7 +142,7 @@ export default function PromoShowcase() {
                     </div>
 
                     {card.imageUrl && (
-                      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[62%] h-[46%] rounded-2xl overflow-hidden shadow-lg">
+                      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[64%] aspect-square rounded-2xl overflow-hidden shadow-lg">
                         <Image
                           src={card.imageUrl}
                           alt={card.title}
