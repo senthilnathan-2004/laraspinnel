@@ -180,9 +180,9 @@ export default function AdminMessagesPage() {
       />
       <AdminTopbar title="Contact Messages" />
 
-      <div className="flex-1 p-3 md:p-6 w-full flex flex-col md:flex-row gap-6">
+      <div className="flex-1 p-3 md:p-6 w-full flex flex-col lg:flex-row gap-6">
         {/* Inbox Left Column */}
-        <div className="w-full md:w-80 lg:w-96 bg-white border border-brand-border rounded-2xl shadow-card flex flex-col overflow-hidden h-[calc(100vh-12rem)]">
+        <div className="w-full lg:w-96 bg-white border border-brand-border rounded-2xl shadow-card flex flex-col overflow-hidden h-[calc(100vh-12rem)]">
           <div className="px-5 py-4 border-b border-brand-border bg-brand-light-gray/50 flex items-center justify-between">
             <h3 className="font-display text-base text-brand-black tracking-wide">
               Inbox
