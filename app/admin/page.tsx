@@ -192,7 +192,7 @@ export default async function AdminDashboardPage() {
       {/* Main Content */}
       <div className="flex-1 p-3 md:p-6 space-y-6 w-full animate-in fade-in">
         {/* Welcome Section */}
-        <div className="bg-white border border-brand-border rounded-2xl p-3 md:p-6 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white border border-brand-border rounded-2xl p-3 md:p-6 shadow-card flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-brand-black">
               Welcome back, {session.user?.name || "Admin"}!
@@ -204,7 +204,7 @@ export default async function AdminDashboardPage() {
           <Link
             href="/"
             target="_blank"
-            className="shrink-0 inline-flex items-center gap-2 bg-brand-black text-white hover:bg-goat-primary px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 whitespace-nowrap"
+            className="w-full lg:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-brand-black text-white hover:bg-goat-primary px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 whitespace-nowrap"
           >
             <span>View Public Site</span>
             <ArrowRight size={14} />
