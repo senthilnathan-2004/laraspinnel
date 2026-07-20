@@ -46,7 +46,7 @@ export default function BelowFoldSections() {
   return (
     <>
       {/* Bangles category showcase */}
-      <CategoryShowcase title="Bangles" categorySlug="bangles" />
+      <CategoryShowcase title="Bangles" categorySlug="bangles" eyebrow="Trending Now" />
 
       {/* Featured Products catalog */}
       <FeaturedProducts />

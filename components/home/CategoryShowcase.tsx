@@ -3,7 +3,7 @@
 import React from "react";
 import useSWR from "swr";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Gem } from "lucide-react";
 import PremiumCard from "./PremiumCard";
 import SkeletonCard from "../shared/SkeletonCard";
 import { sortInStockFirst } from "@/lib/utils";
@@ -23,9 +23,10 @@ interface Product {
 interface CategoryShowcaseProps {
   title: string;
   categorySlug: string;
+  eyebrow: string;
 }
 
-export default function CategoryShowcase({ title, categorySlug }: CategoryShowcaseProps) {
+export default function CategoryShowcase({ title, categorySlug, eyebrow }: CategoryShowcaseProps) {
   const { data: rawProducts = [], isLoading, error } = useSWR<Product[]>(
     `/api/products?category=${categorySlug}`,
     fetcher
@@ -40,9 +41,17 @@ export default function CategoryShowcase({ title, categorySlug }: CategoryShowca
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
-          <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
-            {title}
-          </h2>
+          <div>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Gem size={16} className="text-gold-primary" />
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-gray">
+                {eyebrow}
+              </span>
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+              {title}
+            </h2>
+          </div>
           <Link
             href={`/shop?category=${categorySlug}`}
             className="group inline-flex items-center gap-1 text-sm font-semibold text-goat-primary hover:text-goat-hover transition-colors"

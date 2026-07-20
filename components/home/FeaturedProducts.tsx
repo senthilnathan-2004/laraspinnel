@@ -3,7 +3,7 @@
 import React from "react";
 import useSWR from "swr";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import PremiumCard from "./PremiumCard";
 import SkeletonCard from "../shared/SkeletonCard";
 import { sortInStockFirst } from "@/lib/utils";
@@ -44,9 +44,17 @@ export default function FeaturedProducts() {
               }
             }
           `}</style>
-          <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
-            Featured Products
-          </h2>
+          <div>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Star size={16} className="text-gold-primary" />
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-gray">
+                Popular Choices
+              </span>
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+              Featured Products
+            </h2>
+          </div>
           <Link
             href="/shop"
             className="group inline-flex items-center gap-1 text-sm font-semibold text-goat-primary hover:text-goat-hover transition-colors"
