@@ -105,6 +105,32 @@ html {
   background: var(--color-brand-gray);
 }
 
+/* Thin scrollbar for scrollable containers nested inside a page (e.g. the
+   CustomSelect dropdown list, used on public shop filters and across the
+   admin panel) — scrollbar-width isn't inherited by descendants in Firefox,
+   so the global html-level rule above doesn't reach them on its own. */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-border) var(--color-cream-bg);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-brand-border);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-gray);
+}
+
 /* Masonry layout support */
 .masonry-grid {
   display: grid;
