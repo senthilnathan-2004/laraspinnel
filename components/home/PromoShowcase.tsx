@@ -130,7 +130,7 @@ export default function PromoShowcase() {
                   <div
                     className={`relative rounded-[28px] ${getPromoCardColorClass(
                       card.bgColor
-                    )} p-6 h-72 sm:h-80 overflow-visible flex flex-col`}
+                    )} p-6 h-72 sm:h-80 overflow-hidden flex flex-col`}
                   >
                     <div className="relative z-10 space-y-4 w-full pr-2">
                       <h3 className="text-white font-display text-lg sm:text-xl leading-snug drop-shadow-sm truncate">
@@ -142,7 +142,7 @@ export default function PromoShowcase() {
                     </div>
 
                     {card.imageUrl && (
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 w-[62%] h-[58%] rounded-2xl overflow-hidden shadow-2xl">
+                      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[62%] h-[46%] rounded-2xl overflow-hidden shadow-lg">
                         <Image
                           src={card.imageUrl}
                           alt={card.title}
