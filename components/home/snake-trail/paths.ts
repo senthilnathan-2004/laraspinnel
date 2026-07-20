@@ -68,7 +68,27 @@ const TABLET_ACCENTS: AccentMaskRegion[] = [
   { id: "bottom-left-flourish", x: 58, y: 244, width: 56, height: 56, rx: 14 },
 ];
 
-const TENSION = 0.2;
+// Raised from 0.2: at that tension the sharp inside-to-outside reversals
+// (e.g. mobile points [1]->[2]->[3]) read as an angular "zigzag" instead of
+// a rounded snake-body curve. 0.32 keeps the loop from self-crossing while
+// giving those direction changes a visibly rounded sweep.
+const TENSION = 0.32;
+
+// Per-lap jitter so the trail doesn't retrace an identical route every
+// cycle. Point [0] (the loop's start/end) is never jittered, so consecutive
+// laps still hand off from the exact same pixel — no seam. The radius stays
+// comfortably inside the smallest card-edge/canvas-edge margin in the point
+// tables above (28 units), so a jittered point can't flip from "outside the
+// card" to "inside" or vice versa.
+const JITTER_RADIUS = 18;
+
+function jitterPoint([x, y]: Point, radius: number, width: number, height: number): Point {
+  const angle = Math.random() * Math.PI * 2;
+  const distance = Math.random() * radius;
+  const jitteredX = x + Math.cos(angle) * distance;
+  const jitteredY = y + Math.sin(angle) * distance;
+  return [Math.max(2, Math.min(width - 2, jitteredX)), Math.max(2, Math.min(height - 2, jitteredY))];
+}
 
 export function getTrailGeometry(variant: TrailVariant): TrailGeometry {
   const isMobile = variant === "mobile";
@@ -84,4 +104,22 @@ export function getTrailGeometry(variant: TrailVariant): TrailGeometry {
     pathD: arcsToPathD(catmullRomLoopToBezier(points, TENSION)),
     accentMaskRegions: isMobile ? MOBILE_ACCENTS : TABLET_ACCENTS,
   };
+}
+
+/**
+ * A fresh closed path for one lap, jittered from the same anchor points used
+ * by getTrailGeometry so the trail travels a different, still-smooth route
+ * each cycle instead of repeating an identical loop. Call once per lap.
+ */
+export function getRandomizedPathD(variant: TrailVariant): string {
+  const isMobile = variant === "mobile";
+  const points = isMobile ? MOBILE_LOOP_POINTS : TABLET_LOOP_POINTS;
+  const width = isMobile ? 356 : 456;
+  const height = isMobile ? 456 : 356;
+
+  const jittered: Point[] = points.map((point, i) =>
+    i === 0 ? point : jitterPoint(point, JITTER_RADIUS, width, height)
+  );
+
+  return arcsToPathD(catmullRomLoopToBezier(jittered, TENSION));
 }

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { getTrailGeometry } from "./paths";
+import { getTrailGeometry, getRandomizedPathD } from "./paths";
 
 function assertRectWithinCanvas(
   rect: { x: number; y: number; width: number; height: number },
@@ -37,3 +37,24 @@ test("mobile and tablet geometries use distinct aspect ratios", () => {
   const tablet = getTrailGeometry("tablet");
   assert.notEqual(mobile.width / mobile.height, tablet.width / tablet.height);
 });
+
+for (const variant of ["mobile", "tablet"] as const) {
+  test(`getRandomizedPathD("${variant}") always starts at the same fixed anchor point`, () => {
+    const first = getRandomizedPathD(variant);
+    const second = getRandomizedPathD(variant);
+    const startOf = (d: string) => d.match(/^M (\S+) (\S+)/)?.slice(1).join(" ");
+    assert.equal(startOf(first), startOf(second));
+  });
+
+  test(`getRandomizedPathD("${variant}") produces a closed SVG path`, () => {
+    const d = getRandomizedPathD(variant);
+    assert.ok(d.startsWith("M "));
+    assert.ok(d.trim().endsWith("Z"));
+  });
+
+  test(`getRandomizedPathD("${variant}") varies between calls`, () => {
+    const attempts = Array.from({ length: 5 }, () => getRandomizedPathD(variant));
+    const distinct = new Set(attempts);
+    assert.ok(distinct.size > 1);
+  });
+}

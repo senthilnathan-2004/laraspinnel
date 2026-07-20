@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger, ensureScrollTriggerRegistered } from "./gsapSetup";
-import { getTrailGeometry, type TrailVariant } from "./paths";
+import { getTrailGeometry, getRandomizedPathD, type TrailVariant } from "./paths";
 import { getTrailGradientStops } from "@/lib/utils";
 
 const ARC_COUNT = 8;
@@ -34,42 +34,65 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
     const particles = particleRefs.current.filter((el): el is SVGCircleElement => el !== null);
     if (paths.length !== 3 || heads.length !== 3) return;
 
-    const totalLength = paths[0].getTotalLength();
-    const tailLength = totalLength * TAIL_FRACTION;
-
-    for (const path of paths) {
-      path.style.strokeDasharray = `${tailLength} ${totalLength}`;
-    }
-
+    let cancelled = false;
+    const activeTimeline: { current: gsap.core.Timeline | null } = { current: null };
     const progress = { distance: 0 };
-    const timeline = gsap.timeline({ repeat: -1 });
 
-    for (let i = 0; i < ARC_COUNT; i++) {
-      const arcStart = (i / ARC_COUNT) * totalLength;
-      const arcEnd = ((i + 1) / ARC_COUNT) * totalLength;
-      // fromTo (not to): a plain-object tween needs an explicit "from" so
-      // every timeline repeat restarts this arc from the right value,
-      // instead of animating from wherever the previous repeat left off.
-      timeline.fromTo(
-        progress,
-        { distance: arcStart },
-        {
-          distance: arcEnd,
-          duration: ARC_DURATION_SECONDS,
-          ease: "power1.inOut",
-          onUpdate: () => {
-            const point = paths[0].getPointAtLength(progress.distance);
-            for (const head of heads) {
-              head.setAttribute("cx", String(point.x));
-              head.setAttribute("cy", String(point.y));
-            }
-            for (const path of paths) {
-              path.style.strokeDashoffset = String(-progress.distance);
-            }
-          },
-        }
-      );
+    // Each lap gets its own freshly-randomized path (see getRandomizedPathD)
+    // so the trail never retraces an identical route twice, and its own
+    // one-shot timeline — chaining onComplete instead of `repeat: -1` means
+    // there's no fixed "restart point" for the loop to snap back to.
+    function runLap() {
+      if (cancelled) return;
+
+      const pathD = getRandomizedPathD(variant);
+      for (const path of paths) {
+        path.setAttribute("d", pathD);
+      }
+
+      const totalLength = paths[0].getTotalLength();
+      const tailLength = totalLength * TAIL_FRACTION;
+      for (const path of paths) {
+        // Dash pattern sums to totalLength (tailLength + the gap), matching
+        // the path's own period exactly. That's what makes offset -totalLength
+        // (this lap's last frame) equivalent to offset 0 (the next lap's
+        // first frame) — no phase jump at the handoff.
+        path.style.strokeDasharray = `${tailLength} ${totalLength - tailLength}`;
+      }
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          if (!cancelled) runLap();
+        },
+      });
+      activeTimeline.current = timeline;
+
+      for (let i = 0; i < ARC_COUNT; i++) {
+        const arcStart = (i / ARC_COUNT) * totalLength;
+        const arcEnd = ((i + 1) / ARC_COUNT) * totalLength;
+        timeline.fromTo(
+          progress,
+          { distance: arcStart },
+          {
+            distance: arcEnd,
+            duration: ARC_DURATION_SECONDS,
+            ease: "power1.inOut",
+            onUpdate: () => {
+              const point = paths[0].getPointAtLength(progress.distance);
+              for (const head of heads) {
+                head.setAttribute("cx", String(point.x));
+                head.setAttribute("cy", String(point.y));
+              }
+              for (const path of paths) {
+                path.style.strokeDashoffset = String(-progress.distance);
+              }
+            },
+          }
+        );
+      }
     }
+
+    runLap();
 
     ensureScrollTriggerRegistered();
     const svgEl = svgRootRef.current;
@@ -78,10 +101,10 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
           trigger: svgEl,
           start: "top bottom",
           end: "bottom top",
-          onEnter: () => timeline.play(),
-          onLeave: () => timeline.pause(),
-          onEnterBack: () => timeline.play(),
-          onLeaveBack: () => timeline.pause(),
+          onEnter: () => activeTimeline.current?.play(),
+          onLeave: () => activeTimeline.current?.pause(),
+          onEnterBack: () => activeTimeline.current?.play(),
+          onLeaveBack: () => activeTimeline.current?.pause(),
         })
       : null;
 
@@ -128,14 +151,15 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
     }
 
     return () => {
-      timeline.kill();
+      cancelled = true;
+      activeTimeline.current?.kill();
       scrollTrigger?.kill();
       particleCall?.kill();
       for (const el of particles) {
         gsap.killTweensOf(el);
       }
     };
-  }, [prefersReducedMotion, geometry.pathD]);
+  }, [prefersReducedMotion, variant]);
 
   if (prefersReducedMotion) return null;
 
