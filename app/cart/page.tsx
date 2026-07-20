@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useCart, type CartItem } from "@/hooks/useCart";
 import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
+import StickyBox from "@/components/shared/StickyBox";
 import { ShoppingCart, Trash2, ArrowLeft, ArrowRight, ShoppingBag, Plus, Minus, Pencil } from "lucide-react";
 
 const lineKey = (item: CartItem) => `${item.productId}-${item.customText || ""}-${item.customImage || ""}`;
@@ -65,7 +66,7 @@ export default function CartPage() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Items Column (8 cols) */}
             <div className="lg:col-span-8 space-y-4">
               <div className="border border-brand-border rounded-2xl overflow-hidden shadow-card">
@@ -226,7 +227,8 @@ export default function CartPage() {
             </div>
 
             {/* Summary Column (4 cols) */}
-            <div className="lg:col-span-4 lg:sticky lg:top-24 bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-6 shadow-card">
+            <StickyBox topOffset={112} enableFrom={1024} className="lg:col-span-4">
+            <div className="bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-6 shadow-card">
               <h2 className="font-display text-xl text-brand-black uppercase tracking-wide border-b border-brand-border pb-3">
                 Order Summary
               </h2>
@@ -259,6 +261,7 @@ export default function CartPage() {
                 </Link>
               </div>
             </div>
+            </StickyBox>
           </div>
         )}
       </main>

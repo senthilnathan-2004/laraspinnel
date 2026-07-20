@@ -80,9 +80,14 @@ export default function StickyBox({ topOffset, enableFrom = 0, className = "", c
       } else {
         // Container's bottom is approaching — dock there instead of
         // floating past it over whatever comes next (e.g. the footer).
+        // `position: absolute` is relative to the container, so `left` must
+        // be the slot's offset from the container's left edge — not 0,
+        // which only happened to look right for a slot that starts flush
+        // with the container's left side (e.g. a left-hand sidebar) and
+        // snaps a right-hand column (e.g. a cart summary) to the far left.
         setStyle({
           position: "absolute",
-          left: 0,
+          left: slotRect.left - containerRect.left,
           top: container.clientHeight - boxHeight,
           width: boxWidth,
         });
