@@ -136,26 +136,26 @@ export default function PremiumCard({
           {outOfStock ? (
             <button
               disabled
-              className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center gap-1 shadow-xs border bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
+              className="h-6 sm:h-7 px-2.5 sm:px-3.5 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center gap-1 shadow-xs border bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
             >
               <span>Sold Out</span>
             </button>
           ) : quantityInCart > 0 ? (
-            <div className="flex items-center rounded-full border border-goat-primary/30 bg-goat-tint overflow-hidden shrink-0">
+            <div className="h-6 sm:h-7 flex items-center rounded-full border border-goat-primary/30 bg-goat-tint overflow-hidden shrink-0">
               <button
                 onClick={handleDecrement}
                 aria-label="Decrease quantity"
-                className="p-1 sm:p-1.5 text-goat-primary hover:bg-goat-primary/10 transition-colors cursor-pointer"
+                className="h-full px-1 sm:px-1.5 flex items-center justify-center text-goat-primary hover:bg-goat-primary/10 transition-colors cursor-pointer"
               >
                 <Minus size={10} className="sm:w-3 sm:h-3" />
               </button>
-              <span className="w-4 sm:w-5 text-center text-[9px] sm:text-[10px] font-bold text-goat-primary">
+              <span className="h-full w-4 sm:w-5 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-goat-primary">
                 {quantityInCart}
               </span>
               <button
                 onClick={handleIncrement}
                 aria-label="Increase quantity"
-                className="p-1 sm:p-1.5 text-goat-primary hover:bg-goat-primary/10 transition-colors cursor-pointer"
+                className="h-full px-1 sm:px-1.5 flex items-center justify-center text-goat-primary hover:bg-goat-primary/10 transition-colors cursor-pointer"
               >
                 <Plus size={10} className="sm:w-3 sm:h-3" />
               </button>
@@ -163,7 +163,7 @@ export default function PremiumCard({
           ) : (
             <button
               onClick={handleAddToCart}
-              className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs border bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
+              className="h-6 sm:h-7 px-2.5 sm:px-3.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs border bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
             >
               <ShoppingCart size={10} className="sm:w-3 sm:h-3" />
               <span>Add</span>
