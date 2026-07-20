@@ -78,7 +78,12 @@ export default function CartPage() {
 
                 <div className="divide-y divide-brand-border bg-white">
                   {cart.map((item) => (
-                    <div key={lineKey(item)} className="p-4 grid grid-cols-1 md:grid-cols-12 items-start md:items-center gap-4">
+                    <div
+                      key={lineKey(item)}
+                      className={`p-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-start ${
+                        editingKey === lineKey(item) ? "" : "md:items-center"
+                      }`}
+                    >
                       {/* Product Detail */}
                       <div className="col-span-1 md:col-span-6 flex gap-4 items-start">
                         <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-brand-light-gray shrink-0 border border-brand-border">
@@ -96,7 +101,7 @@ export default function CartPage() {
                           </h3>
 
                           {editingKey === lineKey(item) ? (
-                            <div className="space-y-2 pt-1 max-w-sm">
+                            <div className="space-y-2 pt-1 max-w-sm md:max-w-none">
                               <textarea
                                 value={draftText}
                                 onChange={(e) => setDraftText(e.target.value)}
