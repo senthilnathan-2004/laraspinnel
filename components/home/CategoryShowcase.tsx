@@ -41,10 +41,10 @@ export default function CategoryShowcase({ title, categorySlug, eyebrow }: Categ
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
-          <div>
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <Gem size={16} className="text-gold-primary" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-gray">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-goat-primary">
+              <Gem size={16} className="animate-pulse text-gold-primary" />
+              <span className="text-[10px] font-bold tracking-widest uppercase text-brand-gray">
                 {eyebrow}
               </span>
             </div>

@@ -44,10 +44,10 @@ export default function FeaturedProducts() {
               }
             }
           `}</style>
-          <div>
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <Star size={16} className="text-gold-primary" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-gray">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-goat-primary">
+              <Star size={16} className="animate-pulse text-gold-primary" />
+              <span className="text-[10px] font-bold tracking-widest uppercase text-brand-gray">
                 Popular Choices
               </span>
             </div>
