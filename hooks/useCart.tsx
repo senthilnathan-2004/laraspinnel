@@ -23,6 +23,12 @@ interface CartContextType {
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
   removeItem: (productId: string, customText?: string, customImage?: string) => void;
   updateQuantity: (productId: string, quantity: number, customText?: string, customImage?: string) => void;
+  updateCustomization: (
+    productId: string,
+    oldCustomText: string | undefined,
+    oldCustomImage: string | undefined,
+    updates: { customText?: string; customImage?: string }
+  ) => void;
   clearCart: () => void;
   cartCount: number;
   cartTotal: number;
@@ -85,6 +91,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
+  const updateCustomization = (
+    productId: string,
+    oldCustomText: string | undefined,
+    oldCustomImage: string | undefined,
+    updates: { customText?: string; customImage?: string }
+  ) => {
+    const oldKey = lineKey(productId, oldCustomText, oldCustomImage);
+    setCart((prev) =>
+      prev.map((i) =>
+        lineKey(i.productId, i.customText, i.customImage) === oldKey
+          ? { ...i, customText: updates.customText, customImage: updates.customImage }
+          : i
+      )
+    );
+  };
+
   const clearCart = () => {
     setCart([]);
   };
@@ -99,6 +121,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         addItem,
         removeItem,
         updateQuantity,
+        updateCustomization,
         clearCart,
         cartCount,
         cartTotal,

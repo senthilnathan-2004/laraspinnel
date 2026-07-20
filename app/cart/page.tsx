@@ -1,15 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { useCart } from "@/hooks/useCart";
-import { ShoppingCart, Trash2, ArrowLeft, ArrowRight, ShoppingBag, Plus, Minus } from "lucide-react";
+import { useCart, type CartItem } from "@/hooks/useCart";
+import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
+import { ShoppingCart, Trash2, ArrowLeft, ArrowRight, ShoppingBag, Plus, Minus, Pencil } from "lucide-react";
+
+const lineKey = (item: CartItem) => `${item.productId}-${item.customText || ""}-${item.customImage || ""}`;
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeItem, clearCart, cartCount, cartTotal } = useCart();
+  const { cart, updateQuantity, removeItem, updateCustomization, clearCart, cartCount, cartTotal } = useCart();
+  const [editingKey, setEditingKey] = useState<string | null>(null);
+  const [draftText, setDraftText] = useState("");
+  const [draftImage, setDraftImage] = useState("");
+
+  const startEditing = (item: CartItem) => {
+    setEditingKey(lineKey(item));
+    setDraftText(item.customText || "");
+    setDraftImage(item.customImage || "");
+  };
+
+  const cancelEditing = () => setEditingKey(null);
+
+  const saveEditing = (item: CartItem) => {
+    updateCustomization(item.productId, item.customText, item.customImage, {
+      customText: draftText.trim() || undefined,
+      customImage: draftImage || undefined,
+    });
+    setEditingKey(null);
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col justify-between">
@@ -56,9 +78,9 @@ export default function CartPage() {
 
                 <div className="divide-y divide-brand-border bg-white">
                   {cart.map((item) => (
-                    <div key={`${item.productId}-${item.customText || ""}-${item.customImage || ""}`} className="p-4 grid grid-cols-1 md:grid-cols-12 items-center gap-4">
+                    <div key={lineKey(item)} className="p-4 grid grid-cols-1 md:grid-cols-12 items-start md:items-center gap-4">
                       {/* Product Detail */}
-                      <div className="col-span-1 md:col-span-6 flex gap-4 items-center">
+                      <div className="col-span-1 md:col-span-6 flex gap-4 items-start">
                         <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-brand-light-gray shrink-0 border border-brand-border">
                           <Image
                             src={item.image || "/placeholder.jpg"}
@@ -68,32 +90,76 @@ export default function CartPage() {
                             className="object-cover"
                           />
                         </div>
-                        <div className="space-y-1 min-w-0">
+                        <div className="space-y-1 min-w-0 flex-1">
                           <h3 className="font-semibold text-brand-black text-sm md:text-base truncate">
                             {item.name}
                           </h3>
-                          {item.customText && (
-                            <p className="text-xs text-goat-text bg-goat-tint border border-goat-primary/20 rounded-lg px-2 py-1 italic truncate" title={item.customText}>
-                              Custom: {item.customText}
-                            </p>
-                          )}
-                          {item.customImage && (
-                            <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-goat-primary/30 shrink-0">
-                              <Image
-                                src={item.customImage}
-                                alt="Customization reference"
-                                fill
-                                sizes="40px"
-                                className="object-cover"
+
+                          {editingKey === lineKey(item) ? (
+                            <div className="space-y-2 pt-1 max-w-sm">
+                              <textarea
+                                value={draftText}
+                                onChange={(e) => setDraftText(e.target.value)}
+                                rows={2}
+                                maxLength={300}
+                                placeholder="e.g. Add name 'Priya', change ribbon color to pink..."
+                                className="w-full p-2 bg-goat-tint/20 border border-goat-primary/25 rounded-lg text-xs outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
                               />
+                              <ImageUploadDropzone
+                                value={draftImage ? [draftImage] : []}
+                                onChange={(urls) => setDraftImage(urls[urls.length - 1] || "")}
+                                maxFiles={1}
+                                endpoint="/api/customer-upload"
+                              />
+                              <div className="flex items-center gap-2 pt-1">
+                                <button
+                                  onClick={() => saveEditing(item)}
+                                  className="text-xs font-semibold text-white bg-goat-primary hover:bg-goat-hover px-3 py-1.5 rounded-full transition-colors"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={cancelEditing}
+                                  className="text-xs font-semibold text-brand-gray hover:text-brand-black px-3 py-1.5 rounded-full border border-brand-border transition-colors"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
                             </div>
+                          ) : (
+                            <>
+                              {item.customText && (
+                                <p className="text-xs text-goat-text bg-goat-tint border border-goat-primary/20 rounded-lg px-2 py-1 italic truncate" title={item.customText}>
+                                  Custom: {item.customText}
+                                </p>
+                              )}
+                              {item.customImage && (
+                                <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-goat-primary/30 shrink-0">
+                                  <Image
+                                    src={item.customImage}
+                                    alt="Customization reference"
+                                    fill
+                                    sizes="40px"
+                                    className="object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div className="flex items-center gap-3 mt-0.5">
+                                <button
+                                  onClick={() => startEditing(item)}
+                                  className="text-xs font-semibold text-goat-primary hover:text-goat-hover transition-colors flex items-center gap-1"
+                                >
+                                  <Pencil size={13} /> Edit
+                                </button>
+                                <button
+                                  onClick={() => removeItem(item.productId, item.customText, item.customImage)}
+                                  className="text-xs font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center gap-1"
+                                >
+                                  <Trash2 size={13} /> Remove
+                                </button>
+                              </div>
+                            </>
                           )}
-                          <button
-                            onClick={() => removeItem(item.productId, item.customText, item.customImage)}
-                            className="text-xs font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center gap-1 mt-0.5"
-                          >
-                            <Trash2 size={13} /> Remove
-                          </button>
                         </div>
                       </div>
 
