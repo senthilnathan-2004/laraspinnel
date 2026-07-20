@@ -19,6 +19,11 @@ const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
   loading: () => <div className="min-h-[300px]" />,
 });
 
+const PromoShowcase = dynamic(() => import("@/components/home/PromoShowcase"), {
+  ssr: false,
+  loading: () => <div className="min-h-[320px]" />,
+});
+
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), {
   ssr: false,
   loading: () => <div className="min-h-[48px]" />,
@@ -38,6 +43,9 @@ export default function BelowFoldSections() {
 
       {/* Customer Testimonials */}
       <Testimonials />
+
+      {/* Promo Showcase — rotating auto-scroll cards */}
+      <PromoShowcase />
 
       {/* Gift Categories / Marketing Marquee */}
       <TextMarquee
