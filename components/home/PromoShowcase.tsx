@@ -113,7 +113,7 @@ export default function PromoShowcase() {
   if (cards.length === 0) return null;
 
   return (
-    <section className="py-20 md:py-28 bg-white overflow-hidden">
+    <section className="py-20 md:py-28 bg-brand-light-gray overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div
           className="overflow-hidden"
