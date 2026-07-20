@@ -74,7 +74,7 @@ const SECTIONS: Record<TabId, string[]> = {
   footer: ["Quick Links column", "Popular Categories column", "Trust Badges", "Disclaimer & note"],
   about: ["Intro", "Why Choose section", "Stats (4)"],
   contact: ["Contact details", "Social links"],
-  policies: ["Privacy Policy", "Terms of Service", "Editorial Policy"],
+  policies: ["Privacy Policy", "Terms of Service", "Editorial Policy", "Refund Policy"],
 };
 
 export default function AdminContentPage() {
@@ -483,6 +483,10 @@ export default function AdminContentPage() {
               <Section activeSection={activeSection} title="Editorial Policy">
                 <p className="text-[10px] text-brand-gray -mt-1">Leave blank to use the built-in default.</p>
                 <TiptapEditor value={val("editorial_policy_content")} onChange={(v) => setVal("editorial_policy_content", v)} />
+              </Section>
+              <Section activeSection={activeSection} title="Refund Policy">
+                <p className="text-[10px] text-brand-gray -mt-1">Leave blank to use the built-in default policy.</p>
+                <TiptapEditor value={val("refund_policy_content")} onChange={(v) => setVal("refund_policy_content", v)} />
               </Section>
             </div>
           )}
