@@ -9,6 +9,11 @@ const FeaturedProducts = dynamic(() => import("@/components/home/FeaturedProduct
   loading: () => <div className="min-h-[300px] bg-brand-light-gray/40 animate-pulse" />,
 });
 
+const CategoryShowcase = dynamic(() => import("@/components/home/CategoryShowcase"), {
+  ssr: false,
+  loading: () => <div className="min-h-[300px] bg-white animate-pulse" />,
+});
+
 const HowItWorks = dynamic(() => import("@/components/home/HowItWorks"), {
   ssr: false,
   loading: () => <div className="min-h-[200px]" />,
@@ -35,6 +40,9 @@ export default function BelowFoldSections() {
 
   return (
     <>
+      {/* Bangles category showcase */}
+      <CategoryShowcase title="Bangles" categorySlug="bangles" />
+
       {/* Featured Products catalog */}
       <FeaturedProducts />
 
