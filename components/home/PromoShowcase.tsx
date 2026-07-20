@@ -132,8 +132,8 @@ export default function PromoShowcase() {
                       card.bgColor
                     )} p-6 h-72 sm:h-80 overflow-visible flex flex-col`}
                   >
-                    <div className="relative z-10 space-y-4 max-w-[60%]">
-                      <h3 className="text-white font-display text-lg sm:text-xl leading-snug drop-shadow-sm">
+                    <div className="relative z-10 space-y-4 w-full pr-2">
+                      <h3 className="text-white font-display text-lg sm:text-xl leading-snug drop-shadow-sm truncate">
                         {card.title}
                       </h3>
                       {card.buttonText && card.buttonLink && (
@@ -142,12 +142,12 @@ export default function PromoShowcase() {
                     </div>
 
                     {card.imageUrl && (
-                      <div className="absolute bottom-0 right-1 w-[65%] h-[75%] translate-y-3">
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 w-[62%] h-[58%] rounded-2xl overflow-hidden shadow-2xl">
                         <Image
                           src={card.imageUrl}
                           alt={card.title}
                           fill
-                          className="object-contain object-bottom drop-shadow-2xl"
+                          className="object-cover"
                           sizes="(max-width: 768px) 60vw, 320px"
                         />
                       </div>
