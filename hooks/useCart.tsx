@@ -18,6 +18,19 @@ export interface CartItem {
 const lineKey = (productId: string, customText?: string, customImage?: string) =>
   `${productId}::${(customText || "").trim()}::${customImage || ""}`;
 
+// Best-effort cleanup so a customer's uploaded reference image doesn't sit
+// orphaned in ImageKit storage once its cart line is gone. Never blocks the
+// cart update on failure — the DB record disappearing is what matters to the
+// customer; a leftover file is a (rare) storage-cost issue, not a UX one.
+function deleteCustomerImage(url?: string) {
+  if (!url) return;
+  fetch("/api/customer-upload", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url }),
+  }).catch(() => {});
+}
+
 interface CartContextType {
   cart: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
@@ -78,6 +91,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const removeItem = (productId: string, customText?: string, customImage?: string) => {
     const key = lineKey(productId, customText, customImage);
     setCart((prev) => prev.filter((i) => lineKey(i.productId, i.customText, i.customImage) !== key));
+    deleteCustomerImage(customImage);
   };
 
   const updateQuantity = (productId: string, quantity: number, customText?: string, customImage?: string) => {
@@ -105,9 +119,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           : i
       )
     );
+    // Only delete the old image if it was actually replaced/removed, not if
+    // the customer kept the same one.
+    if (oldCustomImage && oldCustomImage !== updates.customImage) {
+      deleteCustomerImage(oldCustomImage);
+    }
   };
 
   const clearCart = () => {
+    for (const item of cart) {
+      deleteCustomerImage(item.customImage);
+    }
     setCart([]);
   };
 
