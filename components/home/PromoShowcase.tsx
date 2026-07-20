@@ -113,7 +113,7 @@ export default function PromoShowcase() {
   if (cards.length === 0) return null;
 
   return (
-    <section className="py-20 md:py-28 bg-brand-light-gray overflow-hidden">
+    <section className="py-20 md:py-28 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div
           className="overflow-hidden"
@@ -124,7 +124,7 @@ export default function PromoShowcase() {
             {cards.map((card, index) => (
               <div
                 key={index}
-                className="flex-[0_0_82%] sm:flex-[0_0_58%] md:flex-[0_0_42%] lg:flex-[0_0_32%] min-w-0 px-3"
+                className="flex-[0_0_97%] sm:flex-[0_0_70%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-3"
               >
                 <div className="promo-tween-target will-change-transform">
                   <div
@@ -142,7 +142,7 @@ export default function PromoShowcase() {
                     </div>
 
                     {card.imageUrl && (
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[76%] aspect-square rounded-2xl overflow-hidden shadow-lg">
+                      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[84%] aspect-square rounded-2xl overflow-hidden">
                         <Image
                           src={card.imageUrl}
                           alt={card.title}

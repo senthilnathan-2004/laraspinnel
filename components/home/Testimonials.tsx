@@ -218,7 +218,7 @@ export default function Testimonials() {
   }, [nextSlide]);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Header row */}
         <div className="flex flex-col md:flex-row md:items-start justify-between border-b border-brand-border pb-6 gap-4 md:gap-8">

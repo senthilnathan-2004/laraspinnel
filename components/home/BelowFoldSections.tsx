@@ -50,7 +50,7 @@ export default function BelowFoldSections() {
       {/* Gift Categories / Marketing Marquee */}
       <TextMarquee
         items={marqueeItems}
-        bgColor="bg-brand-black"
+        bgColor="bg-[#111111]"
         textColor="text-white"
         dividerColor="text-white/20"
         borderColor="border-white/10"

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useScrollNavbar } from "@/hooks/useScrollNavbar";
 import { useSettings } from "@/hooks/useSettings";
-import { Phone, ShoppingCart, Home, ShoppingBag, LayoutGrid, Info } from "lucide-react";
+import { Phone, ShoppingCart, Home, ShoppingBag, LayoutGrid, Info, Search } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { useCart } from "@/hooks/useCart";
 
@@ -91,6 +91,16 @@ export default function Navbar() {
 
           {/* Right Actions (Desktop) */}
           <div className="hidden xl:flex items-center gap-4">
+            {/* Search */}
+            <Link
+              href="/shop"
+              className="p-2 text-brand-black hover:text-goat-primary hover:bg-brand-light-gray rounded-full transition-all border border-transparent hover:border-brand-border"
+              title="Search"
+              aria-label="Search"
+            >
+              <Search size={18} strokeWidth={1.8} />
+            </Link>
+
             {/* Phone */}
             <a
               href={`tel:${phone}`}
@@ -147,14 +157,14 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Phone — mobile only */}
-            <a
-              href={`tel:${phone}`}
+            {/* Search — mobile only */}
+            <Link
+              href="/shop"
               className="md:hidden p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
-              aria-label="Call Us"
+              aria-label="Search"
             >
-              <Phone size={18} />
-            </a>
+              <Search size={18} />
+            </Link>
 
             {/* Direct Cart Button for mobile/tablet */}
             <Link
@@ -177,7 +187,7 @@ export default function Navbar() {
       <div className="h-14 md:h-16"></div>
 
       {/* Fixed Bottom Navigation Bar (Mobile only) */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#111111] text-neutral-400 border-t border-neutral-800 md:hidden h-16 shadow-[0_-2px_10px_rgba(0,0,0,0.15)]">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white text-neutral-500 border-t border-neutral-200 md:hidden h-[3.75rem] shadow-[0_-2px_10px_rgba(0,0,0,0.08)]">
         <div className="flex items-center justify-around h-full px-2 max-w-md mx-auto">
           {bottomLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -185,10 +195,10 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 transition-all duration-200 select-none ${
+                className={`flex flex-col items-center justify-center gap-1 flex-1 py-1.5 transition-all duration-200 select-none ${
                   isActive
-                    ? "text-goat-primary scale-105"
-                    : "text-neutral-400 hover:text-neutral-200"
+                    ? "text-goat-primary"
+                    : "text-neutral-500 hover:text-neutral-800"
                 }`}
               >
                 <link.icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />

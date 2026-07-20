@@ -168,6 +168,6 @@ h1, h2, h3, h4, h5, h6, .font-display {
 /* Push page content up to avoid clipping under fixed bottom navigation bar on mobile */
 @media (max-width: 767px) {
   body {
-    padding-bottom: 4rem;
+    padding-bottom: 3.5rem;
   }
 }

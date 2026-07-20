@@ -31,6 +31,8 @@ function ShopPageContent() {
   const [category, setCategory] = useState(initialCategory);
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [sort, setSort] = useState(initialSort);
+  const [showDesktopSuggestions, setShowDesktopSuggestions] = useState(false);
+  const [showMobileSuggestions, setShowMobileSuggestions] = useState(false);
 
   // Sync state with URL search params
   useEffect(() => {
@@ -63,9 +65,31 @@ function ShopPageContent() {
   // Out-of-stock items fall to the end; they return to their normal spot once restocked.
   const products = sortInStockFirst(rawProducts);
 
+  // Full product list (unfiltered by search) to power search-bar suggestions
+  const { data: allProducts = [] } = useSWR("/api/products", fetcher);
+  const productNames: string[] = Array.from(
+    new Set(allProducts.map((p: any) => p.name).filter(Boolean))
+  );
+  const suggestions = searchTerm
+    ? productNames
+        .filter(
+          (name) =>
+            name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            name.toLowerCase() !== searchTerm.toLowerCase()
+        )
+        .slice(0, 5)
+    : [];
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateUrlParams({ search: searchTerm });
+  };
+
+  const handleSuggestionSelect = (name: string) => {
+    setSearchTerm(name);
+    updateUrlParams({ search: name });
+    setShowDesktopSuggestions(false);
+    setShowMobileSuggestions(false);
   };
 
   const updateUrlParams = (updates: Record<string, string>) => {
@@ -119,10 +143,26 @@ function ShopPageContent() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onFocus={() => setShowDesktopSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowDesktopSuggestions(false), 200)}
                   placeholder="Search products..."
+                  autoComplete="off"
                   className="w-full h-10 px-3.5 bg-brand-light-gray/50 border border-brand-border rounded-lg text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                 />
                 <button type="submit" className="sr-only">Search</button>
+                {showDesktopSuggestions && suggestions.length > 0 && (
+                  <div className="absolute z-30 w-full mt-1 bg-white border border-brand-border rounded-lg shadow-lg max-h-60 overflow-auto">
+                    {suggestions.map((name) => (
+                      <div
+                        key={name}
+                        className="px-3.5 py-2 text-sm text-brand-black hover:bg-brand-light-gray cursor-pointer"
+                        onMouseDown={() => handleSuggestionSelect(name)}
+                      >
+                        {name}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </form>
             </div>
 
@@ -213,10 +253,26 @@ function ShopPageContent() {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={() => setShowMobileSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowMobileSuggestions(false), 200)}
                     placeholder="Search products by name..."
+                    autoComplete="off"
                     className="w-full h-10 md:h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-lg md:rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                   />
                   <button type="submit" className="sr-only">Search</button>
+                  {showMobileSuggestions && suggestions.length > 0 && (
+                    <div className="absolute z-30 w-full mt-1 bg-white border border-brand-border rounded-lg shadow-lg max-h-60 overflow-auto">
+                      {suggestions.map((name) => (
+                        <div
+                          key={name}
+                          className="px-4 py-2 text-sm text-brand-black hover:bg-brand-light-gray cursor-pointer"
+                          onMouseDown={() => handleSuggestionSelect(name)}
+                        >
+                          {name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </form>
 
                 <div className="flex w-full sm:w-auto items-center gap-2 md:gap-3">
