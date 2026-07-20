@@ -7,7 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import type { EmblaCarouselType } from "embla-carousel";
 import { useSettings } from "@/hooks/useSettings";
-import { PromoCard, DEFAULT_PROMO_CARDS, getPromoCardColorClass, parseList } from "@/lib/siteContent";
+import { PromoCard, DEFAULT_PROMO_CARDS, CONTENT_DEFAULTS, getPromoCardColorClass, parseList } from "@/lib/siteContent";
 
 const TWEEN_FACTOR_BASE = 0.84;
 
@@ -35,6 +35,8 @@ function PromoCardButton({ text, href }: { text: string; href: string }) {
 export default function PromoShowcase() {
   const { settings } = useSettings();
   const cards = parseList<PromoCard>(settings.home_promo_cards, DEFAULT_PROMO_CARDS);
+  const promoTitle = settings.home_promo_title || CONTENT_DEFAULTS.home_promo_title;
+  const promoSubtitle = settings.home_promo_subtitle || CONTENT_DEFAULTS.home_promo_subtitle;
 
   const [prefersReducedMotion] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -114,7 +116,19 @@ export default function PromoShowcase() {
 
   return (
     <section className="py-20 md:py-28 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-8">
+        {/* Header row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
+          <div>
+            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+              {promoTitle}
+            </h2>
+            <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+              {promoSubtitle}
+            </p>
+          </div>
+        </div>
+
         <div
           className="overflow-hidden"
           style={{ perspective: prefersReducedMotion ? undefined : "1400px" }}

@@ -67,6 +67,21 @@ export function getPromoCardColorClass(key: string): string {
   );
 }
 
+// Hex values for the same 5 theme colors above — for spots (like the footer
+// banner's decoration overlay) that need an actual color value rather than a
+// Tailwind background class, e.g. for border/text colors mixed with opacity.
+export const THEME_ACCENT_HEX: Record<string, string> = {
+  goat: "#8FA88A",
+  gold: "#C9A15A",
+  mutton: "#C1622D",
+  rose: "#D98E97",
+  brown: "#6B4A2E",
+};
+
+export function getThemeAccentHex(key: string): string {
+  return THEME_ACCENT_HEX[key] ?? THEME_ACCENT_HEX.goat;
+}
+
 export const DEFAULT_PROMO_CARDS: PromoCard[] = [
   {
     imageUrl: "/placeholder-goat.jpg",
@@ -132,6 +147,9 @@ export const CONTENT_DEFAULTS: Record<string, string> = {
   home_why_title: "Why Choose Us",
   home_why_subtitle: "Every detail of our handcrafted gifts is designed to bring joy and lasting memories.",
   home_why_steps: JSON.stringify(DEFAULT_WHY_STEPS),
+  // Home — Promo Showcase (rotating cards below reviews)
+  home_promo_title: "Shop Our Favorites",
+  home_promo_subtitle: "Handpicked crochet collections, ready to gift or keep for yourself.",
   // Home — marquee
   home_marquee: JSON.stringify(DEFAULT_MARQUEE_ITEMS),
   // Footer

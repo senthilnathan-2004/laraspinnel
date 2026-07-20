@@ -22,6 +22,7 @@ import {
   DEFAULT_FOOTER_CATEGORIES,
   DEFAULT_FOOTER_BADGES,
   DEFAULT_PROMO_CARDS,
+  PROMO_CARD_COLORS,
   parseList,
   WhyStep,
   LinkItem,
@@ -68,7 +69,7 @@ const SECTIONS: Record<TabId, string[]> = {
     "Testimonials — heading & stats",
     "Promo Showcase — rotating cards below reviews",
     "Scrolling Marquee",
-    "Footer Banner — 16:9 image above the footer",
+    "Footer Banner — mobile & tablet images above the footer",
   ],
   footer: ["Quick Links column", "Popular Categories column", "Trust Badges", "Disclaimer & note"],
   about: ["Intro", "Why Choose section", "Stats (4)"],
@@ -266,6 +267,8 @@ export default function AdminContentPage() {
               </Section>
 
               <Section activeSection={activeSection} title="Promo Showcase — rotating cards below reviews">
+                <TextField label="Heading" value={val("home_promo_title")} onChange={(v) => setVal("home_promo_title", v)} />
+                <TextAreaField label="Subtitle" value={val("home_promo_subtitle")} onChange={(v) => setVal("home_promo_subtitle", v)} />
                 <PromoCardListEditor
                   items={listVal<PromoCard>("home_promo_cards", DEFAULT_PROMO_CARDS)}
                   onChange={(arr) => setListVal("home_promo_cards", arr)}
@@ -286,13 +289,68 @@ export default function AdminContentPage() {
                 />
               </Section>
 
-              <Section activeSection={activeSection} title="Footer Banner — 16:9 image above the footer">
+              <Section activeSection={activeSection} title="Footer Banner — mobile & tablet images above the footer">
                 <ImageField
-                  label="Banner Image"
+                  label="Mobile Banner Image (3:4)"
+                  value={val("home_footer_banner_mobile_image")}
+                  onChange={(v) => setVal("home_footer_banner_mobile_image", v)}
+                  hint="Shown on phones at a 3:4 (portrait) ratio. Leave blank to reuse the tablet image below, cropped instead."
+                />
+                <ImageField
+                  label="Tablet Banner Image (4:3)"
                   value={val("home_footer_banner_image")}
                   onChange={(v) => setVal("home_footer_banner_image", v)}
-                  hint="Displayed at a fixed 16:9 ratio on every device. Leave blank to hide this section."
+                  hint="Shown on tablets at a 4:3 ratio. This section is hidden on desktop. Leave both images blank to hide it entirely."
                 />
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">
+                    Decoration Color
+                  </label>
+                  <div className="flex items-center gap-2.5">
+                    {PROMO_CARD_COLORS.map((color) => (
+                      <button
+                        key={color.key}
+                        type="button"
+                        onClick={() => setVal("home_footer_banner_decoration_color", color.key)}
+                        aria-label={color.label}
+                        title={color.label}
+                        className={`w-8 h-8 rounded-full ${color.className} border-2 transition-all ${
+                          (val("home_footer_banner_decoration_color") || "brown") === color.key
+                            ? "border-brand-black scale-110"
+                            : "border-transparent"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-brand-gray">
+                    Color of the corner accents and sparkles overlaid on the banner image — pick one that stands out against your uploaded photo.
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="flex items-baseline justify-between">
+                    <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">
+                      Image Opacity
+                    </label>
+                    <span className="text-xs font-bold text-goat-primary">
+                      {val("home_footer_banner_image_opacity") || "100"}%
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={20}
+                    max={100}
+                    step={5}
+                    value={Number(val("home_footer_banner_image_opacity") || 100)}
+                    onChange={(e) => setVal("home_footer_banner_image_opacity", e.target.value)}
+                    className="w-full h-2 rounded-full bg-goat-tint accent-goat-primary cursor-pointer"
+                  />
+                  <p className="text-[10px] text-brand-gray">
+                    Fades only the banner photo — the corner decoration and sparkles always stay fully visible.
+                  </p>
+                </div>
+
                 <TextField
                   label="Link (optional)"
                   value={val("home_footer_banner_link")}
