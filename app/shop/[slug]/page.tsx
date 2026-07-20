@@ -223,7 +223,7 @@ export default function ProductDetailPage() {
                 {/* Custom design instructions */}
                 <div className="space-y-1.5">
                   <div className="flex items-baseline justify-between">
-                    <label htmlFor="customText" className="text-sm font-semibold text-brand-gray">
+                    <label htmlFor="customText" className="text-sm font-semibold text-goat-text">
                       Customize Your Order
                     </label>
                     <span className="text-[10px] text-brand-gray">Optional</span>
@@ -235,14 +235,14 @@ export default function ProductDetailPage() {
                     value={customText}
                     onChange={(e) => setCustomText(e.target.value)}
                     placeholder="e.g. Add name 'Priya', change ribbon color to pink..."
-                    className="w-full p-3 bg-brand-light-gray/30 border border-brand-border rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
+                    className="w-full p-3 bg-goat-tint/20 border border-goat-primary/25 rounded-xl text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all resize-none"
                   />
                 </div>
 
                 {/* Reference image upload */}
                 <div className="space-y-1.5">
                   <div className="flex items-baseline justify-between">
-                    <label className="text-sm font-semibold text-brand-gray">
+                    <label className="text-sm font-semibold text-goat-text">
                       Upload Reference Image
                     </label>
                     <span className="text-[10px] text-brand-gray">Optional</span>
@@ -257,11 +257,11 @@ export default function ProductDetailPage() {
 
                 {/* Quantity picker */}
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-semibold text-brand-gray">Quantity:</span>
-                  <div className="flex items-center border border-brand-border rounded-xl bg-brand-light-gray/30 h-10 overflow-hidden">
+                  <span className="text-sm font-semibold text-goat-text">Quantity:</span>
+                  <div className="flex items-center border border-goat-primary/25 rounded-xl bg-goat-tint/20 h-10 overflow-hidden">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="px-3 h-full hover:bg-brand-light-gray transition-colors text-brand-black"
+                      className="px-3 h-full hover:bg-goat-tint transition-colors text-brand-black"
                       aria-label="Decrease quantity"
                     >
                       <Minus size={14} />
@@ -271,7 +271,7 @@ export default function ProductDetailPage() {
                     </span>
                     <button
                       onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                      className="px-3 h-full hover:bg-brand-light-gray transition-colors text-brand-black"
+                      className="px-3 h-full hover:bg-goat-tint transition-colors text-brand-black"
                       aria-label="Increase quantity"
                     >
                       <Plus size={14} />
