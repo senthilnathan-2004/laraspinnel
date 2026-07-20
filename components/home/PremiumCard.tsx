@@ -136,7 +136,7 @@ export default function PremiumCard({
           {outOfStock ? (
             <button
               disabled
-              className="w-16 sm:w-20 h-6 sm:h-7 rounded-full text-[10px] sm:text-xs font-bold flex items-center justify-center gap-1 shadow-xs border bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
+              className="w-16 sm:w-20 h-6 sm:h-7 rounded-full text-xs sm:text-sm font-bold flex items-center justify-center gap-1 shadow-xs border bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
             >
               <span>Sold Out</span>
             </button>
@@ -149,7 +149,7 @@ export default function PremiumCard({
               >
                 <Minus size={10} className="sm:w-3 sm:h-3" />
               </button>
-              <span className="h-full w-4 sm:w-5 flex items-center justify-center text-[10px] sm:text-xs font-bold text-goat-primary">
+              <span className="h-full w-4 sm:w-5 flex items-center justify-center text-xs sm:text-sm font-bold text-goat-primary">
                 {quantityInCart}
               </span>
               <button
@@ -163,7 +163,7 @@ export default function PremiumCard({
           ) : (
             <button
               onClick={handleAddToCart}
-              className="w-16 sm:w-20 h-6 sm:h-7 rounded-full text-[10px] sm:text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1 shadow-xs border bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
+              className="w-16 sm:w-20 h-6 sm:h-7 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 flex items-center justify-center gap-1 shadow-xs border bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
             >
               <ShoppingCart size={10} className="sm:w-3 sm:h-3" />
               <span>Add</span>
