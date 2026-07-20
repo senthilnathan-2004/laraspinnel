@@ -27,7 +27,7 @@ export default function StatCard({ title, value, icon, badge }: StatCardProps) {
   return (
     <div className="bg-white p-3 md:p-6 rounded-2xl border border-brand-border shadow-card flex items-center justify-between gap-3 transition-transform duration-200 hover:-translate-y-0.5">
       <div className="space-y-2 min-w-0 flex-1">
-        <p className="text-sm font-medium text-brand-gray truncate">{title}</p>
+        <p className="text-sm font-medium text-brand-gray line-clamp-2 leading-snug">{title}</p>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <span className="text-2xl md:text-3xl font-bold tracking-tight text-brand-black">
             {value}
