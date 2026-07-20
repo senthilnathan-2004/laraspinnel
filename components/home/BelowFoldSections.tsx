@@ -21,7 +21,7 @@ const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
 
 const PromoShowcase = dynamic(() => import("@/components/home/PromoShowcase"), {
   ssr: false,
-  loading: () => <div className="min-h-[420px]" />,
+  loading: () => <div className="min-h-[480px]" />,
 });
 
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), {
