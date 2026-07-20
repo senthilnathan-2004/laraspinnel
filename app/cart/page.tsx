@@ -226,7 +226,7 @@ export default function CartPage() {
             </div>
 
             {/* Summary Column (4 cols) */}
-            <div className="lg:col-span-4 bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-6 shadow-card">
+            <div className="lg:col-span-4 lg:sticky lg:top-24 bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-6 shadow-card">
               <h2 className="font-display text-xl text-brand-black uppercase tracking-wide border-b border-brand-border pb-3">
                 Order Summary
               </h2>
