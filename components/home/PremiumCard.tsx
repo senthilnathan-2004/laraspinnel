@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Sparkles } from "lucide-react";
+import { ShoppingCart, Sparkles, Plus, Minus } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 
 interface PremiumCardProps {
@@ -28,9 +28,18 @@ export default function PremiumCard({
   stock,
 }: PremiumCardProps) {
   const url = `/shop/${slug}`;
-  const { addItem } = useCart();
-  const [added, setAdded] = useState(false);
+  const { cart, addItem, updateQuantity } = useCart();
   const outOfStock = typeof stock === "number" && stock <= 0;
+  const productId = id || slug; // Fallback to slug if id not provided
+
+  // Only tracks the plain (no customization note/image) cart line — a
+  // customized order placed from the product detail page is a distinct line
+  // and shouldn't be affected by the quick +/- stepper on this card.
+  const cartLine = cart.find((i) => i.productId === productId && !i.customText && !i.customImage);
+  const quantityInCart = cartLine?.quantity ?? 0;
+
+  // Extract numeric price from format (e.g. "₹249" -> 249)
+  const numericPrice = parseFloat(price.replace(/[^\d.]/g, "")) || 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,18 +47,24 @@ export default function PremiumCard({
 
     if (outOfStock) return;
 
-    // Extract numeric price from format (e.g. "₹249" -> 249)
-    const numericPrice = parseFloat(price.replace(/[^\d.]/g, "")) || 0;
-
     addItem({
-      productId: id || slug, // Fallback to slug if id not provided
+      productId,
       name,
       price: numericPrice,
       image: image || "",
     });
+  };
 
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+  const handleIncrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem({ productId, name, price: numericPrice, image: image || "" });
+  };
+
+  const handleDecrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    updateQuantity(productId, quantityInCart - 1);
   };
 
   return (
@@ -118,31 +133,42 @@ export default function PremiumCard({
             </span>
           </div>
 
-          <button
-            onClick={handleAddToCart}
-            disabled={outOfStock}
-            className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs border ${
-              outOfStock
-                ? "bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
-                : added
-                ? "bg-goat-tint text-goat-primary border-goat-primary/30 cursor-pointer"
-                : "bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
-            }`}
-          >
-            {outOfStock ? (
+          {outOfStock ? (
+            <button
+              disabled
+              className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center gap-1 shadow-xs border bg-neutral-100 text-neutral-400 border-neutral-200 cursor-not-allowed"
+            >
               <span>Sold Out</span>
-            ) : added ? (
-              <>
-                <span className="text-[10px] sm:text-xs font-bold">✓</span>
-                <span>Added</span>
-              </>
-            ) : (
-              <>
-                <ShoppingCart size={10} className="sm:w-3 sm:h-3" />
-                <span>Add</span>
-              </>
-            )}
-          </button>
+            </button>
+          ) : quantityInCart > 0 ? (
+            <div className="flex items-center rounded-full border border-goat-primary/30 bg-goat-tint overflow-hidden shrink-0">
+              <button
+                onClick={handleDecrement}
+                aria-label="Decrease quantity"
+                className="p-1 sm:p-1.5 text-goat-primary hover:bg-goat-primary/10 transition-colors cursor-pointer"
+              >
+                <Minus size={10} className="sm:w-3 sm:h-3" />
+              </button>
+              <span className="w-4 sm:w-5 text-center text-[9px] sm:text-[10px] font-bold text-goat-primary">
+                {quantityInCart}
+              </span>
+              <button
+                onClick={handleIncrement}
+                aria-label="Increase quantity"
+                className="p-1 sm:p-1.5 text-goat-primary hover:bg-goat-primary/10 transition-colors cursor-pointer"
+              >
+                <Plus size={10} className="sm:w-3 sm:h-3" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold transition-all duration-300 flex items-center gap-1 shadow-xs border bg-goat-primary text-white border-transparent hover:bg-goat-hover cursor-pointer"
+            >
+              <ShoppingCart size={10} className="sm:w-3 sm:h-3" />
+              <span>Add</span>
+            </button>
+          )}
         </div>
       </div>
     </Link>
