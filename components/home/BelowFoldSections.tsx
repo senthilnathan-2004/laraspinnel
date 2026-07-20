@@ -41,11 +41,11 @@ export default function BelowFoldSections() {
       {/* Why Choose Us (HowItWorks refactored) */}
       <HowItWorks />
 
-      {/* Customer Testimonials */}
-      <Testimonials />
-
       {/* Promo Showcase — rotating auto-scroll cards */}
       <PromoShowcase />
+
+      {/* Customer Testimonials */}
+      <Testimonials />
 
       {/* Gift Categories / Marketing Marquee */}
       <TextMarquee
