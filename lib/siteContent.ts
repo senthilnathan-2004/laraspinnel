@@ -18,6 +18,18 @@ export interface WhyStep {
   title: string;
   desc: string;
 }
+export interface PromoCard {
+  imageUrl: string;
+  title: string;
+  buttonText: string;
+  buttonLink: string;
+  bgColor: string;
+}
+export interface PromoCardColorOption {
+  key: string;
+  label: string;
+  className: string;
+}
 
 /* ---- Home: "Why Choose Us" steps (icons are fixed in the component by index) ---- */
 export const DEFAULT_WHY_STEPS: WhyStep[] = [
@@ -37,6 +49,46 @@ export const DEFAULT_MARQUEE_ITEMS: string[] = [
   "Keychains",
   "Festive Rakhis",
   "Gifts Under ₹999",
+];
+
+/* ---- Home: Promo Showcase rotating cards (below Testimonials) ---- */
+export const PROMO_CARD_COLORS: PromoCardColorOption[] = [
+  { key: "goat", label: "Sage Green", className: "bg-goat-primary" },
+  { key: "gold", label: "Golden Cream", className: "bg-gold-primary" },
+  { key: "mutton", label: "Terracotta", className: "bg-mutton-primary" },
+  { key: "rose", label: "Blush Rose", className: "bg-rose-primary" },
+  { key: "brown", label: "Cocoa Brown", className: "bg-brown-primary" },
+];
+
+export function getPromoCardColorClass(key: string): string {
+  return (
+    PROMO_CARD_COLORS.find((c) => c.key === key)?.className ??
+    PROMO_CARD_COLORS[0].className
+  );
+}
+
+export const DEFAULT_PROMO_CARDS: PromoCard[] = [
+  {
+    imageUrl: "/placeholder-goat.jpg",
+    title: "Crochet Flower Bouquets",
+    buttonText: "Buy Now",
+    buttonLink: "/shop?category=bouquets",
+    bgColor: "goat",
+  },
+  {
+    imageUrl: "/placeholder-mutton.jpg",
+    title: "Custom Crochet Frames",
+    buttonText: "Buy Now",
+    buttonLink: "/shop?category=customized-frames",
+    bgColor: "gold",
+  },
+  {
+    imageUrl: "/placeholder-goat.jpg",
+    title: "Amigurumi Gift Hampers",
+    buttonText: "Buy Now",
+    buttonLink: "/shop?category=hampers",
+    bgColor: "rose",
+  },
 ];
 
 /* ---- Footer link columns ---- */
