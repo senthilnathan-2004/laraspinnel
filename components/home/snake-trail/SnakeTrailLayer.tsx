@@ -9,6 +9,8 @@ const ARC_COUNT = 8;
 const ARC_DURATION_SECONDS = 2.4;
 const HEAD_RADIUS = 4;
 const TAIL_FRACTION = 0.14; // portion of the loop rendered as the glowing comet tail
+const PARTICLE_COUNT = 7;
+const PARTICLE_INTERVAL_SECONDS = 0.75;
 
 export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailVariant; colorHex: string }) {
   const geometry = getTrailGeometry(variant);
@@ -17,6 +19,7 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
 
   const pathRefs = useRef<(SVGPathElement | null)[]>([null, null, null]);
   const headRefs = useRef<(SVGCircleElement | null)[]>([null, null, null]);
+  const particleRefs = useRef<(SVGCircleElement | null)[]>(Array(PARTICLE_COUNT).fill(null));
 
   const prefersReducedMotion =
     typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -26,6 +29,7 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
 
     const paths = pathRefs.current.filter((el): el is SVGPathElement => el !== null);
     const heads = headRefs.current.filter((el): el is SVGCircleElement => el !== null);
+    const particles = particleRefs.current.filter((el): el is SVGCircleElement => el !== null);
     if (paths.length !== 3 || heads.length !== 3) return;
 
     const totalLength = paths[0].getTotalLength();
@@ -65,8 +69,54 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
       );
     }
 
+    let particleIndex = 0;
+    let particleCall: gsap.core.Tween | null = null;
+
+    function spawnParticle() {
+      const el = particles[particleIndex];
+      particleIndex = (particleIndex + 1) % particles.length;
+      if (!el) return;
+
+      const point = paths[0].getPointAtLength(progress.distance);
+      const driftX = (Math.random() - 0.5) * 14;
+      const driftY = (Math.random() - 0.5) * 14 - 6;
+
+      gsap.killTweensOf(el);
+      gsap.set(el, { attr: { cx: point.x, cy: point.y }, opacity: 0, scale: 0.4, transformOrigin: "center" });
+      gsap.to(el, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.35,
+        ease: "power1.out",
+        onComplete: () => {
+          gsap.to(el, {
+            attr: { cx: point.x + driftX, cy: point.y + driftY },
+            opacity: 0,
+            scale: 0.6,
+            duration: 1.1,
+            ease: "power1.in",
+          });
+        },
+      });
+    }
+
+    function scheduleNextParticle() {
+      particleCall = gsap.delayedCall(PARTICLE_INTERVAL_SECONDS, () => {
+        spawnParticle();
+        scheduleNextParticle();
+      });
+    }
+
+    if (particles.length > 0) {
+      scheduleNextParticle();
+    }
+
     return () => {
       timeline.kill();
+      particleCall?.kill();
+      for (const el of particles) {
+        gsap.killTweensOf(el);
+      }
     };
   }, [prefersReducedMotion, geometry.pathD]);
 
@@ -169,6 +219,21 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
           />
         </g>
       ))}
+
+      <g>
+        {Array.from({ length: PARTICLE_COUNT }).map((_, i) => (
+          <circle
+            key={i}
+            ref={(el) => {
+              particleRefs.current[i] = el;
+            }}
+            r={1.6}
+            fill={gradient.light}
+            opacity={0}
+            filter={`url(#${maskIdPrefix}-glow)`}
+          />
+        ))}
+      </g>
     </svg>
   );
 }
