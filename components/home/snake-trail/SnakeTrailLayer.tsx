@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger, ensureScrollTriggerRegistered } from "./gsapSetup";
 import { getTrailGeometry, type TrailVariant } from "./paths";
 import { getTrailGradientStops } from "@/lib/utils";
 
@@ -20,6 +21,7 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
   const pathRefs = useRef<(SVGPathElement | null)[]>([null, null, null]);
   const headRefs = useRef<(SVGCircleElement | null)[]>([null, null, null]);
   const particleRefs = useRef<(SVGCircleElement | null)[]>(Array(PARTICLE_COUNT).fill(null));
+  const svgRootRef = useRef<SVGSVGElement | null>(null);
 
   const prefersReducedMotion =
     typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -69,6 +71,20 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
       );
     }
 
+    ensureScrollTriggerRegistered();
+    const svgEl = svgRootRef.current;
+    const scrollTrigger = svgEl
+      ? ScrollTrigger.create({
+          trigger: svgEl,
+          start: "top bottom",
+          end: "bottom top",
+          onEnter: () => timeline.play(),
+          onLeave: () => timeline.pause(),
+          onEnterBack: () => timeline.play(),
+          onLeaveBack: () => timeline.pause(),
+        })
+      : null;
+
     let particleIndex = 0;
     let particleCall: gsap.core.Tween | null = null;
 
@@ -113,6 +129,7 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
 
     return () => {
       timeline.kill();
+      scrollTrigger?.kill();
       particleCall?.kill();
       for (const el of particles) {
         gsap.killTweensOf(el);
@@ -126,6 +143,7 @@ export default function SnakeTrailLayer({ variant, colorHex }: { variant: TrailV
 
   return (
     <svg
+      ref={svgRootRef}
       viewBox={geometry.viewBox}
       className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
       aria-hidden="true"
