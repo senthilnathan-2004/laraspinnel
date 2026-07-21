@@ -6,12 +6,12 @@ import Image from "next/image";
 import { useSettings } from "@/hooks/useSettings";
 import { getThemeAccentHex } from "@/lib/siteContent";
 import { hexToRgba } from "@/lib/utils";
-import DecorativeAccents from "./snake-trail/DecorativeAccents";
-import SnakeTrailLayer from "./snake-trail/SnakeTrailLayer";
-import { useScrollReveal } from "./snake-trail/useScrollReveal";
+import FloatingPaper from "./FloatingPaper";
+import Sprinkles from "./Sprinkles";
+import { motion } from "framer-motion";
 
 const CARD_CLASSES =
-  "relative w-full overflow-hidden rounded-2xl bg-brand-light-gray ring-1 ring-goat-primary/15 shadow-[0_8px_30px_rgba(0,0,0,0.06)]";
+  "relative w-full overflow-hidden rounded-[2rem] bg-brand-light-gray ring-1 ring-goat-primary/15 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-700 ease-out group-hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)]";
 
 function CardDecoration({ colorHex }: { colorHex: string }) {
   return (
@@ -54,7 +54,6 @@ function CardDecoration({ colorHex }: { colorHex: string }) {
 
 export default function FooterBanner() {
   const { settings } = useSettings();
-  const revealRef = useScrollReveal<HTMLDivElement>();
   const tabletImageUrl = settings.home_footer_banner_image;
   // Falls back to the tablet image (cropped) until a dedicated mobile image is uploaded.
   const mobileImageUrl = settings.home_footer_banner_mobile_image || tabletImageUrl;
@@ -66,8 +65,33 @@ export default function FooterBanner() {
   if (!tabletImageUrl && !mobileImageUrl) return null;
 
   const content = (
-    <div ref={revealRef} className="transition-transform duration-300 group-hover:scale-[1.01] space-y-0">
-      {/* Mobile — 3:4, separately uploaded image */}
+    <motion.div 
+      className="transition-transform duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.02] group-hover:-translate-y-2 space-y-0 relative perspective-1000"
+      initial={{ opacity: 0, scale: 1.1, y: 50, rotateX: 10 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ 
+        type: "spring",
+        stiffness: 120,
+        damping: 15,
+        mass: 1.2,
+        delay: 0.1
+      }}
+    >
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="relative w-full"
+      >
+        {/* Paper Floating Layer & Sprinkles Layer */}
+        <FloatingPaper colorHex={decorationColor} />
+        <Sprinkles colorHex={decorationColor} />
+        
+        {/* Mobile — 3:4, separately uploaded image */}
       {mobileImageUrl && (
         <div className={`sm:hidden aspect-[3/4] ${CARD_CLASSES}`}>
           <Image
@@ -79,8 +103,6 @@ export default function FooterBanner() {
             style={{ opacity: imageOpacity }}
           />
           <CardDecoration colorHex={decorationColor} />
-          <DecorativeAccents variant="mobile" colorHex={decorationColor} />
-          <SnakeTrailLayer variant="mobile" colorHex={decorationColor} />
         </div>
       )}
 
@@ -96,11 +118,10 @@ export default function FooterBanner() {
             style={{ opacity: imageOpacity }}
           />
           <CardDecoration colorHex={decorationColor} />
-          <DecorativeAccents variant="tablet" colorHex={decorationColor} />
-          <SnakeTrailLayer variant="tablet" colorHex={decorationColor} />
         </div>
       )}
-    </div>
+      </motion.div>
+    </motion.div>
   );
 
   return (
