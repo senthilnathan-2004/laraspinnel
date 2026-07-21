@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import CheckoutSuccess from "@/components/checkout/CheckoutSuccess";
 import { useCart } from "@/hooks/useCart";
 import { useSettings } from "@/hooks/useSettings";
 import { ShoppingBag, ChevronRight, ArrowLeft, Phone, ShieldCheck, Heart, FileText, CheckCircle2 } from "lucide-react";
@@ -106,59 +107,12 @@ export default function CheckoutPage() {
   // If order is successfully placed, show success screen
   if (placedOrder) {
     return (
-      <div className="min-h-screen bg-white flex flex-col justify-between">
-        <Navbar />
-
-        <main className="flex-1 max-w-xl mx-auto px-4 md:px-6 py-20 flex flex-col items-center justify-center text-center space-y-8 animate-in fade-in">
-          <div className="w-20 h-20 rounded-full bg-goat-tint border border-goat-primary/10 flex items-center justify-center shadow-md animate-bounce">
-            <CheckCircle2 size={48} className="text-goat-primary" />
-          </div>
-
-          <div className="space-y-3">
-            <h1 className="font-display text-3xl md:text-4xl text-brand-black uppercase tracking-wide">
-              Order Placed!
-            </h1>
-            <p className="text-sm font-semibold text-brand-black">
-              Order Number: <span className="text-goat-primary select-all">{placedOrder.orderNumber}</span>
-            </p>
-            <p className="text-xs text-brand-gray max-w-sm mx-auto leading-relaxed">
-              Thank you for supporting handcrafted art! We will contact you shortly on WhatsApp or phone to confirm shipping details and delivery date.
-              {formData.email.trim() && ` A confirmation email is also on its way to ${formData.email.trim()}.`}
-            </p>
-          </div>
-
-          <div className="w-full bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-4">
-            <h3 className="font-bold text-sm text-brand-black uppercase tracking-wider">Confirm Your Order Quickly</h3>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold py-3 px-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-sm text-sm"
-              >
-                <FaWhatsapp size={18} /> Chat on WhatsApp
-              </a>
-              <a
-                href={`tel:${contactPhone}`}
-                className="flex-1 bg-brand-black hover:bg-goat-primary text-white font-bold py-3 px-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-sm text-sm"
-              >
-                <Phone size={16} /> Call Us
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <Link
-              href="/shop"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-goat-primary hover:underline"
-            >
-              <ArrowLeft size={16} /> Continue Shopping
-            </Link>
-          </div>
-        </main>
-
-        <Footer />
-      </div>
+      <CheckoutSuccess 
+        orderNumber={placedOrder.orderNumber}
+        email={formData.email}
+        whatsappUrl={whatsappUrl}
+        contactPhone={contactPhone}
+      />
     );
   }
 
