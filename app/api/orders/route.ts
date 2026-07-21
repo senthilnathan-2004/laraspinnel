@@ -36,8 +36,15 @@ export async function POST(req: NextRequest) {
 
     const { customerName, phone, email, address, city, pincode, notes, items } = result.data;
 
+    // Fetch site settings early for delivery fee and emails
+    const settingsList = await SiteSettings.find({}).lean();
+    const settingsMap = settingsList.reduce((acc: Record<string, string>, s: any) => {
+      acc[s.key] = s.value;
+      return acc;
+    }, {});
+
     // Verify stock and update product quantities in a loop/transaction
-    let totalAmount = 0;
+    let subtotal = 0;
     const finalItems = [];
 
     for (const item of items) {
@@ -57,7 +64,7 @@ export async function POST(req: NextRequest) {
       }
 
       const price = product.discountPrice || product.price;
-      totalAmount += price * item.quantity;
+      subtotal += price * item.quantity;
 
       finalItems.push({
         productId: product._id,
@@ -69,6 +76,18 @@ export async function POST(req: NextRequest) {
         customImage: item.customImage || undefined,
       });
     }
+
+    // Calculate delivery fee
+    const deliveryFeeSetting = parseFloat(settingsMap.delivery_fee) || 0;
+    const isFreeDeliveryEnabled = settingsMap.is_free_delivery_enabled === "true";
+    const freeDeliveryThreshold = parseFloat(settingsMap.free_delivery_threshold) || 0;
+
+    let deliveryFee = deliveryFeeSetting;
+    if (isFreeDeliveryEnabled && subtotal >= freeDeliveryThreshold) {
+      deliveryFee = 0;
+    }
+
+    const totalAmount = subtotal + deliveryFee;
 
     // Generate unique order number
     const orderNumber = generateRefId();
@@ -83,6 +102,8 @@ export async function POST(req: NextRequest) {
       pincode,
       notes,
       items: finalItems,
+      subtotal,
+      deliveryFee,
       totalAmount,
       status: "pending",
     });
@@ -100,14 +121,6 @@ export async function POST(req: NextRequest) {
     // Best-effort — a failed/misconfigured email must never fail the order itself.
     if (email?.trim()) {
       try {
-        const settingsList = await SiteSettings.find({
-          key: { $in: ["farm_name", "email_order_subject", "email_order_intro", "email_order_footer"] },
-        }).lean();
-        const settingsMap = settingsList.reduce((acc: Record<string, string>, s: any) => {
-          acc[s.key] = s.value;
-          return acc;
-        }, {});
-
         const { subject, html } = getOrderConfirmationEmail(
           { orderNumber, customerName, address, city, pincode, totalAmount, items: finalItems },
           {

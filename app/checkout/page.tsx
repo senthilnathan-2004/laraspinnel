@@ -358,11 +358,34 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-brand-gray font-medium">Delivery:</span>
-                  <span className="text-goat-primary font-bold">FREE Delivery</span>
+                  {(() => {
+                    const deliveryFeeSetting = parseFloat(settings.delivery_fee) || 0;
+                    const isFreeDeliveryEnabled = settings.is_free_delivery_enabled === "true";
+                    const freeDeliveryThreshold = parseFloat(settings.free_delivery_threshold) || 0;
+                    
+                    const isFreeDelivery = isFreeDeliveryEnabled && cartTotal >= freeDeliveryThreshold;
+                    const deliveryFee = isFreeDelivery || deliveryFeeSetting === 0 ? 0 : deliveryFeeSetting;
+
+                    return deliveryFee === 0 ? (
+                      <span className="text-goat-primary font-bold">FREE Delivery</span>
+                    ) : (
+                      <span className="font-bold text-brand-black">₹{deliveryFee}</span>
+                    );
+                  })()}
                 </div>
                 <div className="border-t border-brand-border pt-3 flex justify-between text-base">
                   <span className="font-bold text-brand-black">Total Amount:</span>
-                  <span className="font-extrabold text-brand-black text-lg">₹{cartTotal}</span>
+                  <span className="font-extrabold text-brand-black text-lg">
+                    ₹{(() => {
+                      const deliveryFeeSetting = parseFloat(settings.delivery_fee) || 0;
+                      const isFreeDeliveryEnabled = settings.is_free_delivery_enabled === "true";
+                      const freeDeliveryThreshold = parseFloat(settings.free_delivery_threshold) || 0;
+                      
+                      const isFreeDelivery = isFreeDeliveryEnabled && cartTotal >= freeDeliveryThreshold;
+                      const deliveryFee = isFreeDelivery || deliveryFeeSetting === 0 ? 0 : deliveryFeeSetting;
+                      return cartTotal + deliveryFee;
+                    })()}
+                  </span>
                 </div>
               </div>
 

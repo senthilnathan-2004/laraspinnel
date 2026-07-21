@@ -20,6 +20,8 @@ export interface IOrder extends Document {
   pincode: string;
   notes?: string;
   items: IOrderItem[];
+  subtotal: number;
+  deliveryFee: number;
   totalAmount: number;
   status: "pending" | "confirmed" | "preparing" | "ready" | "delivered" | "cancelled";
   createdAt: Date;
@@ -47,6 +49,8 @@ const OrderSchema = new Schema<IOrder>(
     pincode: { type: String, required: true },
     notes: { type: String },
     items: { type: [OrderItemSchema], required: true },
+    subtotal: { type: Number, required: true, default: 0 },
+    deliveryFee: { type: Number, required: true, default: 0 },
     totalAmount: { type: Number, required: true },
     status: {
       type: String,

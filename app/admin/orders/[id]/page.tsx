@@ -35,6 +35,8 @@ interface Order {
   pincode: string;
   notes?: string;
   items: OrderItem[];
+  subtotal: number;
+  deliveryFee: number;
   totalAmount: number;
   status: OrderStatus;
   createdAt: string;
@@ -261,9 +263,19 @@ export default function OrderDetailPage() {
                   </table>
                 </div>
 
-                <div className="bg-brand-light-gray/30 px-5 py-4 flex justify-between border-t border-brand-border text-sm font-semibold">
-                  <span className="text-brand-gray">Delivery Shipping</span>
-                  <span className="text-goat-primary font-bold">FREE Delivery</span>
+                <div className="bg-brand-light-gray/30 px-5 py-4 flex flex-col gap-2 border-t border-brand-border text-sm font-semibold">
+                  <div className="flex justify-between">
+                    <span className="text-brand-gray">Subtotal</span>
+                    <span className="text-brand-black">₹{order.subtotal || 0}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-brand-gray">Delivery Shipping</span>
+                    {order.deliveryFee === 0 ? (
+                      <span className="text-goat-primary font-bold">FREE Delivery</span>
+                    ) : (
+                      <span className="text-brand-black">₹{order.deliveryFee || 0}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="px-5 py-4 flex justify-between border-t border-brand-border text-base font-bold">
                   <span className="text-brand-black">Total Paid / Estimated</span>

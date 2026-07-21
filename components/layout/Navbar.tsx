@@ -58,10 +58,10 @@ export default function Navbar() {
                 sizes="200px"
                 quality={75}
                 priority
-                className="h-8 w-auto object-contain"
+                className="h-6 md:h-8 w-auto object-contain"
               />
             )}
-            <span className="font-display text-3xl md:text-4xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase truncate max-w-[130px] min-[375px]:max-w-[180px] sm:max-w-none leading-none translate-y-[2px]">
+            <span className="font-display text-xl md:text-4xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase truncate max-w-[130px] min-[375px]:max-w-[180px] sm:max-w-none leading-none translate-y-[2px]">
               {settings.farm_name || "Lara's Pinnal"}
             </span>
           </Link>

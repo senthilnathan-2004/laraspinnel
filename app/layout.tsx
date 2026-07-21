@@ -125,6 +125,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { Providers } from "@/components/Providers";
+import FloatingCartBar from "@/components/layout/FloatingCartBar";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 
@@ -310,7 +311,10 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <div className="flex flex-col min-h-screen w-full relative" id="main-content">
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <FloatingCartBar />
+          </Providers>
         </div>
         {jsonLd.map((schema, index) => (
           <script

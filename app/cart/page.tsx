@@ -6,6 +6,7 @@ import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { useCart, type CartItem } from "@/hooks/useCart";
+import { useSettings } from "@/hooks/useSettings";
 import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
 import StickyBox from "@/components/shared/StickyBox";
 import { ShoppingCart, Trash2, ArrowLeft, ArrowRight, ShoppingBag, Plus, Minus, Pencil } from "lucide-react";
@@ -14,6 +15,7 @@ const lineKey = (item: CartItem) => `${item.productId}-${item.customText || ""}-
 
 export default function CartPage() {
   const { cart, updateQuantity, removeItem, updateCustomization, clearCart, cartCount, cartTotal } = useCart();
+  const { settings } = useSettings();
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [draftText, setDraftText] = useState("");
   const [draftImage, setDraftImage] = useState("");
@@ -244,11 +246,34 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-brand-gray font-medium">Delivery:</span>
-                  <span className="text-goat-primary font-bold">FREE Delivery</span>
+                  {(() => {
+                    const deliveryFeeSetting = parseFloat(settings.delivery_fee) || 0;
+                    const isFreeDeliveryEnabled = settings.is_free_delivery_enabled === "true";
+                    const freeDeliveryThreshold = parseFloat(settings.free_delivery_threshold) || 0;
+                    
+                    const isFreeDelivery = isFreeDeliveryEnabled && cartTotal >= freeDeliveryThreshold;
+                    const deliveryFee = isFreeDelivery || deliveryFeeSetting === 0 ? 0 : deliveryFeeSetting;
+
+                    return deliveryFee === 0 ? (
+                      <span className="text-goat-primary font-bold">FREE Delivery</span>
+                    ) : (
+                      <span className="font-bold text-brand-black">₹{deliveryFee}</span>
+                    );
+                  })()}
                 </div>
                 <div className="border-t border-brand-border pt-4 flex justify-between text-base">
                   <span className="font-bold text-brand-black">Total:</span>
-                  <span className="font-extrabold text-brand-black">₹{cartTotal}</span>
+                  <span className="font-extrabold text-brand-black">
+                    ₹{(() => {
+                      const deliveryFeeSetting = parseFloat(settings.delivery_fee) || 0;
+                      const isFreeDeliveryEnabled = settings.is_free_delivery_enabled === "true";
+                      const freeDeliveryThreshold = parseFloat(settings.free_delivery_threshold) || 0;
+                      
+                      const isFreeDelivery = isFreeDeliveryEnabled && cartTotal >= freeDeliveryThreshold;
+                      const deliveryFee = isFreeDelivery || deliveryFeeSetting === 0 ? 0 : deliveryFeeSetting;
+                      return cartTotal + deliveryFee;
+                    })()}
+                  </span>
                 </div>
               </div>
 

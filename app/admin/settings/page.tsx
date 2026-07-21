@@ -6,7 +6,7 @@ import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
 import { Save, Loader2, AlertCircle, CheckCircle, Landmark, Briefcase, Globe } from "lucide-react";
 
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<"branding" | "business" | "seo">("branding");
+  const [activeTab, setActiveTab] = useState<"branding" | "business" | "seo" | "delivery">("branding");
   const [settings, setSettings] = useState<any>({
     farm_name: "",
     tagline: "",
@@ -19,6 +19,9 @@ export default function AdminSettingsPage() {
     business_hours: "",
     seo_title: "",
     seo_description: "",
+    delivery_fee: "",
+    free_delivery_threshold: "",
+    is_free_delivery_enabled: "false",
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -144,6 +147,18 @@ export default function AdminSettingsPage() {
               >
                 <Globe size={16} />
                 <span>SEO Defaults</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab("delivery")}
+                className={`flex items-center gap-2 px-4 md:px-6 py-4 text-sm font-semibold border-b-2 outline-none whitespace-nowrap transition-colors ${
+                  activeTab === "delivery"
+                    ? "border-goat-primary text-goat-primary"
+                    : "border-transparent text-brand-gray hover:text-brand-black"
+                }`}
+              >
+                <Landmark size={16} />
+                <span>Delivery</span>
               </button>
             </div>
 
@@ -315,6 +330,64 @@ export default function AdminSettingsPage() {
                         className="w-full bg-white border border-brand-border rounded-xl p-3 md:p-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary resize-none"
                       ></textarea>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* DELIVERY TAB */}
+              {activeTab === "delivery" && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="grid grid-cols-1 gap-6">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
+                        Delivery Fee (₹)
+                      </label>
+                      <input
+                        type="number"
+                        value={settings.delivery_fee}
+                        onChange={(e) => handleChange("delivery_fee", e.target.value)}
+                        placeholder="e.g., 50"
+                        className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
+                      />
+                      <p className="text-xs text-brand-gray mt-1">
+                        The default delivery fee applied to orders.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={settings.is_free_delivery_enabled === "true"}
+                          onChange={(e) => handleChange("is_free_delivery_enabled", e.target.checked ? "true" : "false")}
+                          className="w-4 h-4 text-goat-primary border-gray-300 rounded focus:ring-goat-primary"
+                        />
+                        <span className="text-xs font-semibold text-brand-black uppercase tracking-wider">
+                          Enable Free Delivery Threshold
+                        </span>
+                      </label>
+                      <p className="text-xs text-brand-gray mt-1">
+                        If enabled, orders above the threshold amount will have free delivery.
+                      </p>
+                    </div>
+
+                    {settings.is_free_delivery_enabled === "true" && (
+                      <div className="space-y-1.5 animate-in fade-in duration-200">
+                        <label className="text-xs font-semibold text-brand-black uppercase tracking-wider block">
+                          Free Delivery Threshold Amount (₹)
+                        </label>
+                        <input
+                          type="number"
+                          value={settings.free_delivery_threshold}
+                          onChange={(e) => handleChange("free_delivery_threshold", e.target.value)}
+                          placeholder="e.g., 800"
+                          className="w-full h-11 bg-white border border-brand-border rounded-xl px-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary"
+                        />
+                        <p className="text-xs text-brand-gray mt-1">
+                          Orders with a subtotal greater than or equal to this amount will get free delivery.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
