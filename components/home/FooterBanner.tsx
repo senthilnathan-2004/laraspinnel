@@ -16,36 +16,43 @@ const CARD_CLASSES =
 function CardDecoration({ colorHex }: { colorHex: string }) {
   return (
     <div className="absolute inset-0 pointer-events-none">
+      {/* Full inner box effect */}
       <div
-        className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 rounded-tl-2xl"
-        style={{ borderColor: hexToRgba(colorHex, 0.9) }}
+        className="absolute inset-3 border-2 rounded-2xl opacity-80"
+        style={{ borderColor: colorHex }}
+      />
+      
+      {/* Corner Accents */}
+      <div
+        className="absolute top-4 left-4 w-12 h-12 border-t-[3px] border-l-[3px] rounded-tl-2xl"
+        style={{ borderColor: colorHex }}
       />
       <div
-        className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 rounded-br-2xl"
-        style={{ borderColor: hexToRgba(colorHex, 0.9) }}
+        className="absolute bottom-4 right-4 w-12 h-12 border-b-[3px] border-r-[3px] rounded-br-2xl"
+        style={{ borderColor: colorHex }}
       />
       <div
-        className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 rounded-tr-xl"
-        style={{ borderColor: hexToRgba(colorHex, 0.6) }}
+        className="absolute top-4 right-4 w-6 h-6 border-t-[3px] border-r-[3px] rounded-tr-xl"
+        style={{ borderColor: colorHex }}
       />
       <div
-        className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 rounded-bl-xl"
-        style={{ borderColor: hexToRgba(colorHex, 0.6) }}
+        className="absolute bottom-4 left-4 w-6 h-6 border-b-[3px] border-l-[3px] rounded-bl-xl"
+        style={{ borderColor: colorHex }}
       />
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border"
-        style={{ borderColor: hexToRgba(colorHex, 0.3) }}
+        style={{ borderColor: colorHex }}
       />
       <span className="absolute top-5 right-6 text-xl drop-shadow-sm rotate-12" style={{ color: colorHex }}>
         ✦
       </span>
-      <span className="absolute bottom-6 left-8 text-base drop-shadow-sm -rotate-6" style={{ color: hexToRgba(colorHex, 0.8) }}>
+      <span className="absolute bottom-6 left-8 text-base drop-shadow-sm -rotate-6" style={{ color: colorHex }}>
         ✦
       </span>
-      <span className="absolute top-1/3 left-6 text-sm drop-shadow-sm rotate-45" style={{ color: hexToRgba(colorHex, 0.7) }}>
+      <span className="absolute top-1/3 left-6 text-sm drop-shadow-sm rotate-45" style={{ color: colorHex }}>
         ✦
       </span>
-      <span className="absolute bottom-10 right-10 text-sm drop-shadow-sm -rotate-12" style={{ color: hexToRgba(colorHex, 0.7) }}>
+      <span className="absolute bottom-10 right-10 text-sm drop-shadow-sm -rotate-12" style={{ color: colorHex }}>
         ✦
       </span>
     </div>
