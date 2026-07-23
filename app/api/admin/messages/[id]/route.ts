@@ -24,7 +24,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     const updatedMessage = await ContactMessage.findByIdAndUpdate(
       id,
       { status },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!updatedMessage) {

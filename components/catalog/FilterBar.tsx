@@ -121,7 +121,7 @@ export default function FilterBar({
 
       {/* Quick Tag Chips Row */}
       {tags.length > 0 && (
-        <div className="border-t border-brand-border pt-4 mt-2">
+        <div className="pt-4 mt-2">
           {/* Toggle Button */}
           <div className="flex mb-2">
             <button

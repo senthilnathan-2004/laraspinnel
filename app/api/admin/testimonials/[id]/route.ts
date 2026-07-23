@@ -35,7 +35,7 @@ export async function PUT(
     const updatedTestimonial = await Testimonial.findByIdAndUpdate(
       params.id,
       updateData,
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!updatedTestimonial) {

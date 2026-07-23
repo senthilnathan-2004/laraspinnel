@@ -93,7 +93,7 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
           );
 
           return (
-            <div className="border-t border-brand-border pt-4 text-xs font-semibold select-none">
+            <div className="pt-4 text-xs font-semibold select-none">
               <details className="group">
                 <summary className="cursor-pointer text-brand-gray uppercase tracking-wider font-bold flex items-center justify-between outline-none">
                   <span>Categories</span>
@@ -164,7 +164,7 @@ export default function BlogListContainer({ initialPosts }: BlogListContainerPro
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-brand-gray border-t border-brand-border pt-4 mt-2">
+                <div className="flex items-center justify-between text-[11px] text-brand-gray pt-4 mt-2">
                   <div className="flex items-center gap-1">
                     <User size={12} className="text-neutral-400" />
                     <span>{post.author}</span>

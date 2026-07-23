@@ -118,12 +118,12 @@ export default function PromoShowcase() {
     <section className="py-20 md:py-28 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
-          <div>
-            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+        <div className="pb-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-display text-3xl md:text-4xl text-brand-black tracking-wide uppercase">
               {promoTitle}
             </h2>
-            <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+            <p className="text-sm font-medium text-brand-gray mt-2">
               {promoSubtitle}
             </p>
           </div>
@@ -181,17 +181,14 @@ export default function PromoShowcase() {
                       <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-black/5" />
                     </div>
 
-                    <div className="relative z-10 space-y-4 w-full pr-2">
+                    <div className="relative z-10 w-full pr-2">
                       <h3 className="text-white font-display text-lg sm:text-xl leading-snug drop-shadow-sm truncate">
                         {card.title}
                       </h3>
-                      {card.buttonText && card.buttonLink && (
-                        <PromoCardButton text={card.buttonText} href={card.buttonLink} />
-                      )}
                     </div>
 
                     {card.imageUrl && (
-                      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[84%] aspect-square rounded-2xl overflow-hidden">
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[84%] aspect-square rounded-2xl overflow-hidden">
                         <Image
                           src={card.imageUrl}
                           alt={card.title}
@@ -199,6 +196,13 @@ export default function PromoShowcase() {
                           className="object-cover"
                           sizes="(max-width: 768px) 60vw, 320px"
                         />
+                      </div>
+                    )}
+
+                    {/* Buy Now — centered at the bottom of the card, above the image */}
+                    {card.buttonText && card.buttonLink && (
+                      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+                        <PromoCardButton text={card.buttonText} href={card.buttonLink} />
                       </div>
                     )}
                   </div>

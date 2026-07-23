@@ -10,7 +10,7 @@ import StatusBadge, { OrderStatus } from "@/components/admin/StatusBadge";
 import TypeToConfirmDialog from "@/components/admin/TypeToConfirmDialog";
 import { useToast } from "@/components/admin/Toast";
 import { useSettings } from "@/hooks/useSettings";
-import { ArrowLeft, Save, Calendar, Phone, MapPin, User, FileText, ShoppingCart, Trash2 } from "lucide-react";
+import { ArrowLeft, Save, Calendar, Phone, MapPin, User, FileText, ShoppingCart, Trash2, Images, Sparkles } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { DEFAULT_WHATSAPP_ORDER_TEMPLATE, renderWhatsAppTemplate, getWhatsAppLink } from "@/lib/whatsappTemplate";
 
@@ -39,6 +39,18 @@ interface Order {
   deliveryFee: number;
   totalAmount: number;
   status: OrderStatus;
+  orderType?: "shop" | "custom";
+  referenceImages?: string[];
+  customDetails?: {
+    occasion?: string;
+    colors?: string[];
+    size?: string;
+    quantityLabel?: string;
+    personalization?: string;
+    requirements?: string;
+    preferredDate?: string;
+    customerNote?: string;
+  };
   createdAt: string;
   updatedAt: string;
 }
@@ -187,6 +199,101 @@ export default function OrderDetailPage() {
               </div>
 
               {/* Products Table Card */}
+              {/* Custom request details — shown prominently for custom orders */}
+              {order.orderType === "custom" && order.customDetails && (
+                <div className="bg-white border border-goat-primary/40 rounded-2xl shadow-card overflow-hidden">
+                  <div className="px-5 py-4 border-b border-brand-border bg-goat-tint/40 flex items-center gap-2">
+                    <Sparkles size={18} className="text-goat-primary" />
+                    <h3 className="font-bold text-sm text-brand-black uppercase tracking-wider">
+                      Custom Request Details
+                    </h3>
+                    <span className="ml-auto text-[10px] font-bold uppercase tracking-wider text-rose-text bg-rose-tint border border-rose-primary/30 rounded-full px-2.5 py-0.5">
+                      Custom Order
+                    </span>
+                  </div>
+
+                  <div className="p-5 space-y-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                      {order.customDetails.occasion && (
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-brand-gray uppercase block">Occasion</span>
+                          <span className="font-semibold text-brand-black">{order.customDetails.occasion}</span>
+                        </div>
+                      )}
+                      {order.customDetails.size && (
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-brand-gray uppercase block">Size</span>
+                          <span className="font-semibold text-brand-black">{order.customDetails.size}</span>
+                        </div>
+                      )}
+                      {order.customDetails.quantityLabel && (
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-brand-gray uppercase block">Quantity</span>
+                          <span className="font-semibold text-brand-black">{order.customDetails.quantityLabel}</span>
+                        </div>
+                      )}
+                      {order.customDetails.preferredDate && (
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-bold text-brand-gray uppercase block">Preferred Date</span>
+                          <span className="font-semibold text-brand-black">
+                            {new Date(order.customDetails.preferredDate).toLocaleDateString("en-IN", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {order.customDetails.colors && order.customDetails.colors.length > 0 && (
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] font-bold text-brand-gray uppercase block">Preferred Colors</span>
+                        <div className="flex flex-wrap gap-2">
+                          {order.customDetails.colors.map((c) => (
+                            <span
+                              key={c}
+                              className="text-xs font-semibold text-brand-black bg-brand-light-gray border border-brand-border rounded-full px-3 py-1"
+                            >
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {order.customDetails.personalization && (
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] font-bold text-brand-gray uppercase block">Personalization (Name / Text)</span>
+                        <p className="text-sm font-semibold text-goat-text bg-goat-tint border border-goat-primary/20 rounded-xl px-4 py-3 whitespace-pre-line">
+                          {order.customDetails.personalization}
+                        </p>
+                      </div>
+                    )}
+
+                    {order.customDetails.requirements && (
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] font-bold text-brand-gray uppercase block">Special Requirements</span>
+                        <p className="text-sm text-brand-black bg-brand-light-gray/60 border border-brand-border rounded-xl px-4 py-3 whitespace-pre-line">
+                          {order.customDetails.requirements}
+                        </p>
+                      </div>
+                    )}
+
+                    {order.customDetails.customerNote && (
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] font-bold text-brand-gray uppercase flex items-center gap-1">
+                          <FileText size={11} /> Customer Note
+                        </span>
+                        <p className="text-sm text-brand-black bg-gold-tint border border-gold-primary/30 rounded-xl px-4 py-3 whitespace-pre-line">
+                          {order.customDetails.customerNote}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div className="bg-white border border-brand-border rounded-2xl shadow-card overflow-hidden">
                 <div className="px-5 py-4 border-b border-brand-border flex items-center gap-2">
                   <ShoppingCart size={18} className="text-goat-primary" />
@@ -282,6 +389,41 @@ export default function OrderDetailPage() {
                   <span className="text-brand-black text-lg">₹{order.totalAmount}</span>
                 </div>
               </div>
+
+              {/* Customer inspiration images (custom-order requests) */}
+              {order.referenceImages && order.referenceImages.length > 0 && (
+                <div className="bg-white border border-brand-border rounded-2xl shadow-card overflow-hidden">
+                  <div className="px-5 py-4 border-b border-brand-border flex items-center gap-2">
+                    <Images size={18} className="text-goat-primary" />
+                    <h3 className="font-bold text-sm text-brand-black uppercase tracking-wider">
+                      Customer Inspiration Images
+                    </h3>
+                    <span className="ml-auto text-[11px] font-bold text-brand-gray bg-brand-light-gray border border-brand-border rounded-full px-2.5 py-0.5">
+                      {order.referenceImages.length}
+                    </span>
+                  </div>
+                  <div className="p-5 flex flex-wrap gap-3">
+                    {order.referenceImages.map((url, i) => (
+                      <a
+                        key={url}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="View full size"
+                        className="group relative w-28 h-28 rounded-xl overflow-hidden border border-brand-border bg-brand-light-gray"
+                      >
+                        <Image
+                          src={url}
+                          alt={`Customer inspiration image ${i + 1}`}
+                          fill
+                          sizes="112px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Right Column (4 cols): Billing & Actions */}
@@ -335,7 +477,7 @@ export default function OrderDetailPage() {
                   </div>
                   {order.notes && (
                     <div className="space-y-1 pt-1.5 border-t border-brand-border/60">
-                      <span className="text-[10px] font-bold text-brand-gray uppercase block flex items-center gap-1"><FileText size={10} /> Client Notes</span>
+                      <span className="text-[10px] font-bold text-brand-gray uppercase flex items-center gap-1"><FileText size={10} /> Client Notes</span>
                       <span className="text-xs text-brand-gray whitespace-pre-line italic">"{order.notes}"</span>
                     </div>
                   )}

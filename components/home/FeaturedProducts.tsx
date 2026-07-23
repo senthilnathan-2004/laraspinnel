@@ -3,7 +3,7 @@
 import React from "react";
 import useSWR from "swr";
 import Link from "next/link";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import PremiumCard from "./PremiumCard";
 import SkeletonCard from "../shared/SkeletonCard";
 import { sortInStockFirst } from "@/lib/utils";
@@ -32,7 +32,7 @@ export default function FeaturedProducts() {
     <section className="relative overflow-hidden py-20 bg-brand-light-gray/40">
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
+        <div className="flex flex-row items-center justify-between pb-4 gap-3 sm:gap-0">
           <style>{`
             @keyframes arrowSlide {
               0%, 100% { transform: translateX(0); }
@@ -45,12 +45,6 @@ export default function FeaturedProducts() {
             }
           `}</style>
           <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-goat-primary">
-              <Star size={16} className="animate-pulse text-gold-primary" />
-              <span className="text-[10px] font-bold tracking-widest uppercase text-brand-gray">
-                Popular Choices
-              </span>
-            </div>
             <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
               Featured Products
             </h2>

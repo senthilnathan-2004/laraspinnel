@@ -1114,7 +1114,7 @@ async function seed() {
       await SiteSettings.findOneAndUpdate(
         { key },
         { value },
-        { upsert: true, new: true }
+        { upsert: true, returnDocument: 'after' }
       );
     }
     console.log("Site settings seeded.");

@@ -40,7 +40,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         order,
         isActive,
       },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!updatedBanner) {

@@ -58,7 +58,7 @@ export default function Navbar() {
                 sizes="200px"
                 quality={75}
                 priority
-                className="h-6 md:h-8 w-auto object-contain"
+                className="h-8 md:h-10 w-auto object-contain"
               />
             )}
             <span className="font-display text-xl md:text-4xl tracking-wider text-brand-black group-hover:text-goat-primary transition-colors uppercase truncate max-w-[130px] min-[375px]:max-w-[180px] sm:max-w-none leading-none translate-y-[2px]">
@@ -123,20 +123,28 @@ export default function Navbar() {
               <FaWhatsapp size={20} />
             </a>
 
-            {/* Cart Button */}
+            {/* Cart Button — count appears as a badge on top of the icon */}
             <Link
               href="/cart"
-              className="bg-brand-black hover:bg-goat-primary text-white text-sm font-semibold px-5 py-2 rounded-full shadow-sm hover:shadow transition-all duration-200 flex items-center gap-2"
+              aria-label={`View Cart${cartCount > 0 ? ` (${cartCount} items)` : ""}`}
+              className="bg-brand-black hover:bg-goat-primary text-white text-sm font-semibold px-5 py-2 rounded-full shadow-sm hover:shadow transition-all duration-200 flex items-center gap-2.5"
             >
-              <ShoppingCart size={16} />
-              <span>Cart ({cartCount})</span>
+              <span className="relative">
+                <ShoppingCart size={17} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2.5 min-w-4 h-4 px-1 bg-rose-text text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-xs animate-in zoom-in duration-200">
+                    {cartCount > 99 ? "99+" : cartCount}
+                  </span>
+                )}
+              </span>
+              <span>Cart</span>
             </Link>
           </div>
 
           {/* Mobile controls (Mobile & Tablet) */}
-          <div className="flex xl:hidden items-center gap-1 md:gap-2">
+          <div className="flex xl:hidden items-center gap-2">
             {/* Tablet-only icon nav */}
-            <div className="hidden md:flex xl:hidden items-center gap-1 pr-2 mr-1 border-r border-brand-border">
+            <div className="hidden md:flex xl:hidden items-center gap-2 pr-2 mr-1 border-r border-brand-border">
               {bottomLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -145,7 +153,7 @@ export default function Navbar() {
                     href={link.href}
                     title={link.name}
                     aria-label={link.name}
-                    className={`p-2 rounded-full transition-colors ${
+                    className={`p-2 min-w-11 min-h-11 flex items-center justify-center rounded-full transition-colors ${
                       isActive
                         ? "text-goat-primary bg-goat-tint"
                         : "text-brand-black hover:bg-brand-light-gray hover:text-goat-primary"
@@ -159,7 +167,7 @@ export default function Navbar() {
                 href="/shop"
                 title="Search"
                 aria-label="Search"
-                className="p-2 rounded-full text-brand-black hover:bg-brand-light-gray hover:text-goat-primary transition-colors"
+                className="p-2 min-w-11 min-h-11 flex items-center justify-center rounded-full text-brand-black hover:bg-brand-light-gray hover:text-goat-primary transition-colors"
               >
                 <Search size={18} strokeWidth={1.8} />
               </Link>
@@ -168,7 +176,7 @@ export default function Navbar() {
             {/* Search — mobile only */}
             <Link
               href="/shop"
-              className="md:hidden p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
+              className="md:hidden p-2 min-w-11 min-h-11 flex items-center justify-center text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
               aria-label="Search"
             >
               <Search size={18} />
@@ -177,12 +185,12 @@ export default function Navbar() {
             {/* Direct Cart Button for mobile/tablet */}
             <Link
               href="/cart"
-              className="relative p-2 text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
+              className="relative p-2 min-w-11 min-h-11 flex items-center justify-center text-brand-black hover:bg-brand-light-gray rounded-full transition-colors"
               aria-label="View Cart"
             >
               <ShoppingCart size={20} />
               {cartCount > 0 && (
-                <span className="absolute top-0.5 right-0.5 min-w-4 h-4 px-1 bg-rose-primary text-white text-[8px] font-bold rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute top-0.5 right-0.5 min-w-4 h-4 px-1 bg-rose-text text-white text-[8px] font-bold rounded-full flex items-center justify-center shadow-xs">
                   {cartCount}
                 </span>
               )}

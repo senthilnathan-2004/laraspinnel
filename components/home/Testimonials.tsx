@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Quote, Users, MapPin, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
-import { Star } from "@phosphor-icons/react";
+import { Quote, Users, MapPin, ShieldCheck, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import useSWR from "swr";
 import { X, CheckCircle2, Loader2 } from "lucide-react";
 import SwipeButton from "@/components/shared/SwipeButton";
@@ -17,7 +16,7 @@ const ReviewCard = ({ rev, className = "" }: { rev: any; className?: string }) =
     <div className="space-y-4">
       <div className="flex gap-0.5">
         {[...Array(5)].map((_, i) => (
-          <Star key={i} weight={i < (rev.rating || 5) ? "fill" : "regular"} size={16} className={i < (rev.rating || 5) ? "text-gold-primary" : "text-brand-gray/30"} />
+          <Star key={i} size={16} className={i < (rev.rating || 5) ? "text-gold-primary fill-gold-primary" : "text-brand-gray/30"} />
         ))}
       </div>
       <div className="text-xs text-brand-gray leading-relaxed relative z-10 space-y-3">
@@ -70,7 +69,7 @@ const AddReviewModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-3xl p-4 sm:p-8 w-full max-w-lg shadow-2xl relative animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="bg-white rounded-3xl p-4 sm:p-8 w-full max-w-lg shadow-2xl relative animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
         <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-brand-light-gray rounded-full text-brand-gray hover:text-brand-black transition-colors z-10">
           <X size={20} />
         </button>
@@ -102,7 +101,7 @@ const AddReviewModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                       onClick={() => setFormData({ ...formData, rating: i + 1 })}
                       className="focus:outline-none transition-transform active:scale-90"
                     >
-                      <Star weight={i < formData.rating ? "fill" : "regular"} size={32} className={i < formData.rating ? "text-gold-primary" : "text-brand-gray/30"} />
+                      <Star size={32} className={i < formData.rating ? "text-gold-primary fill-gold-primary" : "text-brand-gray/30"} />
                     </button>
                   ))}
                 </div>
@@ -211,17 +210,23 @@ export default function Testimonials() {
   }, [maxSlide]);
 
   useEffect(() => {
+    // Don't auto-advance for reduced-motion users, or when nothing to scroll.
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || maxSlide === 0) return;
+
     const timer = setInterval(() => {
       nextSlide();
     }, 5000);
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [nextSlide, maxSlide]);
 
   return (
     <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Header row */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between border-b border-brand-border pb-6 gap-4 md:gap-8">
+        <div className="flex flex-col md:flex-row md:items-start justify-between pb-6 gap-4 md:gap-8">
           <div className="md:pr-6">
             <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
               {settings.home_testimonials_title || "What Our Customers Say"}
@@ -234,7 +239,7 @@ export default function Testimonials() {
             </p>
           </div>
 
-          <div className="w-full md:w-auto md:min-w-[200px]">
+          <div className="w-full md:w-auto md:min-w-50">
             <div className="hidden sm:block">
               <button onClick={() => setIsModalOpen(true)} className="px-8 py-3 w-full bg-goat-primary border-2 border-transparent text-white font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-goat-hover transition-all shadow-sm active:scale-95">
                 Add Your Review
@@ -267,7 +272,7 @@ export default function Testimonials() {
               <button 
                 onClick={prevSlide}
                 aria-label="Previous slide"
-                className="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform"
+                className="w-11 h-11 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-black"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -290,7 +295,7 @@ export default function Testimonials() {
               <button 
                 onClick={nextSlide}
                 aria-label="Next slide"
-                className="w-9 h-9 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform"
+                className="w-11 h-11 rounded-full bg-white border border-brand-border flex items-center justify-center text-brand-black shadow-sm active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-black"
               >
                 <ChevronRight size={18} />
               </button>
@@ -329,8 +334,8 @@ export default function Testimonials() {
           {/* Mobile View - Marquee */}
           <div className="flex sm:hidden relative overflow-hidden whitespace-nowrap -mx-4 px-4">
             {/* Blurry fade overlays */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-brand-light-gray to-transparent z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-brand-light-gray to-transparent z-10" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-linear-to-r from-brand-light-gray to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-linear-to-l from-brand-light-gray to-transparent z-10" />
             
             <div className="flex animate-marquee w-max">
               {[1, 2].map((i) => (

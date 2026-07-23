@@ -56,7 +56,7 @@ export default async function RefundPolicyPage() {
     <div className="min-h-screen bg-white flex flex-col font-body">
       <Navbar />
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 pt-5 md:pt-12 pb-14 md:pb-24 w-full">
-        <h1 className="font-display text-3xl md:text-5xl text-brand-black mb-4 uppercase tracking-wide border-b border-neutral-200 pb-6">Refund Policy</h1>
+        <h1 className="font-display text-3xl md:text-5xl text-brand-black mb-4 uppercase tracking-wide pb-6">Refund Policy</h1>
         <p className="text-sm text-brand-gray mb-10 italic">Last Updated: {updatedAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
 
         <div

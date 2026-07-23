@@ -29,7 +29,7 @@ export default function EmptyState({
       {onReset && (
         <button
           onClick={onReset}
-          className="inline-flex items-center justify-center border border-brand-border hover:bg-brand-light-gray text-brand-black text-xs font-semibold h-9 px-4 rounded-xl transition-all"
+          className="inline-flex items-center justify-center border border-brand-border hover:bg-brand-light-gray text-brand-black text-xs font-semibold h-11 px-4 rounded-xl transition-all"
         >
           Reset Filters
         </button>

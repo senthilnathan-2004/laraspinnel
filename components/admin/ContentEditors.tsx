@@ -3,7 +3,7 @@
 import React from "react";
 import { Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
 import ImageUploader from "@/components/admin/ImageUploader";
-import { PromoCard, PROMO_CARD_COLORS } from "@/lib/siteContent";
+import { PromoCard, PROMO_CARD_COLORS, CustomGalleryItem } from "@/lib/siteContent";
 
 /* ---------------- Single-value fields ---------------- */
 
@@ -223,6 +223,119 @@ export function ListEditor<T>({
         className="inline-flex items-center gap-1.5 text-xs font-bold text-goat-primary hover:text-goat-hover border border-dashed border-goat-primary/40 hover:border-goat-primary rounded-lg px-3 py-2 transition-colors"
       >
         <Plus size={14} /> {addLabel}
+      </button>
+    </div>
+  );
+}
+
+/* ---------------- Custom Order gallery list editor ---------------- */
+
+export function GalleryItemListEditor({
+  items,
+  onChange,
+  label = "Gallery Images",
+}: {
+  items: CustomGalleryItem[];
+  onChange: (items: CustomGalleryItem[]) => void;
+  label?: string;
+}) {
+  const blankItem = (): CustomGalleryItem => ({ src: "", alt: "" });
+
+  const update = (index: number, next: CustomGalleryItem) => {
+    const copy = [...items];
+    copy[index] = next;
+    onChange(copy);
+  };
+
+  const move = (index: number, dir: -1 | 1) => {
+    const target = index + dir;
+    if (target < 0 || target >= items.length) return;
+    const copy = [...items];
+    [copy[index], copy[target]] = [copy[target], copy[index]];
+    onChange(copy);
+  };
+
+  const remove = (index: number) => onChange(items.filter((_, i) => i !== index));
+  const add = () => onChange([...items, blankItem()]);
+
+  return (
+    <div className="space-y-2.5">
+      <div className="flex items-center justify-between">
+        <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">
+          {label}
+        </label>
+        <span className="text-[10px] font-semibold text-brand-gray">
+          {items.length} {items.length === 1 ? "image" : "images"}
+        </span>
+      </div>
+
+      <div className="space-y-3">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="flex items-start gap-2 p-3 bg-brand-light-gray/30 border border-brand-border rounded-xl"
+          >
+            <div className="flex flex-col gap-1 pt-1">
+              <button
+                type="button"
+                onClick={() => move(index, -1)}
+                disabled={index === 0}
+                aria-label="Move up"
+                className="p-1 text-brand-gray hover:text-brand-black disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <ArrowUp size={13} />
+              </button>
+              <button
+                type="button"
+                onClick={() => move(index, 1)}
+                disabled={index === items.length - 1}
+                aria-label="Move down"
+                className="p-1 text-brand-gray hover:text-brand-black disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <ArrowDown size={13} />
+              </button>
+            </div>
+
+            <div className="flex-1 min-w-0 space-y-2">
+              <ImageUploader
+                images={item.src ? [item.src] : []}
+                onChange={(imgs) => update(index, { ...item, src: imgs[0] || "" })}
+                multiple={false}
+                label="Gallery Image"
+              />
+              <input
+                type="text"
+                value={item.alt}
+                onChange={(e) => update(index, { ...item, alt: e.target.value })}
+                placeholder="Image description (alt text), e.g. Pink Lily Bouquet"
+                className="w-full h-10 px-3 bg-white border border-brand-border rounded-lg text-sm outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => remove(index)}
+              aria-label="Remove image"
+              className="shrink-0 p-1.5 mt-0.5 text-brand-gray hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <Trash2 size={15} />
+            </button>
+          </div>
+        ))}
+
+        {items.length === 0 && (
+          <p className="text-xs text-brand-gray italic px-1 py-2">
+            No images yet — the site shows the built-in curated set.
+          </p>
+        )}
+      </div>
+
+      <button
+        type="button"
+        onClick={add}
+        className="inline-flex items-center gap-1.5 text-xs font-bold text-goat-primary hover:text-goat-hover border border-dashed border-goat-primary/40 hover:border-goat-primary rounded-lg px-3 py-2 transition-colors"
+      >
+        <Plus size={14} /> Add image
       </button>
     </div>
   );

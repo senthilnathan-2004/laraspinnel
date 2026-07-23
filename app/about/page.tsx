@@ -34,7 +34,7 @@ export default function AboutPage() {
 
       <main className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-16 animate-in fade-in">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
+        <div className="space-y-3 pb-6 text-center mx-auto w-full">
           <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
             <BookOpen size={14} className="text-goat-primary" /> Our Story
           </span>
@@ -95,7 +95,7 @@ export default function AboutPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 select-none border-y border-brand-border py-8 text-center bg-white">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 select-none py-8 text-center bg-white">
           <div className="space-y-1">
             <span className="font-display text-2xl sm:text-3xl md:text-4xl text-goat-primary block tracking-wide">{settings.about_stat_1_val || "500+"}</span>
             <span className="text-[10px] text-brand-gray uppercase font-bold tracking-wider block">{settings.about_stat_1_label || "Gifts Handmade"}</span>

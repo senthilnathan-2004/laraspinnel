@@ -31,7 +31,7 @@ export default function BlogShareSidebar({ title, slug }: BlogShareSidebarProps)
   const shareUrl = encodeURIComponent(currentUrl);
 
   return (
-    <div className="pt-8 mt-10 border-t border-brand-border space-y-4 select-none">
+    <div className="pt-8 mt-10 space-y-4 select-none">
       <h4 className="text-xs font-bold text-brand-black uppercase tracking-wider">Share Article</h4>
       
       {/* Mobile: 2 columns grid. Desktop: flex wrap */}

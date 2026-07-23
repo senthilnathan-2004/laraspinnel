@@ -70,7 +70,7 @@ export async function PUT(
     const product = await Product.findByIdAndUpdate(
       id,
       { name, slug, category, price, discountPrice, description, images, stock, isFeatured, isActive },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!product) {

@@ -12,7 +12,7 @@ import ImageUploadDropzone from "@/components/admin/ImageUploadDropzone";
 import StickyBox from "@/components/shared/StickyBox";
 import { useCart } from "@/hooks/useCart";
 import { sortInStockFirst } from "@/lib/utils";
-import { ShoppingCart, ShoppingBag, Plus, Minus, ArrowLeft, Heart, Sparkles, ShieldCheck } from "lucide-react";
+import { ShoppingCart, ShoppingBag, Plus, Minus, ArrowLeft, Heart, ShieldCheck } from "lucide-react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -107,7 +107,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Product Details Section */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
           {/* Gallery Column — mirrors the desktop layout from tablet width up */}
           <div className="order-1 md:order-1 md:col-span-5 md:row-span-2 relative">
           <StickyBox topOffset={112} enableFrom={768}>
@@ -156,24 +156,21 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Info: title, price, description */}
-          <div className="order-2 md:order-2 md:col-span-7 space-y-6">
+          <div className="order-2 md:order-2 md:col-span-7 space-y-4">
             <div className="space-y-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-goat-tint border border-goat-primary/20 text-goat-primary text-[10px] font-bold uppercase tracking-wider rounded-lg">
-                <Sparkles size={10} /> Handmade Collection
-              </span>
+              <Link
+                href={`/shop?category=${product.category.slug}`}
+                className="text-[10px] font-bold uppercase tracking-widest text-goat-primary hover:underline"
+              >
+                {product.category.name}
+              </Link>
               <h1 className="font-display text-2xl md:text-4xl text-brand-black uppercase leading-tight">
                 {product.name}
               </h1>
-              <div className="flex items-center gap-2 text-xs font-semibold text-brand-gray">
-                <span>Category:</span>
-                <Link href={`/shop?category=${product.category.slug}`} className="text-goat-primary hover:underline uppercase">
-                  {product.category.name}
-                </Link>
-              </div>
             </div>
 
             {/* Price section */}
-            <div className="flex items-baseline gap-3 border-y border-brand-border py-4">
+            <div className="flex items-baseline gap-3">
               <span className="text-3xl font-extrabold text-brand-black">
                 ₹{currentPrice}
               </span>
@@ -219,7 +216,7 @@ export default function ProductDetailPage() {
 
           {/* Purchase: quantity + Add to Cart / Buy Now */}
           {inStock && (
-            <div className="order-3 md:order-3 md:col-span-7 space-y-4 pt-4 border-t border-brand-border">
+            <div className="order-3 md:order-3 md:col-span-7 space-y-4">
                 {/* Custom design instructions */}
                 <div className="space-y-1.5">
                   <div className="flex items-baseline justify-between">
@@ -308,9 +305,9 @@ export default function ProductDetailPage() {
 
         {/* Related Products Grid */}
         {relatedProducts.length > 0 && (
-          <div className="space-y-6 pt-10 border-t border-brand-border">
+          <div className="space-y-6 pt-10">
             <h2 className="font-display text-2xl md:text-3xl text-brand-black uppercase tracking-wide">
-              Related Products
+              Explore Products
             </h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               {relatedProducts.map((p: any) => (

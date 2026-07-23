@@ -83,7 +83,7 @@ export default function ContactPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-12">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
+        <div className="space-y-3 pb-6 text-center mx-auto w-full">
           <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
             <Phone size={14} className="text-goat-primary" /> Get in touch
           </span>
@@ -223,7 +223,7 @@ export default function ContactPage() {
                 <textarea
                   {...register("message")}
                   placeholder="Tell us what you need in detail..."
-                  className="w-full flex-1 bg-brand-light-gray/40 border border-brand-border rounded-xl p-3 md:p-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary resize-none min-h-[120px]"
+                  className="w-full flex-1 bg-brand-light-gray/40 border border-brand-border rounded-xl p-3 md:p-4 text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary resize-none min-h-30"
                 ></textarea>
                 {errors.message && (
                   <p className="text-xs text-red-600 font-semibold flex items-center gap-1">

@@ -42,7 +42,7 @@ export default function CartPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 w-full space-y-8 animate-in fade-in">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6">
+        <div className="space-y-3 pb-6">
           <h1 className="font-display text-3xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Your Shopping Cart
           </h1>
@@ -72,7 +72,7 @@ export default function CartPage() {
             {/* Items Column (8 cols) */}
             <div className="lg:col-span-8 space-y-4">
               <div className="border border-brand-border rounded-2xl overflow-hidden shadow-card">
-                <div className="bg-brand-light-gray/50 px-4 py-3 border-b border-brand-border hidden md:grid grid-cols-12 text-xs font-bold text-brand-gray uppercase">
+                <div className="bg-brand-light-gray/50 px-4 py-3 hidden md:grid grid-cols-12 text-xs font-bold text-brand-gray uppercase">
                   <div className="col-span-6">Product Details</div>
                   <div className="col-span-2 text-center">Price</div>
                   <div className="col-span-2 text-center">Quantity</div>
@@ -155,13 +155,13 @@ export default function CartPage() {
                               <div className="flex items-center gap-3 mt-0.5">
                                 <button
                                   onClick={() => startEditing(item)}
-                                  className="text-xs font-semibold text-goat-primary hover:text-goat-hover transition-colors flex items-center gap-1"
+                                  className="text-xs font-semibold text-goat-primary hover:text-goat-hover transition-colors flex items-center gap-1 min-h-11 py-2"
                                 >
                                   <Pencil size={13} /> Edit
                                 </button>
                                 <button
                                   onClick={() => removeItem(item.productId, item.customText, item.customImage)}
-                                  className="text-xs font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center gap-1"
+                                  className="text-xs font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center gap-1 min-h-11 py-2"
                                 >
                                   <Trash2 size={13} /> Remove
                                 </button>
@@ -180,10 +180,10 @@ export default function CartPage() {
                       {/* Quantity Selector */}
                       <div className="col-span-1 md:col-span-2 flex justify-between md:justify-center items-center gap-3">
                         <span className="md:hidden text-brand-gray font-medium">Quantity:</span>
-                        <div className="flex items-center border border-brand-border rounded-lg bg-brand-light-gray/20 h-8 overflow-hidden">
+                        <div className="flex items-center border border-brand-border rounded-lg bg-brand-light-gray/20 h-11 overflow-hidden">
                           <button
                             onClick={() => updateQuantity(item.productId, item.quantity - 1, item.customText, item.customImage)}
-                            className="px-2 h-full hover:bg-brand-light-gray text-brand-black"
+                            className="px-2 min-w-11 h-full flex items-center justify-center hover:bg-brand-light-gray text-brand-black"
                             aria-label="Decrease quantity"
                           >
                             <Minus size={12} />
@@ -193,7 +193,7 @@ export default function CartPage() {
                           </span>
                           <button
                             onClick={() => updateQuantity(item.productId, item.quantity + 1, item.customText, item.customImage)}
-                            className="px-2 h-full hover:bg-brand-light-gray text-brand-black"
+                            className="px-2 min-w-11 h-full flex items-center justify-center hover:bg-brand-light-gray text-brand-black"
                             aria-label="Increase quantity"
                           >
                             <Plus size={12} />
@@ -231,7 +231,7 @@ export default function CartPage() {
             {/* Summary Column (4 cols) */}
             <StickyBox topOffset={112} enableFrom={1024} className="lg:col-span-4">
             <div className="bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-6 shadow-card">
-              <h2 className="font-display text-xl text-brand-black uppercase tracking-wide border-b border-brand-border pb-3">
+              <h2 className="font-display text-xl text-brand-black uppercase tracking-wide pb-3">
                 Order Summary
               </h2>
 
@@ -261,7 +261,7 @@ export default function CartPage() {
                     );
                   })()}
                 </div>
-                <div className="border-t border-brand-border pt-4 flex justify-between text-base">
+                <div className="pt-4 flex justify-between text-base">
                   <span className="font-bold text-brand-black">Total:</span>
                   <span className="font-extrabold text-brand-black">
                     ₹{(() => {

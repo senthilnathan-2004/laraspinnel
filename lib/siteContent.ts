@@ -30,6 +30,10 @@ export interface PromoCardColorOption {
   label: string;
   className: string;
 }
+export interface CustomGalleryItem {
+  src: string;
+  alt: string;
+}
 
 /* ---- Home: "Why Choose Us" steps (icons are fixed in the component by index) ---- */
 export const DEFAULT_WHY_STEPS: WhyStep[] = [
@@ -106,6 +110,65 @@ export const DEFAULT_PROMO_CARDS: PromoCard[] = [
   },
 ];
 
+/* ---- Home: Custom Order banner ---- */
+export const DEFAULT_CUSTOM_POINTS: string[] = [
+  "Choose Your Colors",
+  "Personalized Details",
+  "Handmade to Order",
+];
+
+// Curated custom creations — Lara's Pinnal catalog photography (ImageKit CDN).
+export const DEFAULT_CUSTOM_GALLERY: CustomGalleryItem[] = [
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_rose_flower_on_stem_202607192151-removebg-preview_6NgeZL4GE.png",
+    alt: "Single Pink Rose Stem — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_teddy_bear_on_white_202607192145-removebg-preview_5cLkpFYkW.png",
+    alt: "Cute Teddy Bear Amigurumi — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/ragugoatfarm/Baby_shower_gift_hamper_arrangement_202607191703-removebg-preview_d9iZSHF5O.png",
+    alt: "Baby Shower Warm Hamper — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_flower_bouquet_lavender___202607192146-removebg-preview_O0_IyzOS2.png",
+    alt: "Lavender Crochet Bouquet — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_hair_band_daisy_flower_202607192143-removebg-preview_h3rCfX27-.png",
+    alt: "Daisy Flower Hair Band — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_sunflower_coasters_stacked_2K_202607192202-removebg-preview_GEjOlGAlH.png",
+    alt: "Desk Sunflower Coaster Set — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_flower_bouquet_pink_lilies_202607192147-removebg-preview_LtUJPk8Yq.png",
+    alt: "Pink Lily Bouquet — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Wooden_embroidery_hoop_photo_frame_202607192148-removebg-preview_rCFSgzD5l.png",
+    alt: "Wooden Hoop Crochet Portrait Frame — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_bunny_plush_sitting_pose_202607192145-removebg-preview_j3Tt7vKMS.png",
+    alt: "Pink Bunny Crochet Plush — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_tulip_desk_lamp_2K_202607192202-removebg-preview_fL6jvkQ8E.png",
+    alt: "Crochet Tulip Desk Lamp — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_tote_bag_with_daisy_202607192143-removebg-preview_hHYTevl_N.png",
+    alt: "Daisy Flower Crochet Tote Bag — custom handmade by Lara's Pinnal",
+  },
+  {
+    src: "https://ik.imagekit.io/senra6374/laraspinnal/Crochet_sunflower_keychain_desk___202607192150-removebg-preview_0tqyzIWZh.png",
+    alt: "Smiley Sunflower Keychain Desk Stand — custom handmade by Lara's Pinnal",
+  },
+];
+
 /* ---- Footer link columns ---- */
 export const DEFAULT_FOOTER_QUICKLINKS: LinkItem[] = [
   { label: "Home", href: "/" },
@@ -152,6 +215,20 @@ export const CONTENT_DEFAULTS: Record<string, string> = {
   home_promo_subtitle: "Handpicked crochet collections, ready to gift or keep for yourself.",
   // Home — marquee
   home_marquee: JSON.stringify(DEFAULT_MARQUEE_ITEMS),
+  // Home — Custom Order banner
+  home_custom_enabled: "true",
+  home_custom_eyebrow: "Custom Made · Just For You",
+  home_custom_heading: "Made by Hand.\nMade for You.",
+  home_custom_description:
+    "From forever bouquets to meaningful gifts, we create something uniquely yours.",
+  home_custom_points: JSON.stringify(DEFAULT_CUSTOM_POINTS),
+  home_custom_primary_text: "Start Your Custom Order",
+  home_custom_primary_link: "/custom-order",
+  home_custom_secondary_text: "View Custom Creations",
+  home_custom_secondary_link: "/shop",
+  home_custom_bg_image: "/custombg.png",
+  home_custom_bg_image_mobile: "/custommobile.png",
+  home_custom_gallery: JSON.stringify(DEFAULT_CUSTOM_GALLERY),
   // Footer
   footer_quicklinks: JSON.stringify(DEFAULT_FOOTER_QUICKLINKS),
   footer_categories: JSON.stringify(DEFAULT_FOOTER_CATEGORIES),

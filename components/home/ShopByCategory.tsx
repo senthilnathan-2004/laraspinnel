@@ -14,13 +14,13 @@ export default function ShopByCategory({ settings }: { settings: any }) {
     <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-12">
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-4 gap-3 sm:gap-0">
           <div>
             <h2 className="font-display text-2xl md:text-4xl text-brand-black tracking-wide uppercase">
-              {settings.home_shop_title || "Handmade Gifts Crafted with Love"}
+              {settings.home_shop_title || "Shop by Collection"}
             </h2>
             <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
-              {settings.home_shop_subtitle || "Browse our collection of hand-knitted crochet bouquets, customized frames, hampers, and accessories."}
+              {settings.home_shop_subtitle || "Find something handmade for every moment, celebration, and someone special."}
             </p>
           </div>
         </div>
@@ -35,13 +35,18 @@ export default function ShopByCategory({ settings }: { settings: any }) {
               </div>
             ))}
           </div>
+        ) : categories.length === 0 ? (
+          <div className="text-center text-brand-gray py-12">
+            <p className="text-sm font-semibold">Categories coming soon.</p>
+            <p className="text-xs mt-1">Check back shortly for our handmade collections.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 md:gap-6">
             {categories.map((category: any) => (
               <Link
                 key={category._id}
                 href={`/shop?category=${category.slug}`}
-                className="group flex flex-col items-center text-center gap-3 w-full"
+                className="group flex flex-col items-center text-center gap-3 w-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-goat-primary focus-visible:ring-offset-2"
               >
                 {/* Rounded Square Card with Off-White Background */}
                 <div className="relative aspect-square w-full rounded-2xl md:rounded-[2rem] overflow-hidden bg-[#F3F4F6] border border-brand-border/40 transition-all duration-300 group-hover:shadow-md group-hover:-translate-y-1">

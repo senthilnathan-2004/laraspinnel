@@ -6,32 +6,32 @@ import { DEFAULT_MARQUEE_ITEMS, parseList } from "@/lib/siteContent";
 
 const FeaturedProducts = dynamic(() => import("@/components/home/FeaturedProducts"), {
   ssr: false,
-  loading: () => <div className="min-h-[300px] bg-brand-light-gray/40 animate-pulse" />,
+  loading: () => <div className="min-h-75 bg-brand-light-gray/40 animate-pulse" />,
 });
 
 const CategoryShowcase = dynamic(() => import("@/components/home/CategoryShowcase"), {
   ssr: false,
-  loading: () => <div className="min-h-[300px] bg-white animate-pulse" />,
+  loading: () => <div className="min-h-75 bg-white animate-pulse" />,
 });
 
 const HowItWorks = dynamic(() => import("@/components/home/HowItWorks"), {
   ssr: false,
-  loading: () => <div className="min-h-[200px]" />,
+  loading: () => <div className="min-h-50" />,
 });
 
-const Testimonials = dynamic(() => import("@/components/home/Testimonials"), {
+const CustomerLove = dynamic(() => import("@/components/home/CustomerLove"), {
   ssr: false,
-  loading: () => <div className="min-h-[300px]" />,
+  loading: () => <div className="min-h-75" />,
 });
 
 const PromoShowcase = dynamic(() => import("@/components/home/PromoShowcase"), {
   ssr: false,
-  loading: () => <div className="min-h-[480px]" />,
+  loading: () => <div className="min-h-120" />,
 });
 
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), {
   ssr: false,
-  loading: () => <div className="min-h-[48px]" />,
+  loading: () => <div className="min-h-12" />,
 });
 
 const FooterBanner = dynamic(() => import("@/components/home/FooterBanner"), {
@@ -46,7 +46,7 @@ export default function BelowFoldSections() {
   return (
     <>
       {/* Bangles category showcase */}
-      <CategoryShowcase title="Bangles" categorySlug="bangles" eyebrow="Trending Now" />
+      <CategoryShowcase title="Bangles" categorySlug="bangles" />
 
       {/* Featured Products catalog */}
       <FeaturedProducts />
@@ -57,8 +57,8 @@ export default function BelowFoldSections() {
       {/* Promo Showcase — rotating auto-scroll cards */}
       <PromoShowcase />
 
-      {/* Customer Testimonials */}
-      <Testimonials />
+      {/* Customer Testimonials — WhatsApp-style chat cards */}
+      <CustomerLove />
 
       {/* 16:9 promotional banner */}
       <FooterBanner />

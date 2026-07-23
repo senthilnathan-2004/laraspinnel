@@ -71,7 +71,7 @@ export async function PUT(
     const category = await Category.findByIdAndUpdate(
       id,
       { name, slug, description, image, isActive },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!category) {

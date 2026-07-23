@@ -186,7 +186,7 @@ export default function CheckoutPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16 w-full space-y-8 animate-in fade-in">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6">
+        <div className="space-y-3 pb-6">
           <h1 className="font-display text-3xl sm:text-5xl text-brand-black tracking-wide uppercase">
             Order Checkout
           </h1>
@@ -197,9 +197,9 @@ export default function CheckoutPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Checkout Form (7 cols) */}
-          <form onSubmit={handleSubmit} className="lg:col-span-7 space-y-6">
+          <form id="checkout-form" onSubmit={handleSubmit} className="lg:col-span-7 space-y-6">
             <div className="bg-white border border-brand-border rounded-2xl p-5 md:p-8 space-y-5 shadow-card">
-              <h2 className="text-lg font-bold text-brand-black uppercase tracking-wider border-b border-brand-border pb-3 flex items-center gap-2">
+              <h2 className="text-lg font-bold text-brand-black uppercase tracking-wider pb-3 flex items-center gap-2">
                 <FileText size={18} className="text-goat-primary" /> Delivery Information
               </h2>
 
@@ -222,7 +222,9 @@ export default function CheckoutPage() {
               <div className="space-y-1.5">
                 <label htmlFor="phone" className="text-xs font-bold text-brand-black uppercase">Mobile Number</label>
                 <input
-                  type="text"
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={10}
                   id="phone"
                   name="phone"
                   value={formData.phone}
@@ -285,6 +287,8 @@ export default function CheckoutPage() {
                   <label htmlFor="pincode" className="text-xs font-bold text-brand-black uppercase">Pincode</label>
                   <input
                     type="text"
+                    inputMode="numeric"
+                    maxLength={6}
                     id="pincode"
                     name="pincode"
                     value={formData.pincode}
@@ -319,7 +323,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-5 space-y-6">
             {/* Cart Summary Card */}
             <div className="bg-brand-light-gray/30 border border-brand-border rounded-2xl p-6 space-y-4 shadow-card">
-              <h2 className="font-display text-lg text-brand-black uppercase tracking-wide border-b border-brand-border pb-3">
+              <h2 className="font-display text-lg text-brand-black uppercase tracking-wide pb-3">
                 Order Summary
               </h2>
 
@@ -351,7 +355,7 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <div className="border-t border-brand-border pt-4 text-sm space-y-2">
+              <div className="pt-4 text-sm space-y-2">
                 <div className="flex justify-between">
                   <span className="text-brand-gray font-medium">Subtotal:</span>
                   <span className="font-bold text-brand-black">₹{cartTotal}</span>
@@ -373,7 +377,7 @@ export default function CheckoutPage() {
                     );
                   })()}
                 </div>
-                <div className="border-t border-brand-border pt-3 flex justify-between text-base">
+                <div className="pt-3 flex justify-between text-base">
                   <span className="font-bold text-brand-black">Total Amount:</span>
                   <span className="font-extrabold text-brand-black text-lg">
                     ₹{(() => {
@@ -391,8 +395,8 @@ export default function CheckoutPage() {
 
               <button
                 type="submit"
+                form="checkout-form"
                 disabled={isSubmitting}
-                onClick={handleSubmit}
                 className="w-full bg-brand-black hover:bg-goat-primary text-white font-bold py-3.5 px-6 rounded-full transition-all flex items-center justify-center gap-2 shadow-md disabled:bg-neutral-400 disabled:cursor-not-allowed text-base"
               >
                 {isSubmitting ? (
@@ -412,7 +416,7 @@ export default function CheckoutPage() {
                   <p className="text-[10px] text-brand-gray">No advance payment card details needed. Pay after order verification.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 border-t border-brand-border/60 pt-3.5">
+              <div className="flex items-center gap-3 pt-3.5">
                 <Heart size={36} className="text-red-400 shrink-0" />
                 <div>
                   <h4 className="text-xs font-bold text-brand-black uppercase tracking-wider">Handcrafted Art Guarantee</h4>

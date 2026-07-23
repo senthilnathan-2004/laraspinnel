@@ -8,6 +8,7 @@ export interface ITestimonial extends Document {
   initial: string;
   rating: number;
   refId: string;
+  avatarUrl?: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -22,6 +23,7 @@ const TestimonialSchema = new Schema<ITestimonial>(
     initial: { type: String, required: true },
     rating: { type: Number, required: true, min: 1, max: 5, default: 5 },
     refId: { type: String, required: true },
+    avatarUrl: { type: String, default: "" },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }

@@ -29,12 +29,12 @@ export default function HowItWorks() {
     <section className="py-20 bg-brand-light-gray">
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-16">
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
-          <div>
-            <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
+        <div className="pb-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-display text-3xl md:text-4xl text-brand-black tracking-wide uppercase">
               {whyTitle}
             </h2>
-            <p className="text-sm font-medium text-brand-gray mt-1 text-justify md:text-left">
+            <p className="text-sm font-medium text-brand-gray mt-2">
               {whySubtitle}
             </p>
           </div>
@@ -78,8 +78,8 @@ export default function HowItWorks() {
         {/* Desktop View */}
         <div className="hidden md:grid grid-cols-5 gap-6 relative pt-10">
           {/* Connector Line with Moving Dot */}
-          <div className="absolute top-[72px] left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
-            <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move shadow-[0_0_8px_rgba(143,168,138,0.8)]"></div>
+          <div className="absolute top-18 left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
+            <div className="absolute -top-1.25 w-2 h-2 rounded-full bg-goat-primary animate-dot-move shadow-[0_0_8px_rgba(143,168,138,0.8)]"></div>
           </div>
 
           {steps.map((step, idx) => (
@@ -109,19 +109,19 @@ export default function HowItWorks() {
         </div>
 
         {/* Mobile View - Marquee */}
-        <div className="flex md:hidden overflow-hidden -mx-4 px-4 pt-14 pb-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div className="flex md:hidden overflow-hidden -mx-4 px-4 pt-14 pb-4 mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <div className="flex animate-marquee-steps w-max" style={{ willChange: 'transform' }}>
             {[1, 2].map((setIndex) => (
               <div key={setIndex} className="flex gap-12 relative shrink-0 pr-12">
                 {/* Connector Line with Moving Dot for Mobile */}
-                <div className="absolute top-8 left-[110px] right-[158px] h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
-                  <div className="absolute top-[-5px] w-2 h-2 rounded-full bg-goat-primary animate-dot-move-mobile shadow-[0_0_8px_rgba(143,168,138,0.8)]" style={{ animationDelay: '-1.6s' }}></div>
+                <div className="absolute top-8 left-27.5 right-39.5 h-0.5 border-t-2 border-dashed border-goat-primary/25 z-0">
+                  <div className="absolute -top-1.25 w-2 h-2 rounded-full bg-goat-primary animate-dot-move-mobile shadow-[0_0_8px_rgba(143,168,138,0.8)]" style={{ animationDelay: '-1.6s' }}></div>
                 </div>
 
                 {steps.map((step, idx) => (
                   <div
                     key={`${setIndex}-${idx}`}
-                    className="flex flex-col items-center text-center space-y-4 relative z-10 group shrink-0 w-[180px]"
+                    className="flex flex-col items-center text-center space-y-4 relative z-10 group shrink-0 w-45"
                   >
                     <div
                       className="w-16 h-16 rounded-full bg-goat-tint border border-goat-primary/10 flex items-center justify-center relative shadow-sm transition-transform duration-200 animate-icon-zoom-mobile"

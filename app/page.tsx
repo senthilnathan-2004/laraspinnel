@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 const TextMarquee = dynamic(() => import("@/components/home/TextMarquee"), { ssr: true });
 
 import BestSellers from "@/components/home/BestSellers";
+import CustomOrderBanner from "@/components/home/CustomOrderBanner";
 import BelowFoldSections from "@/components/home/BelowFoldSections";
 
 import { connectToDatabase } from "@/lib/db";
@@ -137,7 +138,13 @@ export default async function HomePage() {
         {/* Desktop-only Marquee */}
         <div className="hidden lg:block">
           <TextMarquee
-            items={["100% Handcrafted", "Custom Colors Available", "Safe Baby Toys", "Premium Milk Cotton Yarn", "Secure Shipping"]}
+            items={[
+              { label: "100% Handmade", icon: "hand" },
+              { label: "Custom Made", icon: "palette" },
+              { label: "Premium Yarn", icon: "gem" },
+              { label: "Baby-Friendly", icon: "baby" },
+              { label: "Secure Shipping", icon: "truck" },
+            ]}
             bgColor="bg-brand-light-gray"
             textColor="text-brand-black"
             dividerColor="text-brand-black/20"
@@ -149,6 +156,9 @@ export default async function HomePage() {
 
         {/* Popular Best Sellers Section */}
         <BestSellers />
+
+        {/* Custom Orders — single editorial campaign banner (admin-managed) */}
+        <CustomOrderBanner settings={allSettings} />
 
         {/* Below-fold sections */}
         <BelowFoldSections />

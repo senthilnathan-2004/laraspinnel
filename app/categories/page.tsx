@@ -19,7 +19,7 @@ export default function CategoriesPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-7 md:py-12 w-full space-y-12 animate-in fade-in">
         {/* Page Header */}
-        <div className="space-y-3 border-b border-brand-border pb-6 text-center mx-auto w-full">
+        <div className="space-y-3 pb-6 text-center mx-auto w-full">
           <span className="flex items-center justify-center gap-2 text-xs font-semibold text-goat-text uppercase tracking-wider">
             <Tag size={14} className="text-goat-primary" /> Gift Collections
           </span>

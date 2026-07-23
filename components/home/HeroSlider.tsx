@@ -5,7 +5,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 interface Banner {
@@ -29,9 +29,15 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
     revalidateOnMount: false,
     revalidateOnFocus: false,
   });
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
-  ]);
+  // Honor prefers-reduced-motion: no autoplay, no loop when the user asks for stillness.
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: !prefersReducedMotion },
+    prefersReducedMotion ? [] : [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  );
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
@@ -126,11 +132,6 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
                 {/* Slide Content */}
                 <div className="absolute inset-0 flex flex-col justify-center pb-12 md:pb-6 max-w-7xl mx-auto px-4 md:px-6 pt-6">
                   <div className="max-w-3xl space-y-4 max-[300px]:space-y-2 text-left animate-in fade-in slide-in-from-bottom-5 duration-700">
-                    {/* tag */}
-                    <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-xs text-white border border-white/25 rounded-full text-xs max-[300px]:text-[10px] max-[300px]:px-2 font-semibold px-4 py-1.5">
-                      <Sparkles size={14} className="text-goat-primary animate-pulse" strokeWidth={2.5} /> 100% Handcrafted
-                    </span>
-
                     {/* Title in display Anton font */}
                     <Heading className="font-display text-white text-2xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight uppercase tracking-wide max-[300px]:text-2xl max-[300px]:leading-tight line-clamp-2">
                       {slide.headline}
@@ -167,7 +168,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
         {/* Navigation Arrows */}
         <button
           onClick={scrollPrev}
-          className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
+          className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 hidden md:flex items-center justify-center text-white cursor-pointer md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-all duration-300 active:scale-95"
           aria-label="Previous slide"
         >
           <ChevronLeft size={24} strokeWidth={2} />
@@ -175,7 +176,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
 
         <button
           onClick={scrollNext}
-          className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 flex items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 active:scale-95"
+          className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 hover:bg-white/35 backdrop-blur-xs border border-white/10 hidden md:flex items-center justify-center text-white cursor-pointer md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-all duration-300 active:scale-95"
           aria-label="Next slide"
         >
           <ChevronRight size={24} strokeWidth={2} />
@@ -187,7 +188,7 @@ export default function HeroSlider({ initialBanners = [] }: { initialBanners?: B
             <button
               key={index}
               onClick={() => scrollTo(index)}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
+              className={`relative h-2 rounded-full transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white after:absolute after:inset-x-0 after:-inset-y-4 after:content-[''] ${index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
                 }`}
               aria-label={`Go to slide ${index + 1}`}
             ></button>

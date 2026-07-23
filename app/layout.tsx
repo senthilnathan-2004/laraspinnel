@@ -36,19 +36,19 @@ export async function generateMetadata(): Promise<Metadata> {
   let title = "Lara's Pinnal | Handmade Crochet Gifts & Flowers in Tamil Nadu";
   let description =
     "Shop handmade crochet gifts from Lara's Pinnal, Tamil Nadu. Crochet flower bouquets, amigurumi plushies, custom frames, keychains & gift hampers shipped across India.";
-  let favicon = "/icon.svg";
+  let favicon = "/logo.png";
 
   try {
     await connectToDatabase();
     const settings = await SiteSettings.find({
-      key: { $in: ["seo_title", "seo_description", "favicon_url"] },
+      key: { $in: ["seo_title", "seo_description", "favicon_url", "logo_url"] },
     });
 
     const getSetting = (k: string) => settings.find((s) => s.key === k)?.value;
 
     title = getSetting("seo_title") || title;
     description = getSetting("seo_description") || description;
-    favicon = getSetting("favicon_url") || favicon;
+    favicon = getSetting("favicon_url") || getSetting("logo_url") || favicon;
   } catch (error) {
     console.error("Error loading site settings for metadata:", error);
   }

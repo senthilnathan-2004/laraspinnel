@@ -11,9 +11,11 @@
   --color-brand-border: #E8E1D8;
 
   /* PRIMARY — Sage Green (main brand color: buttons, links, active states, header) */
-  --color-primary: #8FA88A;
+  /* Darkened from #8FA88A: white-on-fill and green-text-on-white now meet WCAG 4.5:1 (~5.1:1). */
+  /* Light-tint use-cases stay on --color-primary-tint, which is intentionally unchanged. */
+  --color-primary: #5F7359;
   --color-primary-tint: #EEF3EC;
-  --color-primary-hover: #708870;
+  --color-primary-hover: #4C5D47;
   --color-primary-text: #56695A;
 
   /* SECONDARY — Terracotta/Rust (CTAs, highlights, hover accents) */
@@ -264,4 +266,72 @@ html {
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Custom Order gallery — seamless infinite scroll columns.
+   Each track holds TWO identical halves (each half carries its own trailing
+   gap), so translating exactly -50% lands on a pixel-perfect loop seam:
+   no jump, no flicker, no gap drift. Transform-only = GPU-friendly. */
+@keyframes gallery-scroll-up {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(0, -50%, 0); }
+}
+@keyframes gallery-scroll-down {
+  0% { transform: translate3d(0, -50%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+@keyframes gallery-scroll-x {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+/* Column durations differ slightly for an organic, non-mechanical feel */
+.animate-gallery-up {
+  animation: gallery-scroll-up 26s linear infinite;
+  will-change: transform;
+}
+.animate-gallery-down {
+  animation: gallery-scroll-down 30s linear infinite;
+  will-change: transform;
+}
+.animate-gallery-x {
+  animation: gallery-scroll-x 30s linear infinite;
+  will-change: transform;
+}
+/* Hovering a column gently pauses it so products can be viewed */
+.animate-gallery-up:hover,
+.animate-gallery-down:hover,
+.animate-gallery-x:hover {
+  animation-play-state: paused;
+}
+
+/* Text marquee — defined once here (was duplicated inline per instance) */
+@keyframes marquee-text {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-text {
+  animation: marquee-text 25s linear infinite;
+}
+.animate-marquee-text:hover {
+  animation-play-state: paused;
+}
+
+/* Respect users who ask for less motion (WCAG 2.3.3 / prefers-reduced-motion).
+   Halt looping/decorative animations globally so nothing auto-moves. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee-text,
+  .animate-gallery-up,
+  .animate-gallery-down,
+  .animate-gallery-x {
+    animation: none !important;
+    transform: none !important;
+  }
 }

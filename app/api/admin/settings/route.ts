@@ -46,7 +46,7 @@ export async function PUT(req: NextRequest) {
       return SiteSettings.findOneAndUpdate(
         { key },
         { value: String(val) },
-        { upsert: true, new: true }
+        { upsert: true, returnDocument: 'after' }
       );
     });
 

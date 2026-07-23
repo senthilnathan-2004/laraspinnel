@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IOrderItem {
-  productId: mongoose.Types.ObjectId;
+  /* Absent on custom-order requests, which aren't tied to a catalog product */
+  productId?: mongoose.Types.ObjectId;
   name: string;
   price: number;
   quantity: number;
@@ -24,12 +25,26 @@ export interface IOrder extends Document {
   deliveryFee: number;
   totalAmount: number;
   status: "pending" | "confirmed" | "preparing" | "ready" | "delivered" | "cancelled";
+  orderType: "shop" | "custom";
+  /* Inspiration images uploaded with a custom-order request */
+  referenceImages?: string[];
+  /* Structured request details from the custom-order form */
+  customDetails?: {
+    occasion?: string;
+    colors?: string[];
+    size?: string;
+    quantityLabel?: string;
+    personalization?: string;
+    requirements?: string;
+    preferredDate?: string;
+    customerNote?: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
 
 const OrderItemSchema = new Schema<IOrderItem>({
-  productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+  productId: { type: Schema.Types.ObjectId, ref: "Product" },
   name: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true, min: 1 },
@@ -57,6 +72,13 @@ const OrderSchema = new Schema<IOrder>(
       enum: ["pending", "confirmed", "preparing", "ready", "delivered", "cancelled"],
       default: "pending",
     },
+    orderType: {
+      type: String,
+      enum: ["shop", "custom"],
+      default: "shop",
+    },
+    referenceImages: { type: [String], default: undefined },
+    customDetails: { type: Schema.Types.Mixed, default: undefined },
   },
   { timestamps: true }
 );

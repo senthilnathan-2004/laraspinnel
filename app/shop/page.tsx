@@ -131,7 +131,7 @@ function ShopPageContent() {
           </p>
         </div>
 
-        <div className="relative lg:grid lg:grid-cols-[16rem_1fr] xl:grid-cols-[18rem_1fr] lg:items-start lg:gap-8 lg:border-t lg:border-brand-border lg:pt-8">
+        <div className="relative lg:grid lg:grid-cols-[16rem_1fr] xl:grid-cols-[18rem_1fr] lg:items-start lg:gap-8 lg:pt-8">
           {/* Desktop Sidebar — detailed filters */}
           <StickyBox topOffset={112} enableFrom={1024} className="hidden lg:block">
           <aside className="space-y-7">
@@ -149,7 +149,7 @@ function ShopPageContent() {
                   onBlur={() => setTimeout(() => setShowDesktopSuggestions(false), 200)}
                   placeholder="Search products..."
                   autoComplete="off"
-                  className="w-full h-10 px-3.5 bg-brand-light-gray/50 border border-brand-border rounded-lg text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+                  className="w-full h-11 px-3.5 bg-brand-light-gray/50 border border-brand-border rounded-lg text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                 />
                 <button type="submit" className="sr-only">Search</button>
                 {showDesktopSuggestions && suggestions.length > 0 && (
@@ -179,7 +179,7 @@ function ShopPageContent() {
                     setCategory("all");
                     updateUrlParams({ category: "all" });
                   }}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                  className={`w-full text-left px-3 py-2 min-h-11 flex items-center rounded-lg text-sm font-semibold transition-colors ${
                     category === "all"
                       ? "bg-goat-tint text-goat-primary"
                       : "text-brand-gray hover:bg-brand-light-gray hover:text-brand-black"
@@ -194,7 +194,7 @@ function ShopPageContent() {
                       setCategory(c.slug);
                       updateUrlParams({ category: c.slug });
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    className={`w-full text-left px-3 py-2 min-h-11 flex items-center rounded-lg text-sm font-semibold transition-colors ${
                       category === c.slug
                         ? "bg-goat-tint text-goat-primary"
                         : "text-brand-gray hover:bg-brand-light-gray hover:text-brand-black"
@@ -219,7 +219,7 @@ function ShopPageContent() {
                       setSort(opt.value);
                       updateUrlParams({ sort: opt.value });
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    className={`w-full text-left px-3 py-2 min-h-11 flex items-center rounded-lg text-sm font-semibold transition-colors ${
                       sort === opt.value
                         ? "bg-goat-tint text-goat-primary"
                         : "text-brand-gray hover:bg-brand-light-gray hover:text-brand-black"
@@ -235,7 +235,7 @@ function ShopPageContent() {
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="flex items-center gap-1.5 text-xs font-bold text-red-600 hover:underline"
+                className="flex items-center gap-1.5 min-h-11 py-2 text-xs font-bold text-red-600 hover:underline"
               >
                 <X size={13} /> Clear all filters
               </button>
@@ -260,7 +260,7 @@ function ShopPageContent() {
                     onBlur={() => setTimeout(() => setShowMobileSuggestions(false), 200)}
                     placeholder="Search products by name..."
                     autoComplete="off"
-                    className="w-full h-10 md:h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-lg md:rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
+                    className="w-full h-11 pl-10 pr-4 bg-brand-light-gray/50 border border-brand-border rounded-lg md:rounded-xl text-sm text-brand-black outline-none focus:ring-2 focus:ring-goat-primary transition-all"
                   />
                   <button type="submit" className="sr-only">Search</button>
                   {showMobileSuggestions && suggestions.length > 0 && (

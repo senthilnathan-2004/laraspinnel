@@ -26,6 +26,7 @@ interface Order {
   phone: string;
   totalAmount: number;
   status: OrderStatus;
+  orderType?: "shop" | "custom";
   createdAt: string;
   items: {
     quantity: number;
@@ -457,7 +458,14 @@ export default function AdminOrdersPage() {
                               />
                             </td>
                             <td className="px-4 md:px-6 py-4 font-mono font-semibold text-brand-black">
-                              {order.orderNumber}
+                              <span className="inline-flex items-center gap-2">
+                                {order.orderNumber}
+                                {order.orderType === "custom" && (
+                                  <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-rose-text bg-rose-tint border border-rose-primary/30 rounded-full px-2 py-0.5">
+                                    Custom
+                                  </span>
+                                )}
+                              </span>
                             </td>
                             <td className="px-4 md:px-6 py-4">
                               <div className="font-semibold text-brand-black">{order.customerName}</div>

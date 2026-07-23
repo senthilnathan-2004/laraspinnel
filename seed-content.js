@@ -55,7 +55,7 @@ async function seed() {
       await SiteSettings.findOneAndUpdate(
         { key },
         { $setOnInsert: { value } }, // Only insert if missing
-        { upsert: true, new: true }
+        { upsert: true, returnDocument: 'after' }
       );
       console.log(`Seeded: ${key}`);
     }

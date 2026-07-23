@@ -1,7 +1,27 @@
 import React from "react";
+import {
+  Hand,
+  Palette,
+  Gem,
+  Baby,
+  Truck,
+  type LucideIcon,
+} from "lucide-react";
+
+// Icon-name → Lucide component. Keeps page-level items as plain data (RSC-safe),
+// no JSX crosses the server/client boundary.
+const ICON_MAP: Record<string, LucideIcon> = {
+  hand: Hand,
+  palette: Palette,
+  gem: Gem,
+  baby: Baby,
+  truck: Truck,
+};
+
+export type MarqueeItem = string | { label: string; icon?: string };
 
 interface TextMarqueeProps {
-  items: string[];
+  items: MarqueeItem[];
   bgColor?: string;
   textColor?: string;
   dividerColor?: string;
@@ -23,29 +43,30 @@ export default function TextMarquee({
       <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-24 md:w-48 bg-gradient-to-r ${fadeFrom} to-transparent`} />
       <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-24 md:w-48 bg-gradient-to-l ${fadeFrom} to-transparent`} />
 
-      <style>{`
-        @keyframes marquee-text {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee-text {
-          animation: marquee-text 25s linear infinite;
-        }
-        .animate-marquee-text:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+      {/* Keyframes + reduced-motion handling live in globals.css (.animate-marquee-text) */}
       <div className="flex animate-marquee-text whitespace-nowrap w-max items-center">
         {[1, 2].map((setIndex) => (
           <div key={setIndex} className="flex items-center">
-            {items.map((item, idx) => (
-              <div key={`${setIndex}-${idx}`} className="flex items-center">
-                <span className={`font-display text-2xl sm:text-2xl md:text-3xl tracking-widest uppercase mx-8 ${textColor}`}>
-                  {item}
-                </span>
-                <span className={`text-2xl ${dividerColor}`}>✦</span>
-              </div>
-            ))}
+            {items.map((item, idx) => {
+              const label = typeof item === "string" ? item : item.label;
+              const iconKey = typeof item === "string" ? undefined : item.icon;
+              const Icon = iconKey ? ICON_MAP[iconKey] : undefined;
+              return (
+                <div key={`${setIndex}-${idx}`} className="flex items-center">
+                  <span className={`inline-flex items-center gap-2.5 font-display text-2xl sm:text-2xl md:text-3xl tracking-widest uppercase mx-8 ${textColor}`}>
+                    {Icon && (
+                      <Icon
+                        aria-hidden="true"
+                        strokeWidth={1.75}
+                        className="w-6 h-6 md:w-7 md:h-7 shrink-0"
+                      />
+                    )}
+                    {label}
+                  </span>
+                  <span className={`text-xl ${dividerColor}`}>•</span>
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

@@ -23,7 +23,7 @@ interface Product {
 interface CategoryShowcaseProps {
   title: string;
   categorySlug: string;
-  eyebrow: string;
+  eyebrow?: string;
 }
 
 export default function CategoryShowcase({ title, categorySlug, eyebrow }: CategoryShowcaseProps) {
@@ -40,14 +40,16 @@ export default function CategoryShowcase({ title, categorySlug, eyebrow }: Categ
     <section className="relative overflow-hidden py-20 bg-white">
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 space-y-8">
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-brand-border pb-4 gap-3 sm:gap-0">
+        <div className="flex flex-row items-center justify-between pb-4 gap-3 sm:gap-0">
           <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-goat-primary">
-              <Gem size={16} className="animate-pulse text-gold-primary" />
-              <span className="text-[10px] font-bold tracking-widest uppercase text-brand-gray">
-                {eyebrow}
-              </span>
-            </div>
+            {eyebrow && (
+              <div className="flex items-center gap-1.5 text-goat-primary">
+                <Gem size={16} className="animate-pulse text-gold-primary" />
+                <span className="text-[10px] font-bold tracking-widest uppercase text-brand-gray">
+                  {eyebrow}
+                </span>
+              </div>
+            )}
             <h2 className="font-display text-2xl md:text-3xl text-brand-black tracking-wide uppercase">
               {title}
             </h2>

@@ -56,7 +56,7 @@ export async function PUT(
     const order = await Order.findByIdAndUpdate(
       id,
       { status },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!order) {

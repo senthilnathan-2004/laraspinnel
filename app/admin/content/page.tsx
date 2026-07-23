@@ -12,6 +12,7 @@ import {
   ListEditor,
   ListFieldDef,
   PromoCardListEditor,
+  GalleryItemListEditor,
 } from "@/components/admin/ContentEditors";
 import {
   CONTENT_DEFAULTS,
@@ -22,11 +23,14 @@ import {
   DEFAULT_FOOTER_CATEGORIES,
   DEFAULT_FOOTER_BADGES,
   DEFAULT_PROMO_CARDS,
+  DEFAULT_CUSTOM_POINTS,
+  DEFAULT_CUSTOM_GALLERY,
   PROMO_CARD_COLORS,
   parseList,
   WhyStep,
   LinkItem,
   PromoCard,
+  CustomGalleryItem,
 } from "@/lib/siteContent";
 import {
   Loader2,
@@ -65,6 +69,7 @@ const WHY_FIELDS: ListFieldDef[] = [
 const SECTIONS: Record<TabId, string[]> = {
   home: [
     "Shop by Category — heading",
+    "Custom Order Banner",
     "Why Choose Us",
     "Testimonials — heading & stats",
     "Promo Showcase — rotating cards below reviews",
@@ -240,6 +245,114 @@ export default function AdminContentPage() {
               <Section activeSection={activeSection} title="Shop by Category — heading">
                 <TextField label="Section Title" value={val("home_shop_title")} onChange={(v) => setVal("home_shop_title", v)} placeholder={ph("home_shop_title")} hint="Blank = use site default." />
                 <TextAreaField label="Section Subtitle" value={val("home_shop_subtitle")} onChange={(v) => setVal("home_shop_subtitle", v)} placeholder={ph("home_shop_subtitle")} hint="Blank = use site default." />
+              </Section>
+
+              <Section activeSection={activeSection} title="Custom Order Banner">
+                {/* Show / hide toggle */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-brand-black uppercase tracking-wider block">
+                    Section Visibility
+                  </label>
+                  <div className="flex gap-2">
+                    {[
+                      { key: "true", label: "Visible" },
+                      { key: "false", label: "Hidden" },
+                    ].map((opt) => (
+                      <button
+                        key={opt.key}
+                        type="button"
+                        onClick={() => setVal("home_custom_enabled", opt.key)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold border transition-colors ${
+                          (val("home_custom_enabled") || "true") === opt.key
+                            ? "bg-brand-black text-white border-brand-black"
+                            : "bg-white border-brand-border text-brand-gray hover:text-brand-black"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-brand-gray">
+                    Hidden removes the whole Custom Order banner from the homepage.
+                  </p>
+                </div>
+
+                <TextField
+                  label="Eyebrow Label"
+                  value={val("home_custom_eyebrow")}
+                  onChange={(v) => setVal("home_custom_eyebrow", v)}
+                />
+                <TextAreaField
+                  label="Heading"
+                  value={val("home_custom_heading")}
+                  onChange={(v) => setVal("home_custom_heading", v)}
+                  rows={2}
+                  hint="Each line here becomes its own line in the heading."
+                />
+                <TextAreaField
+                  label="Description"
+                  value={val("home_custom_description")}
+                  onChange={(v) => setVal("home_custom_description", v)}
+                />
+                <ListEditor<string>
+                  label="Benefit Points"
+                  items={listVal<string>("home_custom_points", DEFAULT_CUSTOM_POINTS)}
+                  onChange={(arr) => setListVal("home_custom_points", arr)}
+                  addLabel="Add point"
+                  hint="Short benefit, e.g. Choose Your Colors"
+                />
+                <p className="text-[10px] text-brand-gray -mt-1">
+                  Icons are assigned automatically in order. 3 points look best.
+                </p>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <TextField
+                    label="Primary Button — Text"
+                    value={val("home_custom_primary_text")}
+                    onChange={(v) => setVal("home_custom_primary_text", v)}
+                  />
+                  <TextField
+                    label="Primary Button — Link"
+                    value={val("home_custom_primary_link")}
+                    onChange={(v) => setVal("home_custom_primary_link", v)}
+                    placeholder="/contact or https://..."
+                  />
+                  <TextField
+                    label="Secondary Link — Text"
+                    value={val("home_custom_secondary_text")}
+                    onChange={(v) => setVal("home_custom_secondary_text", v)}
+                  />
+                  <TextField
+                    label="Secondary Link — Link"
+                    value={val("home_custom_secondary_link")}
+                    onChange={(v) => setVal("home_custom_secondary_link", v)}
+                    placeholder="/shop or https://..."
+                  />
+                </div>
+
+                <ImageField
+                  label="Background Image (Desktop & Tablet)"
+                  value={val("home_custom_bg_image")}
+                  onChange={(v) => setVal("home_custom_bg_image", v)}
+                  hint="Soft full-section background behind the banner. Blank = plain cream background."
+                />
+                <ImageField
+                  label="Background Image (Mobile)"
+                  value={val("home_custom_bg_image_mobile")}
+                  onChange={(v) => setVal("home_custom_bg_image_mobile", v)}
+                  hint="Shown on phones instead of the desktop background. Blank = reuse the desktop image."
+                />
+
+                <GalleryItemListEditor
+                  label="Showcase Gallery Images"
+                  items={listVal<CustomGalleryItem>("home_custom_gallery", DEFAULT_CUSTOM_GALLERY)}
+                  onChange={(arr) => setListVal("home_custom_gallery", arr)}
+                />
+                <p className="text-[10px] text-brand-gray -mt-1">
+                  These images scroll in the animated showcase on the right of the banner (and the
+                  carousel on tablets). Transparent PNGs on the blush card background look best.
+                  Order flows round-robin across the three columns.
+                </p>
               </Section>
 
               <Section activeSection={activeSection} title="Why Choose Us">
